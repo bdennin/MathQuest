@@ -1,4 +1,4 @@
-//this is poo
+//this isn't entirely poo
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
