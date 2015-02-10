@@ -1,4 +1,3 @@
-//this is poo
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
@@ -18,7 +17,8 @@ public class MathQuest
 		outerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		outerFrame.setLocationRelativeTo(null);
 		outerFrame.setResizable(false);
-		outerFrame.add(new LoginPage());
+		LoginPageContent loginContent = new LoginPageContent();
+		outerFrame.setContentPane(loginContent);
 		outerFrame.setVisible(true);
 	}
 	
@@ -28,8 +28,6 @@ public class MathQuest
 	
 	public static void switchToGameWorld() {
 		outerFrame.removeAll();
-		outerFrame.pack();
-		outerFrame.add(new GameWorld());
 	}
 	
 	public static void main(String[] args) {
