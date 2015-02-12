@@ -8,15 +8,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 
-public class LoginPageContent extends JPanel {
+public class LoginPage extends JPanel {
 	
 	private JPasswordField password;
 	private JTextField username;
 
-	/**
-	 * Create the panel.
-	 */
-	public LoginPageContent() {
+	public LoginPage() {
 		setLayout(null);
 		
 		JPanel panel = new JPanel();
@@ -44,7 +41,7 @@ public class LoginPageContent extends JPanel {
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				boolean isSuccessfulLogin = LoginPageContent.verifyCredentials(username.getText(), password.getText());
+				boolean isSuccessfulLogin = LoginPage.verifyCredentials(username.getText(), password.getText());
 				
 				if(isSuccessfulLogin) {
 					MathQuest.switchToGameWorld();

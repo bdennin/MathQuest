@@ -1,10 +1,13 @@
 import java.awt.Dimension;
 import java.awt.EventQueue;
+
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class MathQuest
 {
 	private static JFrame outerFrame;
+	private static JPanel contentPane;
 	private static final Dimension FRAME_DIMENSIONS = new Dimension(1024, 768);
 	
 	public MathQuest() {
@@ -17,8 +20,8 @@ public class MathQuest
 		outerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		outerFrame.setLocationRelativeTo(null);
 		outerFrame.setResizable(false);
-		LoginPageContent loginContent = new LoginPageContent();
-		outerFrame.setContentPane(loginContent);
+		contentPane = new LoginPage();
+		outerFrame.setContentPane(contentPane);
 		outerFrame.setVisible(true);
 	}
 	
@@ -27,7 +30,9 @@ public class MathQuest
 	}
 	
 	public static void switchToGameWorld() {
-		outerFrame.removeAll();
+		contentPane = new GameWorld();
+		outerFrame.setContentPane(contentPane);
+		contentPane.revalidate();
 	}
 	
 	public static void main(String[] args) {
