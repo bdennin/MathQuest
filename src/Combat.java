@@ -11,41 +11,32 @@ public class Combat {
 		enemyMonster = m;
 	}
 	
-	private boolean playerTurn(){
+	private boolean playerTurn(Character c){
 		System.out.println("Player's Turn");
+		System.out.println("Health: " + c.getCurrentHealth() + " / " + c.getMaxHealth());
 		return isPlayerTurn = false;
 	}
 	
-	private boolean monsterTurn(){
+	private boolean monsterTurn(Monster m){
 		System.out.println("Monster's Turn");
 		return isPlayerTurn = true;
 	}
 	
-	private int fight(){
+	private int fight(Character c, Monster m){
 		Scanner input = new Scanner(System.in);
 		
-		String decision = input.next();
 		
-		while(decision.equals("y")){
-			if(isPlayerTurn){
-				this.playerTurn();
-			}
-			else{
-				this.monsterTurn();
-			}
-			decision = input.next();
-		}
 		return 0;
 	}
 	
 	
-	public static void main(String[] args){
-		Character me = new Character();
-		Monster you = new Monster();
-		
-		
-		Combat testFight = new Combat(me,you,true);
-		
-		testFight.fight();
-	}
+//	public static void main(String[] args){
+//		Character me = new Character();
+//		Monster you = new Monster();
+//		
+//		
+//		Combat testFight = new Combat(me,you,true);
+//		
+//		testFight.fight();
+//	}
 }
