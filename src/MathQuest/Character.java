@@ -1,3 +1,4 @@
+package MathQuest;
 
 public class Character {
 
@@ -77,7 +78,7 @@ public class Character {
 	public void setArmor(int a){
 		armor = armor + a;
 	}
-	
+
 	public String toString(){
 		return level + " " + maxHealth + " " + currentExperience + " " + maxExperience + " " + " " + gold;
 	}

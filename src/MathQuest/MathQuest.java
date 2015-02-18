@@ -1,3 +1,5 @@
+package MathQuest;
+
 import java.awt.Dimension;
 import java.awt.EventQueue;
 
@@ -9,11 +11,11 @@ public class MathQuest
 	private static JFrame outerFrame;
 	private static JPanel contentPane;
 	private static final Dimension FRAME_DIMENSIONS = new Dimension(1024, 768);
-	
+
 	public MathQuest() {
 		initializeMathQuest();
 	}
-	
+
 	private void initializeMathQuest() {
 		outerFrame = new JFrame("MathQuest");
 		outerFrame.setSize(FRAME_DIMENSIONS);
@@ -24,25 +26,55 @@ public class MathQuest
 		outerFrame.setContentPane(contentPane);
 		outerFrame.setVisible(true);
 	}
-	
+
 	public static Dimension getDimensions() {
 		return FRAME_DIMENSIONS;
 	}
-	
+
 	public static void switchToGameWorld() {
 		contentPane = new GameWorld();
 		outerFrame.setContentPane(contentPane);
 		contentPane.revalidate();
 	}
-	
+
+	public static void switchToInn() {
+		contentPane = new Inn();
+		outerFrame.setContentPane(contentPane);
+		contentPane.revalidate();
+	}
+
+	public static void switchToBlacksmith() {
+		contentPane = new Blacksmith();
+		outerFrame.setContentPane(contentPane);
+		contentPane.revalidate();
+	}
+
+	public static void switchToBattlefield() {
+		contentPane = new Battlefield();
+		outerFrame.setContentPane(contentPane);
+		contentPane.revalidate();
+	}
+
+	public static void switchToInventory() {
+
+	}
+
+	public static void switchToOptions() {
+
+	}
+
+	public static void switchToCombat() {
+
+	}
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater (
-			new Runnable() {
-				@Override
-				public void run() {
-					new MathQuest();
+				new Runnable() {
+					@Override
+					public void run() {
+						new MathQuest();
+					}
 				}
-			}
-		);	
+				);	
 	}
 }

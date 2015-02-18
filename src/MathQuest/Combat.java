@@ -1,3 +1,4 @@
+package MathQuest;
 import java.util.Scanner;
 
 public class Combat {

@@ -1,3 +1,5 @@
+package MathQuest;
+
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
@@ -6,7 +8,6 @@ import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
 
 public class LoginPage extends JPanel {
 	
