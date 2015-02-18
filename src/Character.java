@@ -1,13 +1,14 @@
 
 public class Character {
 
-	private int maxExperience, currentExperience;
+	private double maxExperience, currentExperience;
 	private int strength;
 	private int dexterity;
 	private int maxHealth, currentHealth;
 	private int level;
 	private int armor;
-	private int gold;
+	private double gold;
+	private int speed;
 	
 	public Character() {
 		currentExperience = 0;
@@ -19,15 +20,15 @@ public class Character {
 		armor = 0;
 	}
 	
-	public int getMaxExperience(){
+	public double getMaxExperience(){
 		return maxExperience;
 	}
 	
-	public int getCurrentExperience(){
+	public double getCurrentExperience(){
 		return currentExperience;
 	}
 	
-	public int getStrenght(){
+	public int getStrength(){
 		return strength;
 	}
 	
@@ -51,7 +52,7 @@ public class Character {
 		return armor;
 	}
 	
-	public int getGold(){
+	public double getGold(){
 		return gold;
 	}
 	
@@ -77,4 +78,7 @@ public class Character {
 		armor = armor + a;
 	}
 	
+	public String toString(){
+		return level + " " + maxHealth + " " + currentExperience + " " + maxExperience + " " + " " + gold;
+	}
 }
