@@ -1,8 +1,11 @@
-//2/19/2015
+
+package MathQuest;
 
 import java.io.*;
 import java.util.*;
 import java.sql.*;
+
+/* 2/19/2015 version*/
 
 public class Database
 {

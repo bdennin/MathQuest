@@ -58,6 +58,8 @@ public class LoginPage extends JPanel {
 	}
 	
 	public static boolean verifyCredentials(String username, String password) {
-		return true;
+		Database.getConnected();
+		return Database.isValid(username, password);
+		
 	}
 }

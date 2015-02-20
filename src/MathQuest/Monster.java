@@ -12,14 +12,10 @@ public class Monster {
 	private String name;
 	
 	public Monster(){
-<<<<<<< Updated upstream:src/Monster.java
+
 		name = "Monster";
 		damage = 10;
 		currentHealth = maxHealth = 100;
-=======
-		this.damage = 0;
-		this.health = 10;
->>>>>>> Stashed changes:src/MathQuest/Monster.java
 		level = 1;
 		gold = 10;
 		experience = 10;
