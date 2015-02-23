@@ -26,7 +26,17 @@ public class Inn extends JPanel {
 	
 	public Inn() {
 		try {                
+<<<<<<< HEAD:src/MathQuest/GUI/Inn.java
 			gameWorldBackground = new ImageIcon(ImageIO.read(new File("gameworld.jpg")));
+=======
+			
+//			gameWorldBackground = new ImageIcon(ImageIO.read(new File("gameworld.jpg")));
+			gameWorldBackground = new ImageIcon(ImageIO.read(new File("insideInn.png")));
+			blacksmithPortrait = new ImageIcon(ImageIO.read(new File("blacksmith.jpg")));
+			characterPortrait = new ImageIcon(ImageIO.read(new File("char.jpg")));
+			innPortrait = new ImageIcon(ImageIO.read(new File("inn.jpg")));
+			//hero = Character.load(database.getLogin())
+>>>>>>> kevin:src/MathQuest/Inn.java
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

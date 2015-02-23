@@ -29,12 +29,24 @@ public class World extends JPanel {
 
 	public World() {
 		try {           
+<<<<<<< HEAD:src/MathQuest/GUI/World.java
 			gameWorldBackground = new ImageIcon(ImageIO.read(new File("gameworld.jpg")));
 			blacksmithPortrait = new ImageIcon(ImageIO.read(new File("blacksmith.jpg")));
 			innPortrait = new ImageIcon(ImageIO.read(new File("outsideInn.png")));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+=======
+	          gameWorldBackground = new ImageIcon(ImageIO.read(new File("gameworld.jpg")));
+	          characterPortrait = new ImageIcon(ImageIO.read(new File("char.jpg")));
+//	          blacksmithPortrait = new ImageIcon(ImageIO.read(new File("blacksmith.jpg")));
+	          blacksmithPortrait = new ImageIcon(ImageIO.read(new File("outsideBlacksmith2.png")));
+//	          innPortrait = new ImageIcon(ImageIO.read(new File("inn.jpg")));
+	          innPortrait = new ImageIcon(ImageIO.read(new File("outsideInn.png")));
+	       } catch (IOException e) {
+	    	   e.printStackTrace();
+	       }
+>>>>>>> kevin:src/MathQuest/GameWorld.java
 		setLayout(null);
 		
 		JPanel characterPanel = new CharacterPanel();
@@ -100,7 +112,7 @@ public class World extends JPanel {
 		add(innLabel);
 
 		JLabel blacksmithLabel = new JLabel();
-		blacksmithLabel.setBounds(362, 300, 300, 300);
+		blacksmithLabel.setBounds(762, 250, 300, 300);
 		blacksmithLabel.setIcon(blacksmithPortrait);
 		blacksmithLabel.setToolTipText("Travel to the blacksmith!");
 		blacksmithLabel.addMouseListener(new MouseListener() {

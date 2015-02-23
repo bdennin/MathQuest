@@ -26,7 +26,13 @@ public class Blacksmith extends JPanel {
 	
 	public Blacksmith() {
 		try {                
+<<<<<<< HEAD:src/MathQuest/GUI/Blacksmith.java
 			gameWorldBackground = new ImageIcon(ImageIO.read(new File("gameworld.jpg")));
+=======
+//			gameWorldBackground = new ImageIcon(ImageIO.read(new File("gameworld.jpg")));
+			gameWorldBackground = new ImageIcon(ImageIO.read(new File("insideBlacksmith.jpg")));
+			characterPortrait = new ImageIcon(ImageIO.read(new File("char.jpg")));
+>>>>>>> kevin:src/MathQuest/Blacksmith.java
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
