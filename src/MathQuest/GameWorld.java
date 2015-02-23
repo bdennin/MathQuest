@@ -28,7 +28,8 @@ public class GameWorld extends JPanel {
 		try {           
 	          gameWorldBackground = new ImageIcon(ImageIO.read(new File("gameworld.jpg")));
 	          characterPortrait = new ImageIcon(ImageIO.read(new File("char.jpg")));
-	          blacksmithPortrait = new ImageIcon(ImageIO.read(new File("blacksmith.jpg")));
+//	          blacksmithPortrait = new ImageIcon(ImageIO.read(new File("blacksmith.jpg")));
+	          blacksmithPortrait = new ImageIcon(ImageIO.read(new File("outsideBlacksmith2.png")));
 //	          innPortrait = new ImageIcon(ImageIO.read(new File("inn.jpg")));
 	          innPortrait = new ImageIcon(ImageIO.read(new File("outsideInn.png")));
 	       } catch (IOException e) {
@@ -156,7 +157,7 @@ public class GameWorld extends JPanel {
 		add(innLabel);
 
 		JLabel blacksmithLabel = new JLabel();
-		blacksmithLabel.setBounds(362, 300, 300, 300);
+		blacksmithLabel.setBounds(762, 250, 300, 300);
 		blacksmithLabel.setIcon(blacksmithPortrait);
 		blacksmithLabel.setToolTipText("Travel to the blacksmith!");
 		blacksmithLabel.addMouseListener(new MouseListener() {

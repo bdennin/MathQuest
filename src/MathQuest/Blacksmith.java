@@ -23,7 +23,8 @@ public class Blacksmith extends JPanel {
 	
 	public Blacksmith() {
 		try {                
-			gameWorldBackground = new ImageIcon(ImageIO.read(new File("gameworld.jpg")));
+//			gameWorldBackground = new ImageIcon(ImageIO.read(new File("gameworld.jpg")));
+			gameWorldBackground = new ImageIcon(ImageIO.read(new File("insideBlacksmith.jpg")));
 			characterPortrait = new ImageIcon(ImageIO.read(new File("char.jpg")));
 		} catch (IOException e) {
 			e.printStackTrace();

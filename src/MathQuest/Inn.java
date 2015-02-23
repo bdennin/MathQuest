@@ -26,7 +26,8 @@ public class Inn extends JPanel {
 	public Inn() {
 		try {                
 			
-			gameWorldBackground = new ImageIcon(ImageIO.read(new File("gameworld.jpg")));
+//			gameWorldBackground = new ImageIcon(ImageIO.read(new File("gameworld.jpg")));
+			gameWorldBackground = new ImageIcon(ImageIO.read(new File("insideInn.png")));
 			blacksmithPortrait = new ImageIcon(ImageIO.read(new File("blacksmith.jpg")));
 			characterPortrait = new ImageIcon(ImageIO.read(new File("char.jpg")));
 			innPortrait = new ImageIcon(ImageIO.read(new File("inn.jpg")));
