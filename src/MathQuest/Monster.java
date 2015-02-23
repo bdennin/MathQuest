@@ -16,7 +16,10 @@ public class Monster {
 		damage = 10;
 		currentHealth = maxHealth = 100;
 		this.damage = 0;
+<<<<<<< HEAD
 		currentHealth = maxHealth = 10;
+=======
+>>>>>>> kevin2
 		level = 1;
 		gold = 10;
 		experience = 10;

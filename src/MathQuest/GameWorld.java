@@ -34,7 +34,8 @@ public class GameWorld extends JPanel {
 	          gameWorldBackground = new ImageIcon(ImageIO.read(new File("gameworld.jpg")));
 	          characterPortrait = new ImageIcon(ImageIO.read(new File("char.jpg")));
 	          blacksmithPortrait = new ImageIcon(ImageIO.read(new File("blacksmith.jpg")));
-	          innPortrait = new ImageIcon(ImageIO.read(new File("inn.jpg")));
+//	          innPortrait = new ImageIcon(ImageIO.read(new File("inn.jpg")));
+	          innPortrait = new ImageIcon(ImageIO.read(new File("outsideInn.png")));
 	       } catch (IOException e) {
 	    	   e.printStackTrace();
 	       }
@@ -116,7 +117,7 @@ public class GameWorld extends JPanel {
 		optionsPanel.add(quitButton);
 		
 		JLabel innLabel = new JLabel();
-		innLabel.setBounds(83, 220, 300, 300);
+		innLabel.setBounds(83, 320, 300, 300);
 		innLabel.setIcon(innPortrait);
 		innLabel.setToolTipText("Travel to the inn!");
 		innLabel.addMouseListener(new MouseListener() {
