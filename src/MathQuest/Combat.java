@@ -5,6 +5,7 @@ public class Combat {
 	private static Character playerCharacter;
 	private static Monster enemyMonster;
 	private boolean isPlayerTurn;
+	private boolean isCorrectAnswer;
 	private Scanner input;
 	private String playerChoice;
 	
@@ -34,7 +35,8 @@ public class Combat {
 //modify character and monster stats for level difference
 	private void sizeUp(){
 		if(playerCharacter.getLevel() - enemyMonster.getLevel() > 5){
-			enemyMonster.setExperience(enemyMonster.getExperience() * .25);
+			enemyMonster.setExperience((int)(enemyMonster.getExperience() * .25));
+			enemyMonster.setGold((int)(enemyMonster.getGold()*.25));
 			//other modifiers for higher player level than monster level
 		}
 		
@@ -43,14 +45,26 @@ public class Combat {
 	private String playerTurn(){
 		while(isPlayerTurn && enemyMonster.getCurrentHealth() > 0){
 			System.out.println("Attack or potion");
-			//does math equation for character's attack or potion
+			
+			//player chooses to attack or drink a potion
 			playerChoice = input.nextLine();
+			
 			if(playerChoice.equalsIgnoreCase("attack")){
-				//character deals damage
+				
+				//math equation displayed
+				isCorrectAnswer = true;
+				
+				if(isCorrectAnswer){
+					//character deals damage
+					enemyMonster.takeDamage(playerCharacter.getStrength());
+				}
 			}
+			
 			if(playerChoice.equalsIgnoreCase("potion")){
 				//character drinks potion
+				
 			}
+			
 			isPlayerTurn = false;
 		}
 		
@@ -62,6 +76,9 @@ public class Combat {
 			System.out.println("Monster is attacking");
 			//does math equation for monster attack that character can defend
 			
+			if(!isCorrectAnswer){
+//				playerCharacter.takeDamage(enemyMonster.getDamage());
+			}
 			isPlayerTurn = true;
 		}
 		
