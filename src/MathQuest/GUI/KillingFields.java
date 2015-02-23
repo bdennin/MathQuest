@@ -1,10 +1,11 @@
-package MathQuest;
+package MathQuest.GUI;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -14,29 +15,22 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
 import javax.swing.JButton;
-import javax.swing.BoxLayout;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import java.awt.BorderLayout;
-import javax.swing.JSplitPane;
-import javax.swing.JScrollPane;
-import javax.swing.JInternalFrame;
-import javax.swing.JLayeredPane;
+
+import MathQuest.MathQuest;
+import MathQuest.Logic.Monster;
+
 import java.awt.Font;
 
 public class KillingFields extends JPanel {
 
-	private ImageIcon characterPortrait;
 	private ImageIcon killingFieldsBackground;
 	private Monster creature;
 	
 	public KillingFields() {
 		try {                
-			characterPortrait = new ImageIcon(ImageIO.read(new File("char.jpg")));
 			killingFieldsBackground = new ImageIcon(ImageIO.read(new File("killingFields.jpg")));
-			//hero = Character.load(database.getLogin())
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -96,12 +90,12 @@ public class KillingFields extends JPanel {
 		panel.add(panel_2);
 		panel_2.setLayout(null);
 		
-		JButton button = new JButton("1");
+		JButton button = new JButton("Goblin");
 		button.setBounds(231, 61, 117, 29);
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Monster();
+				creature = new Monster("Char.jpg");
 				MathQuest.switchToCombat(creature);
 			}	
 		});

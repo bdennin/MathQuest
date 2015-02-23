@@ -1,4 +1,4 @@
-package MathQuest;
+package MathQuest.Logic;
 
 import javax.swing.ImageIcon;
 
@@ -12,7 +12,7 @@ public class Monster {
 	private int armor;
 	private int speed;
 	private String name;
-	private ImageIcon portrait;
+	private String imagePath;
 	
 	public Monster(){
 		name = "Monster";
@@ -27,10 +27,9 @@ public class Monster {
 		experience = 10;
 		armor = 0;
 		speed = 10;
-		this.portrait = portrait;
 	}
 	
-	public Monster(ImageIcon portrait){
+	public Monster(String imagePath){
 		name = "Monster";
 		damage = 10;
 		currentHealth = maxHealth = 10;
@@ -41,7 +40,7 @@ public class Monster {
 		experience = 10;
 		armor = 0;
 		speed = 10;
-		this.portrait = portrait;
+		this.imagePath = imagePath;
 	}
 	
 	
@@ -95,8 +94,8 @@ public class Monster {
 		return currentHealth = currentHealth - s;
 	}
 	
-	public ImageIcon getPortrait() {
-		return this.portrait;
+	public String getImagePath() {
+		return this.imagePath;
 	}
 	
 }

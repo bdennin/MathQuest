@@ -1,10 +1,11 @@
-package MathQuest;
+package MathQuest.GUI;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -14,34 +15,35 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
 import javax.swing.JButton;
 
-public class Inn extends JPanel {
+import MathQuest.MathQuest;
+import MathQuest.Logic.Monster;
 
-	private ImageIcon characterPortrait;
+public class CombatPanel extends JPanel {
+
 	private ImageIcon gameWorldBackground;
-	private ImageIcon blacksmithPortrait;
-	private ImageIcon innPortrait;
+	private Monster creature;
 	
-	public Inn() {
+	public CombatPanel(Monster monster) {
 		try {                
-			
 			gameWorldBackground = new ImageIcon(ImageIO.read(new File("gameworld.jpg")));
-			blacksmithPortrait = new ImageIcon(ImageIO.read(new File("blacksmith.jpg")));
-			characterPortrait = new ImageIcon(ImageIO.read(new File("char.jpg")));
-			innPortrait = new ImageIcon(ImageIO.read(new File("inn.jpg")));
-			//hero = Character.load(database.getLogin())
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+		this.creature = monster;
 		setLayout(null);
 		
 		JPanel characterPanel = new CharacterPanel();
 		characterPanel.setBounds(6, 6, 217, 121);
 		add(characterPanel);
 		characterPanel.setLayout(null);
-				
+		
+		CharacterPanel monsterPanel = new CharacterPanel(monster);
+		monsterPanel.setBounds(801, 6, 217, 121);
+		add(monsterPanel);
+		
 		JPanel optionsPanel = new JPanel();
 		optionsPanel.setBounds(882, 639, 135, 101);
 		add(optionsPanel);
@@ -51,7 +53,7 @@ public class Inn extends JPanel {
 		inventoryButton.setBounds(6, 6, 125, 29);
 		optionsPanel.add(inventoryButton);
 
-		JButton optionsButton = new JButton("Return");
+		JButton optionsButton = new JButton("Run Away");
 		optionsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -60,17 +62,6 @@ public class Inn extends JPanel {
 		});
 		optionsButton.setBounds(6, 36, 125, 29);
 		optionsPanel.add(optionsButton);
-		
-		JButton quitButton = new JButton("Quit");
-		quitButton.setBounds(6, 67, 125, 29);
-		quitButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//Character.save(character);
-				System.exit(0);
-			}
-		});
-		optionsPanel.add(quitButton);
 	}
 
 	@Override
@@ -78,6 +69,5 @@ public class Inn extends JPanel {
 		super.paintComponent(g);
 		BufferedImage gameWorldBack = (BufferedImage)gameWorldBackground.getImage();
 		g.drawImage(gameWorldBack, 0, 0, null);          
-
 	}
 }

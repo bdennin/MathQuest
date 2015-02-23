@@ -6,6 +6,15 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import MathQuest.GUI.Blacksmith;
+import MathQuest.GUI.CombatPanel;
+import MathQuest.GUI.Inn;
+import MathQuest.GUI.KillingFields;
+import MathQuest.GUI.LoginPage;
+import MathQuest.GUI.World;
+import MathQuest.Logic.Character;
+import MathQuest.Logic.Monster;
+
 public class MathQuest
 {
 	private static final Dimension FRAME_DIMENSIONS = new Dimension(1024, 768);
@@ -37,7 +46,7 @@ public class MathQuest
 
 	public static void switchToGameWorld() {
 		hero = new Character();
-		contentPane = new GameWorld();
+		contentPane = new World();
 		outerFrame.setContentPane(contentPane);
 		contentPane.revalidate();
 	}

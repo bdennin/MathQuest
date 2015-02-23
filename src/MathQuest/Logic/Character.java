@@ -1,4 +1,6 @@
-package MathQuest;
+package MathQuest.Logic;
+
+import MathQuest.Inventory;
 
 public class Character {
 

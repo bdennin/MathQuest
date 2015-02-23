@@ -1,10 +1,11 @@
-package MathQuest;
+package MathQuest.GUI;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -14,17 +15,18 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
 import javax.swing.JButton;
 
-public class Blacksmith extends JPanel {
+import MathQuest.MathQuest;
 
-	private ImageIcon characterPortrait;
+public class Inn extends JPanel {
+
 	private ImageIcon gameWorldBackground;
 	
-	public Blacksmith() {
+	public Inn() {
 		try {                
 			gameWorldBackground = new ImageIcon(ImageIO.read(new File("gameworld.jpg")));
-			characterPortrait = new ImageIcon(ImageIO.read(new File("char.jpg")));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -35,7 +37,7 @@ public class Blacksmith extends JPanel {
 		characterPanel.setBounds(6, 6, 217, 121);
 		add(characterPanel);
 		characterPanel.setLayout(null);
-		
+				
 		JPanel optionsPanel = new JPanel();
 		optionsPanel.setBounds(882, 639, 135, 101);
 		add(optionsPanel);
@@ -54,6 +56,17 @@ public class Blacksmith extends JPanel {
 		});
 		optionsButton.setBounds(6, 36, 125, 29);
 		optionsPanel.add(optionsButton);
+		
+		JButton quitButton = new JButton("Quit");
+		quitButton.setBounds(6, 67, 125, 29);
+		quitButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//Character.save(character);
+				System.exit(0);
+			}
+		});
+		optionsPanel.add(quitButton);
 	}
 
 	@Override

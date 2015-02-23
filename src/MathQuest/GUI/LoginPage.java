@@ -1,10 +1,12 @@
-package MathQuest;
+package MathQuest.GUI;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+
+import MathQuest.MathQuest;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -56,7 +58,6 @@ public class LoginPage extends JPanel {
 		});
 		btnLogin.setBounds(248, 57, 117, 29);
 		panel.add(btnLogin);
-		
 	}
 	
 	public static boolean verifyCredentials(String username, String password) {

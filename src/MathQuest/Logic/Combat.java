@@ -1,4 +1,4 @@
-package MathQuest;
+package MathQuest.Logic;
 import java.util.Scanner;
 
 public class Combat {
