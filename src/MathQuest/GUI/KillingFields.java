@@ -95,7 +95,7 @@ public class KillingFields extends JPanel {
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Monster("Char.jpg");
+				creature = new Monster("Goblin.jpg");
 				MathQuest.switchToCombat(creature);
 			}	
 		});

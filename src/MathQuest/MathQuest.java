@@ -45,7 +45,6 @@ public class MathQuest
 	}
 
 	public static void switchToGameWorld() {
-		hero = new Character();
 		contentPane = new World();
 		outerFrame.setContentPane(contentPane);
 		contentPane.revalidate();
@@ -101,6 +100,10 @@ public class MathQuest
 	
 	public static Character getCharacter() {
 		return hero;
+	}
+	
+	public static void setCharacter(Character character) {
+		hero = character;
 	}
 	
 	public static void main(String[] args) {

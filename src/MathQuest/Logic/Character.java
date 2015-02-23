@@ -13,61 +13,72 @@ public class Character {
 	private static int gold;
 	private static int speed;
 	private static Inventory inventory;
-	
+
 	public Character() {
 		currentExperience = 0;
 		maxExperience = 10;
 		strength = 10;
 		gold = 0;
-		currentHealth = maxHealth = 10;
+		currentHealth = 10;
+		maxHealth = 10;
 		level = 1;
 		armor = 0;
 	}
-	
+
+	public Character(Integer[] charStats) {
+		this.level = charStats[0];
+		this.currentHealth = charStats[1];
+		this.currentExperience = charStats[2];
+		this.gold = charStats[3];
+		this.maxHealth = this.level * 10;
+		this.strength = 10 + 2 * level;
+		this.maxExperience = (int)(10 * Math.pow(2, level));
+	}
+
 	public double getMaxExperience(){
 		return maxExperience;
 	}
-	
+
 	public double getCurrentExperience(){
 		return currentExperience;
 	}
-	
+
 	public int getStrength(){
 		return strength;
 	}
-	
+
 	public int getDexterity(){
 		return dexterity;
 	}
-	
+
 	public int getMaxHealth(){
 		return maxHealth;
 	}
-	
+
 	public int getCurrentHealth(){
 		return currentHealth;
 	}
-	
+
 	public int getLevel(){
 		return level;
 	}
-	
+
 	public int getArmor(){
 		return armor;
 	}
-	
+
 	public double getGold(){
 		return gold;
 	}
-	
+
 	public void addStrenght(int s){
 		strength = strength + s;
 	}
-	
+
 	public void addGold(int g){
 		gold = gold + g;
 	}
-	
+
 	public void addArmor(int a){
 		armor = armor + a;
 	}
@@ -80,10 +91,10 @@ public class Character {
 			maxExperience = maxExperience*2;
 		}
 	}
-	
+
 	//takes the damage of the monster
 	public String takeDamage(int d){
-		 currentHealth = currentHealth - d;
+		currentHealth = currentHealth - d;
 		return "" + d + "";
 	}
 
@@ -98,7 +109,7 @@ public class Character {
 		stats[3] = gold;
 		return stats;
 	}
-	
+
 	public static Character load() {
 		return null;
 	}

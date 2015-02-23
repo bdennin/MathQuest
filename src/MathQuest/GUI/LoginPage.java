@@ -7,9 +7,12 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 
 import MathQuest.MathQuest;
+import MathQuest.Database.Database;
+import MathQuest.Logic.Character;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class LoginPage extends JPanel {
 	
@@ -41,27 +44,46 @@ public class LoginPage extends JPanel {
 		panel.add(username);
 		username.setColumns(10);
 		
+		final JLabel errorLabel = new JLabel();
+		errorLabel.setBounds(108, 125, 200, 16);
+		errorLabel.setForeground(Color.RED);
+		panel.add(errorLabel);
+		
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean isSuccessfulLogin = LoginPage.verifyCredentials(username.getText(), password.getText());
 				
 				if(isSuccessfulLogin) {
+					MathQuest.setCharacter(new Character());
 					MathQuest.switchToGameWorld();
 					MathQuest.setUsername(username.getText());
 					MathQuest.setPassword(password.getText());
+					
 				}
 				else {
-					//throw box with error
+					errorLabel.setText("Invalid username/password.");
 				}
 			}
 		});
 		btnLogin.setBounds(248, 57, 117, 29);
 		panel.add(btnLogin);
+		
 	}
 	
 	public static boolean verifyCredentials(String username, String password) {
-		return true;
+		boolean outcome;
+		if(username.isEmpty() || password.isEmpty())
+			outcome = false;
+		else {
+			//Database.getConnected();
+			return true;
+//			outcome = Database.isValid(username, password);
+//			if(outcome) {
+//				Integer[] charStats = new Integer[4];
+//				MathQuest.setCharacter(new Character(charStats));
+//			}
+		}
+		return outcome;
 	}
-	
 }
