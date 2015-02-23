@@ -8,10 +8,14 @@ import javax.swing.JPanel;
 
 public class MathQuest
 {
+	private static final Dimension FRAME_DIMENSIONS = new Dimension(1024, 768);
+	
 	private static JFrame outerFrame;
 	private static JPanel contentPane;
-	private static final Dimension FRAME_DIMENSIONS = new Dimension(1024, 768);
-
+	private static Character hero;
+	private static String username;
+	private static String password;
+	
 	public MathQuest() {
 		initializeMathQuest();
 	}
@@ -32,6 +36,7 @@ public class MathQuest
 	}
 
 	public static void switchToGameWorld() {
+		hero = new Character();
 		contentPane = new GameWorld();
 		outerFrame.setContentPane(contentPane);
 		contentPane.revalidate();
@@ -49,8 +54,8 @@ public class MathQuest
 		contentPane.revalidate();
 	}
 
-	public static void switchToBattlefield() {
-		contentPane = new Battlefield();
+	public static void switchToKillingFields() {
+		contentPane = new KillingFields();
 		outerFrame.setContentPane(contentPane);
 		contentPane.revalidate();
 	}
@@ -63,10 +68,32 @@ public class MathQuest
 
 	}
 
-	public static void switchToCombat() {
-
+	public static void switchToCombat(Monster monster) {
+		contentPane = new CombatPanel(monster);
+		outerFrame.setContentPane(contentPane);
+		contentPane.revalidate();
 	}
 
+	public static String getUsername() {
+		return username;
+	}
+	
+	public static void setUsername(String name) {
+		username = name;
+	}
+	
+	public static String getPassword() {
+		return password;
+	}
+	
+	public static void setPassword(String pass) {
+		password = pass;
+	}
+	
+	public static Character getCharacter() {
+		return hero;
+	}
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater (
 				new Runnable() {

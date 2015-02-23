@@ -2,15 +2,15 @@ package MathQuest;
 
 public class Character {
 
-	private int maxExperience, currentExperience;
-	private int strength;
-	private int dexterity;
-	private int maxHealth, currentHealth;
-	private int level;
-	private int armor;
-	private int gold;
-	private int damage;
-	private int speed;
+	private static int maxExperience, currentExperience;
+	private static int strength;
+	private static int dexterity;
+	private static int maxHealth, currentHealth;
+	private static int level;
+	private static int armor;
+	private static int gold;
+	private static int speed;
+	private static Inventory inventory;
 	
 	public Character() {
 		currentExperience = 0;
@@ -62,11 +62,11 @@ public class Character {
 		strength = strength + s;
 	}
 	
-	public void setGold(int g){
+	public void addGold(int g){
 		gold = gold + g;
 	}
 	
-	public void setArmor(int a){
+	public void addArmor(int a){
 		armor = armor + a;
 	}
 
@@ -85,7 +85,19 @@ public class Character {
 		return "" + d + "";
 	}
 
-	public String toString(){
+	public String toString() {
 		return level + " " + currentHealth + " " + currentExperience  + " " + gold;
+	}
+	public static int[] save() {
+		int[] stats = new int[4];	
+		stats[0] = level;
+		stats[1] = currentHealth;
+		stats[2] = currentExperience;
+		stats[3] = gold;
+		return stats;
+	}
+	
+	public static Character load() {
+		return null;
 	}
 }

@@ -15,21 +15,27 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.JButton;
+import javax.swing.BoxLayout;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.RowSpec;
+import java.awt.BorderLayout;
+import javax.swing.JSplitPane;
+import javax.swing.JScrollPane;
+import javax.swing.JInternalFrame;
+import javax.swing.JLayeredPane;
+import java.awt.Font;
 
-public class Inn extends JPanel {
+public class KillingFields extends JPanel {
 
 	private ImageIcon characterPortrait;
-	private ImageIcon gameWorldBackground;
-	private ImageIcon blacksmithPortrait;
-	private ImageIcon innPortrait;
+	private ImageIcon killingFieldsBackground;
+	private Monster creature;
 	
-	public Inn() {
+	public KillingFields() {
 		try {                
-			
-			gameWorldBackground = new ImageIcon(ImageIO.read(new File("gameworld.jpg")));
-			blacksmithPortrait = new ImageIcon(ImageIO.read(new File("blacksmith.jpg")));
 			characterPortrait = new ImageIcon(ImageIO.read(new File("char.jpg")));
-			innPortrait = new ImageIcon(ImageIO.read(new File("inn.jpg")));
+			killingFieldsBackground = new ImageIcon(ImageIO.read(new File("killingFields.jpg")));
 			//hero = Character.load(database.getLogin())
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -71,12 +77,41 @@ public class Inn extends JPanel {
 			}
 		});
 		optionsPanel.add(quitButton);
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(212, 184, 600, 400);
+		add(panel);
+		panel.setLayout(null);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBounds(6, 6, 588, 73);
+		panel.add(panel_1);
+		
+		JLabel lblSelectYourBattle = new JLabel("Select your battle");
+		lblSelectYourBattle.setFont(new Font("Copperplate", Font.PLAIN, 45));
+		panel_1.add(lblSelectYourBattle);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setBounds(6, 91, 588, 300);
+		panel.add(panel_2);
+		panel_2.setLayout(null);
+		
+		JButton button = new JButton("1");
+		button.setBounds(231, 61, 117, 29);
+		button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				creature = new Monster();
+				MathQuest.switchToCombat(creature);
+			}	
+		});
+		panel_2.add(button);
 	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		BufferedImage gameWorldBack = (BufferedImage)gameWorldBackground.getImage();
+		BufferedImage gameWorldBack = (BufferedImage)killingFieldsBackground.getImage();
 		g.drawImage(gameWorldBack, 0, 0, null);          
 
 	}

@@ -16,24 +16,20 @@ import java.io.File;
 import java.io.IOException;
 import javax.swing.JButton;
 
-public class GameWorld extends JPanel {
+public class CombatPanel extends JPanel {
 
 	private ImageIcon characterPortrait;
 	private ImageIcon gameWorldBackground;
-	private ImageIcon blacksmithPortrait;
-	private ImageIcon innPortrait;
-	private ImageIcon killingFieldsPortrait;
+	private Monster creature;
 	
-	public GameWorld() {
-		try {           
-	          gameWorldBackground = new ImageIcon(ImageIO.read(new File("gameworld.jpg")));
-	          characterPortrait = new ImageIcon(ImageIO.read(new File("char.jpg")));
-	          blacksmithPortrait = new ImageIcon(ImageIO.read(new File("blacksmith.jpg")));
-//	          innPortrait = new ImageIcon(ImageIO.read(new File("inn.jpg")));
-	          innPortrait = new ImageIcon(ImageIO.read(new File("outsideInn.png")));
-	       } catch (IOException e) {
-	    	   e.printStackTrace();
-	       }
+	public CombatPanel(Monster monster) {
+		try {                
+			gameWorldBackground = new ImageIcon(ImageIO.read(new File("gameworld.jpg")));
+			characterPortrait = new ImageIcon(ImageIO.read(new File("char.jpg")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		this.creature = monster;
 		setLayout(null);
 		
 		JPanel characterPanel = new JPanel();
@@ -87,7 +83,6 @@ public class GameWorld extends JPanel {
 		lblXp.setBounds(19, 61, 61, 16);
 		charStats.add(lblXp);
 		
-		
 		JLabel label = new JLabel(lifeBar); //character.getCurrentLife(), character.getTotalLife();
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setBounds(19, 21, 61, 16);
@@ -98,6 +93,10 @@ public class GameWorld extends JPanel {
 		lblNewLabel.setBounds(19, 77, 61, 16);
 		charStats.add(lblNewLabel);
 		
+		CharacterPanel monsterPanel = new CharacterPanel();
+		monsterPanel.setBounds(801, 6, 217, 121);
+		add(monsterPanel);
+		
 		JPanel optionsPanel = new JPanel();
 		optionsPanel.setBounds(882, 639, 135, 101);
 		add(optionsPanel);
@@ -107,120 +106,15 @@ public class GameWorld extends JPanel {
 		inventoryButton.setBounds(6, 6, 125, 29);
 		optionsPanel.add(inventoryButton);
 
-		JButton optionsButton = new JButton("Options");
-		optionsButton.setBounds(6, 36, 125, 29);
-		optionsPanel.add(optionsButton);
-
-		JButton quitButton = new JButton("Quit");
-		quitButton.setBounds(6, 67, 125, 29);
-		quitButton.addActionListener(new ActionListener() {
+		JButton optionsButton = new JButton("Run Away");
+		optionsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//Character.save(character);
-				System.exit(0);
+				MathQuest.switchToGameWorld();
 			}
 		});
-		optionsPanel.add(quitButton);
-		
-		JLabel innLabel = new JLabel();
-		innLabel.setBounds(83, 320, 300, 300);
-		innLabel.setIcon(innPortrait);
-		innLabel.setToolTipText("Travel to the inn!");
-		innLabel.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				MathQuest.switchToInn();
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-
-			}
-		});
-		add(innLabel);
-
-		JLabel blacksmithLabel = new JLabel();
-		blacksmithLabel.setBounds(362, 300, 300, 300);
-		blacksmithLabel.setIcon(blacksmithPortrait);
-		blacksmithLabel.setToolTipText("Travel to the blacksmith!");
-		blacksmithLabel.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				MathQuest.switchToBlacksmith();
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-
-			}
-		});
-		add(blacksmithLabel);
-		
-		JLabel killingFieldsLabel = new JLabel();
-		killingFieldsLabel.setIcon(killingFieldsPortrait);
-		killingFieldsLabel.setBounds(693, 300, 300, 300);
-		killingFieldsLabel.setToolTipText("Travel to the killing fields!");
-		killingFieldsLabel.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				MathQuest.switchToKillingFields();
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-
-			}
-		});
-
-		add(killingFieldsLabel);
+		optionsButton.setBounds(6, 36, 125, 29);
+		optionsPanel.add(optionsButton);
 	}
 
 	@Override

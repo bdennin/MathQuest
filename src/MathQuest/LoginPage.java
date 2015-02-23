@@ -46,6 +46,8 @@ public class LoginPage extends JPanel {
 				
 				if(isSuccessfulLogin) {
 					MathQuest.switchToGameWorld();
+					MathQuest.setUsername(username.getText());
+					MathQuest.setPassword(password.getText());
 				}
 				else {
 					//throw box with error
@@ -60,4 +62,5 @@ public class LoginPage extends JPanel {
 	public static boolean verifyCredentials(String username, String password) {
 		return true;
 	}
+	
 }
