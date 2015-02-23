@@ -55,7 +55,7 @@ public class LoginPage extends JPanel {
 				boolean isSuccessfulLogin = LoginPage.verifyCredentials(username.getText(), password.getText());
 				
 				if(isSuccessfulLogin) {
-					MathQuest.setCharacter(new Character());
+					//MathQuest.setCharacter(new Character());
 					MathQuest.switchToGameWorld();
 					MathQuest.setUsername(username.getText());
 					MathQuest.setPassword(password.getText());
@@ -76,13 +76,14 @@ public class LoginPage extends JPanel {
 		if(username.isEmpty() || password.isEmpty())
 			outcome = false;
 		else {
-			//Database.getConnected();
-			return true;
-//			outcome = Database.isValid(username, password);
-//			if(outcome) {
-//				Integer[] charStats = new Integer[4];
-//				MathQuest.setCharacter(new Character(charStats));
-//			}
+			Database.getConnected();
+//			return true;
+			outcome = Database.isValid(username, password);
+			if(outcome) {
+				Integer[] charStats= Database.getStats();
+				System.out.println(charStats[1]);
+				MathQuest.setCharacter(new Character(charStats));
+			}
 		}
 		return outcome;
 	}
