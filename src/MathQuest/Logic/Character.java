@@ -3,114 +3,127 @@ package MathQuest.Logic;
 import MathQuest.Inventory;
 
 public class Character {
-
-	private static int maxExperience, currentExperience;
-	private static int strength;
-	private static int dexterity;
-	private static int maxHealth, currentHealth;
-	private static int level;
-	private static int armor;
-	private static int gold;
-	private static int speed;
-	private static Inventory inventory;
+	
+	private int level;
+	private int maxExperience;
+	private int currentExperience;
+	private int maxHealth;
+	private int currentHealth;
+	private int strength;
+	private int dexterity;
+	private int armor;
+	private int gold;
+	private int speed;
+	private String name;
+	private String imagePath;
+	private Inventory inventory;
 
 	public Character() {
-		currentExperience = 0;
-		maxExperience = 10;
-		strength = 10;
-		gold = 0;
-		currentHealth = 10;
-		maxHealth = 10;
-		level = 1;
-		armor = 0;
+		this.currentExperience = 0;
+		this.maxExperience = 10;
+		this.strength = 10;
+		this.gold = 0;
+		this.currentHealth = 10;
+		this.maxHealth = 10;
+		this.level = 1;
+		this.armor = 0;
+		this.imagePath = "char.jpg";
 	}
 
-	public Character(Integer[] charStats) {
-		this.level = charStats[0];
-		this.currentHealth = charStats[1];
-		this.currentExperience = charStats[2];
-		this.gold = charStats[3];
-		this.maxHealth = this.level * 10;
-		this.strength = 10 + 2 * level;
-		this.maxExperience = (int)(10 * Math.pow(2, level));
+	public Character(int level, String name, String imagePath) {
+		this.strength = 10 * level;
+		this.gold = 2 * level;
+		this.currentHealth = 10 * level;
+		this.maxHealth = 10;
+		this.level = level;
+		this.armor = 0;
+		this.name = name;
+		this.imagePath = imagePath;
+	}
+	
+	public Character(int[] charStats) {
+		level = charStats[0];
+		currentHealth = charStats[1];
+		currentExperience = charStats[2];
+		gold = charStats[3];
+		maxHealth = level * 10;
+		strength = 10 + 2 * level;
+		maxExperience = (int)(10 * Math.pow(2, level));
 	}
 
-	public double getMaxExperience(){
-		return maxExperience;
+	public int getMaxExperience(){
+		return this.maxExperience;
 	}
 
-	public double getCurrentExperience(){
-		return currentExperience;
+	public int getCurrentExperience(){
+		return this.currentExperience;
 	}
 
 	public int getStrength(){
-		return strength;
+		return this.strength;
 	}
 
 	public int getDexterity(){
-		return dexterity;
+		return this.dexterity;
 	}
 
 	public int getMaxHealth(){
-		return maxHealth;
+		return this.maxHealth;
 	}
 
 	public int getCurrentHealth(){
-		return currentHealth;
+		return this.currentHealth;
 	}
 
 	public int getLevel(){
-		return level;
+		return this.level;
 	}
 
 	public int getArmor(){
-		return armor;
+		return this.armor;
+	}
+	
+	public String getName() {
+		return this.name;
 	}
 
 	public double getGold(){
-		return gold;
+		return this.gold;
 	}
-
-	public void addStrenght(int s){
-		strength = strength + s;
+	
+	public void addGold(int gold){
+		this.gold = this.gold + gold;
 	}
-
-	public void addGold(int g){
-		gold = gold + g;
-	}
-
-	public void addArmor(int a){
-		armor = armor + a;
-	}
-
-	public void gainExperience(int c){
-		currentExperience = currentExperience + c;
+	
+	public void gainExperience(int experience){
+		this.currentExperience = this.currentExperience + experience;
 		if(currentExperience >= maxExperience){
-			level = level++;
-			currentExperience = currentExperience - maxExperience;
-			maxExperience = maxExperience*2;
+			this.level++;
+			this.currentExperience = this.currentExperience - this.maxExperience;
+			this.maxExperience = this.maxExperience*2;
 		}
 	}
 
-	//takes the damage of the monster
-	public String takeDamage(int d){
-		currentHealth = currentHealth - d;
-		return "" + d + "";
+	public int calculateDamage() {
+		double maxDamage = this.strength * .2;
+		double damage = this.strength * .2  - ((Math.random()/4) * maxDamage);
+		return (int)damage;
 	}
-
-	public String toString() {
-		return level + " " + currentHealth + " " + currentExperience  + " " + gold;
+	
+	public void takeDamage(int damage){
+		this.currentHealth = this.currentHealth - damage;
 	}
-	public static int[] save() {
+	
+	public int[] save() {
 		int[] stats = new int[4];	
-		stats[0] = level;
-		stats[1] = currentHealth;
-		stats[2] = currentExperience;
-		stats[3] = gold;
+		stats[0] = this.level;
+		stats[1] = this.currentHealth;
+		stats[2] = this.currentExperience;
+		stats[3] = this.gold;
 		return stats;
 	}
-
-	public static Character load() {
-		return null;
+	
+	public String getImagePath() {
+		return this.imagePath;
 	}
 }

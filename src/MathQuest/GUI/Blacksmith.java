@@ -6,6 +6,8 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import MathQuest.Logic.Character;
+
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -24,7 +26,7 @@ public class Blacksmith extends JPanel {
 
 	private ImageIcon gameWorldBackground;
 	
-	public Blacksmith() {
+	public Blacksmith(Character hero) {
 		try {                
 
 			gameWorldBackground = new ImageIcon(ImageIO.read(new File("insideBlacksmith.jpg")));
@@ -32,10 +34,9 @@ public class Blacksmith extends JPanel {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 		setLayout(null);
 		
-		JPanel characterPanel = new CharacterPanel();
+		JPanel characterPanel = new CharacterPanel(hero);
 		characterPanel.setBounds(6, 6, 217, 121);
 		add(characterPanel);
 		characterPanel.setLayout(null);

@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import javax.swing.JButton;
 
 import MathQuest.MathQuest;
+import MathQuest.Logic.Character;
 
 public class World extends JPanel {
 
@@ -26,22 +28,18 @@ public class World extends JPanel {
 	private ImageIcon blacksmithPortrait;
 	private ImageIcon innPortrait;
 	private ImageIcon killingFieldsPortrait;
+	boolean enabled = true;
 
-	public World() {
-		try {           
-			gameWorldBackground = new ImageIcon(ImageIO.read(new File("gameworld.jpg")));
-			blacksmithPortrait = new ImageIcon(ImageIO.read(new File("outsideBlacksmith2.png")));
-			innPortrait = new ImageIcon(ImageIO.read(new File("outsideInn.png")));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		setLayout(null);
+	public World(Character hero) {
+		this.setBounds(0, 0, 1024, 768);
+		this.setLayout(null);
+		this.loadImages();
 		
-		JPanel characterPanel = new CharacterPanel();
-		characterPanel.setBounds(6, 6, 217, 121);
+		final JPanel characterPanel = new CharacterPanel(hero);
+		characterPanel.setBounds(6, 6, 112, 151);
 		add(characterPanel);
 		characterPanel.setLayout(null);
-		
+
 		JPanel optionsPanel = new JPanel();
 		optionsPanel.setBounds(882, 639, 135, 101);
 		add(optionsPanel);
@@ -89,7 +87,7 @@ public class World extends JPanel {
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-
+				//	innLabel.
 			}
 
 			@Override
@@ -163,15 +161,68 @@ public class World extends JPanel {
 
 			}
 		});
-
 		add(killingFieldsLabel);
+
+		final JLabel lblNewLabel = new JLabel();
+		lblNewLabel.setBounds(0, 0, 1024, 768);
+		add(lblNewLabel);
+		lblNewLabel.setIcon(gameWorldBackground);
+		lblNewLabel.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(enabled) {
+					for(Component el : getComponents()) {
+						el.setEnabled(false);
+					}
+					for(Component el : characterPanel.getComponents()) {
+						el.setEnabled(false);
+					}
+				}
+				else {
+					for(Component el : getComponents()) {
+						el.setEnabled(true);
+					}
+				}
+				enabled = !enabled;
+				revalidate();
+				repaint();
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+		});
 	}
-
-	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		BufferedImage gameWorldBack = (BufferedImage)gameWorldBackground.getImage();
-		g.drawImage(gameWorldBack, 0, 0, null);          
-
+	
+	private void loadImages() {
+		try {           
+			this.gameWorldBackground = new ImageIcon(ImageIO.read(new File("gameworld.jpg")));
+			this.blacksmithPortrait = new ImageIcon(ImageIO.read(new File("outsideBlacksmith2.png")));
+			this.innPortrait = new ImageIcon(ImageIO.read(new File("outsideInn.png")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

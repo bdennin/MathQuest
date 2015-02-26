@@ -18,13 +18,14 @@ import java.io.IOException;
 
 import javax.swing.JButton;
 
+import MathQuest.Logic.Character;
 import MathQuest.MathQuest;
 
 public class Inn extends JPanel {
 
 	private ImageIcon gameWorldBackground;
 	
-	public Inn() {
+	public Inn(Character hero) {
 		try {                
 			gameWorldBackground = new ImageIcon(ImageIO.read(new File("insideInn.png")));
 		} catch (IOException e) {
@@ -33,7 +34,7 @@ public class Inn extends JPanel {
 		
 		setLayout(null);
 		
-		JPanel characterPanel = new CharacterPanel();
+		JPanel characterPanel = new CharacterPanel(hero);
 		characterPanel.setBounds(6, 6, 217, 121);
 		add(characterPanel);
 		characterPanel.setLayout(null);

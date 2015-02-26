@@ -1,5 +1,6 @@
 package MathQuest;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 
@@ -13,7 +14,6 @@ import MathQuest.GUI.KillingFields;
 import MathQuest.GUI.LoginPage;
 import MathQuest.GUI.World;
 import MathQuest.Logic.Character;
-import MathQuest.Logic.Monster;
 
 public class MathQuest
 {
@@ -21,9 +21,9 @@ public class MathQuest
 	
 	private static JFrame outerFrame;
 	private static JPanel contentPane;
-	private static Character hero;
 	private static String username;
 	private static String password;
+	private static Character hero;
 	
 	public MathQuest() {
 		initializeMathQuest();
@@ -45,25 +45,25 @@ public class MathQuest
 	}
 
 	public static void switchToGameWorld() {
-		contentPane = new World();
+		contentPane = new World(hero);
 		outerFrame.setContentPane(contentPane);
 		contentPane.revalidate();
 	}
 
 	public static void switchToInn() {
-		contentPane = new Inn();
+		contentPane = new Inn(hero);
 		outerFrame.setContentPane(contentPane);
 		contentPane.revalidate();
 	}
 
 	public static void switchToBlacksmith() {
-		contentPane = new Blacksmith();
+		contentPane = new Blacksmith(hero);
 		outerFrame.setContentPane(contentPane);
 		contentPane.revalidate();
 	}
 
 	public static void switchToKillingFields() {
-		contentPane = new KillingFields();
+		contentPane = new KillingFields(hero);
 		outerFrame.setContentPane(contentPane);
 		contentPane.revalidate();
 	}
@@ -76,8 +76,8 @@ public class MathQuest
 
 	}
 
-	public static void switchToCombat(Monster monster) {
-		contentPane = new CombatPanel(monster);
+	public static void switchToCombat(Character creature) {
+		contentPane = new CombatPanel(hero, creature);
 		outerFrame.setContentPane(contentPane);
 		contentPane.revalidate();
 	}
@@ -104,6 +104,11 @@ public class MathQuest
 	
 	public static void setCharacter(Character character) {
 		hero = character;
+	}
+	
+	public static void disableComponents() {
+		for(Component el : outerFrame.getComponents()) 
+			el.setEnabled(false);
 	}
 	
 	public static void main(String[] args) {

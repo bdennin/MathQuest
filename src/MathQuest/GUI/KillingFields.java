@@ -19,16 +19,16 @@ import java.io.IOException;
 import javax.swing.JButton;
 
 import MathQuest.MathQuest;
-import MathQuest.Logic.Monster;
+import MathQuest.Logic.Character;
 
 import java.awt.Font;
 
 public class KillingFields extends JPanel {
 
 	private ImageIcon killingFieldsBackground;
-	private Monster creature;
+	private Character creature;
 	
-	public KillingFields() {
+	public KillingFields(Character hero) {
 		try {                
 			killingFieldsBackground = new ImageIcon(ImageIO.read(new File("killingFields.jpg")));
 		} catch (IOException e) {
@@ -37,7 +37,7 @@ public class KillingFields extends JPanel {
 		
 		setLayout(null);
 		
-		JPanel characterPanel = new CharacterPanel();
+		JPanel characterPanel = new CharacterPanel(hero);
 		characterPanel.setBounds(6, 6, 217, 121);
 		add(characterPanel);
 		characterPanel.setLayout(null);
@@ -95,7 +95,7 @@ public class KillingFields extends JPanel {
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Monster("Goblin.jpg");
+				creature = new Character(1, "Goblin", "Goblin.jpg");
 				MathQuest.switchToCombat(creature);
 			}	
 		});
