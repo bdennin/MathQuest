@@ -107,7 +107,7 @@ public class Character {
 	public int calculateDamage() {
 		double maxDamage = this.strength * .2;
 		double damage = this.strength * .2  - ((Math.random()/4) * maxDamage);
-		return (int)damage;
+		return (int)Math.round(damage);
 	}
 	
 	public void takeDamage(int damage){

@@ -1,71 +1,32 @@
 package MathQuest.GUI;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
+
 import java.io.File;
 import java.io.IOException;
-
-import javax.swing.JButton;
 
 import MathQuest.MathQuest;
 import MathQuest.Logic.Character;
 
-public class World extends JPanel {
+public class World extends Area {
 
-	private ImageIcon gameWorldBackground;
+	private static final long serialVersionUID = 1L;
 	private ImageIcon blacksmithPortrait;
 	private ImageIcon innPortrait;
 	private ImageIcon killingFieldsPortrait;
-	boolean enabled = true;
-
+	
 	public World(Character hero) {
-		this.setBounds(0, 0, 1024, 768);
-		this.setLayout(null);
+		super(hero);
 		this.loadImages();
 		
-		final JPanel characterPanel = new CharacterPanel(hero);
-		characterPanel.setBounds(6, 6, 112, 151);
-		add(characterPanel);
-		characterPanel.setLayout(null);
-
-		JPanel optionsPanel = new JPanel();
-		optionsPanel.setBounds(882, 639, 135, 101);
-		add(optionsPanel);
-		optionsPanel.setLayout(null);
-
-		JButton inventoryButton = new JButton("Inventory");
-		inventoryButton.setBounds(6, 6, 125, 29);
-		optionsPanel.add(inventoryButton);
-
-		JButton optionsButton = new JButton("Options");
-		optionsButton.setBounds(6, 36, 125, 29);
-		optionsPanel.add(optionsButton);
-
-		JButton quitButton = new JButton("Quit");
-		quitButton.setBounds(6, 67, 125, 29);
-		quitButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//Character.save(character);
-				System.exit(0);
-			}
-		});
-		optionsPanel.add(quitButton);
-
 		JLabel innLabel = new JLabel();
-		innLabel.setBounds(83, 320, 300, 300);
+		innLabel.setBounds(31, 320, 300, 300);
 		innLabel.setIcon(innPortrait);
 		innLabel.setToolTipText("Travel to the inn!");
 		innLabel.addMouseListener(new MouseListener() {
@@ -87,7 +48,7 @@ public class World extends JPanel {
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				//	innLabel.
+				
 			}
 
 			@Override
@@ -98,7 +59,7 @@ public class World extends JPanel {
 		add(innLabel);
 
 		JLabel blacksmithLabel = new JLabel();
-		blacksmithLabel.setBounds(762, 250, 300, 300);
+		blacksmithLabel.setBounds(762, 300, 300, 300);
 		blacksmithLabel.setIcon(blacksmithPortrait);
 		blacksmithLabel.setToolTipText("Travel to the blacksmith!");
 		blacksmithLabel.addMouseListener(new MouseListener() {
@@ -132,7 +93,7 @@ public class World extends JPanel {
 
 		JLabel killingFieldsLabel = new JLabel();
 		killingFieldsLabel.setIcon(killingFieldsPortrait);
-		killingFieldsLabel.setBounds(693, 300, 300, 300);
+		killingFieldsLabel.setBounds(362, 300, 300, 300);
 		killingFieldsLabel.setToolTipText("Travel to the killing fields!");
 		killingFieldsLabel.addMouseListener(new MouseListener() {
 
@@ -162,67 +123,23 @@ public class World extends JPanel {
 			}
 		});
 		add(killingFieldsLabel);
-
-		final JLabel lblNewLabel = new JLabel();
-		lblNewLabel.setBounds(0, 0, 1024, 768);
-		add(lblNewLabel);
-		lblNewLabel.setIcon(gameWorldBackground);
-		lblNewLabel.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if(enabled) {
-					for(Component el : getComponents()) {
-						el.setEnabled(false);
-					}
-					for(Component el : characterPanel.getComponents()) {
-						el.setEnabled(false);
-					}
-				}
-				else {
-					for(Component el : getComponents()) {
-						el.setEnabled(true);
-					}
-				}
-				enabled = !enabled;
-				revalidate();
-				repaint();
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-		});
+		
+		this.renderBackground();
 	}
 	
-	private void loadImages() {
+	public void loadImages() {
 		try {           
-			this.gameWorldBackground = new ImageIcon(ImageIO.read(new File("gameworld.jpg")));
+			this.background = new ImageIcon(ImageIO.read(new File("gameworld.jpg")));
 			this.blacksmithPortrait = new ImageIcon(ImageIO.read(new File("outsideBlacksmith2.png")));
 			this.innPortrait = new ImageIcon(ImageIO.read(new File("outsideInn.png")));
+			this.killingFieldsPortrait = new ImageIcon(ImageIO.read(new File("outsideInn.png")));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	public OptionsPanel loadOptionsPanel() {
+		return new OptionsPanel(this.hero, false);
 	}
 }

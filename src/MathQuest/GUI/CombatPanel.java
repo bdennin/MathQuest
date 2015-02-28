@@ -27,33 +27,21 @@ import javax.swing.JTextArea;
 
 import sun.awt.HorizBagLayout;
 
-public class CombatPanel extends JPanel {
+public class CombatPanel extends Area {
 
-	private ImageIcon gameWorldBackground;
-	private CharacterPanel characterPanel;
 	private CharacterPanel monsterPanel;
 	private JTextArea scrollText;
 	private Character hero;
 	private Character creature;
 	
 	public CombatPanel(Character hero, Character creature) {
-		try {                
-			gameWorldBackground = new ImageIcon(ImageIO.read(new File("gameworld.jpg")));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		setLayout(null);
+		super(hero);
+		this.loadImages();
 		this.hero = hero;
 		this.creature = creature;
 		
-		this.characterPanel = new CharacterPanel(this.hero);
-		this.characterPanel.setBounds(6, 6, 217, 121);
-		add(this.characterPanel);
-		characterPanel.setLayout(null);
-		
-		this.monsterPanel = new CharacterPanel(this.creature);
-		this.monsterPanel.setBounds(801, 6, 217, 121);
-		add(this.monsterPanel);
+		this.monsterPanel = loadMonsterPanel();
+		add(monsterPanel);
 		
 		JPanel combatPanel = new JPanel();
 		combatPanel.setBounds(150, 590, 724, 150);
@@ -112,6 +100,8 @@ public class CombatPanel extends JPanel {
 		this.scrollText.setWrapStyleWord(true);
 		scrollPane.setViewportView(scrollText);
 		this.scrollText.append("You have entered combat!  It is your turn to act...");
+		
+		this.renderBackground();
 	}
 
 	public void addTextToScrollPane(String text) {
@@ -120,16 +110,13 @@ public class CombatPanel extends JPanel {
 	}
 
 	private void attack() {
-		int damage = MathQuest.getCharacter().calculateDamage();
+		int damage = hero.calculateDamage();
 		creature.takeDamage(damage);
 		
-		this.remove(monsterPanel);
-		this.monsterPanel = new CharacterPanel(creature);
-		this.monsterPanel.setBounds(801, 6, 217, 121);
-		add(this.monsterPanel);
-		this.repaint();
+		this.reloadMonsterPanel();
 		
-		this.addTextToScrollPane("You attack a " + creature.getName() + " for " + damage + " point(s) of damage.");
+		String output = new String("You attack a " + creature.getName() + " for " + damage + " points of damage.");
+		this.addTextToScrollPane(output);
 		if(creature.getCurrentHealth() <= 0) {
 			this.victory();
 		}
@@ -141,18 +128,31 @@ public class CombatPanel extends JPanel {
 	private void monsterAttack() {
 		int damage = creature.calculateDamage();
 		
-		this.remove(characterPanel);
-		this.characterPanel = new CharacterPanel(this.hero);
-		this.characterPanel.setBounds(6, 6, 217, 121);
-		add(this.characterPanel);
-		this.repaint();
-		
-		this.addTextToScrollPane("A " + creature.getName() + " attacks YOU for " + damage + " point(s) of damage.");
+		this.addTextToScrollPane("A " + creature.getName() + " attacks YOU for " + damage + " points of damage.");
 		MathQuest.getCharacter().takeDamage(damage);
+		
+		this.reloadCharacterPanel();
 		
 		if(MathQuest.getCharacter().getCurrentHealth() <= 0) {
 			this.defeat();
 		}
+	}
+	
+	private CharacterPanel loadMonsterPanel() {
+			
+		CharacterPanel monsterPanel = new CharacterPanel(this.creature);
+		monsterPanel.setLayout(null);
+		monsterPanel.setBounds(907, 6, 111, 150);
+		return monsterPanel;
+	}
+	
+	private void reloadMonsterPanel() {
+		
+		this.remove(this.monsterPanel);
+		this.monsterPanel = loadMonsterPanel();
+		this.add(monsterPanel);
+		this.renderBackground();
+		this.repaint();
 	}
 	
 	private void victory() {
@@ -162,11 +162,19 @@ public class CombatPanel extends JPanel {
 	private void defeat() {
 		this.addTextToScrollPane("YOU LOSE!");
 	}
- 	
+
 	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		BufferedImage gameWorldBack = (BufferedImage)gameWorldBackground.getImage();
-		g.drawImage(gameWorldBack, 0, 0, null);          
+	public OptionsPanel loadOptionsPanel() {
+		return null;
+	}
+
+	@Override
+	public void loadImages() {
+		
+		try {                
+			this.background = new ImageIcon(ImageIO.read(new File("gameworld.jpg")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}	
 	}
 }
