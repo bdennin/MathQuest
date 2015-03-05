@@ -12,6 +12,7 @@ public class Loot {
 	int armor;
 	int gold;
 	int speed;
+	double chanceToDrop;
 	
 	public Loot(){
 		
@@ -24,7 +25,17 @@ public class Loot {
 		gold = 0;
 		speed = 0;
 		
+		
 	}
+	
+	public int getItemLvl(){
+		return this.itemLevel;
+	}
+	
+	public String getItemName(){
+		return this.itemName;
+	}
+	
 	
 	//Weapons
 	
@@ -35,7 +46,6 @@ public class Loot {
 	//Armor-legs
 	
 	//Armor-boots
-	
 	
 	
 }
