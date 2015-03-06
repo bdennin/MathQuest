@@ -1,4 +1,4 @@
-package MathQuest;
+package MathQuest.GUI;
 
 public class Inventory {
 

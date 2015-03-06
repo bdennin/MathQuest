@@ -7,13 +7,13 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import MathQuest.GUI.Blacksmith;
-import MathQuest.GUI.CombatPanel;
-import MathQuest.GUI.Inn;
-import MathQuest.GUI.KillingFields;
-import MathQuest.GUI.LoginPage;
-import MathQuest.GUI.World;
 import MathQuest.Logic.Character;
+import MathQuest.Pages.Blacksmith;
+import MathQuest.Pages.Combat;
+import MathQuest.Pages.Inn;
+import MathQuest.Pages.KillingFields;
+import MathQuest.Pages.Login;
+import MathQuest.Pages.World;
 
 public class MathQuest
 {
@@ -35,7 +35,7 @@ public class MathQuest
 		outerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		outerFrame.setLocationRelativeTo(null);
 		outerFrame.setResizable(false);
-		contentPane = new LoginPage();
+		contentPane = new Login();
 		outerFrame.setContentPane(contentPane);
 		outerFrame.setVisible(true);
 	}
@@ -68,16 +68,8 @@ public class MathQuest
 		contentPane.revalidate();
 	}
 
-	public static void switchToInventory() {
-
-	}
-
-	public static void switchToOptions() {
-
-	}
-
 	public static void switchToCombat(Character creature) {
-		contentPane = new CombatPanel(hero, creature);
+		contentPane = new Combat(hero, creature);
 		outerFrame.setContentPane(contentPane);
 		contentPane.revalidate();
 	}

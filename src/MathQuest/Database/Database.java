@@ -103,11 +103,11 @@ public class Database
 	 * 
 	 * @return in order of level, currentHealth, exp and gold
 	 */
-	public static Integer[] getStats(){
+	public static int[] getStats(){
 		try{
 			Statement select = con.createStatement();
 			ResultSet res = select.executeQuery("SELECT * from Status where Login_userID =" + userID );
-			Integer[] status = new Integer[4];
+			int[] status = new int[4];
 			if(res.next()){
 				for(int index = 1;index < 5; index++)
 					status[index-1] = res.getInt(index);

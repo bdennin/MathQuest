@@ -77,8 +77,25 @@ public class Equation {
 		return stringConstructor.toString().trim();
 	}
 	
-	public static int solveEquation(String equation) throws ScriptException {
-		Double answer = (Double)ENGINE.eval(equation);
+	public static int solveEquation(String equation) {
+		Double answer = null;
+		try {
+			answer = (Double)ENGINE.eval(equation);
+		} catch (ScriptException e) {
+			e.printStackTrace();
+		}
 		return answer.intValue();
+	}
+	
+	public static int generateWrongAnswer(String equation) {
+		int wrongAnswer;
+		int correctAnswer;
+		do {
+			correctAnswer = Equation.solveEquation(equation);
+			wrongAnswer = (int)(correctAnswer + (correctAnswer * (Math.random() -.5)));
+		}
+		while(correctAnswer == wrongAnswer);
+		
+		return wrongAnswer;
 	}
 }

@@ -1,4 +1,4 @@
-package MathQuest.GUI;
+package MathQuest.Pages;
 
 import java.awt.Component;
 
@@ -6,6 +6,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import MathQuest.GUI.CharacterPanel;
+import MathQuest.GUI.OptionsPanel;
 import MathQuest.Logic.Character;
 
 public abstract class Area extends JPanel {
@@ -53,6 +55,8 @@ public abstract class Area extends JPanel {
 		for(Component el : this.characterPanel.getComponents()) {
 			el.setEnabled(isEnabled);
 		}
+		this.revalidate();
+		this.repaint();
 	}
 	
 	public CharacterPanel getCharacterPanel() {
