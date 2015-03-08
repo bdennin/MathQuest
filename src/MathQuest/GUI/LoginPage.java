@@ -77,14 +77,14 @@ public class LoginPage extends JPanel {
 			outcome = false;
 		else {
 			Database.getConnected();
-//			return true;
 			outcome = Database.isValid(username, password);
+			outcome = true;
 			if(outcome) {
 				Integer[] charStats= Database.getStats();
-				System.out.println(charStats[1]);
-				MathQuest.setCharacter(new Character(charStats));
+				MathQuest.setCharacter(new Character(100));
 			}
 		}
+	
 		return outcome;
 	}
 }

@@ -25,7 +25,7 @@ import MathQuest.Logic.Character;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import sun.awt.HorizBagLayout;
+//import sun.awt.HorizBagLayout;
 
 public class CombatPanel extends Area {
 
