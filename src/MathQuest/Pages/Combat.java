@@ -30,7 +30,7 @@ import MathQuest.Logic.Equation;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import sun.awt.HorizBagLayout;
+//import sun.awt.HorizBagLayout;
 
 public class Combat extends Area {
 

@@ -1,6 +1,6 @@
 package MathQuest.Logic;
 
-import MathQuest.Inventory;
+import MathQuest.GUI.Inventory;
 
 public class Loot {
 

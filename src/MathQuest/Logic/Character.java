@@ -28,6 +28,7 @@ public class Character {
 		this.level = 1;
 		this.armor = 0;
 		this.imagePath = "char.jpg";
+		this.name = "Hero#1";
 	}
 
 	public Character(int level, String name, String imagePath) {
@@ -38,10 +39,25 @@ public class Character {
 		this.level = level;
 		this.armor = 0;
 		this.name = name;
+		this.currentExperience = 0;
+		this.maxExperience = 10;
 		this.imagePath = imagePath;
 	}
 	
-	public Character(int[] charStats) {
+	// test constructor
+	public Character(int currentGold){
+		this.currentExperience = 0;
+		this.maxExperience = 10;
+		this.strength = 10;
+		this.gold = currentGold;
+		this.currentHealth = 1;
+		this.maxHealth = 10;
+		this.level = 1;
+		this.armor = 0;
+		this.imagePath = "char.jpg";
+		this.name = "Hero#1";
+	}
+	public Character(Integer[] charStats) {
 		level = charStats[0];
 		currentHealth = charStats[1];
 		currentExperience = charStats[2];
@@ -49,6 +65,7 @@ public class Character {
 		maxHealth = level * 10;
 		strength = 10 + 2 * level;
 		maxExperience = (int)(10 * Math.pow(2, level));
+		this.imagePath = "char.jpg";
 	}
 
 	public int getMaxExperience(){
@@ -94,7 +111,7 @@ public class Character {
 	public void addGold(int gold){
 		this.gold = this.gold + gold;
 	}
-	
+		
 	public void gainExperience(int experience){
 		this.currentExperience = this.currentExperience + experience;
 		if(currentExperience >= maxExperience){
@@ -125,5 +142,38 @@ public class Character {
 	
 	public String getImagePath() {
 		return this.imagePath;
+	}
+	
+	public int calculateCost(String roomType){
+		return 5;
+	}
+	
+	public boolean enoughGold(String roomType){
+		if (calculateCost(roomType) > this.gold)
+			return false;
+		else
+			return true;
+	}
+	public void payForInn(String roomType){
+		this.gold = this.gold - calculateCost(roomType);
+	}
+	public int calculateIncrease (String roomType){
+		int increase;
+		if (roomType.equalsIgnoreCase("Studio"))
+			increase = this.maxHealth*30/100;
+		else if (roomType.equalsIgnoreCase("Deluxe"))
+			increase = this.maxHealth*60/100;
+		else if (roomType.equalsIgnoreCase("Luxury"))
+			increase = this.maxHealth*90/100;
+		else
+			increase = 0;
+		return increase;
+	}
+	public void healthRegain (String roomType){
+		int increase = calculateIncrease(roomType);
+		if (this.currentHealth + increase < this.maxHealth)
+			this.currentHealth = this.currentHealth + increase;
+		else
+			this.currentHealth = this.maxHealth;
 	}
 }
