@@ -29,7 +29,7 @@ public abstract class Area extends JPanel {
 
 		this.characterPanel = new CharacterPanel(this.hero);
 		characterPanel.setLayout(null);
-		characterPanel.setBounds(6, 6, 111, 187);
+		characterPanel.setBounds(6, 6, 111, 149);
 		add(characterPanel);
 
 		this.optionsPanel = loadOptionsPanel();
@@ -73,7 +73,7 @@ public abstract class Area extends JPanel {
 		this.remove(characterPanel);
 		this.characterPanel = new CharacterPanel(this.hero);
 		characterPanel.setLayout(null);
-		characterPanel.setBounds(6, 6, 111, 187);
+		characterPanel.setBounds(6, 6, 111, 149);
 		add(characterPanel);
 		this.renderBackground();
 		this.repaint();

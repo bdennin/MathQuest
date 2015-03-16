@@ -23,10 +23,10 @@ public class Login extends JPanel {
 		setLayout(null);
 		
 		JPanel panel = new JPanel();
+		panel.setLayout(null);
 		panel.setBounds(317, 285, 401, 166);
 		add(panel);
-		panel.setLayout(null);
-		
+
 		JLabel lblUsername = new JLabel("Username");
 		lblUsername.setBounds(35, 63, 72, 16);
 		panel.add(lblUsername);
@@ -35,14 +35,14 @@ public class Login extends JPanel {
 		lblPassword.setBounds(35, 91, 61, 16);
 		panel.add(lblPassword);
 		
-		password = new JPasswordField(10);
-		password.setBounds(108, 85, 134, 28);
-		panel.add(password);
-		
 		username = new JTextField();
 		username.setBounds(108, 57, 134, 28);
 		panel.add(username);
 		username.setColumns(10);
+		
+		password = new JPasswordField(10);
+		password.setBounds(108, 85, 134, 28);
+		panel.add(password);
 		
 		final JLabel errorLabel = new JLabel();
 		errorLabel.setBounds(108, 125, 200, 16);

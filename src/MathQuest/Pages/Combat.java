@@ -93,7 +93,6 @@ public class Combat extends Area {
 			public void actionPerformed(ActionEvent e) {
 				MathQuest.switchToGameWorld();
 			}
-
 		});
 		runPanel.add(btnRunAway);
 		
@@ -211,7 +210,7 @@ public class Combat extends Area {
 
 		CharacterPanel monsterPanel = new CharacterPanel(character);
 		monsterPanel.setLayout(null);
-		monsterPanel.setBounds(907, 6, 111, 156);
+		monsterPanel.setBounds(907, 6, 111, 149);
 		return monsterPanel;
 	}
 
@@ -263,7 +262,7 @@ public class Combat extends Area {
 	public void loadImages() {
 
 		try {                
-			this.background = new ImageIcon(ImageIO.read(new File("gameworld.jpg")));
+			this.background = new ImageIcon(ImageIO.read(new File("combat.jpg")));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}	
