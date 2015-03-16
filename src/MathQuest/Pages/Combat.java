@@ -119,8 +119,8 @@ public class Combat extends Area {
 		
 		this.toggleElements();
 		boolean hasBonusDamage = this.promptQuestion();
-		
 		this.toggleElements();
+		
 		int damage = hero.calculateDamage();
 		
 		if(hasBonusDamage) {
@@ -206,9 +206,9 @@ public class Combat extends Area {
 		}
 	}
 	
-	private CharacterPanel loadMonsterPanel(Character character) {
+	private CharacterPanel loadMonsterPanel(Character monster) {
 
-		CharacterPanel monsterPanel = new CharacterPanel(character);
+		CharacterPanel monsterPanel = new CharacterPanel(monster);
 		monsterPanel.setLayout(null);
 		monsterPanel.setBounds(907, 6, 111, 149);
 		return monsterPanel;
@@ -227,7 +227,7 @@ public class Combat extends Area {
 	private void victory() {
 		
 		int experience = (int)(creature.getMaxExperience() * .5);
-		int gold = (int)(creature.getGold());
+		int gold = creature.getGold();
 		hero.addGold(gold);
 		hero.gainExperience(experience);
 		

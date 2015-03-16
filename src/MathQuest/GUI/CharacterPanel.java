@@ -20,8 +20,7 @@ public class CharacterPanel extends JPanel {
 	private ImageIcon portrait;
 	private HealthBar healthBar;
 	
-	public CharacterPanel(Character charactr) {
-		Character character = new Character();
+	public CharacterPanel(Character character) {
 		setLayout(null);
 		this.setBounds(0, 0, 111, 149);
 		this.loadImages(character.getImagePath());
