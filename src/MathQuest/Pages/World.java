@@ -19,9 +19,11 @@ public class World extends Area {
 	private ImageIcon blacksmithPortrait;
 	private ImageIcon innPortrait;
 	private ImageIcon killingFieldsPortrait;
+	private static Character dero = new Character();
 	
 	public World(Character hero) {
-		super(hero);
+		
+		super(dero);
 		this.loadImages();
 		
 		JLabel innLabel = new JLabel();
@@ -58,7 +60,7 @@ public class World extends Area {
 		add(innLabel);
 
 		JLabel blacksmithLabel = new JLabel();
-		blacksmithLabel.setBounds(762, 300, 300, 300);
+		blacksmithLabel.setBounds(693, 300, 300, 300);
 		blacksmithLabel.setIcon(blacksmithPortrait);
 		blacksmithLabel.setToolTipText("Travel to the blacksmith!");
 		blacksmithLabel.addMouseListener(new MouseListener() {

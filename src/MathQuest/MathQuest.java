@@ -24,7 +24,7 @@ public class MathQuest
 	private static String username;
 	private static String password;
 	private static Character hero;
-	//poops
+	
 	public MathQuest() {
 		initializeMathQuest();
 	}

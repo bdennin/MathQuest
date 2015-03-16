@@ -31,6 +31,7 @@ public class Character {
 		this.name = "Hero#1";
 	}
 
+	//monster constructor
 	public Character(int level, String name, String imagePath) {
 		this.strength = 10 * level;
 		this.gold = 2 * level;
@@ -57,6 +58,7 @@ public class Character {
 		this.imagePath = "char.jpg";
 		this.name = "Hero#1";
 	}
+	
 	public Character(Integer[] charStats) {
 		level = charStats[0];
 		currentHealth = charStats[1];
@@ -104,14 +106,24 @@ public class Character {
 		return this.name;
 	}
 
-	public double getGold(){
+	public int getGold(){
 		return this.gold;
+	}
+	
+	public void removeGold(int gold) {
+		this.gold = this.gold - gold;
 	}
 	
 	public void addGold(int gold){
 		this.gold = this.gold + gold;
 	}
-		
+	
+	public void death() {
+		this.currentHealth = this.maxHealth;
+		this.gold = (int)(this.gold * .5);
+		this.currentExperience = 0;
+	}
+	
 	public void gainExperience(int experience){
 		this.currentExperience = this.currentExperience + experience;
 		if(currentExperience >= maxExperience){

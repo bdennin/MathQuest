@@ -78,10 +78,12 @@ public class Equation {
 	}
 	
 	public static int solveEquation(String equation) {
-		Double answer = null;
+		Integer answer = null;
 		try {
-			answer = (Double)ENGINE.eval(equation);
+			answer = (Integer)ENGINE.eval(equation);
+			
 		} catch (ScriptException e) {
+			
 			e.printStackTrace();
 		}
 		return answer.intValue();
@@ -89,9 +91,9 @@ public class Equation {
 	
 	public static int generateWrongAnswer(String equation) {
 		int wrongAnswer;
-		int correctAnswer;
+		int correctAnswer = Equation.solveEquation(equation);
+		
 		do {
-			correctAnswer = Equation.solveEquation(equation);
 			wrongAnswer = (int)(correctAnswer + (correctAnswer * (Math.random() -.5)));
 		}
 		while(correctAnswer == wrongAnswer);

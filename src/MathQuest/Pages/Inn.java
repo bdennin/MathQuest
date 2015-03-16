@@ -25,13 +25,12 @@ import java.awt.event.ActionListener;
 public class Inn extends Area {
 
 	private static final long serialVersionUID = 1L;
-	private final static Character dude = new Character();
 	private JTextArea scrollText;
 	final JPanel options = new JPanel();
 	final JPanel panel = new JPanel();
 
 	public Inn(Character hero) {
-		super(dude);
+		super(hero);
 		this.loadImages();
 		
 		

@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 
 public class HealthBar extends JPanel {
 
@@ -17,7 +18,8 @@ public class HealthBar extends JPanel {
 	
 	public HealthBar(Character character) {
 		this.setLayout(null);
-		this.setBounds(0, 0, 99, 22);
+		this.setBorder(new LineBorder(new Color(0, 0, 0)));
+		this.setBounds(0, 0, 99, 28);
 		
 		final int life = character.getCurrentHealth();
 		final int totalLife = character.getMaxHealth();
@@ -25,13 +27,10 @@ public class HealthBar extends JPanel {
 
 		final JLabel lifeLabel = new JLabel();
 		lifeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lifeLabel.setBounds(0, 0, 99, 22);
+		lifeLabel.setBounds(0, 0, 99, 28);
 		add(lifeLabel);
 		
-		healthBar = new JPanel();
-		healthBar.setBackground(Color.RED);
-		healthBar.setBounds(0, 0, (int)(99*lifePercentage), 22);
-		healthBar.addMouseListener(new MouseListener() {
+		this.addMouseListener(new MouseListener() {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -59,6 +58,10 @@ public class HealthBar extends JPanel {
 			}
 			
 		});
+
+		healthBar = new JPanel();
+		healthBar.setBackground(Color.RED);
+		healthBar.setBounds(1, 1, (int)(97*lifePercentage), 26);
 		this.add(healthBar);
 	}
 }

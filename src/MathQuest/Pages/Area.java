@@ -18,16 +18,18 @@ public abstract class Area extends JPanel {
 	protected ImageIcon background;
 	protected JLabel backgroundPanel;	
 	protected Character hero;
+	protected boolean isEnabled;
 
 	public Area(Character hero) {
 
 		this.setBounds(0, 0, 1024, 768);
 		this.setLayout(null);
+		this.isEnabled = true;
 		this.hero = hero;
 
 		this.characterPanel = new CharacterPanel(this.hero);
 		characterPanel.setLayout(null);
-		characterPanel.setBounds(6, 6, 111, 150);
+		characterPanel.setBounds(6, 6, 111, 187);
 		add(characterPanel);
 
 		this.optionsPanel = loadOptionsPanel();
@@ -45,14 +47,9 @@ public abstract class Area extends JPanel {
 
 	public abstract void loadImages();
 
-	public void toggleElements(boolean isEnabled) {
+	public void toggleElements() {
+		this.isEnabled = !isEnabled;
 		for(Component el : this.getComponents()) {
-			el.setEnabled(isEnabled);
-		}
-		for(Component el : this.optionsPanel.getComponents()) {
-			el.setEnabled(isEnabled);
-		}
-		for(Component el : this.characterPanel.getComponents()) {
 			el.setEnabled(isEnabled);
 		}
 		this.revalidate();
@@ -76,7 +73,7 @@ public abstract class Area extends JPanel {
 		this.remove(characterPanel);
 		this.characterPanel = new CharacterPanel(this.hero);
 		characterPanel.setLayout(null);
-		characterPanel.setBounds(6, 6, 111, 150);
+		characterPanel.setBounds(6, 6, 111, 187);
 		add(characterPanel);
 		this.renderBackground();
 		this.repaint();
