@@ -31,7 +31,7 @@ public class Loot {
 }
 
 public Loot(Character monster){
-	
+	/*
 	System.out.print(itemLevel);
 	int monsterLvl = monster.getLevel();
 	if (monsterLvl == 1){
@@ -41,17 +41,21 @@ public Loot(Character monster){
 			System.out.print(itemLevel);
 		}
 	}
+	*/
+	
+	createRandomItem(monster);
 	
 }
 
 
 
-private void createRandomItem(Character monster){
+private Item createRandomItem(Character monster){
 	boolean dropped = chanceToDrop();
 	if (dropped == false)
-		return;
+		return null;
 	else{
 		Item newItem = new Item(monster);
+		return newItem;
 	}
 	
 }
