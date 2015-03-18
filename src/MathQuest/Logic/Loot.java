@@ -27,21 +27,41 @@ public class Loot {
 	armor = 0;
 	gold = 0;
 	speed = 0;
-	chanceToDrop = 1;	
+	chanceToDrop = 1;
 }
 
-public Loot(Character player, Character monster){
+public Loot(Character monster){
 	
 	System.out.print(itemLevel);
-	int playerLvl = player.getLevel();
-	int xmonsterLvl = monster.getLevel();
-	if (playerLvl == 1){
+	int monsterLvl = monster.getLevel();
+	if (monsterLvl == 1){
 		double chanceToDrop = Math.random()*100;
 		if (chanceToDrop >= 0){
 			Loot.Weapon1();
 			System.out.print(itemLevel);
 		}
 	}
+	
+}
+
+
+
+private void createRandomItem(Character monster){
+	boolean dropped = chanceToDrop();
+	if (dropped == false)
+		return;
+	else{
+		Item newItem = new Item(monster);
+	}
+	
+}
+
+private boolean chanceToDrop(){
+	itemDropped = false;
+	double random = Math.random()*100;
+	if (random <= 10)
+		itemDropped = true;
+	return itemDropped;
 	
 }
 
@@ -816,3 +836,4 @@ public static void Boots10(){
 	}
 
 }
+
