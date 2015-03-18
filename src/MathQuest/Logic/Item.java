@@ -57,7 +57,7 @@ public class Item extends Loot {
 			 this.gorilla();
 		 else if(randomAnimal >= 60 && randomAnimal < 70)
 			 this.rabbit();
-		 else if(randomAnimal >= 770 && randomAnimal < 80)
+		 else if(randomAnimal >= 70 && randomAnimal < 80)
 			 this.lion();
 		 else if(randomAnimal >= 80 && randomAnimal < 90)
 			 this.monkey();
