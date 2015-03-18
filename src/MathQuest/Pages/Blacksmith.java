@@ -27,7 +27,6 @@ public class Blacksmith extends Area {
 	
 	private static final long serialVersionUID = 1L;
 	private JTextArea scrollText;
-	final static Character character = new Character();
 	final JPanel blacksmithPanel = new JPanel();
 	final JPanel buttonPanel = new JPanel();
 	final JPanel buyPanel = new JPanel();
@@ -35,7 +34,7 @@ public class Blacksmith extends Area {
 	private ImageIcon swIcon, swIcon2, shIcon, shIcon2, helmIcon, chestIcon, armIcon, legIcon;
 	
 	public Blacksmith(Character hero) {
-			super(character);
+			super(hero);
 			this.loadImages();
 			this.loadOptionsPanel();
 
