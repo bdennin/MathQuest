@@ -34,9 +34,9 @@ public class Character {
 	//monster constructor
 	public Character(int level, String name, String imagePath) {
 		this.strength = 10 * level;
-		this.gold = 2 * level;
+		this.gold = 5 * level;
 		this.currentHealth = 10 * level;
-		this.maxHealth = 10;
+		this.maxHealth = 10 * level;
 		this.level = level;
 		this.armor = 0;
 		this.name = name;
@@ -150,6 +150,10 @@ public class Character {
 		stats[2] = this.currentExperience;
 		stats[3] = this.gold;
 		return stats;
+	}
+	
+	public void setLife(int life) {
+		this.currentHealth = life;
 	}
 	
 	public String getImagePath() {

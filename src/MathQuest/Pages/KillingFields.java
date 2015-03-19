@@ -38,7 +38,7 @@ public class KillingFields extends Area {
 		creaturePanel.add(creatureHeaderPanel);
 		
 		JLabel creatureHeader = new JLabel("Select your opponent");
-		creatureHeader.setFont(new Font("Copperplate", Font.PLAIN, 45));
+		creatureHeader.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 40));
 		creatureHeaderPanel.add(creatureHeader);
 		
 		JPanel creatureSelectionPanel = new JPanel();
