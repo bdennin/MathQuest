@@ -5,11 +5,17 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.border.LineBorder;
 
+import javazoom.jlgui.basicplayer.BasicPlayer;
+import javazoom.jlgui.basicplayer.BasicPlayerException;
+
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Random;
 
 import MathQuest.MathQuest;
 import MathQuest.GUI.OptionsPanel;
@@ -18,11 +24,14 @@ import MathQuest.Logic.Character;
 public class World extends Area {
 
 	private static final long serialVersionUID = 1L;
+	private BasicPlayer mediaPlayer;
 	
 	public World(Character hero) {
 		
 		super(hero);
 		this.loadImages();
+		
+		this.initializeMusic();
 		
 		final JLabel innLabel = new JLabel();
 		innLabel.setBounds(0, 0, 180, 650);
@@ -31,6 +40,7 @@ public class World extends Area {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				stopMusic();
 				MathQuest.switchToInn();
 			}
 
@@ -63,6 +73,7 @@ public class World extends Area {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				stopMusic();
 				MathQuest.switchToBlacksmith();
 			}
 
@@ -95,6 +106,7 @@ public class World extends Area {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				stopMusic();
 				MathQuest.switchToKillingFields();
 			}
 
@@ -120,6 +132,28 @@ public class World extends Area {
 		add(killingFieldsLabel);
 		
 		this.renderBackground();
+	}
+	
+	private void initializeMusic() {
+	
+		String worldMusic = System.getProperty("user.dir").replace("\\", "/") + "/townMusic.mp3";
+		this.mediaPlayer = new BasicPlayer();
+		
+		try {
+			mediaPlayer.open(new URL("file:///" + worldMusic));
+			mediaPlayer.play();
+		}
+		catch(BasicPlayerException | MalformedURLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void stopMusic() {
+		try {
+			this.mediaPlayer.stop();
+		} catch (BasicPlayerException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void loadImages() {

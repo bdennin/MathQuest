@@ -5,24 +5,20 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 
-import java.awt.Graphics;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Random;
-
 import javax.imageio.ImageIO;
-import javax.script.ScriptException;
+import javazoom.jlgui.basicplayer.BasicPlayer;
+import javazoom.jlgui.basicplayer.BasicPlayerException;
 
 import MathQuest.MathQuest;
 import MathQuest.GUI.CharacterPanel;
@@ -39,6 +35,8 @@ public class Combat extends Area {
 
 	private static final long serialVersionUID = 1L;
 
+	private BasicPlayer mediaPlayer; 
+	private BasicPlayer soundPlayer;
 	private CharacterPanel monsterPanel;
 	private JPanel combatOptions;
 	private ImageIcon victoryIcon;
@@ -55,7 +53,9 @@ public class Combat extends Area {
 		this.hero = hero;
 		this.creature = creature;
 		this.creatureName = creature.getName();
-
+		
+		this.initializeMusic();
+		
 		this.monsterPanel = loadMonsterPanel(this.creature);
 		add(monsterPanel);
 
@@ -75,23 +75,6 @@ public class Combat extends Area {
 	private void addTextToScrollPane(String text) {
 		this.scrollText.append("\n");
 		this.scrollText.append(text);
-	}
-
-	private void monsterAttack() {
-
-		int damage = creature.calculateDamage();
-
-		String output = "A " + creature.getName() + " attacks YOU for " + damage + " points of damage.";
-		this.addTextToScrollPane(output);
-		MathQuest.getCharacter().takeDamage(damage);
-		this.reloadCharacterPanel();
-
-		if(MathQuest.getCharacter().getCurrentHealth() <= 0) {
-			this.defeat();
-		}
-		else {
-			this.addTextToScrollPane("It is your turn to act.");
-		}
 	}
 
 	private void promptQuestion() {
@@ -163,6 +146,7 @@ public class Combat extends Area {
 		runAwayButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				stopMusic();
 				MathQuest.switchToGameWorld();
 			}
 		});
@@ -242,13 +226,15 @@ public class Combat extends Area {
 			this.addTextToScrollPane("Good try, but the correct answer was " + this.answer + ".");
 			hero.incrementAnsweredIncorrectly();
 		}
-
+		
+		this.playAttackSound(damage);
+		
 		String output = new String("You attack a " + this.creatureName + " for " + damage + " points of damage.");
 		this.addTextToScrollPane(output);
 
 		creature.takeDamage(damage);
 		this.reloadMonsterPanel();
-
+		
 		if(creature.getCurrentHealth() <= 0) {
 			this.victory();
 		}
@@ -256,7 +242,26 @@ public class Combat extends Area {
 			this.monsterAttack();
 		}
 	}
+	
+	private void monsterAttack() {
 
+		int damage = creature.calculateDamage();
+
+		this.playAttackSound(damage);
+		
+		String output = "A " + creature.getName() + " attacks YOU for " + damage + " points of damage.";
+		this.addTextToScrollPane(output);
+		MathQuest.getCharacter().takeDamage(damage);
+		this.reloadCharacterPanel();
+		
+		if(MathQuest.getCharacter().getCurrentHealth() <= 0) {
+			this.defeat();
+		}
+		else {
+			this.addTextToScrollPane("It is your turn to act.");
+		}
+	}
+	
 	private CharacterPanel loadMonsterPanel(Character monster) {
 
 		CharacterPanel monsterPanel = new CharacterPanel(monster, false);
@@ -277,6 +282,15 @@ public class Combat extends Area {
 
 	private void victory() {
 
+		this.stopMusic();
+		try {
+			mediaPlayer.open(new URL("file:///" + System.getProperty("user.dir").replace("\\", "/") + "/victory.mp3"));
+			mediaPlayer.play();
+		}
+		catch(BasicPlayerException | MalformedURLException e) {
+			e.printStackTrace();
+		}
+		
 		int experience = (int)(creature.getMaxExperience() * .5);
 		int gold = creature.getGold();
 		hero.addGold(gold);
@@ -291,11 +305,20 @@ public class Combat extends Area {
 				JOptionPane.PLAIN_MESSAGE,
 				victoryIcon);
 
+		this.stopMusic();
 		MathQuest.switchToGameWorld();
 	}
 
 	private void defeat() {
-
+		
+		this.stopMusic();
+		try {
+			mediaPlayer.open(new URL("file:///" + System.getProperty("user.dir").replace("\\", "/") + "/defeat.mp3"));
+			mediaPlayer.play();
+		}
+		catch(BasicPlayerException | MalformedURLException e) {
+			e.printStackTrace();
+		}
 		hero.death();
 
 		JOptionPane.showMessageDialog(this, 
@@ -304,14 +327,60 @@ public class Combat extends Area {
 				JOptionPane.PLAIN_MESSAGE,
 				defeatIcon);
 
+		this.stopMusic();
 		MathQuest.switchToGameWorld();
 	}
 
+	private void initializeMusic() {
+		Random random = new Random();
+		String combatMusic = System.getProperty("user.dir").replace("\\", "/") + "/combatMusic" + (random.nextInt(3) + 1) + ".mp3";
+		this.mediaPlayer = new BasicPlayer();
+		this.soundPlayer = new BasicPlayer();
+		
+		try {
+			mediaPlayer.open(new URL("file:///" + combatMusic));
+			mediaPlayer.play();
+		}
+		catch(BasicPlayerException | MalformedURLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void stopMusic() {
+		try {
+			this.mediaPlayer.stop();
+		} catch (BasicPlayerException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void playAttackSound(int damage) {
+		
+		String combatSound;
+		
+		if (damage == 0) {
+			combatSound = System.getProperty("user.dir").replace("\\", "/") + "/swordMiss.mp3";
+		}
+		else {
+			Random random = new Random();
+			combatSound = System.getProperty("user.dir").replace("\\", "/") + "/sword" + (random.nextInt(3) + 1) + ".mp3";
+		}
+		
+		try {
+			soundPlayer.open(new URL("file:///" + combatSound));
+			soundPlayer.play();
+		}
+		catch(BasicPlayerException | MalformedURLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	@Override
 	public OptionsPanel loadOptionsPanel() {
 		return null;
 	}
-
+	
 	@Override
 	public void loadImages() {
 

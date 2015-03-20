@@ -4,6 +4,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 
+import javafx.scene.media.MediaPlayer;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -18,7 +20,7 @@ import MathQuest.Pages.World;
 public class MathQuest
 {
 	private static final Dimension FRAME_DIMENSIONS = new Dimension(1024, 768);
-	
+
 	private static JFrame outerFrame;
 	private static JPanel contentPane;
 	private static String username;

@@ -21,9 +21,8 @@ public class KillingFields extends Area {
 
 	private static final long serialVersionUID = 1L;
 	private Character creature;
-	private static Character hero = new Character();
 	
-	public KillingFields(Character her) {
+	public KillingFields(Character hero) {
 		super(hero);
 		this.loadImages();
 			
