@@ -19,6 +19,7 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.script.ScriptException;
@@ -307,8 +308,12 @@ public class Combat extends Area {
 	@Override
 	public void loadImages() {
 
+		Random random = new Random();
+		Integer pictureNumber = random.nextInt(7) + 1;
+		String imagePath = "combat" + pictureNumber + ".jpg";
+		
 		try {                
-			this.background = new ImageIcon(ImageIO.read(new File("combat.jpg")));
+			this.background = new ImageIcon(ImageIO.read(new File(imagePath)));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}	
