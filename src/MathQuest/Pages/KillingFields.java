@@ -21,8 +21,9 @@ public class KillingFields extends Area {
 
 	private static final long serialVersionUID = 1L;
 	private Character creature;
+	private static Character hero = new Character();
 	
-	public KillingFields(Character hero) {
+	public KillingFields(Character her) {
 		super(hero);
 		this.loadImages();
 			
@@ -34,7 +35,7 @@ public class KillingFields extends Area {
 		
 		JPanel creatureHeaderPanel = new JPanel();
 		creatureHeaderPanel.setBackground(Color.WHITE);
-		creatureHeaderPanel.setBounds(6, 6, 588, 73);
+		creatureHeaderPanel.setBounds(6, 6, 588, 55);
 		creaturePanel.add(creatureHeaderPanel);
 		
 		JLabel creatureHeader = new JLabel("Select your opponent");
@@ -42,116 +43,132 @@ public class KillingFields extends Area {
 		creatureHeaderPanel.add(creatureHeader);
 		
 		JPanel creatureSelectionPanel = new JPanel();
-		creatureSelectionPanel.setBounds(6, 85, 588, 309);
+		creatureSelectionPanel.setBounds(6, 66, 588, 328);
 		creaturePanel.add(creatureSelectionPanel);
 		creatureSelectionPanel.setLayout(null);
 		
-		JButton button = new JButton("Goblin");
-		button.setBounds(16, 28, 117, 29);
-		button.addActionListener(new ActionListener() {
+		JButton btnGoblin = new JButton("Goblin");
+		btnGoblin.setBounds(24, 24, 117, 29);
+		btnGoblin.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				creature = new Character(1, "Goblin", "Goblin.jpg");
 				MathQuest.switchToCombat(creature);
 			}	
 		});
-		creatureSelectionPanel.add(button);
+		creatureSelectionPanel.add(btnGoblin);
 		
-		JButton btnBugbear = new JButton("Orc");
-		btnBugbear.setBounds(16, 69, 117, 29);
-		creatureSelectionPanel.add(btnBugbear);
+		JButton btnFamiliar = new JButton("Familiar");
+		btnFamiliar.setBounds(24, 65, 117, 29);
+		creatureSelectionPanel.add(btnFamiliar);
 		
-		JButton btnNewButton = new JButton("Ogre");
-		btnNewButton.setBounds(16, 110, 117, 29);
-		creatureSelectionPanel.add(btnNewButton);
-		
-		JButton btnSkeleton = new JButton("Skeleton");
-		btnSkeleton.setBounds(16, 151, 117, 29);
-		creatureSelectionPanel.add(btnSkeleton);
-		
-		JButton btnVampire = new JButton("Vampire");
-		btnVampire.setBounds(16, 192, 117, 29);
-		creatureSelectionPanel.add(btnVampire);
-		
-		JButton btnGiantSpider = new JButton("Giant Spider");
-		btnGiantSpider.setBounds(16, 233, 117, 29);
-		creatureSelectionPanel.add(btnGiantSpider);
-		
-		JButton btnUnicorn = new JButton("Unicorn");
-		btnUnicorn.setBounds(145, 28, 117, 29);
-		creatureSelectionPanel.add(btnUnicorn);
-		
-		JButton btnNoble = new JButton("Noble");
-		btnNoble.setBounds(320, 28, 117, 29);
-		creatureSelectionPanel.add(btnNoble);
-		
-		JButton btnRogue = new JButton("Minotaur");
-		btnRogue.setBounds(145, 69, 117, 29);
-		creatureSelectionPanel.add(btnRogue);
+		JButton btnOrc = new JButton("Orc");
+		btnOrc.setBounds(24, 106, 117, 29);
+		creatureSelectionPanel.add(btnOrc);
 		
 		JButton btnGargoyle = new JButton("Gargoyle");
-		btnGargoyle.setBounds(145, 110, 117, 29);
+		btnGargoyle.setBounds(24, 188, 117, 29);
 		creatureSelectionPanel.add(btnGargoyle);
 		
-		JButton btnDragon = new JButton("Green Dragon");
-		btnDragon.setBounds(145, 151, 117, 29);
-		creatureSelectionPanel.add(btnDragon);
+		JButton btnSkeleton = new JButton("Skeleton");
+		btnSkeleton.setBounds(24, 147, 117, 29);
+		creatureSelectionPanel.add(btnSkeleton);
 		
-		JButton btnDrake = new JButton("Silver Drake");
-		btnDrake.setBounds(145, 192, 117, 29);
-		creatureSelectionPanel.add(btnDrake);
-		
-		JButton btnNewButton_1 = new JButton("Nightmare");
-		btnNewButton_1.setBounds(453, 28, 117, 29);
-		creatureSelectionPanel.add(btnNewButton_1);
-		
-		JButton btnZombie = new JButton("Zombie");
-		btnZombie.setBounds(145, 233, 117, 29);
-		creatureSelectionPanel.add(btnZombie);
-		
-		JButton btnGrizzlyBear = new JButton("Demon");
-		btnGrizzlyBear.setBounds(453, 69, 117, 29);
+		JButton btnGrizzlyBear = new JButton("Grizzly Bear");
+		btnGrizzlyBear.setBounds(24, 229, 117, 29);
 		creatureSelectionPanel.add(btnGrizzlyBear);
 		
-		JButton btnNewButton_2 = new JButton("Black Dragon");
-		btnNewButton_2.setBounds(453, 110, 117, 29);
-		creatureSelectionPanel.add(btnNewButton_2);
+		JButton btnZombie = new JButton("Zombie");
+		btnZombie.setBounds(165, 24, 117, 29);
+		creatureSelectionPanel.add(btnZombie);
 		
-		JButton btnNewButton_3 = new JButton("Centaur King");
-		btnNewButton_3.addActionListener(new ActionListener() {
+		JButton btnDemon = new JButton("Demon");
+		btnDemon.setBounds(306, 24, 117, 29);
+		creatureSelectionPanel.add(btnDemon);
+		
+		JButton btnMinotaur = new JButton("Minotaur");
+		btnMinotaur.setBounds(165, 65, 117, 29);
+		creatureSelectionPanel.add(btnMinotaur);
+		
+		JButton btnUnicorn = new JButton("Unicorn");
+		btnUnicorn.setBounds(165, 106, 117, 29);
+		creatureSelectionPanel.add(btnUnicorn);
+		
+		JButton btnIronGolem = new JButton("Iron Golem");
+		btnIronGolem.setBounds(165, 147, 117, 29);
+		creatureSelectionPanel.add(btnIronGolem);
+		
+		JButton btnChromaticDrake = new JButton("Chromadrake");
+		btnChromaticDrake.setBounds(165, 188, 117, 29);
+		creatureSelectionPanel.add(btnChromaticDrake);
+		
+		JButton btnHydra = new JButton("Hydra");
+		btnHydra.setBounds(447, 24, 117, 29);
+		creatureSelectionPanel.add(btnHydra);
+		
+		JButton btnVampire = new JButton("Vampire");
+		btnVampire.setBounds(165, 229, 117, 29);
+		creatureSelectionPanel.add(btnVampire);
+		
+		JButton btnTemplar = new JButton("Templar");
+		btnTemplar.setBounds(447, 65, 117, 29);
+		creatureSelectionPanel.add(btnTemplar);
+		
+		JButton btnCentaurKing = new JButton("Centaur King");
+		btnCentaurKing.setBounds(447, 106, 117, 29);
+		creatureSelectionPanel.add(btnCentaurKing);
+		
+		JButton btnGiant = new JButton("Giant");
+		btnGiant.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton_3.setBounds(453, 151, 117, 29);
-		creatureSelectionPanel.add(btnNewButton_3);
+		btnGiant.setBounds(447, 147, 117, 29);
+		creatureSelectionPanel.add(btnGiant);
 		
-		JButton btnNewButton_4 = new JButton("Titan");
-		btnNewButton_4.setBounds(453, 192, 117, 29);
-		creatureSelectionPanel.add(btnNewButton_4);
+		JButton btnTitan = new JButton("Titan");
+		btnTitan.setBounds(447, 188, 117, 29);
+		creatureSelectionPanel.add(btnTitan);
 		
-		JButton btnNewButton_5 = new JButton("Giant");
-		btnNewButton_5.setBounds(453, 233, 117, 29);
-		creatureSelectionPanel.add(btnNewButton_5);
+		JButton btnBlackDragon = new JButton("Black Dragon");
+		btnBlackDragon.setBounds(447, 229, 117, 29);
+		creatureSelectionPanel.add(btnBlackDragon);
 		
 		JButton btnGriffin = new JButton("Griffin");
-		btnGriffin.setBounds(320, 69, 117, 29);
+		btnGriffin.setBounds(306, 65, 117, 29);
 		creatureSelectionPanel.add(btnGriffin);
 		
-		JButton btnNewButton_6 = new JButton("Treant");
-		btnNewButton_6.setBounds(320, 110, 117, 29);
-		creatureSelectionPanel.add(btnNewButton_6);
+		JButton btnTreant = new JButton("Treant");
+		btnTreant.setBounds(306, 106, 117, 29);
+		creatureSelectionPanel.add(btnTreant);
 		
-		JButton btnGolem = new JButton("Golem");
-		btnGolem.setBounds(320, 151, 117, 29);
-		creatureSelectionPanel.add(btnGolem);
+		JButton btnPitFiend = new JButton("Pit Fiend");
+		btnPitFiend.setBounds(306, 147, 117, 29);
+		creatureSelectionPanel.add(btnPitFiend);
 		
-		JButton btnWizard = new JButton("Lich");
-		btnWizard.setBounds(320, 192, 117, 29);
-		creatureSelectionPanel.add(btnWizard);
+		JButton btnLich = new JButton("Lich");
+		btnLich.setBounds(306, 188, 117, 29);
+		creatureSelectionPanel.add(btnLich);
 		
-		JButton btnNewButton_7 = new JButton("Hydra");
-		btnNewButton_7.setBounds(320, 233, 117, 29);
-		creatureSelectionPanel.add(btnNewButton_7);
+		JButton btnWyvern = new JButton("Wyvern");
+		btnWyvern.setBounds(306, 229, 117, 29);
+		creatureSelectionPanel.add(btnWyvern);
+		
+		JButton btnGiantspid = new JButton("Giant Spider");
+		btnGiantspid.setBounds(24, 270, 117, 29);
+		creatureSelectionPanel.add(btnGiantspid);
+		
+		JButton btnOgreMagi = new JButton("Ogre Magi");
+		btnOgreMagi.setBounds(165, 270, 117, 29);
+		creatureSelectionPanel.add(btnOgreMagi);
+		
+		JButton btnNightmare = new JButton("Nightmare");
+		btnNightmare.setBounds(306, 270, 117, 29);
+		creatureSelectionPanel.add(btnNightmare);
+		
+		JButton btnPhoenix = new JButton("Phoenix");
+		btnPhoenix.setBounds(447, 270, 117, 29);
+		creatureSelectionPanel.add(btnPhoenix);
 		
 		this.renderBackground();
 	}

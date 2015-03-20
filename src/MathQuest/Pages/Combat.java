@@ -41,6 +41,8 @@ public class Combat extends Area {
 
 	private CharacterPanel monsterPanel;
 	private JPanel combatOptions;
+	private ImageIcon victoryIcon;
+	private ImageIcon defeatIcon;
 	private JTextArea scrollText;
 	private Character hero;
 	private Character creature;
@@ -93,7 +95,7 @@ public class Combat extends Area {
 	}
 
 	private void promptQuestion() {
-		
+
 		this.addTextToScrollPane("You try to find your opponents weakness.");
 		String question = Equation.constructEquation(Sign.ADDITION, Digits.ONE, Terms.TWO);
 		this.answer = Equation.solveEquation(question);
@@ -170,7 +172,7 @@ public class Combat extends Area {
 		usePotionButton.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
 		usePotionButton.setBounds(100, 6, 88, 70);		
 		combatOptions.add(usePotionButton);
-		
+
 		this.revalidate();
 		this.repaint();
 	}
@@ -224,21 +226,23 @@ public class Combat extends Area {
 		this.revalidate();
 		this.repaint();
 	}
-	
+
 	private void attack(Integer answer) {
 		int damage = hero.calculateDamage();
 		String creatureName = creature.getName();
-		
+
 		this.addTextToScrollPane("You answered " + answer + ".");
-		
+
 		if(answer == this.answer) {
 			this.addTextToScrollPane("Correct! You strike your enemy with great power!");
+			hero.incrementAnsweredCorrectly();
 			damage = 2 * damage;
 		}
 		else {
 			this.addTextToScrollPane("Good try, but the correct answer was " + this.answer + ".");
+			hero.incrementAnsweredIncorrectly();
 		}
-		
+
 		String output = new String("You attack a " + this.creatureName + " for " + damage + " points of damage.");
 		this.addTextToScrollPane(output);
 
@@ -278,12 +282,14 @@ public class Combat extends Area {
 		hero.addGold(gold);
 		hero.gainExperience(experience);
 
+		String victoryString = String
+				.format("<html>You are victorious! You check your<br/>enemy for gold and head back to<br/>town. You receive:<br/><Center><br/>%d XP<br/>%d Gold<br/></Center></html>", experience, gold);
+
 		JOptionPane.showMessageDialog(this, 
-				new JLabel("You are victorious! You have gained: \n"
-						+ experience + "experience points\n"
-						+ gold + "gold", JLabel.CENTER), 
-						"Victory", 
-						JOptionPane.PLAIN_MESSAGE);
+				new JLabel(victoryString, JLabel.CENTER), 
+				"Victory", 
+				JOptionPane.PLAIN_MESSAGE,
+				victoryIcon);
 
 		MathQuest.switchToGameWorld();
 	}
@@ -293,9 +299,10 @@ public class Combat extends Area {
 		hero.death();
 
 		JOptionPane.showMessageDialog(this, 
-				new JLabel("You are defeated! You have lost gold and experience!", JLabel.CENTER), 
+				new JLabel("<html>You have been defeated in battle!<br/>A good samaritan finds you and<br/>nurses you back to health. You<br/>have lost gold and experience!</html>", JLabel.CENTER), 
 				"Defeat", 
-				JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.PLAIN_MESSAGE,
+				defeatIcon);
 
 		MathQuest.switchToGameWorld();
 	}
@@ -311,9 +318,11 @@ public class Combat extends Area {
 		Random random = new Random();
 		Integer pictureNumber = random.nextInt(7) + 1;
 		String imagePath = "combat" + pictureNumber + ".jpg";
-		
+
 		try {                
 			this.background = new ImageIcon(ImageIO.read(new File(imagePath)));
+			this.victoryIcon = new ImageIcon(ImageIO.read(new File("victoryIcon.png")));
+			this.defeatIcon = new ImageIcon(ImageIO.read(new File("defeatIcon.png")));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}	
