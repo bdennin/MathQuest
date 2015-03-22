@@ -8,22 +8,18 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import MathQuest.Logic.Character;
-import MathQuest.Pages.Blacksmith;
-import MathQuest.Pages.Combat;
-import MathQuest.Pages.Inn;
-import MathQuest.Pages.KillingFields;
-import MathQuest.Pages.Login;
-import MathQuest.Pages.World;
+import MathQuest.Pages.*;
 
 public class MathQuest
 {
 	private static final Dimension FRAME_DIMENSIONS = new Dimension(1024, 768);
 	
-	private static JFrame outerFrame;
+	public static JFrame outerFrame;
 	private static JPanel contentPane;
 	private static String username;
 	private static String password;
 	private static Character hero;
+	public static boolean connectToDatabase = false;
 	
 	public MathQuest() {
 		initializeMathQuest();
@@ -49,7 +45,18 @@ public class MathQuest
 		outerFrame.setContentPane(contentPane);
 		contentPane.revalidate();
 	}
-
+	
+	public static void switchToAdminMain(){
+		contentPane = new AdminMain();
+		outerFrame.setContentPane(contentPane);
+		contentPane.revalidate();
+	}
+	
+	public static void switchToAdminFomularSetting(int Id){
+		contentPane = new AdminFormularSetting(Id);
+		outerFrame.setContentPane(contentPane);
+		contentPane.revalidate();
+	}
 	public static void switchToInn() {
 		contentPane = new Inn(hero);
 		outerFrame.setContentPane(contentPane);

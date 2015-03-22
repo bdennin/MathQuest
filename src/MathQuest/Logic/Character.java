@@ -22,7 +22,7 @@ public class Character {
 		this.currentExperience = 0;
 		this.maxExperience = 10;
 		this.strength = 10;
-		this.gold = 0;
+		this.gold = 100;
 		this.currentHealth = 10;
 		this.maxHealth = 10;
 		this.level = 1;
@@ -51,7 +51,7 @@ public class Character {
 		this.maxExperience = 10;
 		this.strength = 10;
 		this.gold = currentGold;
-		this.currentHealth = 1;
+		this.currentHealth = 5;
 		this.maxHealth = 10;
 		this.level = 1;
 		this.armor = 0;
