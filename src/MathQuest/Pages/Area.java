@@ -1,11 +1,16 @@
 package MathQuest.Pages;
 
 import java.awt.Component;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import javazoom.jlgui.basicplayer.BasicPlayer;
+import javazoom.jlgui.basicplayer.BasicPlayerException;
 import MathQuest.GUI.CharacterPanel;
 import MathQuest.GUI.OptionsPanel;
 import MathQuest.Logic.Character;
@@ -13,15 +18,24 @@ import MathQuest.Logic.Character;
 public abstract class Area extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+	protected static final BasicPlayer musicPlayer = new BasicPlayer();
+	protected static final BasicPlayer soundPlayer = new BasicPlayer();
+	protected static final Random RANDOM = new Random();
+
+	
 	protected CharacterPanel characterPanel;
 	protected OptionsPanel optionsPanel;
+
 	protected ImageIcon background;
 	protected JLabel backgroundPanel;	
 	protected Character hero;
 	protected boolean isEnabled;
 
-	public Area(Character hero) {
+	public Area(Character hero, String musicFilePath) {
 
+		if(null != musicFilePath)
+			this.initializeMusic(musicFilePath);
+		
 		this.setBounds(0, 0, 1024, 768);
 		this.setLayout(null);
 		this.isEnabled = true;
@@ -32,6 +46,8 @@ public abstract class Area extends JPanel {
 		characterPanel.setBounds(6, 6, 111, 149);
 		add(characterPanel);
 
+		
+		
 		this.optionsPanel = loadOptionsPanel();
 		if(null == optionsPanel) {
 
@@ -47,6 +63,27 @@ public abstract class Area extends JPanel {
 
 	public abstract void loadImages();
 
+	public void initializeMusic(String fileName) {
+		
+		String musicPath = String.format("%s%s%s", System.getProperty("user.dir").replace("\\", "/"), "/", fileName);
+		
+		try {
+			musicPlayer.open(new URL("file:///" + musicPath));
+			musicPlayer.play();
+		}
+		catch(BasicPlayerException | MalformedURLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void stopMusic() {
+		try {
+			musicPlayer.stop();
+		} catch (BasicPlayerException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void toggleElements() {
 		this.isEnabled = !isEnabled;
 		for(Component el : this.getComponents()) {

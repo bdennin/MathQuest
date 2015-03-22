@@ -11,13 +11,8 @@ import java.io.File;
 import java.io.IOException;
 
 import MathQuest.GUI.OptionsPanel;
-import MathQuest.MathQuest;
 import MathQuest.Logic.Character;
 
-import javax.swing.JTextPane;
-
-import java.awt.Component;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,7 +25,7 @@ public class Inn extends Area {
 	final JPanel panel = new JPanel();
 
 	public Inn(Character hero) {
-		super(hero);
+		super(hero, "innMusic.mp3");
 		this.loadImages();
 		
 		

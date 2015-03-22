@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 
 import MathQuest.MathQuest;
 import MathQuest.Logic.Character;
+import MathQuest.Pages.Area;
 
 public class OptionsPanel extends JPanel {
 
@@ -30,6 +31,7 @@ public class OptionsPanel extends JPanel {
 			button.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					Area.stopMusic();
 					MathQuest.switchToGameWorld();
 				}
 			});

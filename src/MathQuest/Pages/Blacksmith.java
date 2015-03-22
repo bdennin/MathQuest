@@ -11,17 +11,12 @@ import javax.swing.JTextArea;
 import MathQuest.GUI.OptionsPanel;
 import MathQuest.Logic.Character;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
 import javax.swing.SwingConstants;
-import javax.swing.JLayeredPane;
-
 
 public class Blacksmith extends Area {
 	
@@ -34,7 +29,7 @@ public class Blacksmith extends Area {
 	private ImageIcon swIcon, swIcon2, shIcon, shIcon2, helmIcon, chestIcon, armIcon, legIcon;
 	
 	public Blacksmith(Character hero) {
-			super(hero);
+			super(hero, "blacksmithMusic.mp3");
 			this.loadImages();
 			this.loadOptionsPanel();
 

@@ -4,8 +4,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 
-import javafx.scene.media.MediaPlayer;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
