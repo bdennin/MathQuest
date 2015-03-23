@@ -49,7 +49,7 @@ public abstract class Area extends JPanel {
 		hideOptions();
 		add(optionsMenu);
 		
-		this.characterPanel = new CharacterPanel(this.hero, true);
+		this.characterPanel = new CharacterPanel(this, this.hero, true, false);
 		characterPanel.setLayout(null);
 		characterPanel.setBounds(6, 6, 107, 144);
 		add(characterPanel);
@@ -90,10 +90,15 @@ public abstract class Area extends JPanel {
 		return this.optionsPanel;
 	}
 
+	public void setBackground()
+	{
+		this.backgroundLabel = null;
+	}
+	
 	public void reloadCharacterPanel() {
 
 		this.remove(characterPanel);
-		this.characterPanel = new CharacterPanel(this.hero, true);
+		this.characterPanel = new CharacterPanel(this, this.hero, true, false);
 		characterPanel.setLayout(null);
 		characterPanel.setBounds(6, 6, 107, 144);
 		add(characterPanel);

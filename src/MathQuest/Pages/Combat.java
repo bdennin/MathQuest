@@ -286,7 +286,7 @@ public class Combat extends Area {
 
 	private CharacterPanel loadMonsterPanel(Character monster) {
 
-		CharacterPanel monsterPanel = new CharacterPanel(monster, false);
+		CharacterPanel monsterPanel = new CharacterPanel(this, monster, false, true);
 		monsterPanel.setLayout(null);
 		monsterPanel.setBounds(907, 6, 107, 144);
 		return monsterPanel;

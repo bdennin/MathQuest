@@ -66,10 +66,14 @@ public class OptionsMenu extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(checkboxMuteSound.isSelected())
+				if(checkboxMuteSound.isSelected()) {
 					volumeSlider.setValue(0);
-				else
+					volumeSlider.setEnabled(false);
+				}
+				else {
 					volumeSlider.setValue((int)(MathQuest.getVolume() * 10));
+					volumeSlider.setEnabled(true);
+				}
 			}
 		});
 		optionsBody.add(checkboxMuteSound);
