@@ -3,7 +3,7 @@ package MathQuest.Logic;
 import MathQuest.GUI.Inventory;
 
 public class Character {
-	
+
 	private int level;
 	private int maxExperience;
 	private int currentExperience;
@@ -16,6 +16,9 @@ public class Character {
 	private int speed;
 	private String name;
 	private String imagePath;
+	private String greatestEnemySlain;
+	private double answeredCorrectly;
+	private double answeredIncorrectly;
 	private Inventory inventory;
 
 	public Character() {
@@ -29,14 +32,17 @@ public class Character {
 		this.armor = 0;
 		this.imagePath = "char.jpg";
 		this.name = "Hero#1";
+		this.greatestEnemySlain = "Goblin";
+		this.answeredCorrectly = 0;
+		this.answeredIncorrectly = 0;
 	}
 
 	//monster constructor
 	public Character(int level, String name, String imagePath) {
 		this.strength = 10 * level;
-		this.gold = 2 * level;
+		this.gold = 5 * level;
 		this.currentHealth = 10 * level;
-		this.maxHealth = 10;
+		this.maxHealth = 10 * level;
 		this.level = level;
 		this.armor = 0;
 		this.name = name;
@@ -44,7 +50,7 @@ public class Character {
 		this.maxExperience = 10;
 		this.imagePath = imagePath;
 	}
-	
+
 	// test constructor
 	public Character(int currentGold){
 		this.currentExperience = 0;
@@ -58,7 +64,7 @@ public class Character {
 		this.imagePath = "char.jpg";
 		this.name = "Hero#1";
 	}
-	
+
 	public Character(Integer[] charStats) {
 		level = charStats[0];
 		currentHealth = charStats[1];
@@ -101,7 +107,7 @@ public class Character {
 	public int getArmor(){
 		return this.armor;
 	}
-	
+
 	public String getName() {
 		return this.name;
 	}
@@ -109,21 +115,21 @@ public class Character {
 	public int getGold(){
 		return this.gold;
 	}
-	
+
 	public void removeGold(int gold) {
 		this.gold = this.gold - gold;
 	}
-	
+
 	public void addGold(int gold){
 		this.gold = this.gold + gold;
 	}
-	
+
 	public void death() {
 		this.currentHealth = this.maxHealth;
 		this.gold = (int)(this.gold * .5);
 		this.currentExperience = 0;
 	}
-	
+
 	public void gainExperience(int experience){
 		this.currentExperience = this.currentExperience + experience;
 		if(currentExperience >= maxExperience){
@@ -138,11 +144,11 @@ public class Character {
 		double damage = this.strength * .2  - ((Math.random()/4) * maxDamage);
 		return (int)Math.round(damage);
 	}
-	
+
 	public void takeDamage(int damage){
 		this.currentHealth = this.currentHealth - damage;
 	}
-	
+
 	public int[] save() {
 		int[] stats = new int[4];	
 		stats[0] = this.level;
@@ -151,26 +157,31 @@ public class Character {
 		stats[3] = this.gold;
 		return stats;
 	}
-	
+
 	public String getImagePath() {
 		return this.imagePath;
 	}
-	
+
 	public int calculateCost(String roomType){
 		return 5;
 	}
-	
+
 	public boolean enoughGold(String roomType){
+
 		if (calculateCost(roomType) > this.gold)
 			return false;
 		else
 			return true;
 	}
+
 	public void payForInn(String roomType){
-		this.gold = this.gold - calculateCost(roomType);
+		this.removeGold(calculateCost(roomType));
 	}
+
 	public int calculateIncrease (String roomType){
+
 		int increase;
+
 		if (roomType.equalsIgnoreCase("Studio"))
 			increase = this.maxHealth*30/100;
 		else if (roomType.equalsIgnoreCase("Deluxe"))
@@ -181,11 +192,41 @@ public class Character {
 			increase = 0;
 		return increase;
 	}
+
 	public void healthRegain (String roomType){
+
 		int increase = calculateIncrease(roomType);
+
 		if (this.currentHealth + increase < this.maxHealth)
 			this.currentHealth = this.currentHealth + increase;
 		else
 			this.currentHealth = this.maxHealth;
+	}
+
+	public void setGreatestEnemySlain(String creatureName) {
+		this.greatestEnemySlain = creatureName;
+	}
+
+	public String getGreatestEnemySlain() {
+		return this.greatestEnemySlain;
+	}
+
+	public double getQuestionAccuracy() {
+		if(this.answeredCorrectly == 0 && this.answeredIncorrectly == 0)
+			return 1;
+		else 
+			return this.answeredCorrectly/(this.answeredCorrectly + this.answeredIncorrectly);
+	}
+
+	public int getTotalQuestionsAnswered() {
+		return (int)(this.answeredCorrectly + this.answeredIncorrectly);
+	}
+
+	public void incrementAnsweredCorrectly() {
+		this.answeredCorrectly++;
+	}
+
+	public void incrementAnsweredIncorrectly() {
+		this.answeredIncorrectly++;
 	}
 }

@@ -57,7 +57,7 @@ public class Login extends JPanel {
 		panel.add(errorLabel);
 		
 		JButton btnLogin = new JButton("Login");
-		MathQuest.outerFrame.getRootPane().setDefaultButton(btnLogin);
+		MathQuest.getOuterFrame().getRootPane().setDefaultButton(btnLogin);
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				login();
