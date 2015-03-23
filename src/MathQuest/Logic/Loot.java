@@ -56,7 +56,7 @@ private ArrayList<Item> createRandomItems(int monsterLvl){
 	if (droppedRare == false)
 		System.out.println("No rare Items");
 	else{
-		Item rareItem = new Item(monsterLvl);
+		Item rareItem = new Item(monsterLvl, 5);
 		itemsDropped.add(rareItem);
 	}
 	

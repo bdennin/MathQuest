@@ -8,6 +8,8 @@ import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.CompoundBorder;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,11 +27,13 @@ import MathQuest.MathQuest;
 import MathQuest.GUI.CharacterPanel;
 import MathQuest.GUI.OptionsPanel;
 import MathQuest.Logic.Character;
+import MathQuest.Logic.Character.DamageType;
 import MathQuest.Logic.Equation;
 import MathQuest.Logic.Equation.Sign;
 import MathQuest.Logic.Equation.Digits;
 import MathQuest.Logic.Equation.Terms;
 
+import java.awt.Color;
 import java.awt.Font;
 
 public class Combat extends Area {
@@ -40,6 +44,9 @@ public class Combat extends Area {
 	private JPanel combatOptions;
 	private ImageIcon victoryIcon;
 	private ImageIcon defeatIcon;
+	private ImageIcon potionIcon;
+	private ImageIcon runAwayIcon;
+	private ImageIcon attackIcon;
 	private JTextArea scrollText;
 	private Character hero;
 	private Character creature;
@@ -59,8 +66,9 @@ public class Combat extends Area {
 
 		this.combatOptions = new JPanel();
 		this.loadCombatOptions();
-		combatOptions.setBounds(587, 612, 288, 82);
+		combatOptions.setBounds(587, 612, 269, 77);
 		combatOptions.setLayout(null);
+		combatOptions.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
 		add(combatOptions);
 
 		JPanel combatLog = this.loadCombatLog();
@@ -108,19 +116,23 @@ public class Combat extends Area {
 	private JPanel loadCombatLog() {
 
 		JPanel combatLog = new JPanel();
+		combatLog.setBackground(Color.LIGHT_GRAY);
 		combatLog.setBounds(174, 555, 338, 177);
 		combatLog.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(6, 21, 326, 149);
+		scrollPane.setBounds(0, 21, 338, 156);
+		scrollPane.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
 		combatLog.add(scrollPane);
 
 		this.scrollText = new JTextArea();
 		scrollPane.setViewportView(scrollText);
+		this.scrollText.setFont(null);
 		this.scrollText.setEditable(false);
 		this.scrollText.setLineWrap(true);
 		this.scrollText.setWrapStyleWord(true);
-		this.scrollText.append("You have entered combat!  It is your turn to act.");
+		this.scrollText.append("You have entered combat!");
+		this.addTextToScrollPane("It is your turn to act.");
 
 		JLabel combatLogLabel = new JLabel("Combat Log");
 		combatLogLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 12));
@@ -132,9 +144,8 @@ public class Combat extends Area {
 
 	private void loadCombatOptions() {
 
-		JButton attackButton = new JButton("Attack");
-		attackButton.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
-		attackButton.setBounds(6, 6, 88, 70);
+		JButton attackButton = new JButton(this.attackIcon);
+		attackButton.setBounds(3, 3, 88, 70);
 		attackButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -143,9 +154,8 @@ public class Combat extends Area {
 		});
 		combatOptions.add(attackButton);
 
-		JButton runAwayButton = new JButton("<html><center>Run<br/>Away</center></html>");
-		runAwayButton.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
-		runAwayButton.setBounds(194, 6, 88, 70);
+		JButton runAwayButton = new JButton(this.runAwayIcon);
+		runAwayButton.setBounds(177, 3, 88, 70);
 		runAwayButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -155,11 +165,11 @@ public class Combat extends Area {
 		});
 		combatOptions.add(runAwayButton);
 
-		JButton usePotionButton = new JButton("<html><center>Use<br/>Potion</center></html>");
-		usePotionButton.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
-		usePotionButton.setBounds(100, 6, 88, 70);		
+		JButton usePotionButton = new JButton(this.potionIcon);
+		usePotionButton.setBounds(90, 3, 88, 70);		
 		combatOptions.add(usePotionButton);
-
+		combatOptions.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
+		
 		this.revalidate();
 		this.repaint();
 	}
@@ -175,7 +185,7 @@ public class Combat extends Area {
 
 			JButton answerOne = new JButton(mathAnswers.get(0).toString());
 			answerOne.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
-			answerOne.setBounds(6, 6, 88, 70);
+			answerOne.setBounds(3, 3, 88, 70);
 			answerOne.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -187,7 +197,7 @@ public class Combat extends Area {
 
 			JButton answerTwo = new JButton(mathAnswers.get(1).toString());
 			answerTwo.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
-			answerTwo.setBounds(194, 6, 88, 70);
+			answerTwo.setBounds(177, 3, 88, 70);
 			answerTwo.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -199,7 +209,7 @@ public class Combat extends Area {
 
 			JButton answerThree = new JButton(mathAnswers.get(2).toString());
 			answerThree.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
-			answerThree.setBounds(100, 6, 88, 70);	
+			answerThree.setBounds(90, 3, 88, 70);	
 			answerThree.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -208,6 +218,7 @@ public class Combat extends Area {
 				}
 			});
 			combatOptions.add(answerThree);
+			combatOptions.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
 		}
 
 		this.revalidate();
@@ -223,13 +234,22 @@ public class Combat extends Area {
 			this.addTextToScrollPane("Correct! You strike your enemy with great power!");
 			hero.incrementAnsweredCorrectly();
 			damage = 2 * damage;
+			
+			String filePath = "file:///" + System.getProperty("user.dir").replace("\\", "/") + "/quadDamage.mp3";
+			try {
+				effectPlayer.open(new URL(filePath));
+				effectPlayer.play();
+			}
+			catch(BasicPlayerException | MalformedURLException e) {
+				e.printStackTrace();
+			}
 		}
 		else {
 			this.addTextToScrollPane("Good try, but the correct answer was " + this.answer + ".");
 			hero.incrementAnsweredIncorrectly();
 		}
 
-		this.playAttackSound(damage);
+		this.playAttackSound(hero, damage);
 
 		String output = new String("You attack a " + this.creatureName + " for " + damage + " points of damage.");
 		this.addTextToScrollPane(output);
@@ -249,7 +269,7 @@ public class Combat extends Area {
 
 		int damage = creature.calculateDamage();
 
-		this.playAttackSound(damage);
+		this.playAttackSound(creature, damage);
 
 		String output = "A " + creature.getName() + " attacks YOU for " + damage + " points of damage.";
 		this.addTextToScrollPane(output);
@@ -268,7 +288,7 @@ public class Combat extends Area {
 
 		CharacterPanel monsterPanel = new CharacterPanel(monster, false);
 		monsterPanel.setLayout(null);
-		monsterPanel.setBounds(907, 6, 111, 149);
+		monsterPanel.setBounds(907, 6, 107, 144);
 		return monsterPanel;
 	}
 
@@ -285,8 +305,9 @@ public class Combat extends Area {
 	private void victory() {
 
 		stopMusic();
+		String filePath = "file:///" + System.getProperty("user.dir").replace("\\", "/") + "/victory.mp3";
 		try {
-			musicPlayer.open(new URL("file:///" + System.getProperty("user.dir").replace("\\", "/") + "/victory.mp3"));
+			musicPlayer.open(new URL(filePath));
 			musicPlayer.play();
 		}
 		catch(BasicPlayerException | MalformedURLException e) {
@@ -314,13 +335,16 @@ public class Combat extends Area {
 	private void defeat() {
 
 		stopMusic();
+		String filePath = "file:///" + System.getProperty("user.dir").replace("\\", "/") + "/defeat.mp3";
+		
 		try {
-			musicPlayer.open(new URL("file:///" + System.getProperty("user.dir").replace("\\", "/") + "/defeat.mp3"));
+			musicPlayer.open(new URL(filePath));
 			musicPlayer.play();
 		}
 		catch(BasicPlayerException | MalformedURLException e) {
 			e.printStackTrace();
 		}
+		
 		hero.death();
 
 		JOptionPane.showMessageDialog(this, 
@@ -333,24 +357,48 @@ public class Combat extends Area {
 		MathQuest.switchToGameWorld();
 	}
 
-	private void playAttackSound(int damage) {
+	private void playAttackSound(Character character, int damage) {
 
-		String combatSound;
+		String combatSound = "file:///" + System.getProperty("user.dir").replace("\\", "/");
+		DamageType damageType = character.getDamageType();
 
-		if (damage == 0) {
-			combatSound = System.getProperty("user.dir").replace("\\", "/") + "/swordMiss.mp3";
-		}
-		else {
-			combatSound = System.getProperty("user.dir").replace("\\", "/") + "/sword" + (RANDOM.nextInt(3) + 1) + ".mp3";
+		switch (damageType) {
+		case CRUSHING:
+			if (damage == 0) {
+				combatSound += "/crushing0.mp3";
+			}
+			else {
+				combatSound += "/crushing" + (RANDOM.nextInt(2) + 1) + ".mp3";
+			}
+			break;
+		case SLASHING:
+			if (damage == 0) {
+				combatSound += "/slashing0.mp3";
+			}
+			else {
+				combatSound += "/slashing" + (RANDOM.nextInt(3) + 1) + ".mp3";
+			}
+			break;
+		case MAGICAL:
+			if (damage == 0) {
+				combatSound += "/magic0.mp3";
+			}
+			else {
+				combatSound += "/magic" + (RANDOM.nextInt(4) + 1) + ".mp3";
+			}
+			break;
+		default:
+			throw new IllegalArgumentException();
 		}
 
 		try {
-			soundPlayer.open(new URL("file:///" + combatSound));
+			soundPlayer.open(new URL(combatSound));
 			soundPlayer.play();
 		}
 		catch(BasicPlayerException | MalformedURLException e) {
 			e.printStackTrace();
 		}	
+
 	}
 
 	@Override
@@ -369,6 +417,10 @@ public class Combat extends Area {
 			this.background = new ImageIcon(ImageIO.read(new File(imagePath)));
 			this.victoryIcon = new ImageIcon(ImageIO.read(new File("victoryIcon.png")));
 			this.defeatIcon = new ImageIcon(ImageIO.read(new File("defeatIcon.png")));
+			this.potionIcon = new ImageIcon(ImageIO.read(new File("potion.png")));
+			this.attackIcon = new ImageIcon(ImageIO.read(new File("attack.png")));
+			this.runAwayIcon = new ImageIcon(ImageIO.read(new File("runAway.png")));
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}	

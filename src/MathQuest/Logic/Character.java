@@ -4,6 +4,10 @@ import MathQuest.GUI.Inventory;
 
 public class Character {
 
+	public enum DamageType {
+		CRUSHING, SLASHING, MAGICAL
+	}
+	
 	private int level;
 	private int maxExperience;
 	private int currentExperience;
@@ -19,7 +23,8 @@ public class Character {
 	private String greatestEnemySlain;
 	private double answeredCorrectly;
 	private double answeredIncorrectly;
-	private Inventory inventory;
+	private DamageType damageType;
+	private Item[] inventory;
 
 	public Character() {
 		this.currentExperience = 0;
@@ -30,15 +35,16 @@ public class Character {
 		this.maxHealth = 10;
 		this.level = 1;
 		this.armor = 0;
-		this.imagePath = "char.jpg";
+		this.imagePath = "char2.jpg";
 		this.name = "Hero#1";
 		this.greatestEnemySlain = "Goblin";
+		this.damageType = DamageType.SLASHING;
 		this.answeredCorrectly = 0;
 		this.answeredIncorrectly = 0;
 	}
 
 	//monster constructor
-	public Character(int level, String name, String imagePath) {
+	public Character(int level, String name, String imagePath, DamageType damageType) {
 		this.strength = 10 * level;
 		this.gold = 5 * level;
 		this.currentHealth = 10 * level;
@@ -47,8 +53,9 @@ public class Character {
 		this.armor = 0;
 		this.name = name;
 		this.currentExperience = 0;
-		this.maxExperience = 10;
+		this.maxExperience = 10 * level;
 		this.imagePath = imagePath;
+		this.damageType = damageType;
 	}
 
 	// test constructor
@@ -87,15 +94,27 @@ public class Character {
 	public int getStrength(){
 		return this.strength;
 	}
+	
+	public void addStrength(int strength) {
+		this.strength = this.strength + strength;
+	}
 
 	public int getDexterity(){
 		return this.dexterity;
+	}
+	
+	public void addDexterity(int dexterity) {
+		this.dexterity = this.dexterity + dexterity;
 	}
 
 	public int getMaxHealth(){
 		return this.maxHealth;
 	}
-
+	
+	public void addMaxHealth(int health) {
+		this.maxHealth = this.maxHealth + health; 
+	}
+	
 	public int getCurrentHealth(){
 		return this.currentHealth;
 	}
@@ -124,6 +143,14 @@ public class Character {
 		this.gold = this.gold + gold;
 	}
 
+	public DamageType getDamageType() {
+		return this.damageType;
+	}
+	
+	public void setDamageType(DamageType damageType) {
+		this.damageType = damageType;
+	}
+	
 	public void death() {
 		this.currentHealth = this.maxHealth;
 		this.gold = (int)(this.gold * .5);
@@ -133,12 +160,19 @@ public class Character {
 	public void gainExperience(int experience){
 		this.currentExperience = this.currentExperience + experience;
 		if(currentExperience >= maxExperience){
-			this.level++;
-			this.currentExperience = this.currentExperience - this.maxExperience;
-			this.maxExperience = this.maxExperience*2;
+			this.gainLevel();
 		}
 	}
 
+	private void gainLevel() {
+		this.level++;
+		this.addStrength(10);
+		this.addMaxHealth(10);
+		this.currentHealth = this.maxHealth;
+		this.currentExperience = this.currentExperience - this.maxExperience;
+		this.maxExperience = this.maxExperience*2;
+	}
+	
 	public int calculateDamage() {
 		double maxDamage = this.strength * .2;
 		double damage = this.strength * .2  - ((Math.random()/4) * maxDamage);
@@ -203,7 +237,7 @@ public class Character {
 			this.currentHealth = this.maxHealth;
 	}
 
-	public void setGreatestEnemySlain(String creatureName) {
+	public void setGreatestEnemySlain(String creatureName, int creatureLevel) {
 		this.greatestEnemySlain = creatureName;
 	}
 

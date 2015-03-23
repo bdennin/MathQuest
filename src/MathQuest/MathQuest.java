@@ -1,6 +1,5 @@
 package MathQuest;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 
@@ -24,12 +23,17 @@ public class MathQuest
 	private static String username;
 	private static String password;
 	private static Character hero;
+	private static double volume;
+	
+	public static boolean isMuted;
 	
 	public MathQuest() {
 		initializeMathQuest();
 	}
 
 	private void initializeMathQuest() {
+		isMuted = false;
+		volume = 1;
 		outerFrame = new JFrame("MathQuest");
 		outerFrame.setSize(FRAME_DIMENSIONS);
 		outerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -98,9 +102,12 @@ public class MathQuest
 		hero = character;
 	}
 	
-	public static void disableComponents() {
-		for(Component el : outerFrame.getComponents()) 
-			el.setEnabled(false);
+	public static void setVolume(double gain) {
+		volume = gain;
+	}
+
+	public static double getVolume() {
+		return volume;
 	}
 	
 	public static void main(String[] args) {

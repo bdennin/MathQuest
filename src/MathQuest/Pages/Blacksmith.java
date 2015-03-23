@@ -313,7 +313,7 @@ public class Blacksmith extends Area {
 	
 	@Override
 	public OptionsPanel loadOptionsPanel() {
-		return new OptionsPanel(this.hero, true);
+		return new OptionsPanel(this, this.hero, true);
 	}
 
 	@Override

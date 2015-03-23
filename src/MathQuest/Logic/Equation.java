@@ -94,7 +94,7 @@ public class Equation {
 		int correctAnswer = Equation.solveEquation(equation);
 		
 		do {
-			wrongAnswer = (int)(correctAnswer + (correctAnswer * (Math.random() -.5)));
+			wrongAnswer = (int)(correctAnswer + (correctAnswer * ((Math.random() * 1.5) -.75)));
 		}
 		while(correctAnswer == wrongAnswer);
 		

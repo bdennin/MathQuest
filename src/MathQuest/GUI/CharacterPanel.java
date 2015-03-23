@@ -10,29 +10,31 @@ import javax.swing.JPanel;
 
 import MathQuest.Logic.Character;
 
+import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
 
 import java.awt.Color;
-import java.awt.Graphics;
 
 import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
 
 public class CharacterPanel extends JPanel {
 
-	private static final long serialVersionUID = 1L;
-	private ImageIcon background;			
+	private static final long serialVersionUID = 1L;		
 	private ImageIcon portrait;
 	private HealthBar healthBar;
 
 	public CharacterPanel(Character character, boolean isLevelDisplayed) {
-		setLayout(null);
-		this.setBounds(0, 0, 111, 149);
+		
+		this.setLayout(null);
+		this.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
+		this.setBounds(0, 0, 107, 144);
 		this.loadImages(character.getImagePath());
 
 		Integer level = character.getLevel();
 
 		healthBar = new HealthBar(character);
-		healthBar.setBounds(6, 115, 99, 28);
+		healthBar.setBounds(4, 112, 99, 28);
 		this.add(healthBar);
 
 		if(isLevelDisplayed) {
@@ -40,7 +42,7 @@ public class CharacterPanel extends JPanel {
 			JPanel levelPanel = new JPanel();
 			levelPanel.setLayout(null);
 			levelPanel.setBorder(new LineBorder(new Color(0, 0, 0)));
-			levelPanel.setBounds(12, 89, 22, 20);
+			levelPanel.setBounds(8, 89, 22, 20);
 			add(levelPanel);
 
 			JLabel levelLabel = new JLabel(level.toString());
@@ -51,7 +53,8 @@ public class CharacterPanel extends JPanel {
 		}
 
 		JLabel charPortrait = new JLabel();
-		charPortrait.setBounds(6, 6, 99, 109);
+		charPortrait.setBounds(4, 4, 99, 109);
+		charPortrait.setBorder(new LineBorder(new Color(0, 0, 0)));
 		add(charPortrait);
 		charPortrait.setIcon(this.portrait);
 	}

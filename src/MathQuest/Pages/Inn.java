@@ -48,12 +48,12 @@ public class Inn extends Area {
 		panel.add(options);
 		options.setLayout(null);
 		
-		showOptions();
+		showInnOptions();
 		
 		this.renderBackground();
 	}
 	
-	public void showOptions(){
+	public void showInnOptions(){
 		
 		options.removeAll();
 		
@@ -126,7 +126,7 @@ public class Inn extends Area {
 				}
 				else
 					scrollText.append("Oops. I don't have enough money pay for the Studio Suite! Return to lobby.\n");
-				showOptions();
+				showInnOptions();
 			}
 		});
 		studio.add(btnStudio);
@@ -149,7 +149,7 @@ public class Inn extends Area {
 				}
 				else 
 					scrollText.append("Oops. I don't have enough money pay for the Deluxe Suite! Return to lobby.\n");
-				showOptions();
+				showInnOptions();
 			}
 		});
 		deluxe.add(btnDeluxe);
@@ -172,7 +172,7 @@ public class Inn extends Area {
 				}
 				else 
 					scrollText.append("Oops. I don't have enough money pay for the Luxury Suite! Return to lobby.\n");
-				showOptions();
+				showInnOptions();
 			}
 		});
 		luxury.add(btnLuxury);
@@ -182,7 +182,7 @@ public class Inn extends Area {
 	}
 	@Override
 	public OptionsPanel loadOptionsPanel() {
-		return new OptionsPanel(this.hero, true);
+		return new OptionsPanel(this, this.hero, true);
 	}
 
 	@Override

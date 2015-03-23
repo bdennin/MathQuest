@@ -3,9 +3,7 @@ package MathQuest.Pages;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.border.LineBorder;
 
-import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -19,14 +17,26 @@ public class World extends Area {
 
 	private static final long serialVersionUID = 1L;
 
+	private JLabel innLabel;
+	private JLabel blacksmithLabel;
+	private JLabel killingFieldsLabel;
+	
+	private ImageIcon backgroundInnSelected;
+	private ImageIcon backgroundBlacksmithSelected;
+	private ImageIcon backgroundKillingFieldsSelected;
+	
 	public World(Character hero) {
-		
+
 		super(hero, "townMusic.mp3");
 		this.loadImages();
-		
-		final JLabel innLabel = new JLabel();
-		innLabel.setBounds(0, 0, 180, 650);
-		innLabel.setToolTipText("Travel to the inn!");
+		this.loadJLabels();
+		this.renderBackground();
+	}
+
+	public void loadJLabels() {
+
+		innLabel = new JLabel();
+		innLabel.setBounds(548, 157, 468, 439);
 		innLabel.addMouseListener(new MouseListener() {
 
 			@Override
@@ -47,19 +57,18 @@ public class World extends Area {
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				innLabel.setBorder(new LineBorder(Color.yellow));
+				backgroundLabel.setIcon(backgroundInnSelected);
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				innLabel.setBorder(null);
+				backgroundLabel.setIcon(background);
 			}
 		});
 		add(innLabel);
 
-		final JLabel blacksmithLabel = new JLabel();
-		blacksmithLabel.setBounds(660, 0, 363, 600);
-		blacksmithLabel.setToolTipText("Travel to the blacksmith!");
+		blacksmithLabel = new JLabel();
+		blacksmithLabel.setBounds(6, 161, 510, 435);
 		blacksmithLabel.addMouseListener(new MouseListener() {
 
 			@Override
@@ -80,19 +89,18 @@ public class World extends Area {
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				blacksmithLabel.setBorder(new LineBorder(Color.yellow));
+				backgroundLabel.setIcon(backgroundBlacksmithSelected);
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				blacksmithLabel.setBorder(null);
+				backgroundLabel.setIcon(background);
 			}
 		});
 		add(blacksmithLabel);
 
-		final JLabel killingFieldsLabel = new JLabel();
-		killingFieldsLabel.setBounds(250, 550, 300, 318);
-		killingFieldsLabel.setToolTipText("Travel to the killing fields!");
+		killingFieldsLabel = new JLabel();
+		killingFieldsLabel.setBounds(301, 540, 573, 217);
 		killingFieldsLabel.addMouseListener(new MouseListener() {
 
 			@Override
@@ -112,29 +120,37 @@ public class World extends Area {
 			}
 
 			public void mouseEntered(MouseEvent e) {
-				killingFieldsLabel.setBorder(new LineBorder(Color.yellow));
+				backgroundLabel.setIcon(backgroundKillingFieldsSelected);
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				killingFieldsLabel.setBorder(null);
+				backgroundLabel.setIcon(background);
 			}
 		});
 		add(killingFieldsLabel);
-		
-		this.renderBackground();
+	}
+
+	public void removeLabels() {
+		this.remove(blacksmithLabel);
+		this.remove(innLabel);
+		this.remove(killingFieldsLabel);
 	}
 	
 	public void loadImages() {
 		try {           
-			this.background = new ImageIcon(ImageIO.read(new File("gameworld.jpg")));
+			this.background = new ImageIcon(ImageIO.read(new File("world.jpg")));
+			this.backgroundInnSelected = new ImageIcon(ImageIO.read(new File("worldInnSelected.jpg")));
+			this.backgroundBlacksmithSelected = new ImageIcon(ImageIO.read(new File("worldBlacksmithSelected.jpg")));
+			this.backgroundKillingFieldsSelected = new ImageIcon(ImageIO.read(new File("worldKillingFieldsSelected.jpg")));
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public OptionsPanel loadOptionsPanel() {
-		return new OptionsPanel(this.hero, false);
+		return new OptionsPanel(this, this.hero, false);
 	}
 }
