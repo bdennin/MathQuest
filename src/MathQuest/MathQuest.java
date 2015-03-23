@@ -111,7 +111,7 @@ public class MathQuest{
 	}
 	
 	public static JFrame getOuterFrame(){
-		return outerFrame
+		return outerFrame;
 	}
 	public static void main(String[] args) {
 		EventQueue.invokeLater (

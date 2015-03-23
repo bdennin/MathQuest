@@ -19,16 +19,16 @@ import javax.swing.JButton;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Random;
+
 import javax.imageio.ImageIO;
+
 import javazoom.jlgui.basicplayer.BasicPlayer;
 import javazoom.jlgui.basicplayer.BasicPlayerException;
-
 import MathQuest.Database.Database;
 import MathQuest.MathQuest;
 import MathQuest.GUI.CharacterPanel;
@@ -38,6 +38,7 @@ import MathQuest.Logic.Equation;
 import MathQuest.Logic.Equation.Sign;
 import MathQuest.Logic.Equation.Digits;
 import MathQuest.Logic.Equation.Terms;
+import MathQuest.Pages.Area;
 
 import java.awt.Font;
 
@@ -88,7 +89,7 @@ public class Combat extends Area {
 	}
 
 	private void promptQuestion() {
-
+String question;
 		this.addTextToScrollPane("You try to find your opponents weakness.");
 		  if(MathQuest.connectToDatabase)
 		   question = Equation.constructEquation(Database.getFormular(creature.getLevel()));
@@ -96,6 +97,7 @@ public class Combat extends Area {
 		   question = Equation.constructEquation(Sign.ADDITION, Digits.ONE, Terms.TWO);
 		  this.answer = Equation.solveEquation(question);
 		Integer[] options = new Integer[3];
+		boolean correctAnswerAdded = false;
 		for(int i = 0; i < 3; i++) {
 
 			double random = Math.random();
@@ -253,7 +255,7 @@ public class Combat extends Area {
 			this.monsterAttack();
 		}
 	}
-//
+
 	private void monsterAttack() {
 
 		int damage = creature.calculateDamage();
