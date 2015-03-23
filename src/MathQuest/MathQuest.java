@@ -4,17 +4,17 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 
+import javafx.scene.media.MediaPlayer;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import MathQuest.Logic.Character;
 import MathQuest.Pages.*;
 
-public class MathQuest
-{
+public class MathQuest{
 	private static final Dimension FRAME_DIMENSIONS = new Dimension(1024, 768);
-	
-	public static JFrame outerFrame;
+	private static JFrame outerFrame;
 	private static JPanel contentPane;
 	private static String username;
 	private static String password;
@@ -110,6 +110,9 @@ public class MathQuest
 			el.setEnabled(false);
 	}
 	
+	public static JFrame getOuterFrame(){
+		return outerFrame
+	}
 	public static void main(String[] args) {
 		EventQueue.invokeLater (
 				new Runnable() {

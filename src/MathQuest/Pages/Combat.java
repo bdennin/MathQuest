@@ -1,15 +1,33 @@
 package MathQuest.Pages;
 
+
 import javax.swing.*;
 
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JButton;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Random;
 import javax.imageio.ImageIO;
-import javax.script.ScriptException;
+import javazoom.jlgui.basicplayer.BasicPlayer;
+import javazoom.jlgui.basicplayer.BasicPlayerException;
 
 import MathQuest.Database.Database;
 import MathQuest.MathQuest;
@@ -21,82 +39,46 @@ import MathQuest.Logic.Equation.Sign;
 import MathQuest.Logic.Equation.Digits;
 import MathQuest.Logic.Equation.Terms;
 
+import java.awt.Font;
+
 public class Combat extends Area {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
+	private BasicPlayer mediaPlayer; 
+	private BasicPlayer soundPlayer;
 	private CharacterPanel monsterPanel;
+	private JPanel combatOptions;
+	private ImageIcon victoryIcon;
+	private ImageIcon defeatIcon;
 	private JTextArea scrollText;
 	private Character hero;
 	private Character creature;
+	private String creatureName;
+	private Integer answer;
 
 	public Combat(Character hero, Character creature) {
-		
 		super(hero);
 		this.loadImages();
 		this.hero = hero;
 		this.creature = creature;
+		this.creatureName = creature.getName();
+		
+		this.initializeMusic();
 		
 		this.monsterPanel = loadMonsterPanel(this.creature);
 		add(monsterPanel);
 
-		JPanel combatPanel = new JPanel();
-		combatPanel.setBounds(150, 590, 724, 150);
-		add(combatPanel);
-		combatPanel.setLayout(null);
-
-		JPanel combatOptions = new JPanel();
-		combatOptions.setBounds(429, 6, 289, 138);
-		combatPanel.add(combatOptions);
+		this.combatOptions = new JPanel();
+		this.loadCombatOptions();
+		combatOptions.setBounds(587, 612, 288, 82);
 		combatOptions.setLayout(null);
+		add(combatOptions);
 
-		JPanel attackPanel = new JPanel();
-		attackPanel.setBounds(6, 6, 88, 126);
-		combatOptions.add(attackPanel);
-		attackPanel.setLayout(new GridLayout(1, 0, 0, 0));
+		JPanel combatLog = this.loadCombatLog();
+		combatLog.setBounds(174, 555, 338, 177);
+		add(combatLog);
 
-		JButton btnAttack = new JButton("Attack");
-		btnAttack.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				attack();
-			}
-		});
-		attackPanel.add(btnAttack);
-
-		JPanel potionPanel = new JPanel();
-		potionPanel.setBounds(100, 6, 88, 126);
-		combatOptions.add(potionPanel);
-		potionPanel.setLayout(new GridLayout(1, 0, 0, 0));
-
-		JButton btnUsePotion = new JButton("Use Potion");
-		potionPanel.add(btnUsePotion);
-
-		JPanel runPanel = new JPanel();
-		runPanel.setBounds(194, 6, 88, 126);
-		combatOptions.add(runPanel);
-		runPanel.setLayout(new GridLayout(1, 0, 0, 0));
-
-		JButton btnRunAway = new JButton("Run Away");
-		btnRunAway.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				MathQuest.switchToGameWorld();
-			}
-		});
-		runPanel.add(btnRunAway);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(6, 6, 417, 138);
-		combatPanel.add(scrollPane);
-
-		this.scrollText = new JTextArea();
-		this.scrollText.setEditable(false);
-		this.scrollText.setLineWrap(true);
-		this.scrollText.setWrapStyleWord(true);
-		scrollPane.setViewportView(scrollText);
-		this.scrollText.append("You have entered combat!  It is your turn to act...");
-		
 		this.renderBackground();
 	}
 
@@ -105,22 +87,162 @@ public class Combat extends Area {
 		this.scrollText.append(text);
 	}
 
-	private void attack() {
-		
-		this.toggleElements();
-		boolean hasBonusDamage = this.promptQuestion();
-		this.toggleElements();
-		
+	private void promptQuestion() {
+
+		this.addTextToScrollPane("You try to find your opponents weakness.");
+		  if(MathQuest.connectToDatabase)
+		   question = Equation.constructEquation(Database.getFormular(creature.getLevel()));
+		  else
+		   question = Equation.constructEquation(Sign.ADDITION, Digits.ONE, Terms.TWO);
+		  this.answer = Equation.solveEquation(question);
+		Integer[] options = new Integer[3];
+		for(int i = 0; i < 3; i++) {
+
+			double random = Math.random();
+
+			if(random <  .33 && !correctAnswerAdded || i == 2 && !correctAnswerAdded) {
+				correctAnswerAdded = true;
+				options[i] = this.answer;
+			}
+			else {
+				options[i] = Equation.generateWrongAnswer(question);
+			}
+		}
+
+		this.reloadCombatOptions(options);
+		this.addTextToScrollPane("Solve: " + question);
+	}
+
+	private JPanel loadCombatLog() {
+
+		JPanel combatLog = new JPanel();
+		combatLog.setBounds(174, 555, 338, 177);
+		combatLog.setLayout(null);
+
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(6, 21, 326, 149);
+		combatLog.add(scrollPane);
+
+		this.scrollText = new JTextArea();
+		scrollPane.setViewportView(scrollText);
+		this.scrollText.setEditable(false);
+		this.scrollText.setLineWrap(true);
+		this.scrollText.setWrapStyleWord(true);
+		this.scrollText.append("You have entered combat!  It is your turn to act.");
+
+		JLabel combatLogLabel = new JLabel("Combat Log");
+		combatLogLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 12));
+		combatLogLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		combatLogLabel.setBounds(0, 0, 338, 22);
+		combatLog.add(combatLogLabel);
+		return combatLog;
+	}
+
+	private void loadCombatOptions() {
+
+		JButton attackButton = new JButton("Attack");
+		attackButton.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
+		attackButton.setBounds(6, 6, 88, 70);
+		attackButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				promptQuestion();
+			}
+		});
+		combatOptions.add(attackButton);
+
+		JButton runAwayButton = new JButton("<html><center>Run<br/>Away</center></html>");
+		runAwayButton.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
+		runAwayButton.setBounds(194, 6, 88, 70);
+		runAwayButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				stopMusic();
+				MathQuest.switchToGameWorld();
+			}
+		});
+		combatOptions.add(runAwayButton);
+
+		JButton usePotionButton = new JButton("<html><center>Use<br/>Potion</center></html>");
+		usePotionButton.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
+		usePotionButton.setBounds(100, 6, 88, 70);		
+		combatOptions.add(usePotionButton);
+
+		this.revalidate();
+		this.repaint();
+	}
+
+	private void reloadCombatOptions(final Integer[] mathAnswers) {
+
+		this.combatOptions.removeAll();
+
+		if(null == mathAnswers) {
+			loadCombatOptions();
+		}
+		else {
+
+			JButton answerOne = new JButton(mathAnswers[0].toString());
+			answerOne.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
+			answerOne.setBounds(6, 6, 88, 70);
+			answerOne.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					attack(mathAnswers[0]);
+					reloadCombatOptions(null);
+				}
+			});
+			combatOptions.add(answerOne);
+
+			JButton answerTwo = new JButton(mathAnswers[1].toString());
+			answerTwo.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
+			answerTwo.setBounds(194, 6, 88, 70);
+			answerTwo.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					attack(mathAnswers[1]);
+					reloadCombatOptions(null);
+				}
+			});
+			combatOptions.add(answerTwo);
+
+			JButton answerThree = new JButton(mathAnswers[2].toString());
+			answerThree.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
+			answerThree.setBounds(100, 6, 88, 70);	
+			answerThree.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					attack(mathAnswers[2]);
+					reloadCombatOptions(null);
+				}
+			});
+			combatOptions.add(answerThree);
+		}
+
+		this.revalidate();
+		this.repaint();
+	}
+
+	private void attack(Integer answer) {
 		int damage = hero.calculateDamage();
-		
-		if(hasBonusDamage) {
+		String creatureName = creature.getName();
+
+		this.addTextToScrollPane("You answered " + answer + ".");
+
+		if(answer == this.answer) {
+			this.addTextToScrollPane("Correct! You strike your enemy with great power!");
+			hero.incrementAnsweredCorrectly();
 			damage = 2 * damage;
-			this.addTextToScrollPane("You strike incredibly hard!");
+		}
+		else {
+			this.addTextToScrollPane("Good try, but the correct answer was " + this.answer + ".");
+			hero.incrementAnsweredIncorrectly();
 		}
 		
-		String output = new String("You attack a " + creature.getName() + " for " + damage + " points of damage.");
-		this.addTextToScrollPane(output);
+		this.playAttackSound(damage);
 		
+		String output = new String("You attack a " + this.creatureName + " for " + damage + " points of damage.");
+		this.addTextToScrollPane(output);
+
 		creature.takeDamage(damage);
 		this.reloadMonsterPanel();
 		
@@ -131,84 +253,36 @@ public class Combat extends Area {
 			this.monsterAttack();
 		}
 	}
-
-	private boolean promptQuestion() {
-		String question;
-		if(MathQuest.connectToDatabase)
-			question = Equation.constructEquation(Database.getFormular(creature.getLevel()));
-		else
-			question = Equation.constructEquation(Sign.ADDITION, Digits.ONE, Terms.TWO);
-		int answer = Equation.solveEquation(question);
-		Object[] options = new Object[4];
-		boolean correctAnswerAdded = false;
-		boolean correctAnswerChosen;
-		
-		for(int i = 0; i < 4; i++) {
-			
-			double random = Math.random();
-			
-			if(random <  .25 && !correctAnswerAdded || i == 3 && !correctAnswerAdded) {
-				correctAnswerAdded = true;
-				options[i] = answer;
-			}
-			else {
-				options[i] = Equation.generateWrongAnswer(question);
-			}
-		}
-		
-		int outcome = JOptionPane.showOptionDialog(
-				this, 
-				new JLabel(question, JLabel.CENTER),
-				"Solve for Bonus Damage\n", 
-				JOptionPane.YES_NO_CANCEL_OPTION, 
-				JOptionPane.PLAIN_MESSAGE, 
-				null, 
-				options, 
-				null);
-		
-		if((int)options[outcome] == answer) {
-			correctAnswerChosen = true;
-			JOptionPane.showMessageDialog(this, 
-					new JLabel("You gain double damage on your next attack!", JLabel.CENTER), 
-					"Correct", 
-					JOptionPane.PLAIN_MESSAGE);
-		}
-		else {
-			correctAnswerChosen = false;
-			JOptionPane.showMessageDialog(this, 
-					new JLabel("The correct answer was " + answer + ".", JLabel.CENTER), 
-					"Good Try", 
-					JOptionPane.PLAIN_MESSAGE);
-		}
-		return correctAnswerChosen;
-	}
-
-	
-	
+//
 	private void monsterAttack() {
-		
+
 		int damage = creature.calculateDamage();
 
+		this.playAttackSound(damage);
+		
 		String output = "A " + creature.getName() + " attacks YOU for " + damage + " points of damage.";
 		this.addTextToScrollPane(output);
 		MathQuest.getCharacter().takeDamage(damage);
 		this.reloadCharacterPanel();
-
+		
 		if(MathQuest.getCharacter().getCurrentHealth() <= 0) {
 			this.defeat();
+		}
+		else {
+			this.addTextToScrollPane("It is your turn to act.");
 		}
 	}
 	
 	private CharacterPanel loadMonsterPanel(Character monster) {
 
-		CharacterPanel monsterPanel = new CharacterPanel(monster);
+		CharacterPanel monsterPanel = new CharacterPanel(monster, false);
 		monsterPanel.setLayout(null);
 		monsterPanel.setBounds(907, 6, 111, 149);
 		return monsterPanel;
 	}
 
 	private void reloadMonsterPanel() {
-		
+
 		if(this.monsterPanel != null)
 			this.remove(this.monsterPanel);
 		this.monsterPanel = loadMonsterPanel(this.creature);
@@ -218,44 +292,117 @@ public class Combat extends Area {
 	}
 
 	private void victory() {
+
+		this.stopMusic();
+		try {
+			mediaPlayer.open(new URL("file:///" + System.getProperty("user.dir").replace("\\", "/") + "/victory.mp3"));
+			mediaPlayer.play();
+		}
+		catch(BasicPlayerException | MalformedURLException e) {
+			e.printStackTrace();
+		}
 		
 		int experience = (int)(creature.getMaxExperience() * .5);
 		int gold = creature.getGold();
 		hero.addGold(gold);
 		hero.gainExperience(experience);
-		
+
+		String victoryString = String
+				.format("<html>You are victorious! You check your<br/>enemy for gold and head back to<br/>town. You receive:<br/><Center><br/>%d XP<br/>%d Gold<br/></Center></html>", experience, gold);
+
 		JOptionPane.showMessageDialog(this, 
-				new JLabel("You are victorious! You have gained: \n"
-						+ experience + "experience points\n"
-						+ gold + "gold", JLabel.CENTER), 
+				new JLabel(victoryString, JLabel.CENTER), 
 				"Victory", 
-				JOptionPane.PLAIN_MESSAGE);
-		
+				JOptionPane.PLAIN_MESSAGE,
+				victoryIcon);
+
+		this.stopMusic();
 		MathQuest.switchToGameWorld();
 	}
 
 	private void defeat() {
-	
+		
+		this.stopMusic();
+		try {
+			mediaPlayer.open(new URL("file:///" + System.getProperty("user.dir").replace("\\", "/") + "/defeat.mp3"));
+			mediaPlayer.play();
+		}
+		catch(BasicPlayerException | MalformedURLException e) {
+			e.printStackTrace();
+		}
 		hero.death();
-		
+
 		JOptionPane.showMessageDialog(this, 
-				new JLabel("You are defeated! You have lost gold and experience!", JLabel.CENTER), 
+				new JLabel("<html>You have been defeated in battle!<br/>A good samaritan finds you and<br/>nurses you back to health. You<br/>have lost gold and experience!</html>", JLabel.CENTER), 
 				"Defeat", 
-				JOptionPane.PLAIN_MESSAGE);
-		
+				JOptionPane.PLAIN_MESSAGE,
+				defeatIcon);
+
+		this.stopMusic();
 		MathQuest.switchToGameWorld();
 	}
 
+	private void initializeMusic() {
+		Random random = new Random();
+		String combatMusic = System.getProperty("user.dir").replace("\\", "/") + "/combatMusic" + (random.nextInt(3) + 1) + ".mp3";
+		this.mediaPlayer = new BasicPlayer();
+		this.soundPlayer = new BasicPlayer();
+		
+		try {
+			mediaPlayer.open(new URL("file:///" + combatMusic));
+			mediaPlayer.play();
+		}
+		catch(BasicPlayerException | MalformedURLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void stopMusic() {
+		try {
+			this.mediaPlayer.stop();
+		} catch (BasicPlayerException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void playAttackSound(int damage) {
+		
+		String combatSound;
+		
+		if (damage == 0) {
+			combatSound = System.getProperty("user.dir").replace("\\", "/") + "/swordMiss.mp3";
+		}
+		else {
+			Random random = new Random();
+			combatSound = System.getProperty("user.dir").replace("\\", "/") + "/sword" + (random.nextInt(3) + 1) + ".mp3";
+		}
+		
+		try {
+			soundPlayer.open(new URL("file:///" + combatSound));
+			soundPlayer.play();
+		}
+		catch(BasicPlayerException | MalformedURLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	@Override
 	public OptionsPanel loadOptionsPanel() {
 		return null;
 	}
-
+	
 	@Override
 	public void loadImages() {
 
+		Random random = new Random();
+		Integer pictureNumber = random.nextInt(7) + 1;
+		String imagePath = "combat" + pictureNumber + ".jpg";
+
 		try {                
-			this.background = new ImageIcon(ImageIO.read(new File("combat.jpg")));
+			this.background = new ImageIcon(ImageIO.read(new File(imagePath)));
+			this.victoryIcon = new ImageIcon(ImageIO.read(new File("victoryIcon.png")));
+			this.defeatIcon = new ImageIcon(ImageIO.read(new File("defeatIcon.png")));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}	
