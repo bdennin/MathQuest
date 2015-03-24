@@ -7,12 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import MathQuest.Logic.Character;
-import MathQuest.Pages.Blacksmith;
-import MathQuest.Pages.Combat;
-import MathQuest.Pages.Inn;
-import MathQuest.Pages.KillingFields;
-import MathQuest.Pages.Login;
-import MathQuest.Pages.World;
+import MathQuest.Pages.*;
+
 
 public class MathQuest
 {
@@ -24,9 +20,9 @@ public class MathQuest
 	private static String password;
 	private static Character hero;
 	private static double volume;
-	
+	public static boolean connectToDatabase = true;
 	public static boolean isMuted;
-	
+
 	public MathQuest() {
 		initializeMathQuest();
 	}
@@ -46,6 +42,18 @@ public class MathQuest
 
 	public static Dimension getDimensions() {
 		return FRAME_DIMENSIONS;
+	}
+
+	public static void switchToAdminMain(){
+		contentPane = new AdminMain();
+		outerFrame.setContentPane(contentPane);
+		contentPane.revalidate();
+	}
+
+	public static void switchToAdminFomularSetting(int Id){
+		contentPane = new AdminFormularSetting(Id);
+		outerFrame.setContentPane(contentPane);
+		contentPane.revalidate();
 	}
 
 	public static void switchToGameWorld() {
@@ -81,27 +89,27 @@ public class MathQuest
 	public static String getUsername() {
 		return username;
 	}
-	
+
 	public static void setUsername(String name) {
 		username = name;
 	}
-	
+
 	public static String getPassword() {
 		return password;
 	}
-	
+
 	public static void setPassword(String pass) {
 		password = pass;
 	}
-	
+
 	public static Character getCharacter() {
 		return hero;
 	}
-	
+
 	public static void setCharacter(Character character) {
 		hero = character;
 	}
-	
+
 	public static void setVolume(double gain) {
 		volume = gain;
 	}
@@ -109,7 +117,10 @@ public class MathQuest
 	public static double getVolume() {
 		return volume;
 	}
-	
+
+	public static JFrame getOuterFrame(){
+		return outerFrame;
+	}
 	public static void main(String[] args) {
 		EventQueue.invokeLater (
 				new Runnable() {

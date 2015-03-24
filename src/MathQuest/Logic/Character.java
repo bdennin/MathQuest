@@ -68,8 +68,9 @@ public class Character {
 		this.maxHealth = 10;
 		this.level = 1;
 		this.armor = 0;
-		this.imagePath = "char.jpg";
+		this.imagePath = "char2.jpg";
 		this.name = "Hero#1";
+		this.damageType = DamageType.SLASHING;
 	}
 
 	public Character(Integer[] charStats) {
@@ -80,7 +81,8 @@ public class Character {
 		maxHealth = level * 10;
 		strength = 10 + 2 * level;
 		maxExperience = (int)(10 * Math.pow(2, level));
-		this.imagePath = "char.jpg";
+		this.imagePath = "char2.jpg";
+		this.damageType = DamageType.SLASHING;
 	}
 
 	public int getMaxExperience(){

@@ -18,7 +18,7 @@ public class Equation {
 			return this.sign;
 		}
 	}
-	
+
 	public enum Digits {
 		ONE(1), TWO(2), THREE(3), FOUR(4);
 		private int digits;
@@ -28,10 +28,28 @@ public class Equation {
 		public int getDigits() {
 			return this.digits;
 		}
+		public String getString(){
+			switch(digits){
+			case 1: return "ONE";
+			case 2: return "TWO";
+			case 3: return "THREE";
+			case 4: return "FOUR";
+			default: return null;
+			}
+		}
+		public static int getDigits(String digit){
+			switch(digit){
+			case "ONE": return 1;
+			case "TWO": return 2;
+			case "THREE": return 3;
+			case "FOUR": return 4;
+			default: return 1;
+			}
+		}
 	}
 
 	public enum Terms {
-		ONE(1), TWO(2), THREE(3), FOUR(4), FIVE(5);
+		TWO(2), THREE(3), FOUR(4), FIVE(5);
 		private int terms;
 		Terms(int terms) {
 			this.terms = terms;
@@ -39,18 +57,50 @@ public class Equation {
 		public int getTerms(){
 			return this.terms;
 		}
+		public String getString(){
+			switch(terms){
+			case 2: return "TWO";
+			case 3: return "THREE";
+			case 4: return "FOUR";
+			case 5: return "FIVE";
+			default: return null;
+			}
+		}
+		public static int getTerms(String term){
+			switch(term){
+			case "TWO": return 2;
+			case "THREE": return 3;
+			case "FOUR": return 4;
+			case "FIVE": return 5;
+			default: return 2;
+			}
+		}
 	}
-	
+
 	private static final Random RANDOM = new Random();
 	private static final ScriptEngineManager MANAGER = new ScriptEngineManager();
-    private static final ScriptEngine ENGINE = MANAGER.getEngineByName("JavaScript");
-   
+	private static final ScriptEngine ENGINE = MANAGER.getEngineByName("JavaScript");
+
 	public static String constructEquation(Sign sign, Digits digits, Terms terms) {
-		
-		StringBuilder stringConstructor = new StringBuilder(50);
+
+		String signThreshold = sign.getSign();
 		int termsThreshold = terms.getTerms();
 		int digitsThreshold = digits.getDigits();
-		
+
+		return constructEquation(signThreshold,digitsThreshold,termsThreshold);
+
+	}
+
+	public static String constructEquation(String[] settings) {
+		String signThreshold = settings[0];
+		int digitsThreshold = Digits.getDigits(settings[1]);
+		int termsThreshold = Terms.getTerms(settings[2]);
+
+		return constructEquation(signThreshold,digitsThreshold,termsThreshold);
+	}
+
+	private static String constructEquation(String sign, int digitsThreshold, int termsThreshold){
+		StringBuilder stringConstructor = new StringBuilder(50);
 		for(int i = 0; i < termsThreshold; i++) {
 			for(int j = 0; j < digitsThreshold; j++) {
 				int random;
@@ -58,10 +108,10 @@ public class Equation {
 					random = RANDOM.nextInt(10);
 				}
 				while(j == 0 && random == 0);
-				
+
 				stringConstructor.append(random);
 				if(j == digitsThreshold - 1 && i != termsThreshold - 1) {
-					if(sign == Sign.BOTH) {
+					if(sign.equals("+/-")) {
 						random = RANDOM.nextInt(2);
 						if(random == 1)
 							stringConstructor.append("+");
@@ -69,35 +119,36 @@ public class Equation {
 							stringConstructor.append("-");
 					}
 					else {
-						stringConstructor.append(sign.getSign());
+						stringConstructor.append(sign);
 					}
 				}
 			}
 		}
 		return stringConstructor.toString().trim();
 	}
-	
+
 	public static int solveEquation(String equation) {
 		Integer answer = null;
 		try {
-			answer = (Integer)ENGINE.eval(equation);
-			
+			answer = (Integer) ENGINE.eval(equation);
+
 		} catch (ScriptException e) {
-			
+
 			e.printStackTrace();
 		}
 		return answer.intValue();
 	}
-	
+
 	public static int generateWrongAnswer(String equation) {
 		int wrongAnswer;
 		int correctAnswer = Equation.solveEquation(equation);
-		
+
 		do {
-			wrongAnswer = (int)(correctAnswer + (correctAnswer * ((Math.random() * 1.5) -.75)));
+			wrongAnswer = (int)(correctAnswer + (correctAnswer * (Math.random() -.5)));
 		}
 		while(correctAnswer == wrongAnswer);
-		
+
 		return wrongAnswer;
 	}
+
 }

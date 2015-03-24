@@ -2,8 +2,10 @@ package MathQuest.Logic;
 
 import MathQuest.GUI.Inventory;
 
-import java.lang.Math;
 
+
+import java.awt.Color;
+import java.lang.Math;
 import java.util.ArrayList;
 
 public class Item {
@@ -11,7 +13,9 @@ public class Item {
 	boolean loopPrevention = true;
 	
 	boolean itemDropped;
+	
 	 String itemName;
+	 Color color;
 	 int itemLevel = 1;
 	 int dmg = 0;
 	 int str = 0;
@@ -20,8 +24,10 @@ public class Item {
 	 int gold = 0;
 	 int speed = 0;
 	 
+	 
 	 public Item(){
 		 
+		this.color = Color.white;
 		itemName = "Terrible Item";
 		itemLevel = 1;
 		dmg = 0;
@@ -33,7 +39,9 @@ public class Item {
 			
 	 }
 	 
+	 
 	 public Item(int monsterLvl, int catagoryNumber){
+		 
 		 
 		 this.itemLevel = monsterLvl;
 		 if (loopPrevention == true || catagoryNumber == 0)
@@ -62,6 +70,7 @@ public class Item {
 				System.out.println("No basic items");
 			else{
 				Item basicItem = new Item(monsterLvl, 1);
+				this.color = Color.white;
 				itemsDropped.add(basicItem);
 			}
 			
@@ -69,6 +78,7 @@ public class Item {
 				System.out.println("No rare Items");
 			else{
 				Item rareItem = new Item(monsterLvl, 2);
+				this.color = Color.green;
 				itemsDropped.add(rareItem);
 			}
 			
@@ -76,6 +86,7 @@ public class Item {
 				System.out.println("No epic items");
 			else{
 				Item epicItem = new Item(monsterLvl, 3);
+				this.color = Color.blue;
 				itemsDropped.add(epicItem);
 			}
 			
@@ -83,6 +94,7 @@ public class Item {
 				System.out.println("No legendary items");
 			else{
 				Item legendaryItem = new Item(monsterLvl, 4);
+				this.color = Color.orange;
 				itemsDropped.add(legendaryItem);
 			}
 			
@@ -297,7 +309,7 @@ public class Item {
 	private void cracked(){
 		this.str = 1;
 		this.dex = 1;
-		this.itemName = "Cracked";
+		this.itemName = "Cracked ";
 		this.gold = 50;
 	}
 	 
@@ -305,7 +317,7 @@ public class Item {
 	private void damaged(){
 		this.str = 2;
 		this.dex = 1;
-		this.itemName = "Damaged";
+		this.itemName = "Damaged ";
 		this.gold = 50;
 	}
 	
@@ -313,7 +325,7 @@ public class Item {
 	private void wornOut(){
 		this.str = 1;
 		this.dex = 2;
-		this.itemName = "Worn out";
+		this.itemName = "Worn out ";
 		this.gold = 50;
 	}
 	
@@ -321,7 +333,7 @@ public class Item {
 	private void squishy(){
 		this.str = 2;
 		this.dex = 2;
-		this.itemName = "Squishy";
+		this.itemName = "Squishy ";
 		this.gold = 50;
 	}
 	
@@ -329,7 +341,7 @@ public class Item {
 	private void tiny(){
 		this.str = 0;
 		this.dex = 3;
-		this.itemName = "Tiny";
+		this.itemName = "Tiny ";
 		this.gold = 50;
 	}
 	
@@ -429,7 +441,7 @@ public class Item {
 		 this.dmg = this.dmg * 15;
 		 this.str = 18;
 		 this.dex = 12;
-		 this.itemName = "Amazing";
+		 this.itemName = "Amazing ";
 		 this.gold = 100;
 	 }
 	 
@@ -438,7 +450,7 @@ public class Item {
 		 this.dmg = this.dmg * 12;
 		 this.str = 12;
 		 this.dex = 18;
-		 this.itemName = "Spectacular";
+		 this.itemName = "Spectacular ";
 		 this.gold = 100;
 	 }
 	 
@@ -447,7 +459,7 @@ public class Item {
 		 this.dmg = this.dmg * 14;
 		 this.str = 15;
 		 this.dex = 15;
-		 this.itemName = "Fantastic";
+		 this.itemName = "Fantastic ";
 		 this.gold = 100;
 	 }
 	 
@@ -456,7 +468,7 @@ public class Item {
 		 this.dmg = this.dmg * 20;
 		 this.str = 20;
 		 this.dex = 12;
-		 this.itemName = "Super";
+		 this.itemName = "Super ";
 		 this.gold = 100;
 	 }
 	 
@@ -465,7 +477,7 @@ public class Item {
 		 this.dmg = this.dmg * 12;
 		 this.str = 12;
 		 this.dex = 20;
-		 this.itemName = "Wonderful";
+		 this.itemName = "Wonderful ";
 		 this.gold = 100;
 	 }
 	 
@@ -549,10 +561,6 @@ public class Item {
 			return this.itemLevel;
 		}
 		
-		public String getItemName(){
-			return this.itemName;
-		}
-		
 		public int getItemDmg(){
 			return this.dmg;
 		}
@@ -576,5 +584,13 @@ public class Item {
 		public int getItemGold(){
 			return this.gold;
 		}
-
+		
+		public String toString(){
+			return this.itemName;
+		}
+		
+		public Color getColor(){
+			return this.color;
+		}
+		
 }

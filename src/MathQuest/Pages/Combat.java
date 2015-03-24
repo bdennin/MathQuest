@@ -24,6 +24,7 @@ import javax.imageio.ImageIO;
 
 import javazoom.jlgui.basicplayer.BasicPlayerException;
 import MathQuest.MathQuest;
+import MathQuest.Database.Database;
 import MathQuest.GUI.CharacterPanel;
 import MathQuest.GUI.OptionsPanel;
 import MathQuest.Logic.Character;
@@ -86,7 +87,11 @@ public class Combat extends Area {
 	private void promptQuestion() {
 
 		this.addTextToScrollPane("You try to find your opponent's weakness.");
-		String question = Equation.constructEquation(Sign.ADDITION, Digits.ONE, Terms.TWO);
+		String question;
+		  if(MathQuest.connectToDatabase)
+		   question = Equation.constructEquation(Database.getFormular(creature.getLevel()));
+		  else
+		   question = Equation.constructEquation(Sign.ADDITION, Digits.ONE, Terms.TWO);
 		this.answer = Equation.solveEquation(question);
 		ArrayList<Integer> options = new ArrayList<Integer>();
 		boolean correctAnswerAdded = false;
