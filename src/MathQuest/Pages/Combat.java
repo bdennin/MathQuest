@@ -86,7 +86,7 @@ public class Combat extends Area {
 	private void promptQuestion() {
 
 		this.addTextToScrollPane("You try to find your opponent's weakness.");
-		String question = Equation.constructEquation(Sign.ADDITION, Digits.ONE, Terms.TWO);
+		String question = Equation.constructEquation(Sign.SUBTRACTION, Digits.ONE, Terms.TWO);
 		this.answer = Equation.solveEquation(question);
 		ArrayList<Integer> options = new ArrayList<Integer>();
 		boolean correctAnswerAdded = false;

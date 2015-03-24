@@ -25,6 +25,13 @@ public class OptionsPanel extends JPanel {
 
 		JButton inventoryButton = new JButton("Inventory");
 		inventoryButton.setBounds(3, 3, 125, 29);
+		inventoryButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		this.add(inventoryButton);
 
 		JButton button = new JButton();
@@ -33,6 +40,7 @@ public class OptionsPanel extends JPanel {
 		if(hasReturn) {
 			button.setText("Return");
 			button.addActionListener(new ActionListener() {
+				
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					Area.stopMusic();
@@ -43,6 +51,7 @@ public class OptionsPanel extends JPanel {
 		else {
 			button.setText("Options");
 			button.addActionListener(new ActionListener() {
+				
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					World world = (World)frame;
@@ -57,6 +66,7 @@ public class OptionsPanel extends JPanel {
 		JButton quitButton = new JButton("Quit");
 		quitButton.setBounds(3, 61, 125, 29);
 		quitButton.addActionListener(new ActionListener() {
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);

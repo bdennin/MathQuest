@@ -1,6 +1,6 @@
 package MathQuest.Logic;
 
-import MathQuest.GUI.Inventory;
+import MathQuest.GUI.InventoryPanel;
 
 import java.lang.Math;
 

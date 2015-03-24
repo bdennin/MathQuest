@@ -1,7 +1,5 @@
 package MathQuest.Logic;
 
-import MathQuest.GUI.Inventory;
-
 public class Character {
 
 	public enum DamageType {
