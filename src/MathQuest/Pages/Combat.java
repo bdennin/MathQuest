@@ -24,6 +24,7 @@ import javax.imageio.ImageIO;
 
 import javazoom.jlgui.basicplayer.BasicPlayerException;
 import MathQuest.MathQuest;
+import MathQuest.Database.Database;
 import MathQuest.GUI.CharacterPanel;
 import MathQuest.GUI.OptionsPanel;
 import MathQuest.Logic.Character;
@@ -86,7 +87,13 @@ public class Combat extends Area {
 	private void promptQuestion() {
 
 		this.addTextToScrollPane("You try to find your opponent's weakness.");
-		String question = Equation.constructEquation(Sign.SUBTRACTION, Digits.ONE, Terms.TWO);
+		
+		String question;
+		if(MathQuest.connectToDatabase)
+			question = Equation.constructEquation(Database.getFormular(creature.getLevel()));
+		else
+			question = Equation.constructEquation(Sign.ADDITION, Digits.ONE, Terms.TWO);
+		
 		this.answer = Equation.solveEquation(question);
 		ArrayList<Integer> options = new ArrayList<Integer>();
 		boolean correctAnswerAdded = false;
@@ -169,7 +176,7 @@ public class Combat extends Area {
 		usePotionButton.setBounds(90, 3, 88, 70);		
 		combatOptions.add(usePotionButton);
 		combatOptions.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
-		
+
 		this.revalidate();
 		this.repaint();
 	}
@@ -234,7 +241,7 @@ public class Combat extends Area {
 			this.addTextToScrollPane("Correct! You strike your enemy with great power!");
 			hero.incrementAnsweredCorrectly();
 			damage = 2 * damage;
-			
+
 			String filePath = "file:///" + System.getProperty("user.dir").replace("\\", "/") + "/quadDamage.mp3";
 			try {
 				effectPlayer.open(new URL(filePath));
@@ -336,7 +343,7 @@ public class Combat extends Area {
 
 		stopMusic();
 		String filePath = "file:///" + System.getProperty("user.dir").replace("\\", "/") + "/defeat.mp3";
-		
+
 		try {
 			musicPlayer.open(new URL(filePath));
 			musicPlayer.play();
@@ -344,7 +351,7 @@ public class Combat extends Area {
 		catch(BasicPlayerException | MalformedURLException e) {
 			e.printStackTrace();
 		}
-		
+
 		hero.death();
 
 		JOptionPane.showMessageDialog(this, 
@@ -420,7 +427,7 @@ public class Combat extends Area {
 			this.potionIcon = new ImageIcon(ImageIO.read(new File("potion.png")));
 			this.attackIcon = new ImageIcon(ImageIO.read(new File("attack.png")));
 			this.runAwayIcon = new ImageIcon(ImageIO.read(new File("runAway.png")));
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}	
