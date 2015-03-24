@@ -13,6 +13,6 @@
 	<classpathentry kind="lib" path="mp3spi1.9.4.jar"/>
 	<classpathentry kind="lib" path="tritonus_share.jar"/>
 	<classpathentry kind="lib" path="vorbisspi1.0.2.jar"/>
-	<classpathentry kind="lib" path="E:/homework/MathQuest/mysql-connector-java-5.1.34-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jimbob/Documents/GitHub/MathQuest/mysql-connector-java-5.1.34-bin.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
