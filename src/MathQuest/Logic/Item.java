@@ -1,9 +1,5 @@
 package MathQuest.Logic;
 
-import MathQuest.GUI.InventoryPanel;
-
-
-
 import java.awt.Color;
 import java.lang.Math;
 import java.util.ArrayList;

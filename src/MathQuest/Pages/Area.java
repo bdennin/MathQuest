@@ -13,6 +13,7 @@ import javazoom.jlgui.basicplayer.BasicPlayer;
 import javazoom.jlgui.basicplayer.BasicPlayerException;
 import MathQuest.MathQuest;
 import MathQuest.GUI.CharacterPanel;
+import MathQuest.GUI.InventoryPanel;
 import MathQuest.GUI.OptionsMenu;
 import MathQuest.GUI.OptionsPanel;
 import MathQuest.Logic.Character;
@@ -26,6 +27,8 @@ public abstract class Area extends JPanel {
 	protected static final Random RANDOM = new Random();
 	
 	protected static OptionsMenu optionsMenu;
+	protected static InventoryPanel inventoryPanel;
+	
 	protected CharacterPanel characterPanel;
 	protected OptionsPanel optionsPanel;
 	protected ImageIcon background;
@@ -44,10 +47,13 @@ public abstract class Area extends JPanel {
 		this.isEnabled = true;
 		this.hero = hero;
 
-		optionsMenu = new OptionsMenu(this);
-		
+		optionsMenu = new OptionsMenu(this);	
 		hideOptions();
 		add(optionsMenu);
+		
+		inventoryPanel = new InventoryPanel(this, this.hero);
+		hideInventory();
+		add(inventoryPanel);
 		
 		this.characterPanel = new CharacterPanel(this, this.hero, true, false);
 		characterPanel.setLayout(null);
@@ -148,6 +154,14 @@ public abstract class Area extends JPanel {
 			e.printStackTrace();
 		}
 	}	
+	
+	public static void showInventory() {
+		inventoryPanel.setVisible(true);
+	}
+	
+	public static void hideInventory() {
+		inventoryPanel.setVisible(false);
+	}
 	
 	public static void showOptions() {
 		optionsMenu.setVisible(true);

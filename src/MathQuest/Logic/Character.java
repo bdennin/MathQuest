@@ -1,5 +1,7 @@
 package MathQuest.Logic;
 
+import java.util.ArrayList;
+
 public class Character {
 
 	public enum DamageType {
@@ -22,7 +24,16 @@ public class Character {
 	private double answeredCorrectly;
 	private double answeredIncorrectly;
 	private DamageType damageType;
-	private Item[] inventory;
+	private Item equippedHelmet;
+	private Item equippedMail;
+	private Item equippedWeapon;
+	private Item equippedBoots;
+	private Item equippedGloves;
+	private ArrayList<Item> headItems;
+	private ArrayList<Item> chestItems;
+	private ArrayList<Item> feetItems;
+	private ArrayList<Item> gloveItems;
+	private ArrayList<Item> weaponItems;
 
 	public Character() {
 		this.currentExperience = 0;
@@ -39,6 +50,11 @@ public class Character {
 		this.damageType = DamageType.SLASHING;
 		this.answeredCorrectly = 0;
 		this.answeredIncorrectly = 0;
+		this.headItems = new ArrayList<Item>();
+		this.chestItems = new ArrayList<Item>();
+		this.feetItems = new ArrayList<Item>();
+		this.gloveItems = new ArrayList<Item>();
+		this.weaponItems = new ArrayList<Item>();
 	}
 
 	//monster constructor
@@ -262,5 +278,85 @@ public class Character {
 
 	public void incrementAnsweredIncorrectly() {
 		this.answeredIncorrectly++;
+	}
+	
+	public Item getEquippedHelmet() {
+		return equippedHelmet;
+	}
+
+	public void setEquippedHelmet(Item equippedHelmet) {
+		this.equippedHelmet = equippedHelmet;
+	}
+
+	public Item getEquippedMail() {
+		return equippedMail;
+	}
+
+	public void setEquippedMail(Item equippedMail) {
+		this.equippedMail = equippedMail;
+	}
+
+	public Item getEquippedWeapon() {
+		return equippedWeapon;
+	}
+
+	public void setEquippedWeapon(Item equippedWeapon) {
+		this.equippedWeapon = equippedWeapon;
+	}
+
+	public Item getEquippedBoots() {
+		return equippedBoots;
+	}
+
+	public void setEquippedBoots(Item equippedBoots) {
+		this.equippedBoots = equippedBoots;
+	}
+
+	public Item getEquippedGloves() {
+		return equippedGloves;
+	}
+
+	public void setEquippedGloves(Item equippedGloves) {
+		this.equippedGloves = equippedGloves;
+	}
+
+	public ArrayList<Item> getHeadItems() {
+		return headItems;
+	}
+
+	public void setHeadItems(ArrayList<Item> headItems) {
+		this.headItems = headItems;
+	}
+
+	public ArrayList<Item> getChestItems() {
+		return chestItems;
+	}
+
+	public void setChestItems(ArrayList<Item> chestItems) {
+		this.chestItems = chestItems;
+	}
+
+	public ArrayList<Item> getFeetItems() {
+		return feetItems;
+	}
+
+	public void setFeetItems(ArrayList<Item> feetItems) {
+		this.feetItems = feetItems;
+	}
+
+	public ArrayList<Item> getGloveItems() {
+		return gloveItems;
+	}
+
+	public void setGloveItems(ArrayList<Item> gloveItems) {
+		this.gloveItems = gloveItems;
+	}
+
+	public ArrayList<Item> getWeaponItems() {
+		return weaponItems;
+	}
+
+	public void setWeaponItems(ArrayList<Item> weaponItems) {
+		this.weaponItems = weaponItems;
 	}
 }

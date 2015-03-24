@@ -29,7 +29,11 @@ public class OptionsPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				if(frame instanceof World) {
+					World world = (World)frame;
+					world.removeLabels();
+				}
+				Area.showInventory();
 			}
 		});
 		this.add(inventoryButton);
