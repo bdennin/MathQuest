@@ -20,7 +20,7 @@ public class MathQuest
 	private static String password;
 	private static Character hero;
 	private static double volume;
-	public static boolean connectToDatabase = true;
+	public static boolean connectToDatabase = false;
 	public static boolean isMuted;
 
 	public MathQuest() {
