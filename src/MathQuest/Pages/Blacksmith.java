@@ -20,7 +20,6 @@ import java.io.IOException;
 import javax.swing.SwingConstants;
 import javax.swing.border.CompoundBorder;
 
-import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.border.BevelBorder;
@@ -33,10 +32,11 @@ public class Blacksmith extends Area {
 	final JPanel buttonPanel = new JPanel();
 	final JPanel buyPanel, sellPanel, enhancePanel, armorPanel, weaponPanel;
 	
+	JComboBox inventoryComboBox, enhanceComboBox;
+	
 	private Item item1, item2;
 	
-	
-	public Blacksmith(Character hero) {
+	public Blacksmith(final Character hero) {
 		super(hero, "blacksmithMusic.mp3");
 		this.loadImages();
 		this.loadOptionsPanel();
@@ -203,8 +203,7 @@ public class Blacksmith extends Area {
 		btnBuyArmor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				armorPanel.setVisible(false);
-				
-				
+				hero.addToInventory(item1);
 			}
 		});
 		btnBuyArmor.setBounds(39, 163, 117, 29);
@@ -271,6 +270,7 @@ public class Blacksmith extends Area {
 		btnBuyWeapon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				weaponPanel.setVisible(false);
+				hero.addToInventory(item2);
 			}
 		});
 		btnBuyWeapon.setBounds(40, 163, 117, 29);
@@ -312,7 +312,7 @@ public class Blacksmith extends Area {
 		sellLabel.setBounds(6, 6, 221, 29);
 		sellLabelPanel.add(sellLabel);
 		
-		JComboBox inventoryComboBox = new JComboBox();
+		inventoryComboBox = new JComboBox<Item>();
 		inventoryComboBox.setBounds(6, 59, 233, 27);
 		for(Item el : hero.getInventory())
 			inventoryComboBox.addItem(el);
@@ -321,7 +321,7 @@ public class Blacksmith extends Area {
 		JButton sellBtn = new JButton("Sell");
 		sellBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				hero.removeFromInventory((Item)inventoryComboBox.getSelectedItem());
 			}
 		});
 		sellBtn.setBounds(56, 98, 117, 35);
@@ -346,9 +346,10 @@ public class Blacksmith extends Area {
 		lblNewLabel_2.setBounds(6, 6, 221, 25);
 		panel_4.add(lblNewLabel_2);
 		
-		JComboBox enhanceComboBox = new JComboBox();
+		enhanceComboBox = new JComboBox();
 		enhanceComboBox.setBounds(6, 55, 233, 27);
 		for(Item el : hero.getInventory())
+			enhanceComboBox.addItem(el);
 		enhancePanel.add(enhanceComboBox);
 		
 		JButton enhancheBtn = new JButton("Improve");
