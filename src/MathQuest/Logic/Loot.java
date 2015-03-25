@@ -14,6 +14,9 @@ public class Loot {
 public static Item getLoot(int monsterLvl){
 	
 	chanceToDrop();
+	
+	if (rarity == Color.black)
+		return null;
 	Item itemDropped = new Item(monsterLvl, rarity);
 	
 	return itemDropped;
