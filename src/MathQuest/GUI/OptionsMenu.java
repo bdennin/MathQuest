@@ -90,9 +90,9 @@ public class OptionsMenu extends JPanel {
 		});
 		optionsBody.add(checkboxMuteSound);
 		
-		JButton btnClose = new JButton("Close");
-		btnClose.setBounds(125, 122, 88, 23);
-		btnClose.addActionListener(new ActionListener() {
+		JButton btnOK = new JButton("OK");
+		btnOK.setBounds(125, 122, 88, 23);
+		btnOK.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -102,6 +102,6 @@ public class OptionsMenu extends JPanel {
 				world.renderBackground();
 			}
 		});
-		optionsBody.add(btnClose);
+		optionsBody.add(btnOK);
 	}
 }

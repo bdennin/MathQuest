@@ -280,6 +280,8 @@ public class Combat extends Area {
 			e.printStackTrace();
 		}
 
+		//Item droppedItem = I
+		
 		int experience = (int)(creature.getMaxExperience() * .5);
 		int gold = creature.getGold();
 		hero.addGold(gold);

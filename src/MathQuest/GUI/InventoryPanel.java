@@ -1,6 +1,7 @@
 package MathQuest.GUI;
 
 import javax.imageio.ImageIO;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
@@ -18,6 +19,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -31,8 +34,11 @@ public class InventoryPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	private ImageIcon inventoryImage;
-
-	public InventoryPanel(final Area frame, Character hero) {
+	private ImageIcon helmetLabel;
+	private ImageIcon armorLabel;
+	private ImageIcon weaponLabel;
+	
+	public InventoryPanel(final Area frame, final Character hero) {
 
 		this.setBounds(675, 4, 341, 461);
 		this.setLayout(null);
@@ -69,7 +75,158 @@ public class InventoryPanel extends JPanel {
 		inventoryBody.add(inventoryStatsPanel);
 		inventoryStatsPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		inventoryStatsPanel.setLayout(null);
+		
+		final JLabel headLabel = new JLabel();
+		headLabel.setBounds(136, 9, 52, 52);
+		headLabel.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				
+			}
 
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				headLabel.setIcon(helmetLabel);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				headLabel.setIcon(null);
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+
+			}
+		});
+		inventoryStatsPanel.add(headLabel);
+		
+		final JLabel gloveLabel = new JLabel();
+		gloveLabel.setBounds(23, 183, 52, 52);
+		gloveLabel.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				gloveLabel.setIcon(helmetLabel);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				gloveLabel.setIcon(null);
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+
+			}
+		});
+		inventoryStatsPanel.add(gloveLabel);
+		
+		final JLabel feetLabel = new JLabel();
+		feetLabel.setBounds(249, 183, 52, 52);
+		feetLabel.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				feetLabel.setIcon(helmetLabel);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				feetLabel.setIcon(null);
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+
+			}
+		});
+		inventoryStatsPanel.add(feetLabel);
+		
+		final JLabel mainLabel = new JLabel();
+		mainLabel.setBounds(22, 51, 52, 109);
+		mainLabel.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				mainLabel.setIcon(weaponLabel);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				mainLabel.setIcon(null);
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+
+			}
+		});
+		inventoryStatsPanel.add(mainLabel);
+		
+		final JLabel chestLabel = new JLabel();
+		chestLabel.setBounds(135, 79, 52, 82);
+		chestLabel.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				chestLabel.setIcon(armorLabel);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				chestLabel.setIcon(null);
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				frame.add(new InventoryWindow(frame, hero, "Chest Items", hero.getChestItems()));
+				frame.renderBackground();
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+
+			}
+		});
+		inventoryStatsPanel.add(chestLabel);
+		
 		JLabel inventoryImage = new JLabel();
 		inventoryImage.setBounds(1, 1, 318, 260);
 		inventoryImage.setIcon(this.inventoryImage);
@@ -168,9 +325,9 @@ public class InventoryPanel extends JPanel {
 		statBorder.setBorder(new LineBorder(Color.black));
 		characterStatsPanel.add(statBorder);
 		
-		JButton btnClose = new JButton("Close");
-		btnClose.setBounds(129, 405, 88, 23);
-		btnClose.addActionListener(new ActionListener() {
+		JButton btnOK = new JButton("OK");
+		btnOK.setBounds(129, 405, 88, 23);
+		btnOK.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
@@ -182,12 +339,15 @@ public class InventoryPanel extends JPanel {
 				frame.renderBackground();
 			}
 		});
-		inventoryBody.add(btnClose);
+		inventoryBody.add(btnOK);
 	}
 
 	public void loadImages() {
 		try {                
 			this.inventoryImage = new ImageIcon(ImageIO.read(new File("inventory.png")));
+			this.helmetLabel = new ImageIcon(ImageIO.read(new File("helmetLabel.png")));
+			this.weaponLabel = new ImageIcon(ImageIO.read(new File("weaponLabel.png")));
+			this.armorLabel = new ImageIcon(ImageIO.read(new File("armorLabel.png")));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
