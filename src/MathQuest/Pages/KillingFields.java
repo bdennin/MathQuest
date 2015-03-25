@@ -30,8 +30,7 @@ public class KillingFields extends Area {
 	private static final long serialVersionUID = 1L;
 	private Character creature;
 	
-	static Character hero = new Character();
-	public KillingFields(Character her) {
+	public KillingFields(Character hero) {
 		super(hero, "killingFieldsMusic.mp3");
 		this.loadImages();
 			
