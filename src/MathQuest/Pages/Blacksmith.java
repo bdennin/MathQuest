@@ -41,8 +41,8 @@ public class Blacksmith extends Area {
 		this.loadImages();
 		this.loadOptionsPanel();
 		
-		item1 = new Item(1, "white");
-		item2 = new Item(2, "white");
+		item1 = new Item(1, "green");
+		item2 = new Item(2, "green");
 		
 		buttonPanel.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
 		buttonPanel.setBounds(516, 599, 356, 138);
@@ -120,27 +120,15 @@ public class Blacksmith extends Area {
 		
 		JPanel armorLabelPanel = new JPanel();
 		armorLabelPanel.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
-		armorLabelPanel.setBounds(19, 19, 198, 52);
+		armorLabelPanel.setBounds(19, 19, 417, 52);
 		buyPanel.add(armorLabelPanel);
 		armorLabelPanel.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Armor");
+		JLabel lblNewLabel = new JLabel("Items for Sale");
 		lblNewLabel.setFont(new Font("Copperplate Gothic Bold", Font.PLAIN, 23));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(6, 6, 186, 40);
+		lblNewLabel.setBounds(6, 6, 405, 40);
 		armorLabelPanel.add(lblNewLabel);
-		
-		JPanel weaponLabelPanel = new JPanel();
-		weaponLabelPanel.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
-		weaponLabelPanel.setBounds(238, 19, 198, 52);
-		buyPanel.add(weaponLabelPanel);
-		weaponLabelPanel.setLayout(null);
-		
-		JLabel lblNewLabel_1 = new JLabel("Weapons");
-		lblNewLabel_1.setFont(new Font("Copperplate Gothic Bold", Font.PLAIN, 23));
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setBounds(6, 6, 186, 40);
-		weaponLabelPanel.add(lblNewLabel_1);
 		
 		armorPanel = new JPanel();
 		armorPanel.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
@@ -202,8 +190,14 @@ public class Blacksmith extends Area {
 		JButton btnBuyArmor = new JButton("Buy");
 		btnBuyArmor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				armorPanel.setVisible(false);
-				hero.addToInventory(item1);
+				if(hero.getGold() >= item1.getItemGold()){
+					armorPanel.setVisible(false);
+					hero.addToInventory(item1);
+					hero.removeGold(item1.getItemGold());
+				}
+				else{
+					scrollText.append("You don't have enough for that\n");
+				}
 			}
 		});
 		btnBuyArmor.setBounds(39, 163, 117, 29);
@@ -269,8 +263,14 @@ public class Blacksmith extends Area {
 		JButton btnBuyWeapon = new JButton("Buy");
 		btnBuyWeapon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				weaponPanel.setVisible(false);
-				hero.addToInventory(item2);
+				if(hero.getGold() >= item2.getItemGold()){
+					weaponPanel.setVisible(false);
+					hero.addToInventory(item2);
+					hero.removeGold(item2.getItemGold());
+				}
+				else{
+					scrollText.append("You don't have enough for that\n");
+				}
 			}
 		});
 		btnBuyWeapon.setBounds(40, 163, 117, 29);
@@ -321,7 +321,11 @@ public class Blacksmith extends Area {
 		JButton sellBtn = new JButton("Sell");
 		sellBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Item i = (Item)inventoryComboBox.getSelectedItem();
+				hero.addGold(i.getItemGold());
 				hero.removeFromInventory((Item)inventoryComboBox.getSelectedItem());
+				for(Item el: hero.getInventory())
+					inventoryComboBox.addItem(el);
 			}
 		});
 		sellBtn.setBounds(56, 98, 117, 35);
