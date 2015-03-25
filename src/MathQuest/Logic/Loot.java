@@ -26,7 +26,7 @@ public static Item getLoot(int monsterLvl){
 private static String chanceToDrop(){
 	double random = Math.random();
 	if (random <= .50)
-		rarity = "white";
+		rarity = "gray";
 	else if (random > .50 && random <= .75)
 		rarity = "green";
 	else if (random > .75 && random <= .85)

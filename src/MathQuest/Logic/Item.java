@@ -21,7 +21,7 @@ public class Item {
 	 
 	 public Item(){
 		 
-		color = "white";
+		color = "gray";
 		itemName = "Terrible Item";
 		itemLevel = 1;
 		dmg = 0;
@@ -38,7 +38,7 @@ public class Item {
 		 
 		 color = catagory;
 		 itemLevel = monsterLvl;
-		 if (catagory == "white")
+		 if (catagory == "gray")
 			 setStatsBasic();
 		 if (catagory =="green")
 		 	setStatsRare();
