@@ -20,6 +20,7 @@ import java.io.IOException;
 import javax.swing.SwingConstants;
 import javax.swing.border.CompoundBorder;
 
+import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.border.BevelBorder;
@@ -30,20 +31,20 @@ public class Blacksmith extends Area {
 	private static final long serialVersionUID = 1L;
 	private JTextArea scrollText;
 	final JPanel buttonPanel = new JPanel();
-	final JPanel buyPanel, sellPanel, enhancePanel;
+	final JPanel buyPanel, sellPanel, enhancePanel, armorPanel, weaponPanel;
 	
-	private ImageIcon panelImage, armorImage, weaponImage;
-	
-	private static Character character = new Character();
+	private Item item1, item2;
 	
 	
 	public Blacksmith(Character hero) {
-//			super(hero, "blacksmithMusic.mp3");
-		super(character, null);
+		super(hero, "blacksmithMusic.mp3");
 		this.loadImages();
 		this.loadOptionsPanel();
-		buttonPanel.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
 		
+		item1 = new Item(1, Color.white);
+		item2 = new Item(2, Color.white);
+		
+		buttonPanel.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
 		buttonPanel.setBounds(516, 599, 356, 138);
 		add(buttonPanel);
 		buttonPanel.setLayout(null);
@@ -141,25 +142,139 @@ public class Blacksmith extends Area {
 		lblNewLabel_1.setBounds(6, 6, 186, 40);
 		weaponLabelPanel.add(lblNewLabel_1);
 		
-		JPanel armorPanel = new JPanel();
+		armorPanel = new JPanel();
 		armorPanel.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
 		armorPanel.setBounds(19, 83, 198, 198);
 		buyPanel.add(armorPanel);
 		armorPanel.setLayout(null);
 		
-		JComboBox armorComboBox = new JComboBox();
-		armorComboBox.setBounds(6, 6, 186, 36);
-		armorPanel.add(armorComboBox);
+		JLabel armorItemLabel = new JLabel(item1.toString());
+		armorItemLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 15));
+		armorItemLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		armorItemLabel.setBounds(6, 6, 186, 25);
+		armorPanel.add(armorItemLabel);
 		
-		JPanel weaponPanel = new JPanel();
+		JLabel lblLevel = new JLabel("Level:");
+		lblLevel.setBounds(6, 43, 61, 16);
+		armorPanel.add(lblLevel);
+		
+		JLabel lblArmor = new JLabel("Armor:");
+		lblArmor.setBounds(6, 64, 61, 16);
+		armorPanel.add(lblArmor);
+		
+		JLabel lblDexterity = new JLabel("Dexterity:");
+		lblDexterity.setBounds(6, 101, 71, 16);
+		armorPanel.add(lblDexterity);
+		
+		JLabel lblSpeed = new JLabel("Speed:");
+		lblSpeed.setBounds(6, 120, 61, 16);
+		armorPanel.add(lblSpeed);
+		
+		JLabel lblStrength = new JLabel("Strength:");
+		lblStrength.setBounds(6, 82, 61, 16);
+		armorPanel.add(lblStrength);
+		
+		JLabel levelNumber = new JLabel("" + item1.getItemLvl());
+		levelNumber.setBounds(131, 43, 61, 16);
+		armorPanel.add(levelNumber);
+		
+		JLabel armorNumber = new JLabel("" + item1.getItemArmor());
+		armorNumber.setBounds(131, 64, 61, 16);
+		armorPanel.add(armorNumber);
+		
+		JLabel strNumber = new JLabel("" + item1.getItemStr());
+		strNumber.setBounds(131, 82, 61, 16);
+		armorPanel.add(strNumber);
+		
+		JLabel dexNumber = new JLabel("" + item1.getItemDex());
+		dexNumber.setBounds(131, 101, 61, 16);
+		armorPanel.add(dexNumber);
+		
+		JLabel speedNumber = new JLabel("" + item1.getItemSpeed());
+		speedNumber.setBounds(131, 120, 61, 16);
+		armorPanel.add(speedNumber);
+		
+		JLabel armorPrice = new JLabel("" + item1.getItemGold() + "g");
+		armorPrice.setHorizontalAlignment(SwingConstants.CENTER);
+		armorPrice.setBounds(65, 148, 61, 16);
+		armorPanel.add(armorPrice);
+		
+		JButton btnBuyArmor = new JButton("Buy");
+		btnBuyArmor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				armorPanel.setVisible(false);
+				
+				
+			}
+		});
+		btnBuyArmor.setBounds(39, 163, 117, 29);
+		armorPanel.add(btnBuyArmor);
+		
+		weaponPanel = new JPanel();
 		weaponPanel.setLayout(null);
 		weaponPanel.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
 		weaponPanel.setBounds(238, 83, 198, 198);
 		buyPanel.add(weaponPanel);
 		
-		JComboBox weaponComboBox = new JComboBox();
-		weaponComboBox.setBounds(6, 6, 186, 36);
-		weaponPanel.add(weaponComboBox);
+		JLabel weaponItemLabel = new JLabel(item2.toString());
+		weaponItemLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		weaponItemLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 15));
+		weaponItemLabel.setBounds(6, 6, 186, 25);
+		weaponPanel.add(weaponItemLabel);
+		
+		JLabel lblWeaponLevel = new JLabel("Level:");
+		lblWeaponLevel.setBounds(6, 46, 61, 16);
+		weaponPanel.add(lblWeaponLevel);
+		
+		JLabel lblWeaponDamage = new JLabel("Damage:");
+		lblWeaponDamage.setBounds(6, 67, 61, 16);
+		weaponPanel.add(lblWeaponDamage);
+		
+		JLabel lblWeaponStrength = new JLabel("Strength:");
+		lblWeaponStrength.setBounds(6, 85, 61, 16);
+		weaponPanel.add(lblWeaponStrength);
+		
+		JLabel lblWeaponDexterity = new JLabel("Dexterity:");
+		lblWeaponDexterity.setBounds(6, 104, 71, 16);
+		weaponPanel.add(lblWeaponDexterity);
+		
+		JLabel lblWeaponSpeed = new JLabel("Speed:");
+		lblWeaponSpeed.setBounds(6, 123, 61, 16);
+		weaponPanel.add(lblWeaponSpeed);
+		
+		JLabel weaponLevelNumber = new JLabel("" + item2.getItemLvl());
+		weaponLevelNumber.setBounds(131, 46, 61, 16);
+		weaponPanel.add(weaponLevelNumber);
+		
+		JLabel weaponDamageNumber = new JLabel("" + item2.getItemDmg());
+		weaponDamageNumber.setBounds(131, 67, 61, 16);
+		weaponPanel.add(weaponDamageNumber);
+		
+		JLabel weaponStrNumber = new JLabel("" + item2.getItemStr());
+		weaponStrNumber.setBounds(131, 85, 61, 16);
+		weaponPanel.add(weaponStrNumber);
+		
+		JLabel weaponDexNumber = new JLabel("" + item2.getItemDex());
+		weaponDexNumber.setBounds(131, 104, 61, 16);
+		weaponPanel.add(weaponDexNumber);
+		
+		JLabel weaponSpeedNumber = new JLabel("" + item2.getItemSpeed());
+		weaponSpeedNumber.setBounds(131, 123, 61, 16);
+		weaponPanel.add(weaponSpeedNumber);
+		
+		JLabel weaponPrice = new JLabel("" + item2.getItemGold() + "g");
+		weaponPrice.setHorizontalAlignment(SwingConstants.CENTER);
+		weaponPrice.setBounds(65, 148, 61, 16);
+		weaponPanel.add(weaponPrice);
+		
+		JButton btnBuyWeapon = new JButton("Buy");
+		btnBuyWeapon.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				weaponPanel.setVisible(false);
+			}
+		});
+		btnBuyWeapon.setBounds(40, 163, 117, 29);
+		weaponPanel.add(btnBuyWeapon);
 		
 		JPanel textPanel = new JPanel();
 		textPanel.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
@@ -254,9 +369,6 @@ public class Blacksmith extends Area {
 	public void loadImages() {
 		try {           
 			this.background = new ImageIcon(ImageIO.read(new File("insideBlacksmith.jpg")));
-			this.panelImage = new ImageIcon(ImageIO.read(new File("wood.png")));
-			this.armorImage = new ImageIcon(ImageIO.read(new File("goodShield.png")));
-			this.weaponImage = new ImageIcon(ImageIO.read(new File("crappySword.png")));
 			
 		} catch (IOException e) {
 			e.printStackTrace();
