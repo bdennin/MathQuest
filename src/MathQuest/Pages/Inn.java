@@ -28,7 +28,7 @@ public class Inn extends Area {
 	final JPanel panel = new JPanel();
 	final static Character hero = new Character();
 
-	public Inn(Character buddy) {
+	public Inn(Character hero) {
 		super(hero, "innMusic.mp3");
 		this.loadImages();
 		this.setBackground(Color.LIGHT_GRAY);
