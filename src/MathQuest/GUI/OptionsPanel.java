@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JPanel;
+import javax.swing.JLayeredPane;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
 
@@ -13,7 +13,7 @@ import MathQuest.Logic.Character;
 import MathQuest.Pages.Area;
 import MathQuest.Pages.World;
 
-public class OptionsPanel extends JPanel {
+public class OptionsPanel extends JLayeredPane {
 
 	private static final long serialVersionUID = 1L;
 
@@ -21,6 +21,7 @@ public class OptionsPanel extends JPanel {
 		
 		this.setLayout(null);
 		this.setBounds(0, 0, 132, 94);
+		this.setLayer(this, JLayeredPane.DEFAULT_LAYER);
 		this.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
 
 		JButton inventoryButton = new JButton("Inventory");
@@ -29,11 +30,16 @@ public class OptionsPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(frame instanceof World) {
+				if(Area.isInventoryVisible && frame instanceof World) {
+					World world = (World)frame;
+					world.loadJLabels();
+				}
+				else if(!Area.isInventoryVisible && frame instanceof World) {
 					World world = (World)frame;
 					world.removeLabels();
 				}
-				Area.showInventory();
+				Area.toggleInventory();
+				frame.renderBackground();
 			}
 		});
 		this.add(inventoryButton);
@@ -59,8 +65,14 @@ public class OptionsPanel extends JPanel {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					World world = (World)frame;
-					world.removeLabels();
-					Area.showOptions();
+					if(Area.isOptionsVisible) {
+						world.loadJLabels();
+					}
+					else {
+						world.removeLabels();
+					}
+					Area.toggleOptions();
+					frame.renderBackground();
 				}
 			});
 

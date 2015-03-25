@@ -21,40 +21,46 @@ import MathQuest.Logic.Character;
 public abstract class Area extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+
 	protected static final BasicPlayer musicPlayer = new BasicPlayer();
 	protected static final BasicPlayer soundPlayer = new BasicPlayer();
 	protected static final BasicPlayer effectPlayer = new BasicPlayer();
 	protected static final Random RANDOM = new Random();
-	
+
 	protected static OptionsMenu optionsMenu;
 	protected static InventoryPanel inventoryPanel;
-	
+
 	protected CharacterPanel characterPanel;
 	protected OptionsPanel optionsPanel;
 	protected ImageIcon background;
 	protected JLabel backgroundLabel;	
 	protected Character hero;
 	protected boolean isEnabled;
-
+	
+	public static boolean isOptionsVisible;
+	public static boolean isInventoryVisible;
+	
 	public Area(Character hero, String musicFilePath) {
 
 		if(null != musicFilePath)
 			this.initializeMusic(musicFilePath);
 		setVolume();
-		
+
 		this.setBounds(0, 0, 1024, 768);
 		this.setLayout(null);
 		this.isEnabled = true;
 		this.hero = hero;
 
+		isOptionsVisible = true;
 		optionsMenu = new OptionsMenu(this);	
-		hideOptions();
+		Area.toggleOptions();
 		add(optionsMenu);
 		
+		isInventoryVisible = true;
 		inventoryPanel = new InventoryPanel(this, this.hero);
-		hideInventory();
+		Area.toggleInventory();
 		add(inventoryPanel);
-		
+
 		this.characterPanel = new CharacterPanel(this, this.hero, true, false);
 		characterPanel.setLayout(null);
 		characterPanel.setBounds(6, 6, 107, 144);
@@ -100,7 +106,7 @@ public abstract class Area extends JPanel {
 	{
 		this.backgroundLabel = null;
 	}
-	
+
 	public void reloadCharacterPanel() {
 
 		this.remove(characterPanel);
@@ -109,9 +115,8 @@ public abstract class Area extends JPanel {
 		characterPanel.setBounds(6, 6, 107, 144);
 		add(characterPanel);
 		this.renderBackground();
-		this.repaint();
 	}
-		
+
 	public void renderBackground() {
 
 		if(null != this.backgroundLabel)
@@ -121,8 +126,9 @@ public abstract class Area extends JPanel {
 		backgroundLabel.setBounds(0, 0, 1024, 768);
 		backgroundLabel.setIcon(this.background);
 		add(backgroundLabel);
+		this.repaint();
 	}
-	
+
 	public static void setVolume() {
 		double volume = MathQuest.getVolume();
 		try {
@@ -133,7 +139,7 @@ public abstract class Area extends JPanel {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void initializeMusic(String fileName) {
 
 		String musicPath = String.format("file:///%s%s%s", System.getProperty("user.dir").replace("\\", "/"), "/", fileName);
@@ -154,20 +160,18 @@ public abstract class Area extends JPanel {
 			e.printStackTrace();
 		}
 	}	
-	
-	public static void showInventory() {
-		inventoryPanel.setVisible(true);
+
+	public static void toggleInventory() {
+		isInventoryVisible = !isInventoryVisible;
+		if(isInventoryVisible && isOptionsVisible)
+			toggleOptions();
+		inventoryPanel.setVisible(isInventoryVisible);
 	}
-	
-	public static void hideInventory() {
-		inventoryPanel.setVisible(false);
-	}
-	
-	public static void showOptions() {
-		optionsMenu.setVisible(true);
-	}
-	
-	public static void hideOptions() {
-		optionsMenu.setVisible(false);
+
+	public static void toggleOptions() {
+		isOptionsVisible = !isOptionsVisible;
+		if(isOptionsVisible && isInventoryVisible)
+			toggleInventory();
+		optionsMenu.setVisible(isOptionsVisible);
 	}
 }

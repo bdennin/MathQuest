@@ -8,6 +8,10 @@ import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.JCheckBox;
 
 import MathQuest.MathQuest;
@@ -35,6 +39,7 @@ public class OptionsMenu extends JPanel {
 		JLabel optionsLabel = new JLabel("Options");
 		optionsLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 12));
 		optionsLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		optionsLabel.setBorder(new LineBorder(Color.BLACK));
 		optionsLabel.setBounds(0, 0, 338, 22);
 		this.add(optionsLabel);
 		
@@ -46,7 +51,6 @@ public class OptionsMenu extends JPanel {
 		
 		JLabel volumeLabel = new JLabel("Volume");
 		volumeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		volumeLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		volumeLabel.setBounds(10, 11, 80, 22);
 		optionsBody.add(volumeLabel);
 		
@@ -57,6 +61,14 @@ public class OptionsMenu extends JPanel {
 		volumeSlider.setMinorTickSpacing(1);
 		volumeSlider.setMaximum(10);
 		volumeSlider.setBounds(100, 11, 228, 22);
+		volumeSlider.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				double volume = (double)((double)volumeSlider.getValue()/10);
+				MathQuest.setVolume(volume);
+				Area.setVolume();
+			}	
+		});
 		optionsBody.add(volumeSlider);
 		
 		final JCheckBox checkboxMuteSound = new JCheckBox("Mute Sound");
@@ -71,42 +83,25 @@ public class OptionsMenu extends JPanel {
 					volumeSlider.setEnabled(false);
 				}
 				else {
-					volumeSlider.setValue((int)(MathQuest.getVolume() * 10));
+					volumeSlider.setValue(10);
 					volumeSlider.setEnabled(true);
 				}
 			}
 		});
 		optionsBody.add(checkboxMuteSound);
 		
-		JButton btnOK = new JButton("OK");
-		btnOK.setBounds(40, 122, 89, 23);
-		btnOK.addActionListener(new ActionListener() {
+		JButton btnClose = new JButton("Close");
+		btnClose.setBounds(125, 122, 88, 23);
+		btnClose.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				double volume = (double)((double)volumeSlider.getValue()/10);
-				MathQuest.setVolume(volume);
-				Area.setVolume();
-				Area.hideOptions();
+				Area.toggleOptions();
 				World world = (World)frame;
 				world.loadJLabels();
 				world.renderBackground();
 			}
 		});
-		optionsBody.add(btnOK);
-		
-		JButton btnCancel = new JButton("Cancel");
-		btnCancel.setBounds(209, 122, 89, 23);
-		btnCancel.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				Area.hideOptions();
-				World world = (World)frame;
-				world.loadJLabels();
-				world.renderBackground();
-			}
-		});
-		optionsBody.add(btnCancel);
+		optionsBody.add(btnClose);
 	}
 }

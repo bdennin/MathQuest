@@ -4,9 +4,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JButton;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
@@ -26,6 +23,7 @@ import javazoom.jlgui.basicplayer.BasicPlayerException;
 import MathQuest.MathQuest;
 import MathQuest.Database.Database;
 import MathQuest.GUI.CharacterPanel;
+import MathQuest.GUI.LogPanel;
 import MathQuest.GUI.OptionsPanel;
 import MathQuest.Logic.Character;
 import MathQuest.Logic.Character.DamageType;
@@ -34,21 +32,20 @@ import MathQuest.Logic.Equation.Sign;
 import MathQuest.Logic.Equation.Digits;
 import MathQuest.Logic.Equation.Terms;
 
-import java.awt.Color;
 import java.awt.Font;
 
 public class Combat extends Area {
 
 	private static final long serialVersionUID = 1L;
 
-	private CharacterPanel monsterPanel;
+	private CharacterPanel creaturePanel;
+	private LogPanel combatLog;
 	private JPanel combatOptions;
 	private ImageIcon victoryIcon;
 	private ImageIcon defeatIcon;
 	private ImageIcon potionIcon;
 	private ImageIcon runAwayIcon;
 	private ImageIcon attackIcon;
-	private JTextArea scrollText;
 	private Character hero;
 	private Character creature;
 	private String creatureName;
@@ -62,31 +59,25 @@ public class Combat extends Area {
 		this.creature = creature;
 		this.creatureName = creature.getName();
 
-		this.monsterPanel = loadMonsterPanel(this.creature);
-		add(monsterPanel);
+		this.creaturePanel = loadMonsterPanel(this.creature);
+		add(creaturePanel);
 
 		this.combatOptions = new JPanel();
 		this.loadCombatOptions();
-		combatOptions.setBounds(587, 612, 269, 77);
-		combatOptions.setLayout(null);
-		combatOptions.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
 		add(combatOptions);
 
-		JPanel combatLog = this.loadCombatLog();
+		this.combatLog = new LogPanel("Combat Log");
 		combatLog.setBounds(174, 555, 338, 177);
+		combatLog.addTextToScrollPane("You have entered combat!");
+		combatLog.addTextToScrollPane("It is your turn to act.");
 		add(combatLog);
 
 		this.renderBackground();
 	}
 
-	private void addTextToScrollPane(String text) {
-		this.scrollText.append("\n");
-		this.scrollText.append(text);
-	}
-
 	private void promptQuestion() {
 
-		this.addTextToScrollPane("You try to find your opponent's weakness.");
+		combatLog.addTextToScrollPane("You try to find your opponent's weakness.");
 		
 		String question;
 		if(MathQuest.connectToDatabase)
@@ -117,40 +108,15 @@ public class Combat extends Area {
 		}
 
 		this.reloadCombatOptions(options);
-		this.addTextToScrollPane("Solve: " + question);
-	}
-
-	private JPanel loadCombatLog() {
-
-		JPanel combatLog = new JPanel();
-		combatLog.setBackground(Color.LIGHT_GRAY);
-		combatLog.setBounds(174, 555, 338, 177);
-		combatLog.setLayout(null);
-
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 21, 338, 156);
-		scrollPane.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
-		combatLog.add(scrollPane);
-
-		this.scrollText = new JTextArea();
-		scrollPane.setViewportView(scrollText);
-		this.scrollText.setFont(null);
-		this.scrollText.setEditable(false);
-		this.scrollText.setLineWrap(true);
-		this.scrollText.setWrapStyleWord(true);
-		this.scrollText.append("You have entered combat!");
-		this.addTextToScrollPane("It is your turn to act.");
-
-		JLabel combatLogLabel = new JLabel("Combat Log");
-		combatLogLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 12));
-		combatLogLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		combatLogLabel.setBounds(0, 0, 338, 22);
-		combatLog.add(combatLogLabel);
-		return combatLog;
+		combatLog.addTextToScrollPane("Solve: " + question);
 	}
 
 	private void loadCombatOptions() {
 
+		combatOptions.setBounds(587, 612, 269, 77);
+		combatOptions.setLayout(null);
+		combatOptions.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
+		
 		JButton attackButton = new JButton(this.attackIcon);
 		attackButton.setBounds(3, 3, 88, 70);
 		attackButton.addActionListener(new ActionListener() {
@@ -176,9 +142,6 @@ public class Combat extends Area {
 		usePotionButton.setBounds(90, 3, 88, 70);		
 		combatOptions.add(usePotionButton);
 		combatOptions.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
-
-		this.revalidate();
-		this.repaint();
 	}
 
 	private void reloadCombatOptions(final ArrayList<Integer> mathAnswers) {
@@ -227,18 +190,15 @@ public class Combat extends Area {
 			combatOptions.add(answerThree);
 			combatOptions.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
 		}
-
-		this.revalidate();
-		this.repaint();
 	}
 
 	private void attack(Integer answer) {
 		int damage = hero.calculateDamage();
 
-		this.addTextToScrollPane("You answered " + answer + ".");
+		combatLog.addTextToScrollPane("You answered " + answer + ".");
 
 		if(answer == this.answer) {
-			this.addTextToScrollPane("Correct! You strike your enemy with great power!");
+			combatLog.addTextToScrollPane("Correct! You strike your enemy with great power!");
 			hero.incrementAnsweredCorrectly();
 			damage = 2 * damage;
 
@@ -252,14 +212,14 @@ public class Combat extends Area {
 			}
 		}
 		else {
-			this.addTextToScrollPane("Good try, but the correct answer was " + this.answer + ".");
+			combatLog.addTextToScrollPane("Good try, but the correct answer was " + this.answer + ".");
 			hero.incrementAnsweredIncorrectly();
 		}
 
 		this.playAttackSound(hero, damage);
 
 		String output = new String("You attack a " + this.creatureName + " for " + damage + " points of damage.");
-		this.addTextToScrollPane(output);
+		combatLog.addTextToScrollPane(output);
 
 		creature.takeDamage(damage);
 		this.reloadMonsterPanel();
@@ -279,7 +239,7 @@ public class Combat extends Area {
 		this.playAttackSound(creature, damage);
 
 		String output = "A " + creature.getName() + " attacks YOU for " + damage + " points of damage.";
-		this.addTextToScrollPane(output);
+		combatLog.addTextToScrollPane(output);
 		MathQuest.getCharacter().takeDamage(damage);
 		this.reloadCharacterPanel();
 
@@ -287,7 +247,7 @@ public class Combat extends Area {
 			this.defeat();
 		}
 		else {
-			this.addTextToScrollPane("It is your turn to act.");
+			combatLog.addTextToScrollPane("It is your turn to act.");
 		}
 	}
 
@@ -301,12 +261,11 @@ public class Combat extends Area {
 
 	private void reloadMonsterPanel() {
 
-		if(this.monsterPanel != null)
-			this.remove(this.monsterPanel);
-		this.monsterPanel = loadMonsterPanel(this.creature);
-		this.add(monsterPanel);
+		if(this.creaturePanel != null)
+			this.remove(this.creaturePanel);
+		this.creaturePanel = loadMonsterPanel(this.creature);
+		this.add(creaturePanel);
 		this.renderBackground();
-		this.repaint();
 	}
 
 	private void victory() {
