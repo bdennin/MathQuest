@@ -41,8 +41,8 @@ public class Blacksmith extends Area {
 		this.loadImages();
 		this.loadOptionsPanel();
 		
-		item1 = new Item(1, Color.white);
-		item2 = new Item(2, Color.white);
+		item1 = new Item(1, "white");
+		item2 = new Item(2, "white");
 		
 		buttonPanel.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
 		buttonPanel.setBounds(516, 599, 356, 138);
