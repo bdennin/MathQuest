@@ -14,6 +14,7 @@ import javazoom.jlgui.basicplayer.BasicPlayerException;
 import MathQuest.MathQuest;
 import MathQuest.GUI.CharacterPanel;
 import MathQuest.GUI.InventoryPanel;
+import MathQuest.GUI.InventoryWindow;
 import MathQuest.GUI.OptionsMenu;
 import MathQuest.GUI.OptionsPanel;
 import MathQuest.Logic.Character;
@@ -30,16 +31,17 @@ public abstract class Area extends JPanel {
 	protected static OptionsMenu optionsMenu;
 	protected static InventoryPanel inventoryPanel;
 
+	protected InventoryWindow inventoryWindow;
 	protected CharacterPanel characterPanel;
 	protected OptionsPanel optionsPanel;
 	protected ImageIcon background;
 	protected JLabel backgroundLabel;	
 	protected Character hero;
 	protected boolean isEnabled;
-	
+
 	public static boolean isOptionsVisible;
 	public static boolean isInventoryVisible;
-	
+
 	public Area(Character hero, String musicFilePath) {
 
 		if(null != musicFilePath)
@@ -55,12 +57,14 @@ public abstract class Area extends JPanel {
 		optionsMenu = new OptionsMenu(this);	
 		Area.toggleOptions();
 		add(optionsMenu);
-		
+
 		isInventoryVisible = true;
 		inventoryPanel = new InventoryPanel(this, this.hero);
 		Area.toggleInventory();
 		add(inventoryPanel);
 
+		this.inventoryWindow = null;
+		
 		this.characterPanel = new CharacterPanel(this, this.hero, true, false);
 		characterPanel.setLayout(null);
 		characterPanel.setBounds(6, 6, 107, 144);
@@ -135,6 +139,7 @@ public abstract class Area extends JPanel {
 			musicPlayer.setGain(volume);
 			soundPlayer.setGain(volume);
 			effectPlayer.setGain(volume);
+			
 		} catch (BasicPlayerException e) {
 			e.printStackTrace();
 		}
@@ -173,5 +178,22 @@ public abstract class Area extends JPanel {
 		if(isOptionsVisible && isInventoryVisible)
 			toggleInventory();
 		optionsMenu.setVisible(isOptionsVisible);
+	}
+
+	public void addInventoryWindow(String inventoryHeader) {
+		if(null == inventoryWindow) {
+			inventoryWindow = new InventoryWindow(this, hero, inventoryHeader);
+			this.add(inventoryWindow);
+			this.renderBackground();
+		}
+		else{
+
+		}
+	}
+
+	public void removeInventoryWindow() {
+		this.remove(inventoryWindow);
+		inventoryWindow = null;
+		this.renderBackground();
 	}
 }

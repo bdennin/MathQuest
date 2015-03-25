@@ -1,8 +1,5 @@
 package MathQuest.Logic;
 
-import MathQuest.GUI.InventoryPanel;
-
-import java.awt.Color;
 import java.lang.Math;
 
 
@@ -10,7 +7,7 @@ import java.lang.Math;
 public class Loot {
 
 	
-	static Color rarity;
+	static String rarity;
 	
 
 
@@ -23,18 +20,18 @@ public static Item getLoot(int monsterLvl){
 }
 
 
-private static Color chanceToDrop(){
-	double random = Math.random()*100;
-	if (random <= 50)
-		rarity = Color.white;
-	else if (random > 50 && random <= 75)
-		rarity = Color.green;
-	else if (random > 75 && random <= 85)
-		rarity = Color.blue;
-	else if (random > 85 && random <= 87)
-		rarity = Color.orange;
+private static String chanceToDrop(){
+	double random = Math.random();
+	if (random <= .50)
+		rarity = "white";
+	else if (random > .50 && random <= .75)
+		rarity = "green";
+	else if (random > .75 && random <= .85)
+		rarity = "blue";
+	else if (random > .85 && random <= .87)
+		rarity = "orange";
 	else
-		rarity = Color.black;
+		rarity = "black";
 	return rarity;
 }
 

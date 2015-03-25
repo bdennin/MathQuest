@@ -199,13 +199,7 @@ public class Blacksmith extends Area {
 		
 		JComboBox inventoryComboBox = new JComboBox();
 		inventoryComboBox.setBounds(6, 59, 233, 27);
-		for(Item el : hero.getHeadItems())
-			inventoryComboBox.addItem(el);
-		for(Item el : hero.getChestItems())
-			inventoryComboBox.addItem(el);
-		for(Item el : hero.getGloveItems())
-			inventoryComboBox.addItem(el);
-		for(Item el : hero.getFeetItems())
+		for(Item el : hero.getInventory())
 			inventoryComboBox.addItem(el);
 		sellPanel.add(inventoryComboBox);
 		
@@ -239,14 +233,7 @@ public class Blacksmith extends Area {
 		
 		JComboBox enhanceComboBox = new JComboBox();
 		enhanceComboBox.setBounds(6, 55, 233, 27);
-		for(Item el : hero.getHeadItems())
-			enhanceComboBox.addItem(el);
-		for(Item el : hero.getChestItems())
-			enhanceComboBox.addItem(el);
-		for(Item el : hero.getGloveItems())
-			enhanceComboBox.addItem(el);
-		for(Item el : hero.getFeetItems())
-			enhanceComboBox.addItem(el);
+		for(Item el : hero.getInventory())
 		enhancePanel.add(enhanceComboBox);
 		
 		JButton enhancheBtn = new JButton("Improve");

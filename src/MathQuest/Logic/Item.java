@@ -1,7 +1,5 @@
 package MathQuest.Logic;
 
-import java.awt.Color;
-
 import java.lang.Math;
 
 public class Item {
@@ -10,7 +8,7 @@ public class Item {
 	
 	String slot;
 	String itemName;
-	Color color;
+	String color;
 	int itemLevel = 1;
 	int dmg = 0;
 	int str = 0;
@@ -23,7 +21,7 @@ public class Item {
 	 
 	 public Item(){
 		 
-		color = Color.white;
+		color = "white";
 		itemName = "Terrible Item";
 		itemLevel = 1;
 		dmg = 0;
@@ -36,17 +34,17 @@ public class Item {
 	 }
 	 
 	 
-	 public Item(int monsterLvl, Color catagory){
+	 public Item(int monsterLvl, String catagory){
 		 
 		 color = catagory;
 		 itemLevel = monsterLvl;
-		 if (catagory == Color.white)
+		 if (catagory == "white")
 			 setStatsBasic();
-		 if (catagory == Color.green)
+		 if (catagory =="green")
 		 	setStatsRare();
-		 if (catagory == Color.blue)
+		 if (catagory == "blue")
 		 	setStatsEpic();
-		 if (catagory == Color.orange)
+		 if (catagory == "orange")
 		 	setStatsLegendary();
 		 
 		 
@@ -515,7 +513,7 @@ public class Item {
 			return itemName;
 		}
 		
-		public Color getColor(){
+		public String getColor(){
 			return color;
 		}
 		

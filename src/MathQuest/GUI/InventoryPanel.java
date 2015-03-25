@@ -96,7 +96,7 @@ public class InventoryPanel extends JPanel {
 
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				
+				frame.addInventoryWindow("Helmets");
 			}
 
 			@Override
@@ -126,7 +126,7 @@ public class InventoryPanel extends JPanel {
 
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				
+				frame.addInventoryWindow("Gloves");
 			}
 
 			@Override
@@ -156,7 +156,7 @@ public class InventoryPanel extends JPanel {
 
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				
+				frame.addInventoryWindow("Boots");
 			}
 
 			@Override
@@ -186,7 +186,7 @@ public class InventoryPanel extends JPanel {
 
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				
+				frame.addInventoryWindow("Weapons");
 			}
 
 			@Override
@@ -216,8 +216,7 @@ public class InventoryPanel extends JPanel {
 
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				frame.add(new InventoryWindow(frame, hero, "Chest Items", hero.getChestItems()));
-				frame.renderBackground();
+				frame.addInventoryWindow("Armor");
 			}
 
 			@Override

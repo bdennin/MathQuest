@@ -21,16 +21,15 @@ public class LogPanel extends JPanel{
 	public LogPanel(String textHeader) {
 		
 		this.setBackground(Color.LIGHT_GRAY);
-		this.setBounds(174, 555, 338, 200);
+		this.setBounds(174, 542, 338, 192);
 		this.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 22, 338, 167);
+		scrollPane.setBounds(0, 22, 338, 170);
 		scrollPane.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
 		this.add(scrollPane);
 
 		this.scrollText = new JTextArea();
-		this.scrollText.setFont(null);
 		this.scrollText.setEditable(false);
 		this.scrollText.setLineWrap(true);
 		this.scrollText.setWrapStyleWord(true);

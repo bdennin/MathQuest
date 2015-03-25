@@ -31,6 +31,8 @@ import MathQuest.Logic.Equation;
 import MathQuest.Logic.Equation.Sign;
 import MathQuest.Logic.Equation.Digits;
 import MathQuest.Logic.Equation.Terms;
+import MathQuest.Logic.Item;
+import MathQuest.Logic.Loot;
 
 import java.awt.Font;
 
@@ -67,7 +69,6 @@ public class Combat extends Area {
 		add(combatOptions);
 
 		this.combatLog = new LogPanel("Combat Log");
-		combatLog.setBounds(174, 555, 338, 177);
 		combatLog.addTextToScrollPane("You have entered combat!");
 		combatLog.addTextToScrollPane("It is your turn to act.");
 		add(combatLog);
@@ -78,13 +79,13 @@ public class Combat extends Area {
 	private void promptQuestion() {
 
 		combatLog.addTextToScrollPane("You try to find your opponent's weakness.");
-		
+
 		String question;
 		if(MathQuest.connectToDatabase)
 			question = Equation.constructEquation(Database.getFormular(creature.getLevel()));
 		else
 			question = Equation.constructEquation(Sign.ADDITION, Digits.ONE, Terms.TWO);
-		
+
 		this.answer = Equation.solveEquation(question);
 		ArrayList<Integer> options = new ArrayList<Integer>();
 		boolean correctAnswerAdded = false;
@@ -116,7 +117,7 @@ public class Combat extends Area {
 		combatOptions.setBounds(587, 612, 269, 77);
 		combatOptions.setLayout(null);
 		combatOptions.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
-		
+
 		JButton attackButton = new JButton(this.attackIcon);
 		attackButton.setBounds(3, 3, 88, 70);
 		attackButton.addActionListener(new ActionListener() {
@@ -280,15 +281,24 @@ public class Combat extends Area {
 			e.printStackTrace();
 		}
 
-		//Item droppedItem = I
-		
+
+
 		int experience = (int)(creature.getMaxExperience() * .5);
 		int gold = creature.getGold();
 		hero.addGold(gold);
 		hero.gainExperience(experience);
 
-		String victoryString = String
-				.format("<html>You are victorious! You check your<br/>enemy for gold and head back to<br/>town. You receive:<br/><Center><br/>%d XP<br/>%d Gold<br/></Center></html>", experience, gold);
+		String victoryString; 
+
+
+		Item droppedItem = Loot.getLoot(this.creature.getLevel());
+		if(null == droppedItem.toString()) {
+			victoryString = String.format("<html>You are victorious! You check your<br/>enemy for gold and head back to<br/>town. You receive:<br/><Center><br/>%d XP<br/>%d Gold<br/></Center></html>", experience, gold);
+		}
+		else {
+			victoryString = String.format("<html>You are victorious! You check your<br/>enemy for gold and head back to<br/>town. You receive:<br/><Center><br/>%d XP<br/>%d Gold<br/><font color='%s'>[%s]</font><br/></Center></html>", experience, gold, droppedItem.getColor(), droppedItem);
+			hero.addToInventory(droppedItem);
+		}
 
 		JOptionPane.showMessageDialog(this, 
 				new JLabel(victoryString, JLabel.CENTER), 

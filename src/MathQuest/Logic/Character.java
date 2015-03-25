@@ -7,7 +7,7 @@ public class Character {
 	public enum DamageType {
 		CRUSHING, SLASHING, MAGICAL
 	}
-	
+
 	private int level;
 	private int maxExperience;
 	private int currentExperience;
@@ -29,11 +29,7 @@ public class Character {
 	private Item equippedWeapon;
 	private Item equippedBoots;
 	private Item equippedGloves;
-	private ArrayList<Item> headItems;
-	private ArrayList<Item> chestItems;
-	private ArrayList<Item> feetItems;
-	private ArrayList<Item> gloveItems;
-	private ArrayList<Item> weaponItems;
+	private ArrayList<Item> inventory;
 
 	public Character() {
 		this.currentExperience = 0;
@@ -50,11 +46,7 @@ public class Character {
 		this.damageType = DamageType.SLASHING;
 		this.answeredCorrectly = 0;
 		this.answeredIncorrectly = 0;
-		this.headItems = new ArrayList<Item>();
-		this.chestItems = new ArrayList<Item>();
-		this.feetItems = new ArrayList<Item>();
-		this.gloveItems = new ArrayList<Item>();
-		this.weaponItems = new ArrayList<Item>();
+		this.inventory = new ArrayList<Item>();
 	}
 
 	//monster constructor
@@ -110,7 +102,7 @@ public class Character {
 	public int getStrength(){
 		return this.strength;
 	}
-	
+
 	public void addStrength(int strength) {
 		this.strength = this.strength + strength;
 	}
@@ -118,7 +110,7 @@ public class Character {
 	public int getDexterity(){
 		return this.dexterity;
 	}
-	
+
 	public void addDexterity(int dexterity) {
 		this.dexterity = this.dexterity + dexterity;
 	}
@@ -126,11 +118,11 @@ public class Character {
 	public int getMaxHealth(){
 		return this.maxHealth;
 	}
-	
+
 	public void addMaxHealth(int health) {
 		this.maxHealth = this.maxHealth + health; 
 	}
-	
+
 	public int getCurrentHealth(){
 		return this.currentHealth;
 	}
@@ -162,11 +154,11 @@ public class Character {
 	public DamageType getDamageType() {
 		return this.damageType;
 	}
-	
+
 	public void setDamageType(DamageType damageType) {
 		this.damageType = damageType;
 	}
-	
+
 	public void death() {
 		this.currentHealth = this.maxHealth;
 		this.gold = (int)(this.gold * .5);
@@ -188,7 +180,7 @@ public class Character {
 		this.currentExperience = this.currentExperience - this.maxExperience;
 		this.maxExperience = this.maxExperience*2;
 	}
-	
+
 	public int calculateDamage() {
 		double maxDamage = this.strength * .2;
 		double damage = this.strength * .2  - ((Math.random()/4) * maxDamage);
@@ -279,7 +271,7 @@ public class Character {
 	public void incrementAnsweredIncorrectly() {
 		this.answeredIncorrectly++;
 	}
-	
+
 	public Item getEquippedHelmet() {
 		return equippedHelmet;
 	}
@@ -320,43 +312,26 @@ public class Character {
 		this.equippedGloves = equippedGloves;
 	}
 
-	public ArrayList<Item> getHeadItems() {
-		return headItems;
+	public ArrayList<Item> getInventory() {
+		return this.inventory;
 	}
 
-	public void setHeadItems(ArrayList<Item> headItems) {
-		this.headItems = headItems;
+	public void addToInventory(Item item) {
+		this.inventory.add(item);
 	}
 
-	public ArrayList<Item> getChestItems() {
-		return chestItems;
+	public void removeFromInventory(Item item) {
+		this.inventory.remove(item);
 	}
 
-	public void setChestItems(ArrayList<Item> chestItems) {
-		this.chestItems = chestItems;
-	}
+	public void equip(Object item) {
+		if(null == item) {
 
-	public ArrayList<Item> getFeetItems() {
-		return feetItems;
-	}
-
-	public void setFeetItems(ArrayList<Item> feetItems) {
-		this.feetItems = feetItems;
-	}
-
-	public ArrayList<Item> getGloveItems() {
-		return gloveItems;
-	}
-
-	public void setGloveItems(ArrayList<Item> gloveItems) {
-		this.gloveItems = gloveItems;
-	}
-
-	public ArrayList<Item> getWeaponItems() {
-		return weaponItems;
-	}
-
-	public void setWeaponItems(ArrayList<Item> weaponItems) {
-		this.weaponItems = weaponItems;
+		}
+		else {
+			Item equipable = (Item)item;
+			String slot = equipable.getSlot();
+			System.out.println(slot);
+		}
 	}
 }

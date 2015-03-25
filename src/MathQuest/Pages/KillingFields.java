@@ -19,12 +19,19 @@ import MathQuest.Logic.Character.DamageType;
 
 import java.awt.Color;
 
+import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.LineBorder;
+import java.awt.GridLayout;
+
 public class KillingFields extends Area {
 
 	private static final long serialVersionUID = 1L;
 	private Character creature;
 	
-	public KillingFields(Character hero) {
+	static Character hero = new Character();
+	public KillingFields(Character her) {
 		super(hero, "killingFieldsMusic.mp3");
 		this.loadImages();
 			
@@ -35,21 +42,24 @@ public class KillingFields extends Area {
 		creaturePanel.setLayout(null);
 		
 		JPanel creatureHeaderPanel = new JPanel();
-		creatureHeaderPanel.setBackground(Color.WHITE);
-		creatureHeaderPanel.setBounds(6, 6, 588, 55);
+		creatureHeaderPanel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		creatureHeaderPanel.setBackground(Color.LIGHT_GRAY);
+		creatureHeaderPanel.setBounds(0, 0, 600, 45);
 		creaturePanel.add(creatureHeaderPanel);
+		creatureHeaderPanel.setLayout(null);
 		
 		JLabel creatureHeader = new JLabel("Select your opponent");
+		creatureHeader.setHorizontalAlignment(SwingConstants.CENTER);
+		creatureHeader.setBounds(0, 0, 600, 45);
 		creatureHeader.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 40));
 		creatureHeaderPanel.add(creatureHeader);
 		
 		JPanel creatureSelectionPanel = new JPanel();
-		creatureSelectionPanel.setBounds(6, 67, 588, 334);
+		creatureSelectionPanel.setBounds(0, 46, 600, 361);
+		creatureSelectionPanel.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
 		creaturePanel.add(creatureSelectionPanel);
-		creatureSelectionPanel.setLayout(null);
 		
 		JButton btnGoblin = new JButton("Goblin");
-		btnGoblin.setBounds(16, 16, 131, 29);
 		btnGoblin.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -57,10 +67,10 @@ public class KillingFields extends Area {
 				MathQuest.switchToCombat(creature);
 			}	
 		});
+		creatureSelectionPanel.setLayout(new GridLayout(0, 4, 0, 0));
 		creatureSelectionPanel.add(btnGoblin);
 		
 		JButton btnOrc = new JButton("Orc");
-		btnOrc.setBounds(16, 55, 131, 29);
 		btnOrc.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -68,54 +78,39 @@ public class KillingFields extends Area {
 				MathQuest.switchToCombat(creature);
 			}	
 		});
+		
+		JButton btnPitFiend = new JButton("Pit Fiend");
+		btnPitFiend.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				creature = new Character(25, "Pit Fiend", "Pit Fiend Portrait.png", DamageType.SLASHING);
+				MathQuest.switchToCombat(creature);
+			}	
+		});
+		
+		JButton btnSuccubus = new JButton("Succubus");
+		btnSuccubus.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				creature = new Character(17, "Succubus", "Succubus Portrait.png", DamageType.MAGICAL);
+				MathQuest.switchToCombat(creature);
+			}	
+		});
+		
+		JButton btnDemon = new JButton("Demon");
+		btnDemon.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				creature = new Character(9, "Demon", "Demon Portrait.png", DamageType.CRUSHING);
+				MathQuest.switchToCombat(creature);
+			}	
+		});
+		creatureSelectionPanel.add(btnDemon);
+		creatureSelectionPanel.add(btnSuccubus);
+		creatureSelectionPanel.add(btnPitFiend);
 		creatureSelectionPanel.add(btnOrc);
 		
-		JButton btnGhoul = new JButton("Ghoul");
-		btnGhoul.setBounds(16, 94, 131, 29);		
-		btnGhoul.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				creature = new Character(3, "Ghoul", "Ghoul Portrait.png", DamageType.CRUSHING);
-				MathQuest.switchToCombat(creature);
-			}	
-		});
-		creatureSelectionPanel.add(btnGhoul);
-		
-		JButton btnTormentor = new JButton("Tormentor");
-		btnTormentor.setBounds(16, 172, 131, 29);
-		btnTormentor.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				creature = new Character(5, "Tormentor", "Tormentor Portrait.png", DamageType.SLASHING);
-				MathQuest.switchToCombat(creature);
-			}	
-		});
-		creatureSelectionPanel.add(btnTormentor);
-		
-		JButton btnSkeleton = new JButton("Skeleton");
-		btnSkeleton.setBounds(16, 133, 131, 29);
-		btnSkeleton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				creature = new Character(4, "Skeleton", "Skeleton Portrait.png", DamageType.SLASHING);
-				MathQuest.switchToCombat(creature);
-			}	
-		});
-		creatureSelectionPanel.add(btnSkeleton);
-		
-		JButton btnGhost = new JButton("Ghost");
-		btnGhost.setBounds(16, 211, 131, 29);
-		btnGhost.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				creature = new Character(6, "Ghost", "Ghost Portrait.png", DamageType.CRUSHING);
-				MathQuest.switchToCombat(creature);
-			}	
-		});
-		creatureSelectionPanel.add(btnGhost);
-		
 		JButton btnHarpy = new JButton("Harpy");
-		btnHarpy.setBounds(157, 55, 131, 29);
 		btnHarpy.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -126,7 +121,6 @@ public class KillingFields extends Area {
 		creatureSelectionPanel.add(btnHarpy);
 		
 		JButton btnFireElemental = new JButton("Fire Elemental");
-		btnFireElemental.setBounds(298, 55, 131, 29);
 		btnFireElemental.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -136,52 +130,7 @@ public class KillingFields extends Area {
 		});
 		creatureSelectionPanel.add(btnFireElemental);
 		
-		JButton btnEvilEye = new JButton("Evil Eye");
-		btnEvilEye.setBounds(157, 94, 131, 29);
-		btnEvilEye.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				creature = new Character(11, "Evil Eye", "Evil Eye Portrait.png", DamageType.MAGICAL);
-				MathQuest.switchToCombat(creature);
-			}	
-		});
-		creatureSelectionPanel.add(btnEvilEye);
-		
-		JButton btnGriffin = new JButton("Griffin");
-		btnGriffin.setBounds(157, 133, 131, 29);
-		btnGriffin.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				creature = new Character(12, "Griffin", "Griffin Portrait.png", DamageType.SLASHING);
-				MathQuest.switchToCombat(creature);
-			}	
-		});
-		creatureSelectionPanel.add(btnGriffin);
-		
-		JButton btnEarthElemental = new JButton("Earth Elemental");
-		btnEarthElemental.setBounds(157, 172, 131, 29);
-		btnEarthElemental.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				creature = new Character(13, "Earth Elemental", "Earth Elemental Portrait.png", DamageType.CRUSHING);
-				MathQuest.switchToCombat(creature);
-			}	
-		});
-		creatureSelectionPanel.add(btnEarthElemental);
-		
-		JButton btnAirElemental = new JButton("Air Elemental");
-		btnAirElemental.setBounds(157, 211, 131, 29);
-		btnAirElemental.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				creature = new Character(14, "Air Elemental", "Air Elemental Portrait.png", DamageType.MAGICAL);
-				MathQuest.switchToCombat(creature);
-			}	
-		});
-		creatureSelectionPanel.add(btnAirElemental);
-		
 		JButton btnNightmare = new JButton("Nightmare");
-		btnNightmare.setBounds(439, 55, 131, 29);
 		btnNightmare.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -191,19 +140,64 @@ public class KillingFields extends Area {
 		});
 		creatureSelectionPanel.add(btnNightmare);
 		
-		JButton btnMinotaur = new JButton("Minotaur");
-		btnMinotaur.setBounds(157, 250, 131, 29);
-		btnMinotaur.addActionListener(new ActionListener() {
+		JButton btnVampireKnight = new JButton("Vampire Knight");
+		btnVampireKnight.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(15, "Minotaur", "Minotaur Portrait.png", DamageType.SLASHING);
+				creature = new Character(19, "Vampire Knight", "Vampire Knight Portrait.png", DamageType.SLASHING);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
-		creatureSelectionPanel.add(btnMinotaur);
+		
+		JButton btnEvilEye = new JButton("Evil Eye");
+		btnEvilEye.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				creature = new Character(11, "Evil Eye", "Evil Eye Portrait.png", DamageType.MAGICAL);
+				MathQuest.switchToCombat(creature);
+			}	
+		});
+		
+		JButton btnGhoul = new JButton("Ghoul");
+		btnGhoul.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				creature = new Character(3, "Ghoul", "Ghoul Portrait.png", DamageType.CRUSHING);
+				MathQuest.switchToCombat(creature);
+			}	
+		});
+		creatureSelectionPanel.add(btnGhoul);
+		creatureSelectionPanel.add(btnEvilEye);
+		creatureSelectionPanel.add(btnVampireKnight);
+		
+		JButton btnCentaur = new JButton("Centaur");
+		btnCentaur.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				creature = new Character(20, "Centaur", "Centaur Portrait.png", DamageType.SLASHING);
+				MathQuest.switchToCombat(creature);
+			}	
+		});
+		
+		JButton btnGriffin = new JButton("Griffin");
+		btnGriffin.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				creature = new Character(12, "Griffin", "Griffin Portrait.png", DamageType.SLASHING);
+				MathQuest.switchToCombat(creature);
+			}	
+		});
+		
+		JButton btnSkeleton = new JButton("Skeleton");
+		btnSkeleton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				creature = new Character(4, "Skeleton", "Skeleton Portrait.png", DamageType.SLASHING);
+				MathQuest.switchToCombat(creature);
+			}	
+		});
 		
 		JButton btnAngel = new JButton("Angel");
-		btnAngel.setBounds(439, 94, 131, 29);
 		btnAngel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -212,9 +206,38 @@ public class KillingFields extends Area {
 			}	
 		});
 		creatureSelectionPanel.add(btnAngel);
+		creatureSelectionPanel.add(btnSkeleton);
+		creatureSelectionPanel.add(btnGriffin);
+		creatureSelectionPanel.add(btnCentaur);
+		
+		JButton btnManticore = new JButton("Manticore");
+		btnManticore.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				creature = new Character(21, "Manticore", "Manticore Portrait.png", DamageType.CRUSHING);
+				MathQuest.switchToCombat(creature);
+			}	
+		});
+		
+		JButton btnEarthElemental = new JButton("Earth Elemental");
+		btnEarthElemental.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				creature = new Character(13, "Earth Elemental", "Earth Elemental Portrait.png", DamageType.CRUSHING);
+				MathQuest.switchToCombat(creature);
+			}	
+		});
+		
+		JButton btnTormentor = new JButton("Tormentor");
+		btnTormentor.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				creature = new Character(5, "Tormentor", "Tormentor Portrait.png", DamageType.SLASHING);
+				MathQuest.switchToCombat(creature);
+			}	
+		});
 		
 		JButton btnIceDragon = new JButton("Ice Dragon");
-		btnIceDragon.setBounds(439, 133, 131, 29);
 		btnIceDragon.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -223,9 +246,38 @@ public class KillingFields extends Area {
 			}	
 		});
 		creatureSelectionPanel.add(btnIceDragon);
+		creatureSelectionPanel.add(btnTormentor);
+		creatureSelectionPanel.add(btnEarthElemental);
+		creatureSelectionPanel.add(btnManticore);
+		
+		JButton btnGiant = new JButton("Giant");
+		btnGiant.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				creature = new Character(22, "Giant", "Giant Portrait.png", DamageType.CRUSHING);
+				MathQuest.switchToCombat(creature);
+			}	
+		});
+		
+		JButton btnAirElemental = new JButton("Air Elemental");
+		btnAirElemental.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				creature = new Character(14, "Air Elemental", "Air Elemental Portrait.png", DamageType.MAGICAL);
+				MathQuest.switchToCombat(creature);
+			}	
+		});
+		
+		JButton btnGhost = new JButton("Ghost");
+		btnGhost.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				creature = new Character(6, "Ghost", "Ghost Portrait.png", DamageType.CRUSHING);
+				MathQuest.switchToCombat(creature);
+			}	
+		});
 		
 		JButton btnLightningDragon = new JButton("Lightning Dragon");
-		btnLightningDragon.setBounds(439, 172, 131, 29);
 		btnLightningDragon.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -234,9 +286,20 @@ public class KillingFields extends Area {
 			}	
 		});
 		creatureSelectionPanel.add(btnLightningDragon);
+		creatureSelectionPanel.add(btnGhost);
+		creatureSelectionPanel.add(btnAirElemental);
+		creatureSelectionPanel.add(btnGiant);
+		
+		JButton btnEnchantress = new JButton("Enchantress");
+		btnEnchantress.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				creature = new Character(8, "Enchantress", "Enchantress Portrait.png", DamageType.MAGICAL);
+				MathQuest.switchToCombat(creature);
+			}	
+		});
 		
 		JButton btnShadowDragon = new JButton("Shadow Dragon");
-		btnShadowDragon.setBounds(439, 211, 131, 29);
 		btnShadowDragon.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -245,86 +308,9 @@ public class KillingFields extends Area {
 			}	
 		});
 		creatureSelectionPanel.add(btnShadowDragon);
-		
-		JButton btnSpiderQueen = new JButton("Spider Queen");
-		btnSpiderQueen.setBounds(439, 250, 131, 29);
-		btnSpiderQueen.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				creature = new Character(37, "Spider Queen", "Spider Queen Portrait.png", DamageType.CRUSHING);
-				MathQuest.switchToCombat(creature);
-			}	
-		});
-		creatureSelectionPanel.add(btnSpiderQueen);
-		
-		JButton btnVampireKnight = new JButton("Vampire Knight");
-		btnVampireKnight.setBounds(298, 94, 131, 29);
-		btnVampireKnight.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				creature = new Character(19, "Vampire Knight", "Vampire Knight Portrait.png", DamageType.SLASHING);
-				MathQuest.switchToCombat(creature);
-			}	
-		});
-		creatureSelectionPanel.add(btnVampireKnight);
-		
-		JButton btnCentaur = new JButton("Centaur");
-		btnCentaur.setBounds(298, 133, 131, 29);
-		btnCentaur.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				creature = new Character(20, "Centaur", "Centaur Portrait.png", DamageType.SLASHING);
-				MathQuest.switchToCombat(creature);
-			}	
-		});
-		creatureSelectionPanel.add(btnCentaur);
-		
-		JButton btnManticore = new JButton("Manticore");
-		btnManticore.setBounds(298, 172, 131, 29);
-		btnManticore.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				creature = new Character(21, "Manticore", "Manticore Portrait.png", DamageType.CRUSHING);
-				MathQuest.switchToCombat(creature);
-			}	
-		});
-		creatureSelectionPanel.add(btnManticore);
-		
-		JButton btnGiant = new JButton("Giant");
-		btnGiant.setBounds(298, 211, 131, 29);
-		btnGiant.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				creature = new Character(22, "Giant", "Giant Portrait.png", DamageType.CRUSHING);
-				MathQuest.switchToCombat(creature);
-			}	
-		});
-		creatureSelectionPanel.add(btnGiant);
-		
-		JButton btnLich = new JButton("Lich");
-		btnLich.setBounds(298, 250, 131, 29);
-		btnLich.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				creature = new Character(23, "Lich", "Lich Portrait.png", DamageType.MAGICAL);
-				MathQuest.switchToCombat(creature);
-			}	
-		});
-		creatureSelectionPanel.add(btnLich);
-		
-		JButton btnEnchantress = new JButton("Enchantress");
-		btnEnchantress.setBounds(16, 250, 131, 29);
-		btnEnchantress.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				creature = new Character(8, "Enchantress", "Enchantress Portrait.png", DamageType.MAGICAL);
-				MathQuest.switchToCombat(creature);
-			}	
-		});
 		creatureSelectionPanel.add(btnEnchantress);
 		
 		JButton btnVampire = new JButton("Vampire");
-		btnVampire.setBounds(157, 289, 131, 29);
 		btnVampire.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -332,10 +318,49 @@ public class KillingFields extends Area {
 				MathQuest.switchToCombat(creature);
 			}	
 		});
+		
+		JButton btnHellhound = new JButton("Hellhound");
+		btnHellhound.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				creature = new Character(7, "Hellhound", "Hellhound Portrait.png", DamageType.CRUSHING);
+				MathQuest.switchToCombat(creature);
+			}	
+		});
+		
+		JButton btnSpiderQueen = new JButton("Spider Queen");
+		btnSpiderQueen.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				creature = new Character(37, "Spider Queen", "Spider Queen Portrait.png", DamageType.CRUSHING);
+				MathQuest.switchToCombat(creature);
+			}	
+		});
+		
+		JButton btnLich = new JButton("Lich");
+		btnLich.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				creature = new Character(23, "Lich", "Lich Portrait.png", DamageType.MAGICAL);
+				MathQuest.switchToCombat(creature);
+			}	
+		});
+		
+		JButton btnMinotaur = new JButton("Minotaur");
+		btnMinotaur.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				creature = new Character(15, "Minotaur", "Minotaur Portrait.png", DamageType.SLASHING);
+				MathQuest.switchToCombat(creature);
+			}	
+		});
+		creatureSelectionPanel.add(btnMinotaur);
+		creatureSelectionPanel.add(btnLich);
+		creatureSelectionPanel.add(btnSpiderQueen);
+		creatureSelectionPanel.add(btnHellhound);
 		creatureSelectionPanel.add(btnVampire);
 		
 		JButton btnGoldDragon = new JButton("Gold Dragon");
-		btnGoldDragon.setBounds(298, 289, 131, 29);
 		btnGoldDragon.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -346,7 +371,6 @@ public class KillingFields extends Area {
 		creatureSelectionPanel.add(btnGoldDragon);
 		
 		JButton btnUniverseDragon = new JButton("Universe Dragon");
-		btnUniverseDragon.setBounds(439, 289, 131, 29);
 		btnUniverseDragon.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -355,50 +379,6 @@ public class KillingFields extends Area {
 			}	
 		});
 		creatureSelectionPanel.add(btnUniverseDragon);
-		
-		JButton btnDemon = new JButton("Demon");
-		btnDemon.setBounds(157, 16, 131, 29);
-		btnDemon.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				creature = new Character(9, "Demon", "Demon Portrait.png", DamageType.CRUSHING);
-				MathQuest.switchToCombat(creature);
-			}	
-		});
-		creatureSelectionPanel.add(btnDemon);
-		
-		JButton btnSuccubus = new JButton("Succubus");
-		btnSuccubus.setBounds(298, 16, 131, 29);		
-		btnSuccubus.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				creature = new Character(17, "Succubus", "Succubus Portrait.png", DamageType.MAGICAL);
-				MathQuest.switchToCombat(creature);
-			}	
-		});
-		creatureSelectionPanel.add(btnSuccubus);
-		
-		JButton btnPitFiend = new JButton("Pit Fiend");
-		btnPitFiend.setBounds(439, 16, 131, 29);
-		btnPitFiend.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				creature = new Character(25, "Pit Fiend", "Pit Fiend Portrait.png", DamageType.SLASHING);
-				MathQuest.switchToCombat(creature);
-			}	
-		});
-		creatureSelectionPanel.add(btnPitFiend);
-		
-		JButton btnHellhound = new JButton("Hellhound");
-		btnHellhound.setBounds(16, 289, 131, 29);
-		btnHellhound.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				creature = new Character(7, "Hellhound", "Hellhound Portrait.png", DamageType.CRUSHING);
-				MathQuest.switchToCombat(creature);
-			}	
-		});
-		creatureSelectionPanel.add(btnHellhound);
 		
 		this.renderBackground();
 	}
