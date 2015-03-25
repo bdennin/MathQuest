@@ -57,16 +57,16 @@ public class Item {
 		 
 		 String slotName;
 		 String modifier;
-		 double randomItem = Math.random()*10;
-		 double randomModifier = Math.random()*10;
-		 if(randomItem < 20)
+		 double randomItem = Math.random();
+		 double randomModifier = Math.random();
+		 if(randomItem < .20)
 			 weapon();
-		 else if(randomItem >= 20 && randomItem < 40)
+		 else if(randomItem >= .20 && randomItem < .40)
 			 helmet();
-		 else if(randomItem >= 40 && randomItem < 60)
+		 else if(randomItem >= .40 && randomItem < .60)
 			 chest();
-		 else if(randomItem >= 60 && randomItem < 80)
-			 legs();
+		 else if(randomItem >= .60 && randomItem < .80)
+			 gloves();
 		 else
 			 boots();
 		 
@@ -75,13 +75,13 @@ public class Item {
 		 speed = speed * itemLevel;
 		 slotName = itemName;
 		 
-		 if(randomModifier < 20)
+		 if(randomModifier < .20)
 			 cracked();
-		 else if(randomModifier >= 20 && randomModifier < 40)
+		 else if(randomModifier >= .20 && randomModifier < .40)
 			 damaged();
-		 else if(randomModifier >= 40 && randomModifier < 60)
+		 else if(randomModifier >= .40 && randomModifier < .60)
 			 wornOut();
-		 else if(randomModifier >= 60 && randomModifier < 80)
+		 else if(randomModifier >= .60 && randomModifier < .80)
 			 squishy();
 		 else
 			 tiny();
@@ -99,16 +99,16 @@ public class Item {
 		 
 		 String slotName;
 		 String animalName;
-		 double randomAnimal = Math.random()*10;
-		 double randomItem = Math.random()*10;
-		 if(randomItem < 20)
+		 double randomAnimal = Math.random();
+		 double randomItem = Math.random();
+		 if(randomItem < .20)
 			 weapon();
-		 else if(randomItem >= 20 && randomItem < 40)
+		 else if(randomItem >= .20 && randomItem < .40)
 			 helmet();
-		 else if(randomItem >= 40 && randomItem < 60)
+		 else if(randomItem >= .40 && randomItem < .60)
 			 chest();
-		 else if(randomItem >= 60 && randomItem < 80)
-			 legs();
+		 else if(randomItem >= .60 && randomItem < .80)
+			 gloves();
 		 else
 			 boots();
 		 
@@ -117,23 +117,23 @@ public class Item {
 		 speed = speed * itemLevel;
 		 slotName = itemName;
 		 
-		 if(randomAnimal < 10)
+		 if(randomAnimal < .10)
 			 bear();
-		 else if(randomAnimal >= 10 && randomAnimal < 20)
+		 else if(randomAnimal >= .10 && randomAnimal < .20)
 			 snake();
-		 else if(randomAnimal >= 20 && randomAnimal < 30)
+		 else if(randomAnimal >= .20 && randomAnimal < .30)
 			 eagle();
-		 else if(randomAnimal >= 30 && randomAnimal < 40)
+		 else if(randomAnimal >= .30 && randomAnimal < .40)
 			 tiger();
-		 else if(randomAnimal >= 40 && randomAnimal < 50)
+		 else if(randomAnimal >= .40 && randomAnimal < .50)
 			 fox();
-		 else if(randomAnimal >= 50 && randomAnimal < 60)
+		 else if(randomAnimal >= .50 && randomAnimal < .60)
 			 gorilla();
-		 else if(randomAnimal >= 60 && randomAnimal < 70)
+		 else if(randomAnimal >= .60 && randomAnimal < .70)
 			 rabbit();
-		 else if(randomAnimal >= 70 && randomAnimal < 80)
+		 else if(randomAnimal >= .70 && randomAnimal < .80)
 			 lion();
-		 else if(randomAnimal >= 80 && randomAnimal < 90)
+		 else if(randomAnimal >= .80 && randomAnimal < .90)
 			 monkey();
 		 else
 			 elephant();
@@ -150,16 +150,16 @@ public class Item {
 		 
 		 String slotName;
 		 String epicName;
-		 double randomEpic = Math.random()*10;
-		 double randomItem = Math.random()*10;
-		 if(randomItem < 20)
+		 double randomEpic = Math.random();
+		 double randomItem = Math.random();
+		 if(randomItem < .20)
 			 weapon();
-		 else if(randomItem >= 20 && randomItem < 40)
+		 else if(randomItem >= .20 && randomItem < .40)
 			 helmet();
-		 else if(randomItem >= 40 && randomItem < 60)
+		 else if(randomItem >= .40 && randomItem < .60)
 			 chest();
-		 else if(randomItem >= 60 && randomItem < 80)
-			 legs();
+		 else if(randomItem >= .60 && randomItem < .80)
+			 gloves();
 		 else
 			 boots();
 		 
@@ -168,13 +168,13 @@ public class Item {
 		 speed = speed * itemLevel;
 		 slotName = itemName;
 		 
-		 if(randomEpic < 20)
+		 if(randomEpic < .20)
 			 amazing();
-		 else if(randomEpic >= 20 && randomEpic < 40)
+		 else if(randomEpic >= .20 && randomEpic < .40)
 			 spectacular();
-		 else if(randomEpic >= 40 && randomEpic < 60)
+		 else if(randomEpic >= .40 && randomEpic < .60)
 			 fantastic();
-		 else if(randomEpic >= 60 && randomEpic < 80)
+		 else if(randomEpic >= .60 && randomEpic < .80)
 			 superEpic();
 		 else
 			 wonderful();
@@ -189,22 +189,22 @@ public class Item {
 	 
 	 private void setStatsLegendary(){
 		 
-		 double randomItem = Math.random()*10;
-		 if(randomItem < 20){
+		 double randomItem = Math.random();
+		 if(randomItem < .20){
 			 weapon();
 			 legendaryWeapon();
 		 }
-		 else if(randomItem >= 20 && randomItem < 40){
+		 else if(randomItem >= .20 && randomItem < .40){
 			 helmet();
 			 legendaryHelmet();
 		 }
-		 else if(randomItem >= 40 && randomItem < 60){
+		 else if(randomItem >= .40 && randomItem < .60){
 			 chest();
 			 legendaryChest();
 		 }
-		 else if(randomItem >= 60 && randomItem < 80){
-			 legs();
-			 legendaryLegs();
+		 else if(randomItem >= .60 && randomItem < .80){
+			 gloves();
+			 legendaryGloves();
 		 }
 		 else{
 			 boots();
@@ -427,11 +427,11 @@ public class Item {
 		 gold = 200;
 	 }
 	 
-	 //Legs
-	 private void legendaryLegs(){
+	 //gloves
+	 private void legendaryGloves(){
 		 str = 30;
 		 dex = 30;
-		 itemName = "Mathtastic Legs of Learning";
+		 itemName = "Mathtastic Gloves of Learning";
 		 gold = 200;
 	 }
 	 
@@ -463,10 +463,10 @@ public class Item {
 		 slot = "Chest";
 	 }
 	 
-	 private void legs(){
+	 private void gloves(){
 		 armor = 3;
-		 itemName = "Leggings";
-		 slot = "Legs";
+		 itemName = "Gloves";
+		 slot = "gloves";
 	 }
 	 
 	 private void boots(){
