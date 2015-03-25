@@ -292,7 +292,7 @@ public class Combat extends Area {
 
 
 		Item droppedItem = Loot.getLoot(this.creature.getLevel());
-		if(null == droppedItem.toString()) {
+		if(null == droppedItem) {
 			victoryString = String.format("<html>You are victorious! You check your<br/>enemy for gold and head back to<br/>town. You receive:<br/><Center><br/>%d XP<br/>%d Gold<br/></Center></html>", experience, gold);
 		}
 		else {
