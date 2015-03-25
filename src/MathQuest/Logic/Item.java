@@ -1,29 +1,29 @@
 package MathQuest.Logic;
 
 import java.awt.Color;
+
 import java.lang.Math;
-import java.util.ArrayList;
 
 public class Item {
-
-	boolean loopPrevention = true;
 	
 	boolean itemDropped;
 	
-	 String itemName;
-	 Color color;
-	 int itemLevel = 1;
-	 int dmg = 0;
-	 int str = 0;
-	 int dex = 0;
-	 int armor = 0;
-	 int gold = 0;
-	 int speed = 0;
+	String slot;
+	String itemName;
+	Color color;
+	int itemLevel = 1;
+	int dmg = 0;
+	int str = 0;
+	int dex = 0;
+	int armor = 0;
+	int gold = 0;
+	int speed = 0;
+	 
 	 
 	 
 	 public Item(){
 		 
-		this.color = Color.white;
+		color = Color.white;
 		itemName = "Terrible Item";
 		itemLevel = 1;
 		dmg = 0;
@@ -36,106 +36,63 @@ public class Item {
 	 }
 	 
 	 
-	 public Item(int monsterLvl, int catagoryNumber){
+	 public Item(int monsterLvl, Color catagory){
 		 
+		 color = catagory;
+		 itemLevel = monsterLvl;
+		 if (catagory == Color.white)
+			 setStatsBasic();
+		 if (catagory == Color.green)
+		 	setStatsRare();
+		 if (catagory == Color.blue)
+		 	setStatsEpic();
+		 if (catagory == Color.orange)
+		 	setStatsLegendary();
 		 
-		 this.itemLevel = monsterLvl;
-		 if (loopPrevention == true || catagoryNumber == 0)
-		 	this.createRandomItems(monsterLvl);
-		 if (catagoryNumber == 1)
-			 this.setStatsBasic();
-		 if (catagoryNumber == 2)
-		 	this.setStatsRare();
-		 if (catagoryNumber == 3)
-		 	this.setStatsEpic();
-		 if (catagoryNumber == 4)
-		 	this.setStatsLegendary();
 		 
 	 }
 	 
-	 private ArrayList<Item> createRandomItems(int monsterLvl){
-			
-			ArrayList <Item> itemsDropped = new ArrayList <Item>();
-			boolean droppedBasic = chanceToDropBasic();
-			boolean droppedRare = chanceToDropRare();
-			boolean droppedEpic = chanceToDropEpic();
-			boolean droppedLegendary = chanceToDropLegendary();
-			loopPrevention = false;
-			
-			if (droppedBasic == false)
-				System.out.println("No basic items");
-			else{
-				Item basicItem = new Item(monsterLvl, 1);
-				this.color = Color.white;
-				itemsDropped.add(basicItem);
-			}
-			
-			if (droppedRare == false)
-				System.out.println("No rare Items");
-			else{
-				Item rareItem = new Item(monsterLvl, 2);
-				this.color = Color.green;
-				itemsDropped.add(rareItem);
-			}
-			
-			if (droppedEpic == false)
-				System.out.println("No epic items");
-			else{
-				Item epicItem = new Item(monsterLvl, 3);
-				this.color = Color.blue;
-				itemsDropped.add(epicItem);
-			}
-			
-			if (droppedLegendary == false)
-				System.out.println("No legendary items");
-			else{
-				Item legendaryItem = new Item(monsterLvl, 4);
-				this.color = Color.orange;
-				itemsDropped.add(legendaryItem);
-			}
-			
-			loopPrevention = true;
-			return itemsDropped;
-		}
+
 	 
 	 private void setStatsBasic(){
+		 
 		 
 		 String slotName;
 		 String modifier;
 		 double randomItem = Math.random()*10;
 		 double randomModifier = Math.random()*10;
 		 if(randomItem < 20)
-			 this.weapon();
+			 weapon();
 		 else if(randomItem >= 20 && randomItem < 40)
-			 this.helmet();
+			 helmet();
 		 else if(randomItem >= 40 && randomItem < 60)
-			 this.chest();
+			 chest();
 		 else if(randomItem >= 60 && randomItem < 80)
-			 this.legs();
+			 legs();
 		 else
-			 this.boots();
+			 boots();
 		 
-		 this.dmg = this.dmg * this.itemLevel;
-		 this.armor = this.armor * this.itemLevel;
-		 this.speed = this.speed * this.itemLevel;
-		 slotName = this.itemName;
+		 dmg = dmg * itemLevel;
+		 armor = armor * itemLevel;
+		 speed = speed * itemLevel;
+		 slotName = itemName;
 		 
 		 if(randomModifier < 20)
-			 this.cracked();
+			 cracked();
 		 else if(randomModifier >= 20 && randomModifier < 40)
-			 this.damaged();
+			 damaged();
 		 else if(randomModifier >= 40 && randomModifier < 60)
-			 this.wornOut();
+			 wornOut();
 		 else if(randomModifier >= 60 && randomModifier < 80)
-			 this.squishy();
+			 squishy();
 		 else
-			 this.tiny();
+			 tiny();
 		 
-		 this.str = this.str * this.itemLevel;
-		 this.dex = this.dex * this.itemLevel;
-		 this.gold = this.gold * this.itemLevel;
-		 modifier = this.itemName;
-		 this.itemName = modifier + slotName;
+		 str = str * itemLevel;
+		 dex = dex * itemLevel;
+		 gold = gold * itemLevel;
+		 modifier = itemName;
+		 itemName = modifier + slotName;
 		 
 	 }
 	 
@@ -147,47 +104,47 @@ public class Item {
 		 double randomAnimal = Math.random()*10;
 		 double randomItem = Math.random()*10;
 		 if(randomItem < 20)
-			 this.weapon();
+			 weapon();
 		 else if(randomItem >= 20 && randomItem < 40)
-			 this.helmet();
+			 helmet();
 		 else if(randomItem >= 40 && randomItem < 60)
-			 this.chest();
+			 chest();
 		 else if(randomItem >= 60 && randomItem < 80)
-			 this.legs();
+			 legs();
 		 else
-			 this.boots();
+			 boots();
 		 
-		 this.dmg = this.dmg * this.itemLevel;
-		 this.armor = this.armor * this.itemLevel;
-		 this.speed = this.speed * this.itemLevel;
-		 slotName = this.itemName;
+		 dmg = dmg * itemLevel;
+		 armor = armor * itemLevel;
+		 speed = speed * itemLevel;
+		 slotName = itemName;
 		 
 		 if(randomAnimal < 10)
-			 this.bear();
+			 bear();
 		 else if(randomAnimal >= 10 && randomAnimal < 20)
-			 this.snake();
+			 snake();
 		 else if(randomAnimal >= 20 && randomAnimal < 30)
-			 this.eagle();
+			 eagle();
 		 else if(randomAnimal >= 30 && randomAnimal < 40)
-			 this.tiger();
+			 tiger();
 		 else if(randomAnimal >= 40 && randomAnimal < 50)
-			 this.fox();
+			 fox();
 		 else if(randomAnimal >= 50 && randomAnimal < 60)
-			 this.gorilla();
+			 gorilla();
 		 else if(randomAnimal >= 60 && randomAnimal < 70)
-			 this.rabbit();
+			 rabbit();
 		 else if(randomAnimal >= 70 && randomAnimal < 80)
-			 this.lion();
+			 lion();
 		 else if(randomAnimal >= 80 && randomAnimal < 90)
-			 this.monkey();
+			 monkey();
 		 else
-			 this.elephant();
+			 elephant();
 		 
-		 this.str = this.str * this.itemLevel;
-		 this.dex = this.dex * this.itemLevel;
-		 this.gold = this.gold * this.itemLevel;
-		 animalName = this.itemName;
-		 this.itemName = slotName + animalName;
+		 str = str * itemLevel;
+		 dex = dex * itemLevel;
+		 gold = gold * itemLevel;
+		 animalName = itemName;
+		 itemName = slotName + animalName;
 		 
 	 }
 	 
@@ -198,37 +155,37 @@ public class Item {
 		 double randomEpic = Math.random()*10;
 		 double randomItem = Math.random()*10;
 		 if(randomItem < 20)
-			 this.weapon();
+			 weapon();
 		 else if(randomItem >= 20 && randomItem < 40)
-			 this.helmet();
+			 helmet();
 		 else if(randomItem >= 40 && randomItem < 60)
-			 this.chest();
+			 chest();
 		 else if(randomItem >= 60 && randomItem < 80)
-			 this.legs();
+			 legs();
 		 else
-			 this.boots();
+			 boots();
 		 
-		 this.dmg = this.dmg * this.itemLevel;
-		 this.armor = this.armor * this.itemLevel;
-		 this.speed = this.speed * this.itemLevel;
-		 slotName = this.itemName;
+		 dmg = dmg * itemLevel;
+		 armor = armor * itemLevel;
+		 speed = speed * itemLevel;
+		 slotName = itemName;
 		 
 		 if(randomEpic < 20)
-			 this.amazing();
+			 amazing();
 		 else if(randomEpic >= 20 && randomEpic < 40)
-			 this.spectacular();
+			 spectacular();
 		 else if(randomEpic >= 40 && randomEpic < 60)
-			 this.fantastic();
+			 fantastic();
 		 else if(randomEpic >= 60 && randomEpic < 80)
-			 this.superEpic();
+			 superEpic();
 		 else
-			 this.wonderful();
+			 wonderful();
 		 
-		 this.str = this.str * this.itemLevel;
-		 this.dex = this.dex * this.itemLevel;
-		 this.gold = this.gold * this.itemLevel;
-		 epicName = this.itemName;
-		 this.itemName = epicName + slotName;
+		 str = str * itemLevel;
+		 dex = dex * itemLevel;
+		 gold = gold * itemLevel;
+		 epicName = itemName;
+		 itemName = epicName + slotName;
 		 
 	 }
 	 
@@ -236,316 +193,289 @@ public class Item {
 		 
 		 double randomItem = Math.random()*10;
 		 if(randomItem < 20){
-			 this.weapon();
-			 this.legendaryWeapon();
+			 weapon();
+			 legendaryWeapon();
 		 }
 		 else if(randomItem >= 20 && randomItem < 40){
-			 this.helmet();
-			 this.legendaryHelmet();
+			 helmet();
+			 legendaryHelmet();
 		 }
 		 else if(randomItem >= 40 && randomItem < 60){
-			 this.chest();
-			 this.legendaryChest();
+			 chest();
+			 legendaryChest();
 		 }
 		 else if(randomItem >= 60 && randomItem < 80){
-			 this.legs();
-			 this.legendaryLegs();
+			 legs();
+			 legendaryLegs();
 		 }
 		 else{
-			 this.boots();
-			 this.legendaryBoots();
+			 boots();
+			 legendaryBoots();
 		 }
 		 
-		 this.dmg = this.dmg * this.itemLevel;
-		 this.armor = this.armor * this.itemLevel;
-		 this.speed = this.speed * this.itemLevel;
-		 this.str = this.str * this.itemLevel;
-		 this.dex = this.dex * this.itemLevel;
-		 this.gold = this.gold * this.itemLevel;
+		 dmg = dmg * itemLevel;
+		 armor = armor * itemLevel;
+		 speed = speed * itemLevel;
+		 str = str * itemLevel;
+		 dex = dex * itemLevel;
+		 gold = gold * itemLevel;
 		 
 	 }
 	 
-////////////////////////////////////////Set chances to drop////////////////////////////////////////
-	 
-	 private boolean chanceToDropBasic(){
-			itemDropped = false;
-			double random = Math.random()*100;
-			if (random <= 50)
-				itemDropped = true;
-			return itemDropped;
-		}
 
-		private boolean chanceToDropRare(){
-			itemDropped = false;
-			double random = Math.random()*100;
-			if (random <= 25)
-				itemDropped = true;
-			return itemDropped;
-		}
-
-		private boolean chanceToDropEpic(){
-			itemDropped = false;
-			double random = Math.random()*100;
-			if (random <= 10)
-				itemDropped = true;
-			return itemDropped;
-		}
-
-		private boolean chanceToDropLegendary(){
-			itemDropped = false;
-			double random = Math.random()*100;
-			if (random <= 2)
-				itemDropped = true;
-			return itemDropped;
-		}
 	 
 ////////////////////////////////////////Basic Item Modifiers////////////////////////////////////////
 		
 	//1
 	private void cracked(){
-		this.str = 1;
-		this.dex = 1;
-		this.itemName = "Cracked ";
-		this.gold = 50;
+		str = 1;
+		dex = 1;
+		itemName = "Cracked ";
+		gold = 50;
 	}
 	 
 	//2
 	private void damaged(){
-		this.str = 2;
-		this.dex = 1;
-		this.itemName = "Damaged ";
-		this.gold = 50;
+		str = 2;
+		dex = 1;
+		itemName = "Damaged ";
+		gold = 50;
 	}
 	
 	//3
 	private void wornOut(){
-		this.str = 1;
-		this.dex = 2;
-		this.itemName = "Worn out ";
-		this.gold = 50;
+		str = 1;
+		dex = 2;
+		itemName = "Worn out ";
+		gold = 50;
 	}
 	
 	//4
 	private void squishy(){
-		this.str = 2;
-		this.dex = 2;
-		this.itemName = "Squishy ";
-		this.gold = 50;
+		str = 2;
+		dex = 2;
+		itemName = "Squishy ";
+		gold = 50;
 	}
 	
 	//5
 	private void tiny(){
-		this.str = 0;
-		this.dex = 3;
-		this.itemName = "Tiny ";
-		this.gold = 50;
+		str = 0;
+		dex = 3;
+		itemName = "Tiny ";
+		gold = 50;
 	}
 	
 ////////////////////////////////////////Rare Item Modifiers////////////////////////////////////////
 	 
 	 //1
 	 private void bear(){
-		 this.dmg = this.dmg * 5;
-		 this.str = 5;
-		 this.itemName = " of the Bear";
-		 this.gold = 20;
+		 dmg = dmg * 5;
+		 str = 5;
+		 itemName = " of the Bear";
+		 gold = 20;
 	 }
 	 
 	 //2
 	 private void snake(){
-		 this.dmg = this.dmg * 2;
-		 this.dex = 5;
-		 this.speed = this.speed *2;
-		 this.itemName = " of the Snake";
-		 this.gold = 20;
+		 dmg = dmg * 2;
+		 dex = 5;
+		 speed = speed *2;
+		 itemName = " of the Snake";
+		 gold = 20;
 	 }
 	 
 	 //3
 	 private void eagle(){
-		 this.dmg = this.dmg * 3;
-		 this.dex = 3;
-		 this.str = 2;
-		 this.itemName = " of the Eagle";
-		 this.gold = 20;
+		 dmg = dmg * 3;
+		 dex = 3;
+		 str = 2;
+		 itemName = " of the Eagle";
+		 gold = 20;
 	 }
 
 	 //4
 	 private void tiger(){
-		 this.dmg = this.dmg * 4;
-		 this.str = 4;
-		 this.dex = 1;
-		 this.itemName = " of the Tiger";
-		 this.gold = 20;
+		 dmg = dmg * 4;
+		 str = 4;
+		 dex = 1;
+		 itemName = " of the Tiger";
+		 gold = 20;
 	 }
 
 	 //5
 	 private void fox(){
-		 this.dmg = this.dmg * 2;
-		 this.dex = 4;
-		 this.str = 1;
-		 this.itemName = " of the Fox";
-		 this.gold = 20;
+		 dmg = dmg * 2;
+		 dex = 4;
+		 str = 1;
+		 itemName = " of the Fox";
+		 gold = 20;
 	 }
 
 	 //6
 	 private void gorilla(){
-		 this.dmg = this.dmg * 8;
-		 this.str = 8;
-		 this.itemName = " of the Gorilla";
-		 this.gold = 20;
+		 dmg = dmg * 8;
+		 str = 8;
+		 itemName = " of the Gorilla";
+		 gold = 20;
 	 }
 
 	 //7
 	 private void rabbit(){
-		 this.dmg = this.dmg * 2;
-		 this.dex = 8;
-		 this.speed = this.speed * 3;
-		 this.itemName = " of the Rabbit";
-		 this.gold = 20;
+		 dmg = dmg * 2;
+		 dex = 8;
+		 speed = speed * 3;
+		 itemName = " of the Rabbit";
+		 gold = 20;
 	 }
 
 	 //8
 	 private void lion(){
-		 this.dmg = this.dmg * 5;
-		 this.str = 4;
-		 this.dex = 4;
-		 this.itemName = " of the Lion";
-		 this.gold = 20;
+		 dmg = dmg * 5;
+		 str = 4;
+		 dex = 4;
+		 itemName = " of the Lion";
+		 gold = 20;
 	 }
 	 
 	 //9
 	 private void monkey(){
-		 this.dmg = this.dmg * 3;
-		 this.dex = 6;
-		 this.str = 2;
-		 this.itemName = " of the Monkey";
-		 this.gold = 20;
+		 dmg = dmg * 3;
+		 dex = 6;
+		 str = 2;
+		 itemName = " of the Monkey";
+		 gold = 20;
 	 }
 	 
 	 //10
 	 private void elephant(){
-		 this.dmg = this.dmg * 10;
-		 this.str = 10;
-		 this.itemName = " of the Elephant";
-		 this.gold = 20;
+		 dmg = dmg * 10;
+		 str = 10;
+		 itemName = " of the Elephant";
+		 gold = 20;
 	 }
 	 
 //////////////////////////////////////////Epic Item Modifiers//////////////////////////////////////////
 	 
 	 //1
 	 private void amazing(){
-		 this.dmg = this.dmg * 15;
-		 this.str = 18;
-		 this.dex = 12;
-		 this.itemName = "Amazing ";
-		 this.gold = 100;
+		 dmg = dmg * 15;
+		 str = 18;
+		 dex = 12;
+		 itemName = "Amazing ";
+		 gold = 100;
 	 }
 	 
 	 //2
 	 private void spectacular(){
-		 this.dmg = this.dmg * 12;
-		 this.str = 12;
-		 this.dex = 18;
-		 this.itemName = "Spectacular ";
-		 this.gold = 100;
+		 dmg = dmg * 12;
+		 str = 12;
+		 dex = 18;
+		 itemName = "Spectacular ";
+		 gold = 100;
 	 }
 	 
 	 //3
 	 private void fantastic(){
-		 this.dmg = this.dmg * 14;
-		 this.str = 15;
-		 this.dex = 15;
-		 this.itemName = "Fantastic ";
-		 this.gold = 100;
+		 dmg = dmg * 14;
+		 str = 15;
+		 dex = 15;
+		 itemName = "Fantastic ";
+		 gold = 100;
 	 }
 	 
 	 //4
 	 private void superEpic(){
-		 this.dmg = this.dmg * 20;
-		 this.str = 20;
-		 this.dex = 12;
-		 this.itemName = "Super ";
-		 this.gold = 100;
+		 dmg = dmg * 20;
+		 str = 20;
+		 dex = 12;
+		 itemName = "Super ";
+		 gold = 100;
 	 }
 	 
 	 //5
 	 private void wonderful(){
-		 this.dmg = this.dmg * 12;
-		 this.str = 12;
-		 this.dex = 20;
-		 this.itemName = "Wonderful ";
-		 this.gold = 100;
+		 dmg = dmg * 12;
+		 str = 12;
+		 dex = 20;
+		 itemName = "Wonderful ";
+		 gold = 100;
 	 }
 	 
 ////////////////////////////////////////Legendary Item Modifiers////////////////////////////////////////
 	 
 	 //Weapon
 	 private void legendaryWeapon(){
-		 this.dmg = this.dmg * 40;
-		 this.str = 30;
-		 this.dex = 30;
-		 this.itemName = "Mathtastic Weapon of Solving";
-		 this.gold = 200;
+		 dmg = dmg * 40;
+		 str = 30;
+		 dex = 30;
+		 itemName = "Mathtastic Weapon of Solving";
+		 gold = 200;
 	 }
 	 
 	 //Helmet
 	 private void legendaryHelmet(){
-		 this.str = 30;
-		 this.dex = 30;
-		 this.itemName = "Mathtastic Helmet of Knowledge";
-		 this.gold = 200;
+		 str = 30;
+		 dex = 30;
+		 itemName = "Mathtastic Helmet of Knowledge";
+		 gold = 200;
 	 }
 	 
 	 //Chest
 	 private void legendaryChest(){
-		 this.str = 30;
-		 this.dex = 30;
-		 this.itemName = "Mathtastic Chest of Power";
-		 this.gold = 200;
+		 str = 30;
+		 dex = 30;
+		 itemName = "Mathtastic Chest of Power";
+		 gold = 200;
 	 }
 	 
 	 //Legs
 	 private void legendaryLegs(){
-		 this.str = 30;
-		 this.dex = 30;
-		 this.itemName = "Mathtastic Legs of Learning";
-		 this.gold = 200;
+		 str = 30;
+		 dex = 30;
+		 itemName = "Mathtastic Legs of Learning";
+		 gold = 200;
 	 }
 	 
 	 //Boots
 	 private void legendaryBoots(){
-		 this.str = 30;
-		 this.dex = 30;
-		 this.itemName = "Mathtastic Boots of Intelligence";
-		 this.gold = 200;
+		 str = 30;
+		 dex = 30;
+		 itemName = "Mathtastic Boots of Intelligence";
+		 gold = 200;
 	 }
 	 
 //////////////////////////////////////////////Item Slots//////////////////////////////////////////////
 	 
 	 private void weapon(){
-		 this.dmg = 3;
-		 this.itemName = "Weapon";
+		 dmg = 3;
+		 itemName = "Weapon";
+		 slot = "Weapon";
 	 }
 	 
 	 private void helmet(){
-		 this.armor = 4;
-		 this.itemName = "Helmet";
+		 armor = 4;
+		 itemName = "Helmet";
+		 slot = "Helmet";
 	 }
 	
 	 private void chest(){
-		 this.armor = 6;
-		 this.itemName = "Armor";
+		 armor = 6;
+		 itemName = "Armor";
+		 slot = "Chest";
 	 }
 	 
 	 private void legs(){
-		 this.armor = 3;
-		 this.itemName = "Leggings";
+		 armor = 3;
+		 itemName = "Leggings";
+		 slot = "Legs";
 	 }
 	 
 	 private void boots(){
-		 this.armor = 2;
-		 this.speed = 1;
-		 this.itemName = "Boots";
+		 armor = 2;
+		 speed = 1;
+		 itemName = "Boots";
+		 slot = "Boots";
 	 }
 	 
 
@@ -554,39 +484,43 @@ public class Item {
 	 
 
 		public int getItemLvl(){
-			return this.itemLevel;
+			return itemLevel;
 		}
 		
 		public int getItemDmg(){
-			return this.dmg;
+			return dmg;
 		}
 		
 		public int getItemStr(){
-			return this.str;
+			return str;
 		}
 		
 		public int getItemDex(){
-			return this.dex;
+			return dex;
 		}
 		
 		public int getItemArmor(){
-			return this.armor;
+			return armor;
 		}
 		
 		public int getItemSpeed(){
-			return this.speed;
+			return speed;
 		}
 		
 		public int getItemGold(){
-			return this.gold;
+			return gold;
 		}
 		
 		public String toString(){
-			return this.itemName;
+			return itemName;
 		}
 		
 		public Color getColor(){
-			return this.color;
+			return color;
+		}
+		
+		public String getSlot(){
+			return slot;
 		}
 		
 }
