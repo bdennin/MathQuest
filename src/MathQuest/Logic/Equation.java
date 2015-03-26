@@ -95,7 +95,7 @@ public class Equation {
 		String signThreshold = settings[0];
 		int digitsThreshold = Digits.getDigits(settings[1]);
 		int termsThreshold = Terms.getTerms(settings[2]);
-
+		
 		return constructEquation(signThreshold,digitsThreshold,termsThreshold);
 	}
 

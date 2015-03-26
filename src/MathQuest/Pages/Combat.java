@@ -79,12 +79,12 @@ public class Combat extends Area {
 	private void promptQuestion() {
 
 		combatLog.addTextToScrollPane("You try to find your opponent's weakness.");
-
+		System.out.println("Connected Database:"+MathQuest.connectToDatabase );
 		String question;
 		if(MathQuest.connectToDatabase)
 			question = Equation.constructEquation(Database.getFormular(creature.getLevel()));
 		else
-			question = Equation.constructEquation(Sign.ADDITION, Digits.ONE, Terms.TWO);
+			question = Equation.constructEquation(Sign.SUBTRACTION, Digits.ONE, Terms.FIVE);
 
 		this.answer = Equation.solveEquation(question);
 		ArrayList<Integer> options = new ArrayList<Integer>();

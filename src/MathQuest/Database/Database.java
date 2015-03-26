@@ -265,6 +265,14 @@ public class Database
 		}
 	}
 
+	public static void cleanUp(){
+		con = null;
+		cacheStats = null;
+		cacheType = null;
+		cacheFormular = null; 
+
+	}
+
 	// public static void main(String[] args){
 	//  Database.getConnected();
 	//  Database.userID = 1;

@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import MathQuest.Database.Database;
 import MathQuest.Logic.Character;
 import MathQuest.Pages.*;
 
@@ -20,14 +21,14 @@ public class MathQuest
 	private static String password;
 	private static Character hero;
 	private static double volume;
-	public static boolean connectToDatabase = false;
+	public static boolean connectToDatabase = true;
 	public static boolean isMuted;
 
 	public MathQuest() {
 		initializeMathQuest();
 	}
 
-	private void initializeMathQuest() {
+	private static void initializeMathQuest() {
 		isMuted = false;
 		volume = 1;
 		outerFrame = new JFrame("MathQuest");
@@ -86,6 +87,13 @@ public class MathQuest
 		contentPane.revalidate();
 	}
 
+	public static void switchToLogin(){
+		Database.cleanUp();
+		contentPane = new Login();
+		outerFrame.setContentPane(contentPane);
+		contentPane.revalidate();
+	}
+	
 	public static String getUsername() {
 		return username;
 	}

@@ -41,7 +41,7 @@ public class AdminMain extends JPanel{
 		JButton btnLogOut = new JButton("Log out");
 		btnLogOut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new MathQuest();
+				MathQuest.switchToLogin();
 			}
 		});
 		btnLogOut.setBounds(50, 344, 176, 31);

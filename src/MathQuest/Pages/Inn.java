@@ -26,10 +26,11 @@ public class Inn extends Area {
 	private JTextArea scrollText;
 	final JPanel options = new JPanel();
 	final JPanel panel = new JPanel();
-	final static Character hero = new Character();
+	static Character hero = new Character();
 
 	public Inn(Character hero) {
 		super(hero, "innMusic.mp3");
+		this.hero = hero;
 		this.loadImages();
 		this.setBackground(Color.LIGHT_GRAY);
 		

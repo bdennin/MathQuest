@@ -77,18 +77,28 @@ public class Character {
 		this.imagePath = "char2.jpg";
 		this.name = "Hero#1";
 		this.damageType = DamageType.SLASHING;
+		this.answeredCorrectly = 0;
+		this.answeredIncorrectly = 0;
+		this.inventory = new ArrayList<Item>();
 	}
 
 	public Character(Integer[] charStats) {
-		level = charStats[0];
-		currentHealth = charStats[1];
-		currentExperience = charStats[2];
-		gold = charStats[3];
-		maxHealth = level * 10;
-		strength = 10 + 2 * level;
-		maxExperience = (int)(10 * Math.pow(2, level));
+		this.level = charStats[0];
+		this.currentHealth = charStats[1];
+		this.currentExperience = charStats[2];
+		this.gold = charStats[3];
+		this.maxHealth = level * 10;
+		this.strength = 10 + 2 * level;
+		this.maxExperience = (int)(10 * Math.pow(2, level));
+		
 		this.imagePath = "char2.jpg";
 		this.damageType = DamageType.SLASHING;
+		this.armor = 0;
+		this.name = "Hero#1";
+		this.greatestEnemySlain = "Goblin";
+		this.answeredCorrectly = 0;
+		this.answeredIncorrectly = 0;
+		this.inventory = new ArrayList<Item>();
 	}
 
 	public int getMaxExperience(){
@@ -209,8 +219,7 @@ public class Character {
 	}
 
 	public boolean enoughGold(String roomType){
-
-		if (calculateCost(roomType) > this.gold)
+		if (calculateCost(roomType) > this.getGold())
 			return false;
 		else
 			return true;
