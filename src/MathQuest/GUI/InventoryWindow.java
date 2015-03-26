@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -14,6 +15,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
 
 import MathQuest.Logic.Character;
+import MathQuest.Logic.Item;
 import MathQuest.Pages.Area;
 
 import javax.swing.JButton;
@@ -49,7 +51,12 @@ public class InventoryWindow extends JPanel {
 		scrollPane.setBounds(10, 11, 318, 104);
 		windowPanelBody.add(scrollPane);
 
-		final JList itemList = new JList(hero.getInventory().toArray());
+		ArrayList<Item> slotItems = new ArrayList<Item>();
+		for(Item el : hero.getInventory()) {
+			if(el.getSlot().equals(header))
+				slotItems.add(el);
+		}
+		final JList itemList = new JList(slotItems.toArray());
 		scrollPane.setViewportView(itemList);
 
 		JButton btnEquip = new JButton("Equip");
@@ -59,9 +66,13 @@ public class InventoryWindow extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				hero.equip(itemList.getSelectedValue());
 				frame.removeInventoryWindow();
+				frame.reloadInventoryPanel();
 			}
 		});
 		windowPanelBody.add(btnEquip);
+		
+		
+		
 	}
 	
 	public String getHeaderText() {

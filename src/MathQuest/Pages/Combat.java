@@ -20,6 +20,7 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 import javazoom.jlgui.basicplayer.BasicPlayerException;
+
 import MathQuest.MathQuest;
 import MathQuest.Database.Database;
 import MathQuest.GUI.CharacterPanel;

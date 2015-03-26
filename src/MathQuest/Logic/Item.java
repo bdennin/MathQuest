@@ -244,7 +244,7 @@ public class Item {
 	private void wornOut(){
 		str = 1;
 		dex = 2;
-		itemName = "Worn out ";
+		itemName = "Worn-Out ";
 		gold = 50;
 	}
 	
@@ -448,25 +448,25 @@ public class Item {
 	 private void weapon(){
 		 dmg = 3;
 		 itemName = "Weapon";
-		 slot = "Weapon";
+		 slot = "Weapons";
 	 }
 	 
 	 private void helmet(){
 		 armor = 4;
 		 itemName = "Helmet";
-		 slot = "Helmet";
+		 slot = "Helmets";
 	 }
 	
 	 private void chest(){
 		 armor = 6;
 		 itemName = "Armor";
-		 slot = "Chest";
+		 slot = "Armor";
 	 }
 	 
 	 private void gloves(){
 		 armor = 3;
 		 itemName = "Gloves";
-		 slot = "gloves";
+		 slot = "Gloves";
 	 }
 	 
 	 private void boots(){

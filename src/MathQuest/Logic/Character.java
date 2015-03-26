@@ -13,6 +13,7 @@ public class Character {
 	private int currentExperience;
 	private int maxHealth;
 	private int currentHealth;
+	private int damage;
 	private int strength;
 	private int dexterity;
 	private int armor;
@@ -34,6 +35,7 @@ public class Character {
 	public Character() {
 		this.currentExperience = 0;
 		this.maxExperience = 10;
+		this.damage = 0;
 		this.strength = 10;
 		this.gold = 0;
 		this.currentHealth = 10;
@@ -333,14 +335,59 @@ public class Character {
 		this.inventory.remove(item);
 	}
 
+	private void removeItemStats(Item item) {
+		this.dexterity -= item.dex;
+		this.strength -= item.str;
+		this.armor -= item.armor;
+		this.damage -= item.dmg;
+		this.speed -= item.speed;
+	}
+	
+	private void addItemStats(Item item) {
+		this.dexterity += item.dex;
+		this.strength += item.str;
+		this.armor += item.armor;
+		this.damage += item.dmg;
+		this.speed += item.speed;
+	}
+	
 	public void equip(Object item) {
 		if(null == item) {
 
 		}
 		else {
-			Item equipable = (Item)item;
-			String slot = equipable.getSlot();
-			System.out.println(slot);
+			Item equippable = (Item)item;
+			String slot = equippable.getSlot();
+			if(slot.equals("Helmets")) {
+				if(this.equippedHelmet != null)
+					this.removeItemStats(this.equippedHelmet);
+				this.equippedHelmet = equippable;
+				this.addItemStats(equippable);
+			}
+			else if(slot.equals("Armor")) {
+				if(this.equippedMail != null)
+					this.removeItemStats(this.equippedMail);
+				this.equippedMail = equippable;
+				this.addItemStats(equippable);
+			}
+			else if(slot.equals("Boots")) {
+				if(this.equippedBoots != null)
+					this.removeItemStats(this.equippedBoots);
+				this.equippedBoots = equippable;
+				this.addItemStats(equippable);
+			}
+			else if(slot.equals("Gloves")) {
+				if(this.equippedGloves != null)
+					this.removeItemStats(this.equippedGloves);
+				this.equippedGloves = equippable;
+				this.addItemStats(equippable);
+			}
+			else {
+				if(this.equippedWeapon != null)
+					this.removeItemStats(this.equippedWeapon);
+				this.equippedWeapon = equippable;
+				this.addItemStats(equippable);
+			}
 		}
 	}
 }
