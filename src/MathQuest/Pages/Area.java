@@ -43,11 +43,10 @@ public abstract class Area extends JPanel {
 	public static boolean isInventoryVisible;
 
 	public Area(Character hero, String musicFilePath) {
-
+		
 		if(null != musicFilePath)
 			this.initializeMusic(musicFilePath);
-		setVolume();
-
+		
 		this.setBounds(0, 0, 1024, 768);
 		this.setLayout(null);
 		this.isEnabled = true;
@@ -133,18 +132,6 @@ public abstract class Area extends JPanel {
 		this.repaint();
 	}
 
-	public static void setVolume() {
-		double volume = MathQuest.getVolume();
-		try {
-			musicPlayer.setGain(volume);
-			soundPlayer.setGain(volume);
-			effectPlayer.setGain(volume);
-			
-		} catch (BasicPlayerException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public void initializeMusic(String fileName) {
 
 		String musicPath = String.format("file:///%s%s%s", System.getProperty("user.dir").replace("\\", "/"), "/", fileName);
@@ -152,19 +139,20 @@ public abstract class Area extends JPanel {
 		try {
 			musicPlayer.open(new URL(musicPath));
 			musicPlayer.play();
+			musicPlayer.setGain(MathQuest.getVolume());
 		}
 		catch(BasicPlayerException | MalformedURLException e) {
 			e.printStackTrace();
 		}
 	}
-
-	public static void stopMusic() {
+	
+	public void setMusicVolume() {
 		try {
-			musicPlayer.stop();
+			musicPlayer.setGain(MathQuest.getVolume());
 		} catch (BasicPlayerException e) {
 			e.printStackTrace();
 		}
-	}	
+	}
 
 	public static void toggleInventory() {
 		isInventoryVisible = !isInventoryVisible;
@@ -186,8 +174,12 @@ public abstract class Area extends JPanel {
 			this.add(inventoryWindow);
 			this.renderBackground();
 		}
-		else{
-
+		else if(this.inventoryWindow.getHeaderText() != inventoryHeader) {
+			this.removeInventoryWindow();
+			this.addInventoryWindow(inventoryHeader);
+		}
+		else {
+			
 		}
 	}
 

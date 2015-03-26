@@ -46,7 +46,6 @@ public class World extends Area {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				stopMusic();
 				MathQuest.switchToInn();
 			}
 
@@ -78,7 +77,6 @@ public class World extends Area {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				stopMusic();
 				MathQuest.switchToBlacksmith();
 			}
 
@@ -110,7 +108,6 @@ public class World extends Area {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				stopMusic();
 				MathQuest.switchToKillingFields();
 			}
 

@@ -21,8 +21,6 @@ import java.awt.event.MouseListener;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
-import sun.print.BackgroundLookupListener;
-
 public class CharacterPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;		

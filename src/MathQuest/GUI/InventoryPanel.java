@@ -1,7 +1,6 @@
 package MathQuest.GUI;
 
 import javax.imageio.ImageIO;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
@@ -9,7 +8,6 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
 
 import MathQuest.Logic.Character;
-import MathQuest.Logic.Item;
 import MathQuest.Pages.Area;
 import MathQuest.Pages.World;
 
@@ -27,7 +25,6 @@ import java.io.IOException;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 
 public class InventoryPanel extends JPanel {
 

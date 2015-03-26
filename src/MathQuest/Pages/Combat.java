@@ -76,6 +76,10 @@ public class Combat extends Area {
 		this.renderBackground();
 	}
 
+	private Boolean checkDamage(int damage) {
+		return (damage > 0);
+	}
+
 	private void promptQuestion() {
 
 		combatLog.addTextToScrollPane("You try to find your opponent's weakness.");
@@ -133,7 +137,6 @@ public class Combat extends Area {
 		runAwayButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				stopMusic();
 				MathQuest.switchToGameWorld();
 			}
 		});
@@ -142,7 +145,6 @@ public class Combat extends Area {
 		JButton usePotionButton = new JButton(this.potionIcon);
 		usePotionButton.setBounds(90, 3, 88, 70);		
 		combatOptions.add(usePotionButton);
-		combatOptions.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
 	}
 
 	private void reloadCombatOptions(final ArrayList<Integer> mathAnswers) {
@@ -194,7 +196,9 @@ public class Combat extends Area {
 	}
 
 	private void attack(Integer answer) {
+
 		int damage = hero.calculateDamage();
+		Boolean damageOutcome = checkDamage(damage);
 
 		combatLog.addTextToScrollPane("You answered " + answer + ".");
 
@@ -202,22 +206,14 @@ public class Combat extends Area {
 			combatLog.addTextToScrollPane("Correct! You strike your enemy with great power!");
 			hero.incrementAnsweredCorrectly();
 			damage = 2 * damage;
-
-			String filePath = "file:///" + System.getProperty("user.dir").replace("\\", "/") + "/quadDamage.mp3";
-			try {
-				effectPlayer.open(new URL(filePath));
-				effectPlayer.play();
-			}
-			catch(BasicPlayerException | MalformedURLException e) {
-				e.printStackTrace();
-			}
+			damageOutcome = null;
 		}
 		else {
 			combatLog.addTextToScrollPane("Good try, but the correct answer was " + this.answer + ".");
 			hero.incrementAnsweredIncorrectly();
 		}
 
-		this.playAttackSound(hero, damage);
+		this.playAttackSound(hero, damageOutcome);
 
 		String output = new String("You attack a " + this.creatureName + " for " + damage + " points of damage.");
 		combatLog.addTextToScrollPane(output);
@@ -236,8 +232,9 @@ public class Combat extends Area {
 	private void monsterAttack() {
 
 		int damage = creature.calculateDamage();
+		Boolean damageOutcome = checkDamage(damage);
 
-		this.playAttackSound(creature, damage);
+		this.playAttackSound(creature, damageOutcome);
 
 		String output = "A " + creature.getName() + " attacks YOU for " + damage + " points of damage.";
 		combatLog.addTextToScrollPane(output);
@@ -269,19 +266,71 @@ public class Combat extends Area {
 		this.renderBackground();
 	}
 
+	public void playAttackSound(Character character, Boolean damageOutcome) {
+
+		String combatSound = "file:///" + System.getProperty("user.dir").replace("\\", "/");
+		DamageType damageType = character.getDamageType();
+
+		switch (damageType) {
+		case CRUSHING:
+			if (damageOutcome == null) {	
+				combatSound += "/crushing2.mp3";
+			}
+			else if (damageOutcome == false) {
+				combatSound += "/crushing0.mp3";
+			}
+			else {
+				combatSound += "/crushing1.mp3";
+			}
+			break;
+		case SLASHING:
+			if (damageOutcome == null) {
+				combatSound += "/slashing3.mp3";
+			}
+			else if (damageOutcome == false) {
+				combatSound += "/slashing0.mp3";
+			}
+			else {
+				combatSound += "/slashing" + (RANDOM.nextInt(2) + 1) + ".mp3";
+			}
+			break;
+		case MAGICAL:
+			if (damageOutcome == null){	
+				combatSound += "/magic4.mp3";
+			}
+			else if (damageOutcome == false) {
+				combatSound += "/magic0.mp3";
+			}
+			else {
+				combatSound += "/magic" + (RANDOM.nextInt(3) + 1) + ".mp3";
+			}
+			break;
+		default:
+			throw new IllegalArgumentException();
+		}
+
+		try {
+			soundPlayer.open(new URL(combatSound));
+			soundPlayer.play();
+			soundPlayer.setGain(MathQuest.getVolume());
+		}
+		catch(BasicPlayerException | MalformedURLException e) {
+			e.printStackTrace();
+		}	
+
+	}
+
 	private void victory() {
 
-		stopMusic();
 		String filePath = "file:///" + System.getProperty("user.dir").replace("\\", "/") + "/victory.mp3";
 		try {
 			musicPlayer.open(new URL(filePath));
 			musicPlayer.play();
+			musicPlayer.setGain(MathQuest.getVolume());
 		}
 		catch(BasicPlayerException | MalformedURLException e) {
 			e.printStackTrace();
 		}
-
-
 
 		int experience = (int)(creature.getMaxExperience() * .5);
 		int gold = creature.getGold();
@@ -289,9 +338,8 @@ public class Combat extends Area {
 		hero.gainExperience(experience);
 
 		String victoryString; 
-
-
 		Item droppedItem = Loot.getLoot(this.creature.getLevel());
+
 		if(null == droppedItem) {
 			victoryString = String.format("<html>You are victorious! You check your<br/>enemy for gold and head back to<br/>town. You receive:<br/><Center><br/>%d XP<br/>%d Gold<br/></Center></html>", experience, gold);
 		}
@@ -306,18 +354,17 @@ public class Combat extends Area {
 				JOptionPane.PLAIN_MESSAGE,
 				victoryIcon);
 
-		stopMusic();
 		MathQuest.switchToGameWorld();
 	}
 
 	private void defeat() {
 
-		stopMusic();
 		String filePath = "file:///" + System.getProperty("user.dir").replace("\\", "/") + "/defeat.mp3";
 
 		try {
 			musicPlayer.open(new URL(filePath));
 			musicPlayer.play();
+			musicPlayer.setGain(MathQuest.getVolume());
 		}
 		catch(BasicPlayerException | MalformedURLException e) {
 			e.printStackTrace();
@@ -331,52 +378,7 @@ public class Combat extends Area {
 				JOptionPane.PLAIN_MESSAGE,
 				defeatIcon);
 
-		stopMusic();
 		MathQuest.switchToGameWorld();
-	}
-
-	private void playAttackSound(Character character, int damage) {
-
-		String combatSound = "file:///" + System.getProperty("user.dir").replace("\\", "/");
-		DamageType damageType = character.getDamageType();
-
-		switch (damageType) {
-		case CRUSHING:
-			if (damage == 0) {
-				combatSound += "/crushing0.mp3";
-			}
-			else {
-				combatSound += "/crushing" + (RANDOM.nextInt(2) + 1) + ".mp3";
-			}
-			break;
-		case SLASHING:
-			if (damage == 0) {
-				combatSound += "/slashing0.mp3";
-			}
-			else {
-				combatSound += "/slashing" + (RANDOM.nextInt(3) + 1) + ".mp3";
-			}
-			break;
-		case MAGICAL:
-			if (damage == 0) {
-				combatSound += "/magic0.mp3";
-			}
-			else {
-				combatSound += "/magic" + (RANDOM.nextInt(4) + 1) + ".mp3";
-			}
-			break;
-		default:
-			throw new IllegalArgumentException();
-		}
-
-		try {
-			soundPlayer.open(new URL(combatSound));
-			soundPlayer.play();
-		}
-		catch(BasicPlayerException | MalformedURLException e) {
-			e.printStackTrace();
-		}	
-
 	}
 
 	@Override

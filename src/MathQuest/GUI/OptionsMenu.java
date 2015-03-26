@@ -8,7 +8,6 @@ import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
-import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -64,9 +63,9 @@ public class OptionsMenu extends JPanel {
 		volumeSlider.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
-				double volume = (double)((double)volumeSlider.getValue()/10);
+				double volume = (double)volumeSlider.getValue()/10;
 				MathQuest.setVolume(volume);
-				Area.setVolume();
+				frame.setMusicVolume();
 			}	
 		});
 		optionsBody.add(volumeSlider);

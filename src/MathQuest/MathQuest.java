@@ -14,13 +14,14 @@ import MathQuest.Pages.*;
 public class MathQuest
 {
 	private static final Dimension FRAME_DIMENSIONS = new Dimension(1024, 768);
-
+	
 	private static JFrame outerFrame;
 	private static JPanel contentPane;
 	private static String username;
 	private static String password;
 	private static Character hero;
 	private static double volume;
+	
 	public static boolean connectToDatabase = false;
 	public static boolean isMuted;
 
@@ -48,43 +49,36 @@ public class MathQuest
 	public static void switchToAdminMain(){
 		contentPane = new AdminMain();
 		outerFrame.setContentPane(contentPane);
-		contentPane.revalidate();
 	}
 
 	public static void switchToAdminFomularSetting(int Id){
 		contentPane = new AdminFormularSetting(Id);
 		outerFrame.setContentPane(contentPane);
-		contentPane.revalidate();
 	}
 
 	public static void switchToGameWorld() {
 		contentPane = new World(hero);
 		outerFrame.setContentPane(contentPane);
-		contentPane.revalidate();
 	}
 
 	public static void switchToInn() {
 		contentPane = new Inn(hero);
 		outerFrame.setContentPane(contentPane);
-		contentPane.revalidate();
 	}
 
 	public static void switchToBlacksmith() {
 		contentPane = new Blacksmith(hero);
 		outerFrame.setContentPane(contentPane);
-		contentPane.revalidate();
 	}
 
 	public static void switchToKillingFields() {
 		contentPane = new KillingFields(hero);
 		outerFrame.setContentPane(contentPane);
-		contentPane.revalidate();
 	}
 
 	public static void switchToCombat(Character creature) {
 		contentPane = new Combat(hero, creature);
 		outerFrame.setContentPane(contentPane);
-		contentPane.revalidate();
 	}
 
 	public static void switchToLogin(){

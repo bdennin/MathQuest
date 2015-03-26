@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
 
@@ -13,7 +13,7 @@ import MathQuest.Logic.Character;
 import MathQuest.Pages.Area;
 import MathQuest.Pages.World;
 
-public class OptionsPanel extends JLayeredPane {
+public class OptionsPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
@@ -21,7 +21,6 @@ public class OptionsPanel extends JLayeredPane {
 		
 		this.setLayout(null);
 		this.setBounds(0, 0, 132, 94);
-		this.setLayer(this, JLayeredPane.DEFAULT_LAYER);
 		this.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
 
 		JButton inventoryButton = new JButton("Inventory");
@@ -53,7 +52,6 @@ public class OptionsPanel extends JLayeredPane {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					Area.stopMusic();
 					MathQuest.switchToGameWorld();
 				}
 			});

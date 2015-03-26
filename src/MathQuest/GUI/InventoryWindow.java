@@ -22,13 +22,16 @@ import javax.swing.JList;
 public class InventoryWindow extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	private String header;
+	
 	public InventoryWindow(final Area frame, final Character hero, String headerText) {
 
 		this.setBackground(Color.LIGHT_GRAY);
 		this.setBounds(172, 150, 338, 177);
 		this.setLayout(null);
-
+		this.header = headerText;
+		
 		JLabel combatLogLabel = new JLabel(headerText);
 		combatLogLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 12));
 		combatLogLabel.setBorder(new LineBorder(Color.black));
@@ -59,5 +62,9 @@ public class InventoryWindow extends JPanel {
 			}
 		});
 		windowPanelBody.add(btnEquip);
+	}
+	
+	public String getHeaderText() {
+		return header;
 	}
 }
