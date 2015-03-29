@@ -195,8 +195,8 @@ public class Inn extends Area {
 			this.background = new ImageIcon(ImageIO.read(new File("insideInn.png")));
 			this.potionIcon = new ImageIcon(ImageIO.read(new File("potion.png")));
 			this.restIcon = new ImageIcon(ImageIO.read(new File("rest.png")));
-			this.mealIcon = new ImageIcon(ImageIO.read(new File("meal.jpg")));
-			this.showerIcon = new ImageIcon(ImageIO.read(new File("shower.jpg")));
+			this.mealIcon = new ImageIcon(ImageIO.read(new File("meal.png")));
+			this.showerIcon = new ImageIcon(ImageIO.read(new File("shower.png")));
 			this.bedIcon = new ImageIcon(ImageIO.read(new File("bed.png")));
 		} catch (IOException e) {
 			e.printStackTrace();
