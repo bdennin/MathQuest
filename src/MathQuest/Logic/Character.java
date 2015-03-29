@@ -235,11 +235,11 @@ public class Character {
 
 		int increase;
 
-		if (roomType.equalsIgnoreCase("Studio"))
+		if (roomType.equalsIgnoreCase("Shower"))
 			increase = this.maxHealth*30/100;
-		else if (roomType.equalsIgnoreCase("Deluxe"))
+		else if (roomType.equalsIgnoreCase("Meal"))
 			increase = this.maxHealth*60/100;
-		else if (roomType.equalsIgnoreCase("Luxury"))
+		else if (roomType.equalsIgnoreCase("Sleep"))
 			increase = this.maxHealth*90/100;
 		else
 			increase = 0;

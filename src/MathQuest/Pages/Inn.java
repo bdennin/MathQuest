@@ -12,6 +12,7 @@ import javax.swing.border.CompoundBorder;
 import java.io.File;
 import java.io.IOException;
 
+import MathQuest.GUI.LogPanel;
 import MathQuest.GUI.OptionsPanel;
 import MathQuest.Logic.Character;
 
@@ -25,8 +26,14 @@ public class Inn extends Area {
 	private static final long serialVersionUID = 1L;
 	private JTextArea scrollText;
 	final JPanel options = new JPanel();
-	final JPanel panel = new JPanel();
-	static Character hero = new Character();
+	//final JPanel panel = new JPanel();
+	static Character hero;
+	private LogPanel combatLog;
+	private ImageIcon potionIcon;
+	private ImageIcon restIcon;
+	private ImageIcon mealIcon;
+	private ImageIcon showerIcon;
+	private ImageIcon bedIcon;
 
 	public Inn(Character hero) {
 		super(hero, "innMusic.mp3");
@@ -34,157 +41,149 @@ public class Inn extends Area {
 		this.loadImages();
 		this.setBackground(Color.LIGHT_GRAY);
 		
-		  panel.setBounds(150, 590, 724, 150);
-		  add(panel);
-		  panel.setLayout(null);
-		  
-		  JScrollPane scrollPane = new JScrollPane();
-		  scrollPane.setBounds(6, 6, 417, 138);
-		  panel.add(scrollPane);
-		  
-		  this.scrollText = new JTextArea();
-		  this.scrollText.setEditable(false);
-		  this.scrollText.setLineWrap(true);
-		  this.scrollText.setWrapStyleWord(true);
-		  scrollPane.setViewportView(scrollText);
-		  this.scrollText.append("You have entered Inn!  How can I help you?\n");
-		    
-		  options.setBounds(429, 6, 289, 138);
-		  panel.add(options);
-		  options.setLayout(null);
-		  
-		  showOptions();
-		  
-		  this.renderBackground();
-		 }
-		 
-		 public void showOptions(){
-		  
-		  options.removeAll();
-		  
-		  JPanel potion = new JPanel();
-		  potion.setBounds(6, 6, 88, 126);
-		  options.add(potion);
-		  potion.setLayout(new GridLayout(1, 0, 0, 0));
-		  
-		  JButton btnPotion = new JButton("Buy Potions");
-		  potion.add(btnPotion);
-		  
-		  /*
+		this.combatLog = new LogPanel("Inn Log");
+		combatLog.addTextToScrollPane("You have entered Inn!");
+		combatLog.addTextToScrollPane("How can I help you?");
+		add(combatLog);
+		
+/*		panel.setBounds(150, 590, 724, 150);
+		add(panel);
+		panel.setLayout(null);
+
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(6, 6, 417, 138);
+		panel.add(scrollPane);
+
+		this.scrollText = new JTextArea();
+		this.scrollText.setEditable(false);
+		this.scrollText.setLineWrap(true);
+		this.scrollText.setWrapStyleWord(true);
+		scrollPane.setViewportView(scrollText);
+		this.combatLog.addTextToScrollPane("You have entered Inn!  How can I help you?\n");
+*/
+		options.setBounds(587, 612, 269, 77);
+		options.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
+		options.setLayout(null);
+		add(options);
+		
+		showOptions();
+
+		this.renderBackground();
+	}
+
+	public void showOptions(){
+
+		options.removeAll();
+
+		JButton btnPotion = new JButton(this.potionIcon);
+		btnPotion.setBounds(3, 3, 88, 70);
+		btnPotion.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		options.add(btnPotion);
+
+		/*
 		  JPanel runPanel = new JPanel();
 		  runPanel.setBounds(194, 6, 88, 126);
 		  options.add(runPanel);
 		  runPanel.setLayout(new GridLayout(1, 0, 0, 0));
-		  
+
 		  JButton btnRunAway = new JButton("Look arround");
 		  btnRunAway.addActionListener(new ActionListener() {
 		   @Override
 		   public void actionPerformed(ActionEvent e) {
 		    MathQuest.switchToGameWorld();
 		   }
-		   
+
 		  });
 		  runPanel.add(btnRunAway);
-		  */
-		  
-		  JPanel rest = new JPanel();
-		  rest.setBounds(100, 6, 88, 126);
-		  options.add(rest);
-		  rest.setLayout(new GridLayout(1, 0, 0, 0));
-		  
-		  JButton btnRest = new JButton("Rest");
-		  btnRest.addActionListener(new ActionListener() {
-		   @Override
-		   public void actionPerformed(ActionEvent e) {
-		    showRoomOptions();
-		   }
-		  });
-		  rest.add(btnRest);
-		  
-		  options.revalidate();
-		  options.repaint();
-		 }
+		 */
 
-		 public void showRoomOptions(){
-		  options.removeAll();
+		JButton btnRest = new JButton(this.restIcon);
+		btnRest.setBounds(90, 3, 88, 70);	
+		btnRest.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				showRoomOptions();
+			}
+		});
+		options.add(btnRest);
 
-		  scrollText.append("Here is the prices for suites today:\n");
-		  scrollText.append("     Studio Suite:" + hero.calculateCost("Studio")+ " gold for "+ hero.calculateIncrease("Studio")+" health unit\n");
-		  scrollText.append("     Deluxe Suite:" + hero.calculateCost("Deluxe")+ " gold for "+ hero.calculateIncrease("Deluxe")+" health unit\n");
-		  scrollText.append("     Luxury Suite:" + hero.calculateCost("Luxury")+ " gold for "+ hero.calculateIncrease("Luxury")+" health unit\n");
-		  scrollText.append("Please choose the room you want.\n");
-		  
-		  JPanel studio = new JPanel();
-		  studio.setBounds(6, 6, 88, 126);
-		  options.add(studio);
-		  studio.setLayout(new GridLayout(1, 0, 0, 0));
-		  
-		  JButton btnStudio = new JButton("Studio");
-		  btnStudio.addActionListener(new ActionListener() {
-		   @Override
-		   public void actionPerformed(ActionEvent e) {
-		    if(hero.enoughGold("Studio")){
-		     hero.healthRegain("Studio");
-		     hero.payForInn("Studio");
-		     reloadCharacterPanel();
-		     scrollText.append("After spending a night in Stuido Suite, I feel much better now! Return to lobby.\n");
-		    }
-		    else
-		     scrollText.append("Oops. I don't have enough money pay for the Studio Suite! Return to lobby.\n");
-		    showOptions();
-		   }
-		  });
-		  studio.add(btnStudio);
-		  
-		  JPanel deluxe = new JPanel();
-		  deluxe.setBounds(100, 6, 88, 126);
-		  options.add(deluxe);
-		  deluxe.setLayout(new GridLayout(1, 0, 0, 0));
-		  
+		options.revalidate();
+		options.repaint();
+	}
 
-		  JButton btnDeluxe = new JButton("Deluxe");
-		  btnDeluxe.addActionListener(new ActionListener() {
-		   @Override
-		   public void actionPerformed(ActionEvent e) {
-		    if(hero.enoughGold("Deluxe")){
-		     hero.healthRegain("Deluxe");
-		     hero.payForInn("Deluxe");
-		     reloadCharacterPanel();
-		     scrollText.append("After spending a night in Deluxe Suite, I feel much better now! Return to lobby.\n");
-		    }
-		    else 
-		     scrollText.append("Oops. I don't have enough money pay for the Deluxe Suite! Return to lobby.\n");
-		    showOptions();
-		   }
-		  });
-		  deluxe.add(btnDeluxe);
-		  
-		  JPanel luxury = new JPanel();
-		  luxury.setBounds(194, 6, 88, 126);
-		  options.add(luxury);
-		  luxury.setLayout(new GridLayout(1, 0, 0, 0));
-		  
+	public void showRoomOptions(){
+		options.removeAll();
 
-		  JButton btnLuxury = new JButton("Luxury");
-		  btnLuxury.addActionListener(new ActionListener() {
-		   @Override
-		   public void actionPerformed(ActionEvent e) {
-		    if(hero.enoughGold("Luxury")){
-		     hero.healthRegain("Luxury");
-		     hero.payForInn("Luxury");
-		     reloadCharacterPanel();
-		     scrollText.append("After spending a night in Luxury Suite, I feel much better now! Return to lobby.\n");
-		    }
-		    else 
-		     scrollText.append("Oops. I don't have enough money pay for the Luxury Suite! Return to lobby.\n");
-		    showOptions();
-		   }
-		  });
-		  luxury.add(btnLuxury);
-		  
-		  options.revalidate();
-		  options.repaint();
-		 }
+		combatLog.addTextToScrollPane("Here is the prices for various servies:");
+		combatLog.addTextToScrollPane("     Shower:" + hero.calculateCost("Shower")+ " gold for "+ hero.calculateIncrease("Shower")+" health unit");
+		combatLog.addTextToScrollPane("     Meal:" + hero.calculateCost("Meal")+ " gold for "+ hero.calculateIncrease("Meal")+" health unit");
+		combatLog.addTextToScrollPane("     Take a snap:" + hero.calculateCost("Sleep")+ " gold for "+ hero.calculateIncrease("Sleep")+" health unit");
+		combatLog.addTextToScrollPane("Please choose the room you want.");
+
+		JButton btnShower = new JButton(this.showerIcon);
+		btnShower.setBounds(3, 3, 88, 70);
+		btnShower.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(hero.enoughGold("Shower")){
+					hero.healthRegain("Shower");
+					hero.payForInn("Shower");
+					reloadCharacterPanel();
+					reloadInventoryPanel();
+					combatLog.addTextToScrollPane("After shower, I feel much better now! Return to lobby.");
+				}
+				else
+					combatLog.addTextToScrollPane("Oops. I don't have enough money pay for the Shower! Return to lobby.");
+				showOptions();
+			}
+		});
+		options.add(btnShower);
+
+		JButton btnMeal = new JButton(this.mealIcon);
+		btnMeal.setBounds(90, 3, 88, 70);	
+		btnMeal.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(hero.enoughGold("Meal")){
+					hero.healthRegain("Meal");
+					hero.payForInn("Meal");
+					reloadCharacterPanel();
+					reloadInventoryPanel();
+					combatLog.addTextToScrollPane("After taking the meal, I feel much better now! Return to lobby.");
+				}
+				else 
+					combatLog.addTextToScrollPane("Oops. I don't have enough money pay for the Meal! Return to lobby.");
+				showOptions();
+			}
+		});
+		options.add(btnMeal);
+
+		JButton btnSleep = new JButton(this.bedIcon);
+		btnSleep.setBounds(177, 3, 88, 70);
+		btnSleep.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(hero.enoughGold("Sleep")){
+					hero.healthRegain("Sleep");
+					hero.payForInn("Sleep");
+					reloadCharacterPanel();
+					reloadInventoryPanel();
+					combatLog.addTextToScrollPane("After taking a snap, I feel much better now! Return to lobby.");
+				}
+				else 
+					combatLog.addTextToScrollPane("Oops. I don't have enough money pay for a rest room! Return to lobby.");
+				showOptions();
+			}
+		});
+		options.add(btnSleep);
+
+		options.revalidate();
+		options.repaint();
+	}
 	@Override
 	public OptionsPanel loadOptionsPanel() {
 		return new OptionsPanel(this, this.hero, true);
@@ -194,9 +193,14 @@ public class Inn extends Area {
 	public void loadImages() {
 		try {                
 			this.background = new ImageIcon(ImageIO.read(new File("insideInn.png")));
+			this.potionIcon = new ImageIcon(ImageIO.read(new File("potion.png")));
+			this.restIcon = new ImageIcon(ImageIO.read(new File("rest.png")));
+			this.mealIcon = new ImageIcon(ImageIO.read(new File("meal.jpg")));
+			this.showerIcon = new ImageIcon(ImageIO.read(new File("shower.jpg")));
+			this.bedIcon = new ImageIcon(ImageIO.read(new File("bed.png")));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 }
