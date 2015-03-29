@@ -87,7 +87,7 @@ public class Combat extends Area {
 		System.out.println("Connected Database:"+MathQuest.connectToDatabase );
 		String question;
 		if(MathQuest.connectToDatabase)
-			question = Equation.constructEquation(Database.getFormular(creature.getLevel()));
+			question = Equation.constructEquation(Database.getFormulaFromCache(creature.getLevel()));
 		else
 			question = Equation.constructEquation(Sign.SUBTRACTION, Digits.ONE, Terms.FIVE);
 

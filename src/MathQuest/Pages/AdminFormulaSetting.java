@@ -14,23 +14,17 @@ import java.util.*;
 import java.util.Timer;
 import java.awt.*;
 import java.awt.event.*;
-
-import javax.swing.text.Document;
 import javax.swing.border.LineBorder;
 
 
-public class AdminFormularSetting extends JPanel {
+public class AdminFormulaSetting extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextField monsterLevel;
-	private Vector cache;
 	private DefaultTableModel qtm;
-	private JTable table_1;
-	private JTable table;
-	private JTable table_2;
-	public AdminFormularSetting (int Id) {
+	private JTable currentSettingTable;
+	public AdminFormulaSetting (int Id) {
 		
 		final Timer timer = new Timer();
-		final Vector headers = new Vector();
 		final String[] string ={"Sign","Digits","Terms"};
 		
 		Database.getConnected();
@@ -81,14 +75,17 @@ public class AdminFormularSetting extends JPanel {
 
 		final JComboBox<Sign> signs = new JComboBox<Sign>(Sign.values());
 		signs.setBounds(163, 120, 101, 28);
+		signs.setSelectedItem(null);
 		EquationSettingPanel.add(signs);
 		
 		final JComboBox<Digits> digits = new JComboBox<Digits>(Digits.values());
 		digits.setBounds(163, 190, 101, 28);
+		digits.setSelectedItem(null);
 		EquationSettingPanel.add(digits);
 
 		final JComboBox<Terms> terms = new JComboBox<Terms>(Terms.values());
 		terms.setBounds(163, 260, 101, 28);
+		terms.setSelectedItem(null);
 		EquationSettingPanel.add(terms);
 	
 		
@@ -127,9 +124,9 @@ public class AdminFormularSetting extends JPanel {
 	    	   timer.schedule(new TimerTask() {
 	    		   @Override
 	    		   public void run() {
-	    			   String[][] selected = Database.getFormular(Database.getId(), record);
+	    			   String[][] selected = Database.getFormula(record);
 	    			   qtm = new DefaultTableModel(selected,string);
-	    			   table.setModel(qtm);
+	    			   currentSettingTable.setModel(qtm);
 	    			   }
 	    		 }, 1500);
 	    	   }
@@ -146,7 +143,7 @@ public class AdminFormularSetting extends JPanel {
 					Sign selectedSign = (Sign)signs.getSelectedItem();
 					Digits selectedDigit = (Digits)digits.getSelectedItem();
 					Terms selectedTerm = (Terms)terms.getSelectedItem();
-					boolean res = Database.setFormular(Integer.parseInt(monsterLevel.getText()), selectedSign, selectedDigit, selectedTerm);
+					boolean res = Database.setFormula(Integer.parseInt(monsterLevel.getText()), selectedSign, selectedDigit, selectedTerm);
 					if (res){
 						successLabel.setText("Successfully save to database!");
 						
@@ -175,7 +172,7 @@ public class AdminFormularSetting extends JPanel {
 		btnCancel.setBounds(222, 335, 93, 23);
 		EquationSettingPanel.add(btnCancel);
 		
-		JLabel lblFormula = new JLabel("Formular Setting");
+		JLabel lblFormula = new JLabel("Formula Setting");
 		lblFormula.setFont(new Font("Simplified Arabic", Font.BOLD, 40));
 		lblFormula.setBounds(55, 56, 294, 74);
 		add(lblFormula);
@@ -185,10 +182,10 @@ public class AdminFormularSetting extends JPanel {
 		currentSettingPanel.setLayout(null);
 		add(currentSettingPanel);
 		
-		table = new JTable();
-		table.setBorder(new LineBorder(new Color(0, 0, 0)));
-		table.setBounds(178, 35, 159, 14);
-		currentSettingPanel.add(table); 
+		currentSettingTable = new JTable();
+		currentSettingTable.setBorder(new LineBorder(new Color(0, 0, 0)));
+		currentSettingTable.setBounds(178, 35, 159, 14);
+		currentSettingPanel.add(currentSettingTable); 
 		
 		JLabel lblNewLabel_1 = new JLabel("Sign  |Digit |Term");
 		lblNewLabel_1.setFont(new Font("SimSun", Font.PLAIN, 15));

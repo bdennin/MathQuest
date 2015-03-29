@@ -7,6 +7,8 @@ import MathQuest.Database.Database;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class AdminMain extends JPanel{
 	private static final long serialVersionUID = 1L;
@@ -21,7 +23,7 @@ public class AdminMain extends JPanel{
 		panel.setBounds(373, 137, 277, 448);
 		add(panel);
 		
-		JButton btnSave = new JButton("Formular Setting (Bulk)");
+		JButton btnSave = new JButton("Formula Setting (Bulk)");
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				MathQuest.switchToAdminFomularSetting(Database.getId());
@@ -47,9 +49,10 @@ public class AdminMain extends JPanel{
 		btnLogOut.setBounds(50, 344, 176, 31);
 		panel.add(btnLogOut);
 		
-		JButton btnFormularSettingindividual = new JButton("Formular Setting");
+		JButton btnFormularSettingindividual = new JButton("Formula Setting");
 		btnFormularSettingindividual.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				MathQuest.switchToAdminIndividualFormulaSetting();
 			}
 		});
 		btnFormularSettingindividual.setBounds(50, 82, 176, 31);

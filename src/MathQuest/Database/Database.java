@@ -3,6 +3,10 @@ package MathQuest.Database;
 import java.io.*;
 import java.util.*;
 import java.sql.*;
+
+import com.sun.xml.internal.ws.api.config.management.policy.ManagementAssertion.Setting;
+
+import MathQuest.Logic.*;
 import MathQuest.Logic.Equation.*;
 
 public class Database
@@ -11,7 +15,8 @@ public class Database
 	private static Connection con = null;
 	private static Integer[] cacheStats;
 	private static String cacheType;
-	private static String[][] cacheFormular; 
+	private static Vector cacheStudentsName; 
+	private static ArrayList<String[]> cacheFormulaSettings = new ArrayList<String[]>();
 
 	/**
 	 * @return true if program connects Cerberus successfully
@@ -72,7 +77,11 @@ public class Database
 					cacheType();
 					if (cacheType.equals("student")){
 						cacheStats();
-						cacheFormular();
+						cacheStudents();
+						cacheFormulaSettings();
+					}
+					else{
+						cacheStudents();
 					}
 					return true;
 				}
@@ -172,9 +181,9 @@ public class Database
 		}
 	}
 
-	public static boolean setFormular(int monsterLevel, Sign sign, Digits digit, Terms term){
+	public static boolean setFormula(int monsterLevel, Sign sign, Digits digit, Terms term){
 		try{
-			PreparedStatement select = con.prepareStatement("UPDATE Formular SET sign = ?, digit = ?, term = ? where monsterLevel = ? and teacherId = ?");
+			PreparedStatement select = con.prepareStatement("UPDATE Formula SET sign = ?, digit = ?, term = ? where monsterLevel = ? and teacherId = ?");
 			select.setString(1, sign.getSign());;
 			select.setString(2, digit.getString());
 			select.setString(3, term.getString());;
@@ -187,66 +196,41 @@ public class Database
 				return false;
 		}
 		catch (SQLException e){
-			System.out.println("Error from setFormular: " + e.getMessage());
+			System.out.println("Error from setFormula: " + e.getMessage());
 			return false;
 		}
 	}
-
-	public static void cacheFormular(){
+	
+	public static boolean setFormula(int studentId, int monsterLevel, Sign sign, Digits digit, Terms term){
 		try{
-			PreparedStatement select = con.prepareStatement("SELECT sign, digit, term From Formular Where studentId = ?");
-			select.setInt(1, userID);
-			ResultSet res = select.executeQuery();
-			String[][] record = new String [19][3]; 
-			int count = 0;
-			if (res != null){
-				while(res.next()){
-					for(int index = 0;index < 3; index++)
-						record[count][index] = res.getString(index+1);
-					count ++;
-				}
-				cacheFormular = record;
-			}
+			PreparedStatement select = con.prepareStatement("UPDATE Formula SET sign = ?, digit = ?, term = ? where monsterLevel = ? and teacherId = ? and studentId = ?");
+			select.setString(1, sign.getSign());;
+			select.setString(2, digit.getString());
+			select.setString(3, term.getString());;
+			select.setInt(4, monsterLevel);
+			select.setInt(5, Database.getId());
+			select.setInt(6, studentId);
+			int res = select.executeUpdate();
+			if (res>0)
+				return true;
+			else
+				return false;
 		}
 		catch (SQLException e){
-			System.out.println("Error from getFormular2: " + e.getMessage());
-			cacheFormular = null;
+			System.out.println("Error from setFormula: " + e.getMessage());
+			return false;
 		}
 	}
-
-	public static String[] getFormular(int monsterLevel){
-		return cacheFormular[monsterLevel-1];
+	
+	public static String[] getFormulaFromCache(int monsterLevel){
+		//System.out.println(cacheFormulaSettings.isEmpty());
+		return cacheFormulaSettings.get(monsterLevel-1);
 	}
-
-	public static String[][] getFormular(int teacherId, int monsterLevel, int studentId){
+	
+	public static String[][] getFormula(int monsterLevel){
 		try{
-			Statement select = con.createStatement();
-			ResultSet res = select.executeQuery("SELECT sign, digit, term From Formular" + 
-					"Where teacherId = " + teacherId + " and monsterLevel = " + monsterLevel +
-					" Group by sign, digit, term" +
-					"Order by count(studentId) DESC" +
-					"LIMIT 1");
-			Vector settings = new Vector();
-			String[][] record = new String [1][3]; 
-			if(res.next()){
-
-				for(int index = 0;index < 3; index++)
-					record[0][index] = res.getString(index+1);
-
-			}
-
-			return record;
-		}
-		catch (SQLException e){
-			System.out.println("Error from getFormular1: " + e.getMessage());
-			return null;
-		}
-	}
-
-	public static String[][] getFormular(int teacherId, int monsterLevel){
-		try{
-			PreparedStatement select = con.prepareStatement("SELECT sign, digit, term From Formular Where teacherId = ? and monsterLevel = ? Group by sign, digit, term Order by count(studentId) DESC Limit 1");
-			select.setInt(1, teacherId);
+			PreparedStatement select = con.prepareStatement("SELECT sign, digit, term From Formula Where teacherId = ? and monsterLevel = ? Group by sign, digit, term Order by count(studentId) DESC Limit 1");
+			select.setInt(1, getId());
 			select.setInt(2, monsterLevel);
 			ResultSet res = select.executeQuery();
 			String[][] record = new String [1][3]; 
@@ -260,30 +244,96 @@ public class Database
 			return record;
 		}
 		catch (SQLException e){
-			System.out.println("Error from getFormular2: " + e.getMessage());
+			System.out.println("Error from getFormula1: " + e.getMessage());
 			return null;
 		}
+	}
+
+	public static String[][] getFormula(int studentId, int monsterLevel){
+		try{
+			PreparedStatement select = con.prepareStatement("SELECT sign, digit, term FROM Formula WHERE monsterLevel = ? and studentId = ?");
+			select.setInt(1, monsterLevel);
+			select.setInt(2,studentId);
+			ResultSet res = select.executeQuery();
+			String[][] settings = new String[1][3];
+			if(res.next()){
+				for(int index = 0;index < 3; index++)
+					settings[0][index] = res.getString(index+1);
+			}
+			return settings;
+		}
+		catch (SQLException e){
+			System.out.println("Error from getFormula2: " + e.getMessage());
+			return null;
+		}
+	}
+
+	public static void cacheStudents(){
+		try{
+			PreparedStatement select = con.prepareStatement("SELECT Login.userID, Login.firstname, Login.lastname FROM Login LEFT JOIN Formula ON Login.userID = Formula.studentId WHERE Formula.teacherId = ? GROUP BY Formula.studentId ORDER BY Login.lastname");
+			select.setInt(1, getId());
+			ResultSet res = select.executeQuery();
+			cacheStudentsName = new Vector();
+			while(res.next()){
+				String name = res.getString(3) + ", " + res.getString(2);
+				int id = res.getInt(1);
+				DropdownElement element = new DropdownElement(id,name);
+				cacheStudentsName.add(element);
+			}
+		}
+		catch (SQLException e){
+			System.out.println("Error from cacheStudents: " + e.getMessage());
+		}
+	}
+
+	public static void cacheFormulaSettings(){
+		try{
+			PreparedStatement select = con.prepareStatement("SELECT sign, digit, term FROM Formula WHERE studentId = ? ORDER BY monsterLevel");
+			select.setInt(1, getId());
+			ResultSet res = select.executeQuery();
+			String[] setting = new String[3];
+			while(res.next()){
+				//System.out.println("MonsterLevel");
+				for(int index = 0;index < 3; index++)
+					setting[index] = res.getString(index+1);
+				cacheFormulaSettings.add(setting);
+			}
+		}
+		catch (SQLException e){
+			System.out.println("Error from cacheFormulaSettings: " + e.getMessage());
+		}
+	}
+
+	public static Vector getNames(){
+		return cacheStudentsName;
 	}
 
 	public static void cleanUp(){
 		con = null;
 		cacheStats = null;
 		cacheType = null;
-		cacheFormular = null; 
-
+		cacheStudentsName = null; 
+		cacheFormulaSettings = new ArrayList<String[]>();
 	}
 
-	// public static void main(String[] args){
-	//  Database.getConnected();
-	//  Database.userID = 1;
-	//  Database.getStatus();
-	//  Integer [] status = {2,30,2,30};
-	//  System.out.println(Database.setStatus(status));
-	//  System.out.println(Database.createAccount("zxu123","1234","student"));
-	//  Sign sign = Sign.ADDITION;
-	//  Digits digit = Digits.FOUR;
-	//  Terms term = Terms.FIVE;
-	//  Database.setFormular(1, sign, digit, term);
-	// }
-
+/*
+	public static void main(String[] args){
+		Database.getConnected();
+		Database.userID = 17;
+		//	  Database.getStatus();
+		//	  Integer [] status = {2,30,2,30};
+		//	  System.out.println(Database.setStatus(status));
+		//	  System.out.println(Database.createAccount("zxu123","1234","student"));
+		//	  Sign sign = Sign.ADDITION;
+		//	  Digits digit = Digits.FOUR;
+		//	  Terms term = Terms.FIVE;
+		//	  Database.setFormula(1, sign, digit, term);
+		//	  String[][] a = Database.getFormula(17,1);
+		//	  for(int index = 0;index < 3; index++)
+		//	  System.out.println(a[0][index]);
+		//	  Database.cacheStudents();
+		//Database.cacheFormulaSettings();
+		//System.out.println(Database.getFormulaFromCache(1));
+	}
+*/
 }

@@ -52,7 +52,7 @@ public class MathQuest
 	}
 
 	public static void switchToAdminFomularSetting(int Id){
-		contentPane = new AdminFormularSetting(Id);
+		contentPane = new AdminFormulaSetting(Id);
 		outerFrame.setContentPane(contentPane);
 	}
 
@@ -86,6 +86,11 @@ public class MathQuest
 		contentPane = new Login();
 		outerFrame.setContentPane(contentPane);
 		contentPane.revalidate();
+	}
+	
+	public static void switchToAdminIndividualFormulaSetting(){
+		contentPane = new AdminIndividualFormulaSetting();
+		outerFrame.setContentPane(contentPane);
 	}
 	
 	public static String getUsername() {
