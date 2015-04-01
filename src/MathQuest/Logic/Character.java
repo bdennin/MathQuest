@@ -106,9 +106,17 @@ public class Character {
 	public int getStrength(){
 		return this.strength;
 	}
-
+	
+	public int getVitality(){
+		return this.vitality;
+	}
+	
 	public void addStrength(int strength) {
 		this.strength = this.strength + strength;
+	}
+	
+	public void addVitality(int vitality){
+		this.vitality = this.vitality + vitality;
 	}
 
 	public int getMaxHealth(){
