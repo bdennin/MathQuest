@@ -33,9 +33,10 @@ public class Character {
 		this.currentExperience = 0;
 		this.maxExperience = 10;
 		this.strength = 10;
+		this.vitality = 10;
 		this.gold = 0;
-		this.currentHealth = 10;
-		this.maxHealth = 10;
+		this.currentHealth = this.vitality;
+		this.maxHealth = this.vitality;
 		this.level = 1;
 		this.imagePath = "char2.jpg";
 		this.name = "Hero#1";
@@ -65,9 +66,10 @@ public class Character {
 		this.currentExperience = 0;
 		this.maxExperience = 10;
 		this.strength = 10;
+		this.vitality = 10;
 		this.gold = currentGold;
 		this.currentHealth = 1;
-		this.maxHealth = 10;
+		this.maxHealth = this.vitality;
 		this.level = 1;
 		this.imagePath = "char2.jpg";
 		this.name = "Hero#1";
@@ -82,7 +84,8 @@ public class Character {
 		this.currentHealth = charStats[1];
 		this.currentExperience = charStats[2];
 		this.gold = charStats[3];
-		this.maxHealth = level * 10;
+		this.vitality = 10 * level;
+		this.maxHealth = vitality;
 		this.strength = 10 + 2 * level;
 		this.maxExperience = (int)(10 * Math.pow(2, level));
 		

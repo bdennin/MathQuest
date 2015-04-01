@@ -78,6 +78,7 @@ public class Item {
 			 tiny();
 		 
 		 str = str * itemLevel;
+		 vit = vit * itemLevel * 2;
 		 gold = gold * itemLevel;
 		 modifier = itemName;
 		 itemName = modifier + slotName;
@@ -126,6 +127,7 @@ public class Item {
 			 elephant();
 		 
 		 str = str * itemLevel;
+		 vit = vit * itemLevel * 2;
 		 gold = gold * itemLevel;
 		 animalName = itemName;
 		 itemName = slotName + animalName;
@@ -188,6 +190,7 @@ public class Item {
 			 elephant();
 		 
 		 str = str * itemLevel;
+		 vit = vit * itemLevel * 2;
 		 gold = gold * itemLevel;
 		 animalName = itemName;
 		 itemName = epicName + slotName + animalName;
@@ -219,6 +222,7 @@ public class Item {
 		 }
 
 		 str = str * itemLevel;
+		 vit = vit * itemLevel * 2;
 		 gold = gold * itemLevel;
 		 
 	 }
