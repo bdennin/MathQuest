@@ -84,7 +84,7 @@ public class Character {
 		this.inventory = new ArrayList<Item>();
 	}
 
-	public Character(Integer[] charStats) {
+	public Character(Integer[] charStats, ArrayList<Item> items) {
 		this.level = charStats[0];
 		this.currentHealth = charStats[1];
 		this.currentExperience = charStats[2];
@@ -100,7 +100,7 @@ public class Character {
 		this.greatestEnemySlain = "Goblin";
 		this.answeredCorrectly = 0;
 		this.answeredIncorrectly = 0;
-		this.inventory = new ArrayList<Item>();
+		this.inventory = items;
 	}
 
 	public int getMaxExperience(){
@@ -203,8 +203,8 @@ public class Character {
 		this.currentHealth = this.currentHealth - damage;
 	}
 
-	public int[] save() {
-		int[] stats = new int[4];	
+	public Integer[] getStatus() {
+		Integer[] stats = new Integer[4];	
 		stats[0] = this.level;
 		stats[1] = this.currentHealth;
 		stats[2] = this.currentExperience;

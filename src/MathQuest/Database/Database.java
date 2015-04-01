@@ -17,6 +17,7 @@ public class Database
 	private static String cacheType;
 	private static Vector cacheStudentsName; 
 	private static ArrayList<String[]> cacheFormulaSettings = new ArrayList<String[]>();
+	private static ArrayList<Item> cacheinventory = new ArrayList<Item>();
 
 	/**
 	 * @return true if program connects Cerberus successfully
@@ -79,6 +80,7 @@ public class Database
 						cacheStats();
 						cacheStudents();
 						cacheFormulaSettings();
+						cacheInventory();
 					}
 					else{
 						cacheStudents();
@@ -200,7 +202,7 @@ public class Database
 			return false;
 		}
 	}
-	
+
 	public static boolean setFormula(int studentId, int monsterLevel, Sign sign, Digits digit, Terms term){
 		try{
 			PreparedStatement select = con.prepareStatement("UPDATE Formula SET sign = ?, digit = ?, term = ? where monsterLevel = ? and teacherId = ? and studentId = ?");
@@ -221,12 +223,12 @@ public class Database
 			return false;
 		}
 	}
-	
+
 	public static String[] getFormulaFromCache(int monsterLevel){
 		//System.out.println(cacheFormulaSettings.isEmpty());
 		return cacheFormulaSettings.get(monsterLevel-1);
 	}
-	
+
 	public static String[][] getFormula(int monsterLevel){
 		try{
 			PreparedStatement select = con.prepareStatement("SELECT sign, digit, term From Formula Where teacherId = ? and monsterLevel = ? Group by sign, digit, term Order by count(studentId) DESC Limit 1");
@@ -283,6 +285,7 @@ public class Database
 		}
 		catch (SQLException e){
 			System.out.println("Error from cacheStudents: " + e.getMessage());
+			cacheStudentsName = null;
 		}
 	}
 
@@ -308,6 +311,53 @@ public class Database
 		return cacheStudentsName;
 	}
 
+	public static void cacheInventory(){
+		try{
+			PreparedStatement select = con.prepareStatement("SELECT name, color, level, dex, gold, vit FROM Inventory WHERE Login_userID = ? ORDER BY inventoryID");
+			select.setInt(1, getId());
+			ResultSet res = select.executeQuery();
+			String[] strings = new String[2];
+			Integer[] numbers = new Integer[4];
+			if(!res.wasNull())
+				while(res.next()){
+					for (int i = 0; i<2; i++)
+						strings[i] = res.getString(i+1);
+					for (int i = 0; i<4; i++)
+						numbers[i] = res.getInt(i+3);
+					cacheinventory.add(new Item(strings, numbers));
+				}
+		}
+		catch (SQLException e){
+			System.out.println("Error from cacheInventory: " + e.getMessage());
+		}
+	}
+
+	public static ArrayList<Item> getInventory(){
+		return cacheinventory;
+	}
+
+	public static void saveInventory(ArrayList<Item> items){
+		try{
+			PreparedStatement delete = con.prepareStatement("DELETE FROM Inventory WHERE Login_userID = ?");
+			delete.setInt(1, getId());
+			delete.executeUpdate();
+			for(Item item : items){
+				PreparedStatement inventory = con.prepareStatement("INSERT INTO Inventory (name, color, level, dex, gold, vit, Login_userID) VALUES (?, ?, ?, ?, ?, ?, ?)");
+				inventory.setString(1, item.toString());
+				inventory.setString(2, item.getColor());
+				inventory.setInt(3, item.getItemLvl());
+				inventory.setInt(4, item.getItemDex());
+				inventory.setInt(5, item.getItemGold());
+				inventory.setInt(6, item.getItemVit());
+				inventory.setInt(7, getId());
+				inventory.executeUpdate();
+			}
+		}
+		catch (SQLException e){
+			System.out.println("Error from saveInventory: " + e.getMessage());
+		}
+	}
+
 	public static void cleanUp(){
 		con = null;
 		cacheStats = null;
@@ -316,7 +366,7 @@ public class Database
 		cacheFormulaSettings = new ArrayList<String[]>();
 	}
 
-/*
+	
 	public static void main(String[] args){
 		Database.getConnected();
 		Database.userID = 17;
@@ -334,6 +384,10 @@ public class Database
 		//	  Database.cacheStudents();
 		//Database.cacheFormulaSettings();
 		//System.out.println(Database.getFormulaFromCache(1));
+//		ArrayList<Item> items =  new ArrayList<Item>();
+//		Item one = new Item();
+//		items.add(one);
+//		Database.saveInventory(items);
+		
 	}
-*/
 }

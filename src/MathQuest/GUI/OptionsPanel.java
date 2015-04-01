@@ -9,6 +9,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
 
 import MathQuest.MathQuest;
+import MathQuest.Database.Database;
 import MathQuest.Logic.Character;
 import MathQuest.Pages.Area;
 import MathQuest.Pages.World;
@@ -17,8 +18,8 @@ public class OptionsPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	public OptionsPanel(final Area frame, Character hero, boolean hasReturn) {
-		
+	public OptionsPanel(final Area frame, final Character hero, boolean hasReturn) {
+
 		this.setLayout(null);
 		this.setBounds(0, 0, 132, 94);
 		this.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
@@ -45,11 +46,11 @@ public class OptionsPanel extends JPanel {
 
 		JButton button = new JButton();
 		button.setBounds(3, 32, 125, 29);
-	
+
 		if(hasReturn) {
 			button.setText("Return");
 			button.addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					MathQuest.switchToGameWorld();
@@ -59,7 +60,7 @@ public class OptionsPanel extends JPanel {
 		else {
 			button.setText("Options");
 			button.addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					World world = (World)frame;
@@ -80,9 +81,15 @@ public class OptionsPanel extends JPanel {
 		JButton quitButton = new JButton("Quit");
 		quitButton.setBounds(3, 61, 125, 29);
 		quitButton.addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if(MathQuest.connectToDatabase){
+					Database.getConnected();
+					Database.saveInventory(hero.getInventory());
+					System.out.println("Quit");
+					Database.setStatus(hero.getStatus());
+					Database.close();
+				}
 				System.exit(0);
 			}
 		});
