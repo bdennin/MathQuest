@@ -13,12 +13,9 @@ public class Character {
 	private int currentExperience;
 	private int maxHealth;
 	private int currentHealth;
-	private int damage;
+	private int vitality;
 	private int strength;
-	private int dexterity;
-	private int armor;
 	private int gold;
-	private int speed;
 	private String name;
 	private String imagePath;
 	private String greatestEnemySlain;
@@ -35,13 +32,11 @@ public class Character {
 	public Character() {
 		this.currentExperience = 0;
 		this.maxExperience = 10;
-		this.damage = 0;
 		this.strength = 10;
 		this.gold = 0;
 		this.currentHealth = 10;
 		this.maxHealth = 10;
 		this.level = 1;
-		this.armor = 0;
 		this.imagePath = "char2.jpg";
 		this.name = "Hero#1";
 		this.greatestEnemySlain = "Goblin";
@@ -58,7 +53,6 @@ public class Character {
 		this.currentHealth = 10 * level;
 		this.maxHealth = 10 * level;
 		this.level = level;
-		this.armor = 0;
 		this.name = name;
 		this.currentExperience = 0;
 		this.maxExperience = 10 * level;
@@ -75,7 +69,6 @@ public class Character {
 		this.currentHealth = 1;
 		this.maxHealth = 10;
 		this.level = 1;
-		this.armor = 0;
 		this.imagePath = "char2.jpg";
 		this.name = "Hero#1";
 		this.damageType = DamageType.SLASHING;
@@ -95,7 +88,6 @@ public class Character {
 		
 		this.imagePath = "char2.jpg";
 		this.damageType = DamageType.SLASHING;
-		this.armor = 0;
 		this.name = "Hero#1";
 		this.greatestEnemySlain = "Goblin";
 		this.answeredCorrectly = 0;
@@ -119,14 +111,6 @@ public class Character {
 		this.strength = this.strength + strength;
 	}
 
-	public int getDexterity(){
-		return this.dexterity;
-	}
-
-	public void addDexterity(int dexterity) {
-		this.dexterity = this.dexterity + dexterity;
-	}
-
 	public int getMaxHealth(){
 		return this.maxHealth;
 	}
@@ -141,10 +125,6 @@ public class Character {
 
 	public int getLevel(){
 		return this.level;
-	}
-
-	public int getArmor(){
-		return this.armor;
 	}
 
 	public String getName() {
@@ -336,19 +316,13 @@ public class Character {
 	}
 
 	private void removeItemStats(Item item) {
-		this.dexterity -= item.dex;
 		this.strength -= item.str;
-		this.armor -= item.armor;
-		this.damage -= item.dmg;
-		this.speed -= item.speed;
+		this.vitality -= item.vit;
 	}
 	
 	private void addItemStats(Item item) {
-		this.dexterity += item.dex;
 		this.strength += item.str;
-		this.armor += item.armor;
-		this.damage += item.dmg;
-		this.speed += item.speed;
+		this.vitality += item.vit;
 	}
 	
 	public void equip(Object item) {
