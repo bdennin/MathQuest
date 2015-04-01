@@ -502,9 +502,6 @@ public class Item {
 		return str;
 	}
 
-	public int getItemVit(){
-		return vit;
-	}
 	public int getItemDex(){
 		return dex;
 	}
@@ -531,6 +528,9 @@ public class Item {
 
 	public String getSlot(){
 		return slot;
+	}
+	public int getItemVit(){
+		return vit;
 	}
 
 }

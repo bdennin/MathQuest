@@ -66,7 +66,7 @@ public class InventoryWindow extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				hero.equip(itemList.getSelectedValue());
 				frame.removeInventoryWindow();
-				frame.reloadInventoryPanel();
+				frame.reloadInventoryPanel(true);
 			}
 		});
 		windowPanelBody.add(btnEquip);

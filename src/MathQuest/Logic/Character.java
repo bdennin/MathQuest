@@ -13,12 +13,9 @@ public class Character {
 	private int currentExperience;
 	private int maxHealth;
 	private int currentHealth;
-	private int damage;
+	private int vitality;
 	private int strength;
-	private int dexterity;
-	private int armor;
 	private int gold;
-	private int speed;
 	private String name;
 	private String imagePath;
 	private String greatestEnemySlain;
@@ -35,13 +32,12 @@ public class Character {
 	public Character() {
 		this.currentExperience = 0;
 		this.maxExperience = 10;
-		this.damage = 0;
 		this.strength = 10;
+		this.vitality = 10;
 		this.gold = 0;
-		this.currentHealth = 10;
-		this.maxHealth = 10;
+		this.currentHealth = this.vitality;
+		this.maxHealth = this.vitality;
 		this.level = 1;
-		this.armor = 0;
 		this.imagePath = "char2.jpg";
 		this.name = "Hero#1";
 		this.greatestEnemySlain = "Goblin";
@@ -58,7 +54,6 @@ public class Character {
 		this.currentHealth = 10 * level;
 		this.maxHealth = 10 * level;
 		this.level = level;
-		this.armor = 0;
 		this.name = name;
 		this.currentExperience = 0;
 		this.maxExperience = 10 * level;
@@ -71,11 +66,11 @@ public class Character {
 		this.currentExperience = 0;
 		this.maxExperience = 10;
 		this.strength = 10;
+		this.vitality = 10;
 		this.gold = currentGold;
 		this.currentHealth = 1;
-		this.maxHealth = 10;
+		this.maxHealth = this.vitality;
 		this.level = 1;
-		this.armor = 0;
 		this.imagePath = "char2.jpg";
 		this.name = "Hero#1";
 		this.damageType = DamageType.SLASHING;
@@ -89,13 +84,13 @@ public class Character {
 		this.currentHealth = charStats[1];
 		this.currentExperience = charStats[2];
 		this.gold = charStats[3];
-		this.maxHealth = level * 10;
+		this.vitality = 10 * level;
+		this.maxHealth = vitality;
 		this.strength = 10 + 2 * level;
 		this.maxExperience = (int)(10 * Math.pow(2, level));
 		
 		this.imagePath = "char2.jpg";
 		this.damageType = DamageType.SLASHING;
-		this.armor = 0;
 		this.name = "Hero#1";
 		this.greatestEnemySlain = "Goblin";
 		this.answeredCorrectly = 0;
@@ -114,17 +109,17 @@ public class Character {
 	public int getStrength(){
 		return this.strength;
 	}
-
+	
+	public int getVitality(){
+		return this.vitality;
+	}
+	
 	public void addStrength(int strength) {
 		this.strength = this.strength + strength;
 	}
-
-	public int getDexterity(){
-		return this.dexterity;
-	}
-
-	public void addDexterity(int dexterity) {
-		this.dexterity = this.dexterity + dexterity;
+	
+	public void addVitality(int vitality){
+		this.vitality = this.vitality + vitality;
 	}
 
 	public int getMaxHealth(){
@@ -141,10 +136,6 @@ public class Character {
 
 	public int getLevel(){
 		return this.level;
-	}
-
-	public int getArmor(){
-		return this.armor;
 	}
 
 	public String getName() {
@@ -336,19 +327,13 @@ public class Character {
 	}
 
 	private void removeItemStats(Item item) {
-		this.dexterity -= item.dex;
 		this.strength -= item.str;
-		this.armor -= item.armor;
-		this.damage -= item.dmg;
-		this.speed -= item.speed;
+		this.vitality -= item.vit;
 	}
 	
 	private void addItemStats(Item item) {
-		this.dexterity += item.dex;
 		this.strength += item.str;
-		this.armor += item.armor;
-		this.damage += item.dmg;
-		this.speed += item.speed;
+		this.vitality += item.vit;
 	}
 	
 	public void equip(Object item) {
