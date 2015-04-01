@@ -329,11 +329,16 @@ public class Character {
 	private void removeItemStats(Item item) {
 		this.strength -= item.str;
 		this.vitality -= item.vit;
+		this.currentHealth -= item.vit;
+		this.maxHealth -= item.vit;
 	}
 	
 	private void addItemStats(Item item) {
 		this.strength += item.str;
 		this.vitality += item.vit;
+		if (this.maxHealth == this.currentHealth)
+			this.currentHealth += item.vit;
+		this.maxHealth += item.vit;
 	}
 	
 	public void equip(Object item) {
@@ -344,35 +349,46 @@ public class Character {
 			Item equippable = (Item)item;
 			String slot = equippable.getSlot();
 			if(slot.equals("Helmets")) {
-				if(this.equippedHelmet != null)
+				if(this.equippedHelmet != null){
+					this.inventory.add(this.equippedHelmet);
 					this.removeItemStats(this.equippedHelmet);
+				}
 				this.equippedHelmet = equippable;
 				this.addItemStats(equippable);
 			}
 			else if(slot.equals("Armor")) {
-				if(this.equippedMail != null)
+				if(this.equippedMail != null){
+					this.inventory.add(this.equippedMail);
 					this.removeItemStats(this.equippedMail);
+				}
 				this.equippedMail = equippable;
 				this.addItemStats(equippable);
 			}
 			else if(slot.equals("Boots")) {
-				if(this.equippedBoots != null)
+				if(this.equippedBoots != null){
+					this.inventory.add(this.equippedBoots);
 					this.removeItemStats(this.equippedBoots);
+				}
 				this.equippedBoots = equippable;
 				this.addItemStats(equippable);
 			}
 			else if(slot.equals("Gloves")) {
-				if(this.equippedGloves != null)
+				if(this.equippedGloves != null){
+					this.inventory.add(this.equippedGloves);
 					this.removeItemStats(this.equippedGloves);
+				}
 				this.equippedGloves = equippable;
 				this.addItemStats(equippable);
 			}
 			else {
-				if(this.equippedWeapon != null)
+				if(this.equippedWeapon != null){
+					this.inventory.add(this.equippedWeapon);
 					this.removeItemStats(this.equippedWeapon);
+				}
 				this.equippedWeapon = equippable;
 				this.addItemStats(equippable);
 			}
+			this.inventory.remove(equippable);
 		}
 	}
 }

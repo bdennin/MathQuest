@@ -22,6 +22,7 @@ public class Item {
 		itemName = "Terrible Item";
 		itemLevel = 1;
 		str = 0;
+		vit = 0;
 		gold = 1;
 			
 	 }
