@@ -41,8 +41,25 @@ public class Blacksmith extends Area {
 		this.loadImages();
 		this.loadOptionsPanel();
 		
-		item1 = new Item(1, "green");
-		item2 = new Item(2, "green");
+		int heroLevel = hero.getLevel();
+		
+		if(heroLevel < 5){
+			item1 = new Item(heroLevel, "gray");
+			item2 = new Item(heroLevel, "gray");
+		}
+		else if(heroLevel >= 5 && heroLevel < 10){
+			item1 = new Item(heroLevel, "gray");
+			item2 = new Item(heroLevel, "green");
+		}
+		else if(heroLevel >= 10 && heroLevel < 20){
+			item1 = new Item(heroLevel, "green");
+			item2 = new Item(heroLevel, "green");
+		}
+		else if(heroLevel >= 20){
+			item1 = new Item(heroLevel, "green");
+			item2 = new Item(heroLevel, "blue");
+		}
+		
 		
 		buttonPanel.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
 		buttonPanel.setBounds(516, 599, 356, 138);
@@ -194,6 +211,7 @@ public class Blacksmith extends Area {
 					armorPanel.setVisible(false);
 					hero.addToInventory(item1);
 					hero.removeGold(item1.getItemGold());
+					inventoryComboBox.addItem(item1);
 				}
 				else{
 					scrollText.append("You don't have enough for that\n");
@@ -267,6 +285,7 @@ public class Blacksmith extends Area {
 					weaponPanel.setVisible(false);
 					hero.addToInventory(item2);
 					hero.removeGold(item2.getItemGold());
+					inventoryComboBox.addItem(item2);
 				}
 				else{
 					scrollText.append("You don't have enough for that\n");
@@ -324,8 +343,8 @@ public class Blacksmith extends Area {
 				Item i = (Item)inventoryComboBox.getSelectedItem();
 				hero.addGold(i.getItemGold());
 				hero.removeFromInventory((Item)inventoryComboBox.getSelectedItem());
-				for(Item el: hero.getInventory())
-					inventoryComboBox.addItem(el);
+				inventoryComboBox.removeItem(inventoryComboBox.getSelectedItem());
+				reloadInventoryPanel(false);
 			}
 		});
 		sellBtn.setBounds(56, 98, 117, 35);

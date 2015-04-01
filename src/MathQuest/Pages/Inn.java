@@ -133,7 +133,7 @@ public class Inn extends Area {
 					hero.healthRegain("Shower");
 					hero.payForInn("Shower");
 					reloadCharacterPanel();
-					reloadInventoryPanel();
+					reloadInventoryPanel(true);
 					combatLog.addTextToScrollPane("After shower, I feel much better now! Return to lobby.");
 				}
 				else
@@ -152,7 +152,7 @@ public class Inn extends Area {
 					hero.healthRegain("Meal");
 					hero.payForInn("Meal");
 					reloadCharacterPanel();
-					reloadInventoryPanel();
+					reloadInventoryPanel(true);
 					combatLog.addTextToScrollPane("After taking the meal, I feel much better now! Return to lobby.");
 				}
 				else 
@@ -171,7 +171,7 @@ public class Inn extends Area {
 					hero.healthRegain("Sleep");
 					hero.payForInn("Sleep");
 					reloadCharacterPanel();
-					reloadInventoryPanel();
+					reloadInventoryPanel(true);
 					combatLog.addTextToScrollPane("After taking a snap, I feel much better now! Return to lobby.");
 				}
 				else 

@@ -120,11 +120,12 @@ public abstract class Area extends JPanel {
 		this.renderBackground();
 	}
 
-	public void reloadInventoryPanel() {
+	public void reloadInventoryPanel(boolean a) {
 
 		this.remove(inventoryPanel);
 		inventoryPanel = new InventoryPanel(this, this.hero);
 		add(inventoryPanel);
+		inventoryPanel.setVisible(a);
 		this.renderBackground();
 	}	
 	
