@@ -14,14 +14,14 @@ import MathQuest.Pages.*;
 public class MathQuest
 {
 	private static final Dimension FRAME_DIMENSIONS = new Dimension(1024, 768);
-	
+
 	private static JFrame outerFrame;
 	private static JPanel contentPane;
 	private static String username;
 	private static String password;
 	private static Character hero;
 	private static double volume;
-	
+
 	public static boolean connectToDatabase = false;
 	public static boolean isMuted;
 
@@ -87,12 +87,12 @@ public class MathQuest
 		outerFrame.setContentPane(contentPane);
 		contentPane.revalidate();
 	}
-	
+
 	public static void switchToAdminIndividualFormulaSetting(){
 		contentPane = new AdminIndividualFormulaSetting();
 		outerFrame.setContentPane(contentPane);
 	}
-	
+
 	public static String getUsername() {
 		return username;
 	}
