@@ -119,9 +119,9 @@ public class Inn extends Area {
 		options.removeAll();
 
 		combatLog.addTextToScrollPane("Here is the prices for various servies:");
-		combatLog.addTextToScrollPane("     Shower:" + hero.calculateCost("Shower")+ " gold for "+ hero.calculateIncrease("Shower")+" health unit");
-		combatLog.addTextToScrollPane("     Meal:" + hero.calculateCost("Meal")+ " gold for "+ hero.calculateIncrease("Meal")+" health unit");
-		combatLog.addTextToScrollPane("     Take a snap:" + hero.calculateCost("Sleep")+ " gold for "+ hero.calculateIncrease("Sleep")+" health unit");
+		combatLog.addTextToScrollPane("     Shower:" + hero.calculateCost("Shower",hero.getLevel())+ " gold for "+ hero.calculateIncrease("Shower")+" health unit");
+		combatLog.addTextToScrollPane("     Meal:" + hero.calculateCost("Meal",hero.getLevel())+ " gold for "+ hero.calculateIncrease("Meal")+" health unit");
+		combatLog.addTextToScrollPane("     Take a snap:" + hero.calculateCost("Sleep",hero.getLevel())+ " gold for "+ hero.calculateIncrease("Sleep")+" health unit");
 		combatLog.addTextToScrollPane("Please choose the room you want.");
 
 		JButton btnShower = new JButton(this.showerIcon);

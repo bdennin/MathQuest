@@ -5,7 +5,7 @@ import java.lang.Math;
 public class Item {
 	
 	boolean itemDropped;
-	
+	boolean isEquipped;
 	String slot;
 	String itemName;
 	String color;
@@ -24,10 +24,10 @@ public class Item {
 		str = 0;
 		vit = 0;
 		gold = 1;
-			
+		isEquipped = false;
 	 }
 	 
-	 public Item(String[] strings, Integer[] numbers){
+	 public Item(String[] strings, Integer[] numbers, boolean equipped){
 		 itemName = strings[0]; 
 		 color = strings[1];
 		  slot = strings[2];
@@ -35,6 +35,7 @@ public class Item {
 		  str = numbers[1];
 		  gold = numbers[2];
 		  vit = numbers[3];
+		  isEquipped = equipped;  
 		 }
 	 
 	 public Item(int monsterLvl, String catagory){
@@ -55,7 +56,15 @@ public class Item {
 	 }
 	 
 
-	 
+	 public void disrobe(){
+		 isEquipped = false;
+	 }
+	 public void equip(){
+		 isEquipped = true;
+	 }
+	 public boolean isEquipped(){
+		 return isEquipped;
+	 }
 	 private void setStatsBasic(){
 		 
 		 

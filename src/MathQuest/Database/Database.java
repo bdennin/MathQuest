@@ -226,7 +226,10 @@ public class Database
 
 	public static String[] getFormulaFromCache(int monsterLevel){
 		//System.out.println(cacheFormulaSettings.isEmpty());
-		return cacheFormulaSettings.get(monsterLevel-1);
+		if (monsterLevel > cacheFormulaSettings.size() )
+			return null;
+		else
+			return cacheFormulaSettings.get(monsterLevel-1);
 	}
 
 	public static String[][] getFormula(int monsterLevel){
@@ -313,7 +316,7 @@ public class Database
 
 	public static void cacheInventory(){
 		try{
-			PreparedStatement select = con.prepareStatement("SELECT name, color, slot, level, str, gold, vit FROM Inventory WHERE Login_userID = ? ORDER BY inventoryID");
+			PreparedStatement select = con.prepareStatement("SELECT name, color, slot, level, str, gold, vit, isEquipped FROM Inventory WHERE Login_userID = ? ORDER BY inventoryID");
 			select.setInt(1, getId());
 			ResultSet res = select.executeQuery();
 			String[] strings = new String[3];
@@ -324,9 +327,10 @@ public class Database
 						strings[i] = res.getString(i+1);
 					for (int i = 0; i<4; i++)
 						numbers[i] = res.getInt(i+4);
-					cacheinventory.add(new Item(strings, numbers));
+					boolean isEquipped = res.getBoolean(8);
+					cacheinventory.add(new Item(strings, numbers,isEquipped));
+					//System.out.println("count");
 				}
-			System.out.println(cacheinventory.size());
 		}
 		catch (SQLException e){
 			System.out.println("Error from cacheInventory: " + e.getMessage());
@@ -343,7 +347,7 @@ public class Database
 			delete.setInt(1, getId());
 			delete.executeUpdate();
 			for(Item item : items){
-				PreparedStatement inventory = con.prepareStatement("INSERT INTO Inventory (name, color, level, str, gold, vit, Login_userID, slot) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+				PreparedStatement inventory = con.prepareStatement("INSERT INTO Inventory (name, color, level, str, gold, vit, Login_userID, slot, isEquipped) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 				inventory.setString(1, item.toString());
 				inventory.setString(2, item.getColor());
 				inventory.setString(8, item.getSlot());
@@ -352,6 +356,7 @@ public class Database
 				inventory.setInt(5, item.getItemGold());
 				inventory.setInt(6, item.getItemVit());
 				inventory.setInt(7, getId());
+				inventory.setBoolean(9, item.isEquipped());
 				inventory.executeUpdate();
 			}
 		}
@@ -368,7 +373,7 @@ public class Database
 		cacheFormulaSettings = new ArrayList<String[]>();
 	}
 
-	
+
 	public static void main(String[] args){
 		Database.getConnected();
 		Database.userID = 17;
@@ -386,10 +391,10 @@ public class Database
 		//	  Database.cacheStudents();
 		//Database.cacheFormulaSettings();
 		//System.out.println(Database.getFormulaFromCache(1));
-//		ArrayList<Item> items =  new ArrayList<Item>();
-//		Item one = new Item();
-//		items.add(one);
-//		Database.saveInventory(items);
-		
+		//		ArrayList<Item> items =  new ArrayList<Item>();
+		//		Item one = new Item();
+		//		items.add(one);
+		//		Database.saveInventory(items);
+
 	}
 }

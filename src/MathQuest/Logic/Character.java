@@ -44,7 +44,7 @@ public class Character {
 		this.damageType = DamageType.SLASHING;
 		this.answeredCorrectly = 0;
 		this.answeredIncorrectly = 0;
-		this.inventory = new ArrayList<Item>();
+		inventory =  new ArrayList<Item>();
 	}
 
 	//monster constructor
@@ -76,7 +76,6 @@ public class Character {
 		this.damageType = DamageType.SLASHING;
 		this.answeredCorrectly = 0;
 		this.answeredIncorrectly = 0;
-		this.inventory = new ArrayList<Item>();
 	}
 
 	public Character(Integer[] charStats, ArrayList<Item> items) {
@@ -88,7 +87,7 @@ public class Character {
 		this.maxHealth = vitality;
 		this.strength = 10 + 2 * level;
 		this.maxExperience = (int)(10 * Math.pow(2, level));
-		
+
 		this.imagePath = "char2.jpg";
 		this.damageType = DamageType.SLASHING;
 		this.name = "Hero#1";
@@ -96,8 +95,24 @@ public class Character {
 		this.answeredCorrectly = 0;
 		this.answeredIncorrectly = 0;
 		this.inventory = items;
+		//System.out.println("getting inventory size " + this.inventory.size());
+		for (int i = 0 ; i < this.inventory.size();i++){
+			Item el = this.inventory.get(i);
+			//System.out.println(el.toString() + " " + el.isEquipped()+" "+i);
+			if(el.isEquipped()){
+				equip(el);
+				i--;
+				//System.out.println("equipped " + el.toString());		
+			}
+		}
 	}
-
+	/*switch(item.getSlot()){
+	case "Weapons": setEquippedWeapon(item);
+	case "Helmets": setEquippedHelmet(item);
+	case "Armor":setEquippedMail(item);
+	case "Gloves":setEquippedGloves(item);
+	case "Boots":setEquippedBoots(item);
+	}*/
 	public int getMaxExperience(){
 		return this.maxExperience;
 	}
@@ -109,15 +124,15 @@ public class Character {
 	public int getStrength(){
 		return this.strength;
 	}
-	
+
 	public int getVitality(){
 		return this.vitality;
 	}
-	
+
 	public void addStrength(int strength) {
 		this.strength = this.strength + strength;
 	}
-	
+
 	public void addVitality(int vitality){
 		this.vitality = this.vitality + vitality;
 	}
@@ -207,19 +222,24 @@ public class Character {
 		return this.imagePath;
 	}
 
-	public int calculateCost(String roomType){
-		return 5;
+	public int calculateCost(String roomType, int level){
+		switch(roomType){
+		case "Shower": return level*level*1;
+		case "Meal": return level*level*3;
+		case "Sleep":return level*level*5;
+		default: return level*level*2;
+		}
 	}
 
 	public boolean enoughGold(String roomType){
-		if (calculateCost(roomType) > this.getGold())
+		if (calculateCost(roomType,this.level) > this.getGold())
 			return false;
 		else
 			return true;
 	}
 
 	public void payForInn(String roomType){
-		this.removeGold(calculateCost(roomType));
+		this.removeGold(calculateCost(roomType,this.level));
 	}
 
 	public int calculateIncrease (String roomType){
@@ -279,7 +299,13 @@ public class Character {
 	}
 
 	public void setEquippedHelmet(Item equippedHelmet) {
+		if (this.equippedHelmet != null){
+			//System.out.println("equipped");
+			this.equippedHelmet.disrobe();
+		}
+		equippedHelmet.equip();
 		this.equippedHelmet = equippedHelmet;
+		//System.out.println(this.equippedHelmet.isEquipped());
 	}
 
 	public Item getEquippedMail() {
@@ -287,6 +313,9 @@ public class Character {
 	}
 
 	public void setEquippedMail(Item equippedMail) {
+		if (this.equippedMail != null)
+			this.equippedMail.disrobe();
+		equippedMail.equip();
 		this.equippedMail = equippedMail;
 	}
 
@@ -295,6 +324,9 @@ public class Character {
 	}
 
 	public void setEquippedWeapon(Item equippedWeapon) {
+		if (this.equippedWeapon != null)
+			this.equippedWeapon.disrobe();
+		equippedWeapon.equip();
 		this.equippedWeapon = equippedWeapon;
 	}
 
@@ -303,6 +335,9 @@ public class Character {
 	}
 
 	public void setEquippedBoots(Item equippedBoots) {
+		if (this.equippedBoots != null)
+			this.equippedBoots.disrobe();
+		equippedBoots.equip();
 		this.equippedBoots = equippedBoots;
 	}
 
@@ -311,13 +346,33 @@ public class Character {
 	}
 
 	public void setEquippedGloves(Item equippedGloves) {
+		if (this.equippedGloves != null)
+			this.equippedGloves.disrobe();
+		equippedGloves.equip();
 		this.equippedGloves = equippedGloves;
 	}
-
+	//get the inventories without equipped items
 	public ArrayList<Item> getInventory() {
 		return this.inventory;
 	}
-
+	//get the inventories including equipped items
+	public ArrayList<Item> getAllInventory(){
+		ArrayList<Item> items = new ArrayList<Item>();
+		items.addAll(this.inventory);
+		if(null != this.equippedBoots)
+			items.add(this.equippedBoots);
+		if(null != this.equippedGloves){
+			items.add(this.equippedGloves);
+		//System.out.println("added"+items.size());
+		}
+		if(null != this.equippedHelmet)
+			items.add(this.equippedHelmet);
+		if(null != this.equippedMail)
+			items.add(this.equippedMail);
+		if(null != this.equippedWeapon)
+			items.add(this.equippedWeapon);
+		return items;
+	}
 	public void addToInventory(Item item) {
 		this.inventory.add(item);
 	}
@@ -332,14 +387,14 @@ public class Character {
 		this.currentHealth -= item.vit;
 		this.maxHealth -= item.vit;
 	}
-	
+
 	private void addItemStats(Item item) {
 		this.strength += item.str;
 		this.vitality += item.vit;
 		this.currentHealth += item.vit;
 		this.maxHealth += item.vit;
 	}
-	
+
 	public void equip(Object item) {
 		if(null == item) {
 
@@ -352,7 +407,8 @@ public class Character {
 					this.inventory.add(this.equippedHelmet);
 					this.removeItemStats(this.equippedHelmet);
 				}
-				this.equippedHelmet = equippable;
+				//System.out.println("setting helm");
+				this.setEquippedHelmet(equippable);
 				this.addItemStats(equippable);
 			}
 			else if(slot.equals("Armor")) {
@@ -360,7 +416,7 @@ public class Character {
 					this.inventory.add(this.equippedMail);
 					this.removeItemStats(this.equippedMail);
 				}
-				this.equippedMail = equippable;
+				this.setEquippedMail(equippable);
 				this.addItemStats(equippable);
 			}
 			else if(slot.equals("Boots")) {
@@ -368,7 +424,7 @@ public class Character {
 					this.inventory.add(this.equippedBoots);
 					this.removeItemStats(this.equippedBoots);
 				}
-				this.equippedBoots = equippable;
+				this.setEquippedBoots(equippable);
 				this.addItemStats(equippable);
 			}
 			else if(slot.equals("Gloves")) {
@@ -376,7 +432,7 @@ public class Character {
 					this.inventory.add(this.equippedGloves);
 					this.removeItemStats(this.equippedGloves);
 				}
-				this.equippedGloves = equippable;
+				this.setEquippedGloves(equippable);
 				this.addItemStats(equippable);
 			}
 			else {
@@ -384,7 +440,7 @@ public class Character {
 					this.inventory.add(this.equippedWeapon);
 					this.removeItemStats(this.equippedWeapon);
 				}
-				this.equippedWeapon = equippable;
+				this.setEquippedWeapon(equippable);
 				this.addItemStats(equippable);
 			}
 			this.inventory.remove(equippable);

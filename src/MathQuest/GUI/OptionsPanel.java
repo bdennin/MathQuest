@@ -85,8 +85,7 @@ public class OptionsPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if(MathQuest.connectToDatabase){
 					Database.getConnected();
-					Database.saveInventory(hero.getInventory());
-					System.out.println("Quit");
+					Database.saveInventory(hero.getAllInventory());
 					Database.setStatus(hero.getStatus());
 					Database.close();
 				}
