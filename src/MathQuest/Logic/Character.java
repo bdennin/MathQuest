@@ -329,7 +329,8 @@ public class Character {
 	private void removeItemStats(Item item) {
 		this.strength -= item.str;
 		this.vitality -= item.vit;
-		this.currentHealth -= item.vit;
+		if (this.maxHealth == this.currentHealth)
+			this.currentHealth -= item.vit;
 		this.maxHealth -= item.vit;
 	}
 	
