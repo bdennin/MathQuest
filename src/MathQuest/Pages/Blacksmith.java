@@ -121,7 +121,7 @@ public class Blacksmith extends Area {
 		btnSellItems.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(sellPanel.isVisible()){
-					scrollText.append("I don't need your stuff anyway.\n");
+					scrollText.append("Ok.\n");
 					sellPanel.setVisible(false);
 				}
 				else{
@@ -310,7 +310,9 @@ public class Blacksmith extends Area {
 		inventoryComboBox = new JComboBox<Item>();
 		inventoryComboBox.setBounds(6, 59, 233, 27);
 		for(Item el : hero.getInventory())
-			inventoryComboBox.addItem(el);
+			if(!el.isEquipped()){
+				inventoryComboBox.addItem(el);
+			}
 		sellPanel.add(inventoryComboBox);
 		
 		JButton sellBtn = new JButton("Sell");
