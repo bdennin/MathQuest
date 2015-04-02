@@ -313,19 +313,20 @@ public class Database
 
 	public static void cacheInventory(){
 		try{
-			PreparedStatement select = con.prepareStatement("SELECT name, color, level, dex, gold, vit FROM Inventory WHERE Login_userID = ? ORDER BY inventoryID");
+			PreparedStatement select = con.prepareStatement("SELECT name, color, slot, level, str, gold, vit FROM Inventory WHERE Login_userID = ? ORDER BY inventoryID");
 			select.setInt(1, getId());
 			ResultSet res = select.executeQuery();
-			String[] strings = new String[2];
+			String[] strings = new String[3];
 			Integer[] numbers = new Integer[4];
 			if(!res.wasNull())
 				while(res.next()){
-					for (int i = 0; i<2; i++)
+					for (int i = 0; i<3; i++)
 						strings[i] = res.getString(i+1);
 					for (int i = 0; i<4; i++)
-						numbers[i] = res.getInt(i+3);
+						numbers[i] = res.getInt(i+4);
 					cacheinventory.add(new Item(strings, numbers));
 				}
+			System.out.println(cacheinventory.size());
 		}
 		catch (SQLException e){
 			System.out.println("Error from cacheInventory: " + e.getMessage());
@@ -342,11 +343,12 @@ public class Database
 			delete.setInt(1, getId());
 			delete.executeUpdate();
 			for(Item item : items){
-				PreparedStatement inventory = con.prepareStatement("INSERT INTO Inventory (name, color, level, dex, gold, vit, Login_userID) VALUES (?, ?, ?, ?, ?, ?, ?)");
+				PreparedStatement inventory = con.prepareStatement("INSERT INTO Inventory (name, color, level, str, gold, vit, Login_userID, slot) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 				inventory.setString(1, item.toString());
 				inventory.setString(2, item.getColor());
+				inventory.setString(8, item.getSlot());
 				inventory.setInt(3, item.getItemLvl());
-				inventory.setInt(4, item.getItemDex());
+				inventory.setInt(4, item.getItemStr());
 				inventory.setInt(5, item.getItemGold());
 				inventory.setInt(6, item.getItemVit());
 				inventory.setInt(7, getId());

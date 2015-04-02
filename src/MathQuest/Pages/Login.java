@@ -82,6 +82,7 @@ public class Login extends JPanel {
 				String type = Database.getType();
 				if (type.equals("student")){
 					MathQuest.setCharacter(new Character(Database.getStats(),Database.getInventory()));
+					System.out.println("set character here:"  + Database.getInventory().size());
 					MathQuest.switchToGameWorld();
 					/*
      MathQuest.setUsername(username.getText());
