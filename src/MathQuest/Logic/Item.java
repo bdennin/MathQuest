@@ -253,14 +253,14 @@ public class Item {
 	//1
 	private void cracked(){
 		str = 1;
-		vit = 1;
+		vit = 0;
 		itemName = "Cracked ";
 		gold = 50;
 	}
 	 
 	//2
 	private void damaged(){
-		str = 1;
+		str = 0;
 		vit = 1;
 		itemName = "Damaged ";
 		gold = 50;
@@ -276,8 +276,8 @@ public class Item {
 	
 	//4
 	private void squishy(){
-		str = 1;
-		vit = 1;
+		str = 0;
+		vit = 0;
 		itemName = "Squishy ";
 		gold = 50;
 	}
@@ -294,8 +294,8 @@ public class Item {
 	 
 	 //1
 	 private void bear(){
-		 str = str + 5;
-		 vit = vit + 2;
+		 str = str + 3;
+		 vit = vit + 1;
 		 itemName = " of the Bear";
 		 gold = 20;
 	 }
@@ -303,23 +303,23 @@ public class Item {
 	 //2
 	 private void snake(){
 		 str = str + 2;
-		 vit = vit + 5;
+		 vit = vit + 2;
 		 itemName = " of the Snake";
 		 gold = 20;
 	 }
 	 
 	 //3
 	 private void eagle(){
-		 str = str + 3;
-		 vit = vit + 4;
+		 str = str + 4;
+		 vit = vit + 0;
 		 itemName = " of the Eagle";
 		 gold = 20;
 	 }
 
 	 //4
 	 private void tiger(){
-		 str = str + 4;
-		 vit = vit + 3;
+		 str = str + 2;
+		 vit = vit + 2;
 		 itemName = " of the Tiger";
 		 gold = 20;
 	 }
@@ -327,46 +327,47 @@ public class Item {
 	 //5
 	 private void fox(){
 		 str = str + 1;
-		 vit = vit + 5;
+		 vit = vit + 3;
 		 itemName = " of the Fox";
 		 gold = 20;
 	 }
 
 	 //6
 	 private void gorilla(){
-		 str = str + 7;
-		 vit = vit + 2;
+		 str = str + 3;
+		 vit = vit + 1;
 		 itemName = " of the Gorilla";
 		 gold = 20;
 	 }
 
 	 //7
 	 private void rabbit(){
-		 vit = vit + 6;
+		 str = str + 0;
+		 vit = vit + 4;
 		 itemName = " of the Rabbit";
 		 gold = 20;
 	 }
 
 	 //8
 	 private void lion(){
-		 str = str + 5;
-		 vit = vit + 3;
+		 str = str + 3;
+		 vit = vit + 1;
 		 itemName = " of the Lion";
 		 gold = 20;
 	 }
 	 
 	 //9
 	 private void monkey(){
-		 str = str + 2;
-		 vit = vit + 5;
+		 str = str + 0;
+		 vit = vit + 4;
 		 itemName = " of the Monkey";
 		 gold = 20;
 	 }
 	 
 	 //10
 	 private void elephant(){
-		 str = str + 8;
-		 vit = vit + 4;
+		 str = str + 4;
+		 vit = vit + 0;
 		 itemName = " of the Elephant";
 		 gold = 20;
 	 }
@@ -375,31 +376,31 @@ public class Item {
 	 
 	 //1
 	 private void amazing(){
-		 str = str + 5;
-		 vit = vit + 5;
+		 str = str + 2;
+		 vit = vit + 2;
 		 itemName = "Amazing ";
 		 gold = 100;
 	 }
 	 
 	 //2
 	 private void spectacular(){
-		 str = str + 6;
-		 vit = vit + 4;
+		 str = str + 3;
+		 vit = vit + 2;
 		 itemName = "Spectacular ";
 		 gold = 100;
 	 }
 	 
 	 //3
 	 private void fantastic(){
-		 str = str + 4;
-		 vit = vit + 6;
+		 str = str + 2;
+		 vit = vit + 3;
 		 itemName = "Fantastic ";
 		 gold = 100;
 	 }
 	 
 	 //4
 	 private void superEpic(){
-		 str = str + 7;
+		 str = str + 2;
 		 vit = vit + 3;
 		 itemName = "Super ";
 		 gold = 100;
@@ -408,7 +409,7 @@ public class Item {
 	 //5
 	 private void wonderful(){
 		 str = str + 3;
-		 vit = vit + 7;
+		 vit = vit + 2;
 		 itemName = "Wonderful ";
 		 gold = 100;
 	 }
@@ -417,39 +418,40 @@ public class Item {
 	 
 	 //Weapon
 	 private void legendaryWeapon(){
-		 str = str + 30;
+		 str = str + 10;
+		 vit = vit + 2;
 		 itemName = "Mathtastic Weapon of Solving";
 		 gold = 200;
 	 }
 	 
 	 //Helmet
 	 private void legendaryHelmet(){
-		 str = str + 20;
-		 vit = vit + 20;
+		 str = str + 6;
+		 vit = vit + 8;
 		 itemName = "Mathtastic Helmet of Knowledge";
 		 gold = 200;
 	 }
 	 
 	 //Chest
 	 private void legendaryChest(){
-		 str = str + 20;
-		 vit = vit + 30;
+		 str = str + 7;
+		 vit = vit + 7;
 		 itemName = "Mathtastic Chest of Power";
 		 gold = 200;
 	 }
 	 
 	 //gloves
 	 private void legendaryGloves(){
-		 str = str + 25;
-		 vit = vit + 15;
+		 str = str + 8;
+		 vit = vit + 6;
 		 itemName = "Mathtastic Gloves of Learning";
 		 gold = 200;
 	 }
 	 
 	 //Boots
 	 private void legendaryBoots(){
-		 str = str + 20;
-		 vit = vit + 25;
+		 str = str + 4;
+		 vit = vit + 8;
 		 itemName = "Mathtastic Boots of Intelligence";
 		 gold = 200;
 	 }
@@ -457,31 +459,32 @@ public class Item {
 //////////////////////////////////////////////Item Slots//////////////////////////////////////////////
 	 
 	 private void weapon(){
-		 str = str + 2;
+		 str = str + 1;
 		 itemName = "Weapon";
 		 slot = "Weapons";
 	 }
 	 
 	 private void helmet(){
-		 vit = vit + 4;
+		 vit = vit + 2;
 		 itemName = "Helmet";
 		 slot = "Helmets";
 	 }
 	
 	 private void chest(){
-		 vit = vit + 6;
+		 vit = vit + 3;
 		 itemName = "Armor";
 		 slot = "Armor";
 	 }
 	 
 	 private void gloves(){
-		 vit = vit + 3;
+		 str = str + 1;
+		 vit = vit + 1;
 		 itemName = "Gloves";
 		 slot = "Gloves";
 	 }
 	 
 	 private void boots(){
-		 vit = vit + 2;
+		 vit = vit + 1;
 		 itemName = "Boots";
 		 slot = "Boots";
 	 }
@@ -491,32 +494,32 @@ public class Item {
 	 
 	 
 
-		public int getItemLvl(){
-			return itemLevel;
-		}
+	public int getItemLvl(){
+		return itemLevel;
+	}
 		
-		public int getItemStr(){
-			return str;
-		}
+	public int getItemStr(){
+		return str;
+	}
 		
-		public int getItemVit(){
-			return vit;
-		}
+	public int getItemVit(){
+		return vit;
+	}
 		
-		public int getItemGold(){
-			return gold;
-		}
+	public int getItemGold(){
+		return gold;
+	}
 		
-		public String toString(){
-			return itemName;
-		}
+	public String toString(){
+		return itemName;
+	}
 		
-		public String getColor(){
-			return color;
-		}
+	public String getColor(){
+		return color;
+	}
 		
-		public String getSlot(){
-			return slot;
-		}
+	public String getSlot(){
+		return slot;
+	}
 		
 }
