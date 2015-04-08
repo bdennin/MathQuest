@@ -465,7 +465,7 @@ public class Item {
 	 }
 	 
 	 private void helmet(){
-		 vit = vit + 2;
+		 vit = vit + 1;
 		 itemName = "Helmet";
 		 slot = "Helmets";
 	 }
