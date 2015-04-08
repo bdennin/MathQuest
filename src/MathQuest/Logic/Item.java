@@ -511,6 +511,9 @@ public class Item {
 	}
 		
 	public String toString(){
+		if (isEquipped == true){
+			return itemName + " (Equipped)";
+		}
 		return itemName;
 	}
 		
@@ -521,5 +524,7 @@ public class Item {
 	public String getSlot(){
 		return slot;
 	}
+	
+	
 		
 }
