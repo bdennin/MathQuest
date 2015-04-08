@@ -16,6 +16,7 @@ public class Character {
 	private int vitality;
 	private int strength;
 	private int gold;
+	private int potions;
 	private String name;
 	private String imagePath;
 	private double answeredCorrectly;
@@ -48,72 +49,21 @@ public class Character {
 
 	//monster constructor
 	public Character(int level, String name, String imagePath, DamageType damageType) {
-		if (level <= 5){
-			this.strength = 10 * level;
-			this.gold = 5 * level;
-			this.currentHealth = 10 * level;
-			this.maxHealth = 10 * level;
-			this.level = level;
-			this.name = name;
-			this.currentExperience = 0;
-			this.maxExperience = 10 * level;
-			this.imagePath = imagePath;
-			this.damageType = damageType;
-		}
+
+		int modifier = level/5 + 1 * level;
 		
-		else if (level > 5 && level <= 10){
-			this.strength = 10 * level * 2;
-			this.gold = 5 * level;
-			this.currentHealth = 10 * level * 2;
-			this.maxHealth = 10 * level * 2;
-			this.level = level;
-			this.name = name;
-			this.currentExperience = 0;
-			this.maxExperience = 10 * level;
-			this.imagePath = imagePath;
-			this.damageType = damageType;
-		}
-		
-		else if (level > 10 && level <= 15){
-			this.strength = 10 * level * 3;
-			this.gold = 5 * level;
-			this.currentHealth = 10 * level * 3;
-			this.maxHealth = 10 * level * 3;
-			this.level = level;
-			this.name = name;
-			this.currentExperience = 0;
-			this.maxExperience = 10 * level;
-			this.imagePath = imagePath;
-			this.damageType = damageType;
-		}
-		
-		else if (level > 15 && level <= 20){
-			this.strength = 10 * level * 4;
-			this.gold = 5 * level;
-			this.currentHealth = 10 * level * 4;
-			this.maxHealth = 10 * level * 4;
-			this.level = level;
-			this.name = name;
-			this.currentExperience = 0;
-			this.maxExperience = 10 * level;
-			this.imagePath = imagePath;
-			this.damageType = damageType;
-		}
-		
-		else {
-			this.strength = 10 * level * 5;
-			this.gold = 5 * level;
-			this.currentHealth = 10 * level * 5;
-			this.maxHealth = 10 * level * 5;
-			this.level = level;
-			this.name = name;
-			this.currentExperience = 0;
-			this.maxExperience = 10 * level;
-			this.imagePath = imagePath;
-			this.damageType = damageType;
-		}
+		this.strength = 10 * modifier;
+		this.gold = 5 * modifier;
+		this.currentHealth = 10 * modifier;
+		this.maxHealth = 10 * modifier;
+		this.level = level;
+		this.name = name;
+		this.currentExperience = 0;
+		this.maxExperience = 10 * modifier;
+		this.imagePath = imagePath;
+		this.damageType = damageType;
 	}
-	
+
 	//save constructor
 	public Character(Integer[] charStats, ArrayList<Item> items) {
 		this.level = charStats[0];
