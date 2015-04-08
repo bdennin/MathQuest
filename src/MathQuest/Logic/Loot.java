@@ -33,6 +33,8 @@ private static String chanceToDrop(){
 		rarity = "blue";
 	else if (random > .48 && random <= .5)
 		rarity = "orange";
+	else if (random > .5 && random <= .5001)
+		rarity = "red";
 	else
 		rarity = "black";
 	return rarity;

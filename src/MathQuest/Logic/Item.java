@@ -30,12 +30,12 @@ public class Item {
 	 public Item(String[] strings, Integer[] numbers, boolean equipped){
 		 itemName = strings[0]; 
 		 color = strings[1];
-		  slot = strings[2];
-		  itemLevel = numbers[0];
-		  str = numbers[1];
-		  gold = numbers[2];
-		  vit = numbers[3];
-		  isEquipped = equipped;  
+		 slot = strings[2];
+		 itemLevel = numbers[0];
+		 str = numbers[1];
+		 gold = numbers[2];
+		 vit = numbers[3];
+		 isEquipped = equipped;  
 		 }
 	 
 	 public Item(int monsterLvl, String catagory){
@@ -50,13 +50,15 @@ public class Item {
 		 	setStatsEpic();
 		 else if (catagory == "orange")
 		 	setStatsLegendary();
+		 else if (catagory == "red")
+			 setStatsFalcor();
 		 else
 			 setStatsBasic();
 		 
 	 }
 	 
 
-	 public void disrobe(){
+	public void disrobe(){
 		 isEquipped = false;
 	 }
 	 public void equip(){
@@ -246,6 +248,15 @@ public class Item {
 		 
 	 }
 	 
+	 private void setStatsFalcor() {
+		slot = "Weapons";
+		itemName = "Falcor, the Master weapon of the GODS!";
+		color = "red";
+		vit = 100 * itemLevel;
+		str = 100 * itemLevel;
+		gold = 10000 * itemLevel;
+		
+	}
 
 	 
 ////////////////////////////////////////Basic Item Modifiers////////////////////////////////////////
