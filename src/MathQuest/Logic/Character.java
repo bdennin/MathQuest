@@ -446,7 +446,7 @@ public class Character {
 			String slot = equippable.getSlot();
 			if(slot.equals("Helmets")) {
 				if(this.equippedHelmet != null){
-					this.inventory.add(this.equippedHelmet);
+					//this.inventory.add(this.equippedHelmet);
 					this.removeItemStats(this.equippedHelmet);
 				}
 				this.setEquippedHelmet(equippable);
@@ -454,7 +454,7 @@ public class Character {
 			}
 			else if(slot.equals("Armor")) {
 				if(this.equippedMail != null){
-					this.inventory.add(this.equippedMail);
+					//this.inventory.add(this.equippedMail);
 					this.removeItemStats(this.equippedMail);
 				}
 				this.setEquippedMail(equippable);
@@ -462,7 +462,7 @@ public class Character {
 			}
 			else if(slot.equals("Boots")) {
 				if(this.equippedBoots != null){
-					this.inventory.add(this.equippedBoots);
+					//this.inventory.add(this.equippedBoots);
 					this.removeItemStats(this.equippedBoots);
 				}
 				this.setEquippedBoots(equippable);
@@ -470,7 +470,7 @@ public class Character {
 			}
 			else if(slot.equals("Gloves")) {
 				if(this.equippedGloves != null){
-					this.inventory.add(this.equippedGloves);
+					//this.inventory.add(this.equippedGloves);
 					this.removeItemStats(this.equippedGloves);
 				}
 				this.setEquippedGloves(equippable);
@@ -478,13 +478,13 @@ public class Character {
 			}
 			else {
 				if(this.equippedWeapon != null){
-					this.inventory.add(this.equippedWeapon);
+					//this.inventory.add(this.equippedWeapon);
 					this.removeItemStats(this.equippedWeapon);
 				}
 				this.setEquippedWeapon(equippable);
 				this.addItemStats(equippable);
 			}
-			this.inventory.remove(equippable);
+			//this.inventory.remove(equippable);
 		}
 	}
 }

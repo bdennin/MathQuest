@@ -524,7 +524,5 @@ public class Item {
 	public String getSlot(){
 		return slot;
 	}
-	
-	
 		
 }
