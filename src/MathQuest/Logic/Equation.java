@@ -127,7 +127,7 @@ public class Equation {
 		return stringConstructor.toString().trim();
 	}
 
-	public static int solveEquation(String equation) {
+	public static Integer solveEquation(String equation) {
 		Integer answer = null;
 		try {
 			answer = (Integer) ENGINE.eval(equation);
@@ -139,12 +139,12 @@ public class Equation {
 		return answer.intValue();
 	}
 
-	public static int generateWrongAnswer(String equation) {
+	public static Integer generateWrongAnswer(String equation) {
 		int wrongAnswer;
 		int correctAnswer = Equation.solveEquation(equation);
 
 		do {
-			wrongAnswer = (int)(correctAnswer + (20 * RANDOM.nextDouble() * .5));
+			wrongAnswer = (int)(correctAnswer + (20 * (RANDOM.nextDouble() - .5)));
 		}
 		while(correctAnswer == wrongAnswer);
 

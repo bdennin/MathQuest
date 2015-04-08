@@ -18,7 +18,6 @@ public class Character {
 	private int gold;
 	private String name;
 	private String imagePath;
-	private String greatestEnemySlain;
 	private double answeredCorrectly;
 	private double answeredIncorrectly;
 	private DamageType damageType;
@@ -40,7 +39,6 @@ public class Character {
 		this.level = 1;
 		this.imagePath = "char2.jpg";
 		this.name = "Hero#1";
-		this.greatestEnemySlain = "Goblin";
 		this.damageType = DamageType.SLASHING;
 		this.answeredCorrectly = 0;
 		this.answeredIncorrectly = 0;
@@ -87,11 +85,9 @@ public class Character {
 		this.maxHealth = vitality;
 		this.strength = 10 + 2 * level;
 		this.maxExperience = (int)(10 * Math.pow(2, level));
-
 		this.imagePath = "char2.jpg";
 		this.damageType = DamageType.SLASHING;
 		this.name = "Hero#1";
-		this.greatestEnemySlain = "Goblin";
 		this.answeredCorrectly = 0;
 		this.answeredIncorrectly = 0;
 		this.inventory = items;
@@ -267,17 +263,9 @@ public class Character {
 			this.currentHealth = this.maxHealth;
 	}
 
-	public void setGreatestEnemySlain(String creatureName, int creatureLevel) {
-		this.greatestEnemySlain = creatureName;
-	}
-
-	public String getGreatestEnemySlain() {
-		return this.greatestEnemySlain;
-	}
-
 	public double getQuestionAccuracy() {
 		if(this.answeredCorrectly == 0 && this.answeredIncorrectly == 0)
-			return 1;
+			return 0;
 		else 
 			return this.answeredCorrectly/(this.answeredCorrectly + this.answeredIncorrectly);
 	}
@@ -407,7 +395,6 @@ public class Character {
 					this.inventory.add(this.equippedHelmet);
 					this.removeItemStats(this.equippedHelmet);
 				}
-				//System.out.println("setting helm");
 				this.setEquippedHelmet(equippable);
 				this.addItemStats(equippable);
 			}
