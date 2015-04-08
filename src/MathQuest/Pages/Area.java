@@ -177,6 +177,10 @@ public abstract class Area extends JPanel {
 		optionsMenu.setVisible(isOptionsVisible);
 	}
 
+	public InventoryWindow getInventoryWindow() {
+		return this.inventoryWindow;
+	}
+	
 	public void addInventoryWindow(String inventoryHeader) {
 		if(null == inventoryWindow) {
 			inventoryWindow = new InventoryWindow(this, hero, inventoryHeader);

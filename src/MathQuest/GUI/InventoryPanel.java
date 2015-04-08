@@ -331,6 +331,13 @@ public class InventoryPanel extends JPanel {
 					World world = (World)frame;
 					world.loadJLabels();
 				}
+				if(null == frame.getInventoryWindow()) {
+					
+				}
+				else {
+					frame.removeInventoryWindow();
+				}
+				
 				Area.toggleInventory();
 				frame.renderBackground();
 			}

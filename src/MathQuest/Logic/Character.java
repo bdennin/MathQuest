@@ -28,6 +28,7 @@ public class Character {
 	private Item equippedGloves;
 	private ArrayList<Item> inventory;
 
+	//new character constructor
 	public Character() {
 		this.currentExperience = 0;
 		this.maxExperience = 10;
@@ -112,24 +113,8 @@ public class Character {
 			this.damageType = damageType;
 		}
 	}
-
-	// test constructor
-	public Character(int currentGold){
-		this.currentExperience = 0;
-		this.maxExperience = 10;
-		this.strength = 10;
-		this.vitality = 10;
-		this.gold = currentGold;
-		this.currentHealth = 1;
-		this.maxHealth = this.vitality;
-		this.level = 1;
-		this.imagePath = "char2.jpg";
-		this.name = "Hero#1";
-		this.damageType = DamageType.SLASHING;
-		this.answeredCorrectly = 0;
-		this.answeredIncorrectly = 0;
-	}
-
+	
+	//save constructor
 	public Character(Integer[] charStats, ArrayList<Item> items) {
 		this.level = charStats[0];
 		this.currentHealth = charStats[1];
@@ -145,24 +130,14 @@ public class Character {
 		this.answeredCorrectly = 0;
 		this.answeredIncorrectly = 0;
 		this.inventory = items;
-		//System.out.println("getting inventory size " + this.inventory.size());
 		for (int i = 0 ; i < this.inventory.size();i++){
 			Item el = this.inventory.get(i);
-			//System.out.println(el.toString() + " " + el.isEquipped()+" "+i);
 			if(el.isEquipped()){
 				equip(el);
-				i--;
-				//System.out.println("equipped " + el.toString());		
+				i--;	
 			}
 		}
 	}
-	/*switch(item.getSlot()){
-	case "Weapons": setEquippedWeapon(item);
-	case "Helmets": setEquippedHelmet(item);
-	case "Armor":setEquippedMail(item);
-	case "Gloves":setEquippedGloves(item);
-	case "Boots":setEquippedBoots(item);
-	}*/
 	public int getMaxExperience(){
 		return this.maxExperience;
 	}
@@ -405,7 +380,6 @@ public class Character {
 			items.add(this.equippedBoots);
 		if(null != this.equippedGloves){
 			items.add(this.equippedGloves);
-		//System.out.println("added"+items.size());
 		}
 		if(null != this.equippedHelmet)
 			items.add(this.equippedHelmet);
