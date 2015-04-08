@@ -42,7 +42,7 @@ public class Inn extends Area {
 		this.setBackground(Color.LIGHT_GRAY);
 		
 		this.combatLog = new LogPanel("Inn Log");
-		combatLog.addTextToScrollPane("You have entered Inn!");
+		combatLog.addTextToScrollPane("You have entered the Inn!");
 		combatLog.addTextToScrollPane("How can I help you?");
 		add(combatLog);
 		
@@ -118,11 +118,11 @@ public class Inn extends Area {
 	public void showRoomOptions(){
 		options.removeAll();
 
-		combatLog.addTextToScrollPane("Here is the prices for various servies:");
+		combatLog.addTextToScrollPane("Here are the prices for various services:");
 		combatLog.addTextToScrollPane("     Shower:" + hero.calculateCost("Shower",hero.getLevel())+ " gold for "+ hero.calculateIncrease("Shower")+" health unit");
 		combatLog.addTextToScrollPane("     Meal:" + hero.calculateCost("Meal",hero.getLevel())+ " gold for "+ hero.calculateIncrease("Meal")+" health unit");
-		combatLog.addTextToScrollPane("     Take a snap:" + hero.calculateCost("Sleep",hero.getLevel())+ " gold for "+ hero.calculateIncrease("Sleep")+" health unit");
-		combatLog.addTextToScrollPane("Please choose the room you want.");
+		combatLog.addTextToScrollPane("     Take a nap:" + hero.calculateCost("Sleep",hero.getLevel())+ " gold for "+ hero.calculateIncrease("Sleep")+" health unit");
+		combatLog.addTextToScrollPane("Please choose the service you want.");
 
 		JButton btnShower = new JButton(this.showerIcon);
 		btnShower.setBounds(3, 3, 88, 70);
@@ -134,10 +134,10 @@ public class Inn extends Area {
 					hero.payForInn("Shower");
 					reloadCharacterPanel();
 					reloadInventoryPanel(false);
-					combatLog.addTextToScrollPane("After shower, I feel much better now! Return to lobby.");
+					combatLog.addTextToScrollPane("After a shower, I feel much better now! Return to lobby.");
 				}
 				else
-					combatLog.addTextToScrollPane("Oops. I don't have enough money pay for the Shower! Return to lobby.");
+					combatLog.addTextToScrollPane("Oops. I don't have enough money pay for a Shower! Return to lobby.");
 				showOptions();
 			}
 		});
@@ -153,10 +153,10 @@ public class Inn extends Area {
 					hero.payForInn("Meal");
 					reloadCharacterPanel();
 					reloadInventoryPanel(false);
-					combatLog.addTextToScrollPane("After taking the meal, I feel much better now! Return to lobby.");
+					combatLog.addTextToScrollPane("After eating a meal, I feel much better now! Return to lobby.");
 				}
 				else 
-					combatLog.addTextToScrollPane("Oops. I don't have enough money pay for the Meal! Return to lobby.");
+					combatLog.addTextToScrollPane("Oops. I don't have enough money pay for a Meal! Return to lobby.");
 				showOptions();
 			}
 		});
@@ -172,10 +172,10 @@ public class Inn extends Area {
 					hero.payForInn("Sleep");
 					reloadCharacterPanel();
 					reloadInventoryPanel(false);
-					combatLog.addTextToScrollPane("After taking a snap, I feel much better now! Return to lobby.");
+					combatLog.addTextToScrollPane("After taking a nap, I feel much better now! Return to lobby.");
 				}
 				else 
-					combatLog.addTextToScrollPane("Oops. I don't have enough money pay for a rest room! Return to lobby.");
+					combatLog.addTextToScrollPane("Oops. I don't have enough money pay for a room to rest in! Return to lobby.");
 				showOptions();
 			}
 		});
