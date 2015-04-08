@@ -71,7 +71,11 @@ public class Combat extends Area {
 
 		this.combatLog = new LogPanel("Combat Log");
 		combatLog.addTextToScrollPane("You have entered combat!");
-		combatLog.addTextToScrollPane("It is your turn to act.");
+		
+		if(hero.getLevel() > creature.getLevel())
+			combatLog.addTextToScrollPane("It is your turn to act.");
+		else
+			this.monsterAttack();
 		add(combatLog);
 
 		this.renderBackground();
