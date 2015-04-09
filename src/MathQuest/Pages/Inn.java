@@ -26,7 +26,6 @@ public class Inn extends Area {
 	private static final long serialVersionUID = 1L;
 	private JTextArea scrollText;
 	final JPanel options = new JPanel();
-	//final JPanel panel = new JPanel();
 	static Character hero;
 	private LogPanel combatLog;
 	private ImageIcon potionIcon;
@@ -34,38 +33,27 @@ public class Inn extends Area {
 	private ImageIcon mealIcon;
 	private ImageIcon showerIcon;
 	private ImageIcon bedIcon;
+	private int potionCost;
 
 	public Inn(Character hero) {
 		super(hero, "innMusic.mp3");
 		this.hero = hero;
 		this.loadImages();
 		this.setBackground(Color.LIGHT_GRAY);
-		
+
 		this.combatLog = new LogPanel("Inn Log");
 		combatLog.addTextToScrollPane("You have entered the Inn!");
-		combatLog.addTextToScrollPane("How can I help you?");
+
+		potionCost = hero.getLevel() * hero.getLevel() * 5;
+
+		combatLog.addTextToScrollPane("You may buy potions for " + potionCost + " gold or rest.");
 		add(combatLog);
-		
-/*		panel.setBounds(150, 590, 724, 150);
-		add(panel);
-		panel.setLayout(null);
 
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(6, 6, 417, 138);
-		panel.add(scrollPane);
-
-		this.scrollText = new JTextArea();
-		this.scrollText.setEditable(false);
-		this.scrollText.setLineWrap(true);
-		this.scrollText.setWrapStyleWord(true);
-		scrollPane.setViewportView(scrollText);
-		this.combatLog.addTextToScrollPane("You have entered Inn!  How can I help you?\n");
-*/
 		options.setBounds(587, 612, 269, 77);
 		options.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
 		options.setLayout(null);
 		add(options);
-		
+
 		showOptions();
 
 		this.renderBackground();
@@ -80,26 +68,19 @@ public class Inn extends Area {
 		btnPotion.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				int gold = hero.getGold();
+
+				if(gold >= potionCost) {
+					hero.removeGold(potionCost);
+					hero.setPotions(hero.getPotions() + 1);
+					combatLog.addTextToScrollPane("You have purchased a potion.");
+				}
+				else {
+					combatLog.addTextToScrollPane("You don't have enough gold to buy a potion!");
+				}
 			}
 		});
 		options.add(btnPotion);
-
-		/*
-		  JPanel runPanel = new JPanel();
-		  runPanel.setBounds(194, 6, 88, 126);
-		  options.add(runPanel);
-		  runPanel.setLayout(new GridLayout(1, 0, 0, 0));
-
-		  JButton btnRunAway = new JButton("Look arround");
-		  btnRunAway.addActionListener(new ActionListener() {
-		   @Override
-		   public void actionPerformed(ActionEvent e) {
-		    MathQuest.switchToGameWorld();
-		   }
-
-		  });
-		  runPanel.add(btnRunAway);
-		 */
 
 		JButton btnRest = new JButton(this.restIcon);
 		btnRest.setBounds(90, 3, 88, 70);	
@@ -119,9 +100,9 @@ public class Inn extends Area {
 		options.removeAll();
 
 		combatLog.addTextToScrollPane("Here are the prices for various services:");
-		combatLog.addTextToScrollPane("     Shower:" + hero.calculateCost("Shower",hero.getLevel())+ " gold for "+ hero.calculateIncrease("Shower")+" health unit");
-		combatLog.addTextToScrollPane("     Meal:" + hero.calculateCost("Meal",hero.getLevel())+ " gold for "+ hero.calculateIncrease("Meal")+" health unit");
-		combatLog.addTextToScrollPane("     Take a nap:" + hero.calculateCost("Sleep",hero.getLevel())+ " gold for "+ hero.calculateIncrease("Sleep")+" health unit");
+		combatLog.addTextToScrollPane("     Shower:" + hero.calculateCost("Shower",hero.getLevel())+ " gold for "+ hero.calculateIncrease("Shower")+" health");
+		combatLog.addTextToScrollPane("     Meal:" + hero.calculateCost("Meal",hero.getLevel())+ " gold for "+ hero.calculateIncrease("Meal")+" health");
+		combatLog.addTextToScrollPane("     Take a nap:" + hero.calculateCost("Sleep",hero.getLevel())+ " gold for "+ hero.calculateIncrease("Sleep")+" health");
 		combatLog.addTextToScrollPane("Please choose the service you want.");
 
 		JButton btnShower = new JButton(this.showerIcon);
@@ -134,10 +115,10 @@ public class Inn extends Area {
 					hero.payForInn("Shower");
 					reloadCharacterPanel();
 					reloadInventoryPanel(false);
-					combatLog.addTextToScrollPane("After a shower, I feel much better now! Return to lobby.");
+					combatLog.addTextToScrollPane("You feel much better after showering!");
 				}
 				else
-					combatLog.addTextToScrollPane("Oops. I don't have enough money pay for a Shower! Return to lobby.");
+					combatLog.addTextToScrollPane("You don't have enough gold to shower!");
 				showOptions();
 			}
 		});
@@ -153,10 +134,10 @@ public class Inn extends Area {
 					hero.payForInn("Meal");
 					reloadCharacterPanel();
 					reloadInventoryPanel(false);
-					combatLog.addTextToScrollPane("After eating a meal, I feel much better now! Return to lobby.");
+					combatLog.addTextToScrollPane("You feel much better after eating!");
 				}
 				else 
-					combatLog.addTextToScrollPane("Oops. I don't have enough money pay for a Meal! Return to lobby.");
+					combatLog.addTextToScrollPane("You don't have enough gold to eat!");
 				showOptions();
 			}
 		});
@@ -172,10 +153,10 @@ public class Inn extends Area {
 					hero.payForInn("Sleep");
 					reloadCharacterPanel();
 					reloadInventoryPanel(false);
-					combatLog.addTextToScrollPane("After taking a nap, I feel much better now! Return to lobby.");
+					combatLog.addTextToScrollPane("You feel much better after taking a nap!");
 				}
 				else 
-					combatLog.addTextToScrollPane("Oops. I don't have enough money pay for a room to rest in! Return to lobby.");
+					combatLog.addTextToScrollPane("You don't have enough gold to rest!");
 				showOptions();
 			}
 		});

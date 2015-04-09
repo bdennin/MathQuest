@@ -36,6 +36,7 @@ public class Character {
 		this.strength = 10;
 		this.vitality = 10;
 		this.gold = 0;
+		this.potions = 0;
 		this.currentHealth = this.vitality;
 		this.maxHealth = this.vitality;
 		this.level = 1;
@@ -58,6 +59,7 @@ public class Character {
 		this.maxHealth = 10 * modifier;
 		this.level = level;
 		this.name = name;
+		this.potions = 0;
 		this.currentExperience = 0;
 		this.maxExperience = 10 * modifier;
 		this.imagePath = imagePath;
@@ -66,6 +68,7 @@ public class Character {
 
 	//save constructor
 	public Character(Integer[] charStats, ArrayList<Item> items) {
+		
 		this.level = charStats[0];
 		this.currentHealth = charStats[1];
 		this.currentExperience = charStats[2];
@@ -124,6 +127,10 @@ public class Character {
 		return this.currentHealth;
 	}
 
+	public void setCurrentHealth(int health) {
+		this.currentHealth = health;
+	}
+	
 	public int getLevel(){
 		return this.level;
 	}
@@ -150,6 +157,14 @@ public class Character {
 
 	public void setDamageType(DamageType damageType) {
 		this.damageType = damageType;
+	}
+	
+	public int getPotions() {
+		return this.potions;
+	}
+	
+	public void setPotions(int potions) {
+		this.potions = potions;
 	}
 
 	public void death() {

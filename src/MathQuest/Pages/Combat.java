@@ -154,6 +154,26 @@ public class Combat extends Area {
 
 		JButton usePotionButton = new JButton(this.potionIcon);
 		usePotionButton.setBounds(90, 3, 88, 70);		
+		usePotionButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int potions = hero.getPotions();
+				if(potions > 0) {
+					int currentHealth = hero.getCurrentHealth();
+					int maxHealth = hero.getMaxHealth();
+					int potionHealth = (int)(maxHealth * .3);
+					currentHealth = currentHealth + potionHealth;
+					if(currentHealth > maxHealth)
+						currentHealth = maxHealth;
+					hero.setPotions(potions - 1);
+					hero.setCurrentHealth(currentHealth);
+					combatLog.addTextToScrollPane("You drank a potion and gained " + potionHealth + " health!");	
+					monsterAttack();
+				}
+				else
+					combatLog.addTextToScrollPane("You don't have any potions to use!");	
+			}
+		});
 		combatOptions.add(usePotionButton);
 	}
 
