@@ -22,7 +22,7 @@ public class MathQuest
 	private static Character hero;
 	private static double volume;
 
-	public static boolean connectToDatabase = false;
+	public static boolean connectToDatabase = true;
 	public static boolean isMuted;
 
 	public MathQuest() {
@@ -90,6 +90,11 @@ public class MathQuest
 
 	public static void switchToAdminIndividualFormulaSetting(){
 		contentPane = new AdminIndividualFormulaSetting();
+		outerFrame.setContentPane(contentPane);
+	}
+	
+	public static void switchToRankList(){
+		contentPane = new RankList();
 		outerFrame.setContentPane(contentPane);
 	}
 

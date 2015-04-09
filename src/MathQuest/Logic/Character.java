@@ -261,7 +261,7 @@ public class Character {
 		if(this.answeredCorrectly == 0 && this.answeredIncorrectly == 0)
 			return 0;
 		else 
-			return this.answeredCorrectly/(this.answeredCorrectly + this.answeredIncorrectly);
+			return this.answeredCorrectly/(this.answeredCorrectly + this.answeredIncorrectly)*100;
 	}
 
 	public int getTotalQuestionsAnswered() {

@@ -5,6 +5,7 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.SwingConstants;
 
 import MathQuest.MathQuest;
 import MathQuest.Database.Database;
@@ -68,7 +69,8 @@ public class Login extends JPanel {
 		JLabel lblWelcomToMathquest = new JLabel("Welcome to MathQuest");
 		lblWelcomToMathquest.setFont(new Font("Simplified Arabic", Font.BOLD, 55));
 		lblWelcomToMathquest.setForeground(Color.DARK_GRAY);
-		lblWelcomToMathquest.setBounds(226, 106, 572, 156);
+		lblWelcomToMathquest.setHorizontalAlignment(SwingConstants.CENTER);
+		lblWelcomToMathquest.setBounds(75, 106, 873, 144);
 		add(lblWelcomToMathquest);
 
 	}

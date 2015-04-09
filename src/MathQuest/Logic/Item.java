@@ -527,7 +527,10 @@ public class Item {
 		}
 		return itemName;
 	}
-		
+	
+	public String getName(){
+		return itemName;
+	}
 	public String getColor(){
 		return color;
 	}

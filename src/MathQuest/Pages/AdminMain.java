@@ -32,9 +32,10 @@ public class AdminMain extends JPanel{
 		btnSave.setBounds(50, 166, 176, 31);
 		panel.add(btnSave);
 		
-		JButton btnCheckStudentsStatues = new JButton("Check Statues");
+		JButton btnCheckStudentsStatues = new JButton("Check Performances");
 		btnCheckStudentsStatues.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				MathQuest.switchToRankList();
 			}
 		});
 		btnCheckStudentsStatues.setBounds(50, 255, 176, 31);

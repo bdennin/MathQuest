@@ -348,7 +348,7 @@ public class Database
 			delete.executeUpdate();
 			for(Item item : items){
 				PreparedStatement inventory = con.prepareStatement("INSERT INTO Inventory (name, color, level, str, gold, vit, Login_userID, slot, isEquipped) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-				inventory.setString(1, item.toString());
+				inventory.setString(1, item.getName());
 				inventory.setString(2, item.getColor());
 				inventory.setString(8, item.getSlot());
 				inventory.setInt(3, item.getItemLvl());
@@ -365,6 +365,56 @@ public class Database
 		}
 	}
 
+	public static void saveAccuracy(int amount, double accuracy){
+		try{
+			PreparedStatement teacher = con.prepareStatement("SELECT teacherID FROM TeacherStudent WHERE studentID = ?");
+			teacher.setInt(1, getId());
+			ResultSet rs = teacher.executeQuery();
+			int teacherID = 23;
+			if(rs.next())
+				teacherID = rs.getInt(1);
+			PreparedStatement delete = con.prepareStatement("DELETE FROM StudentAccuracy WHERE studentID = ?");
+			delete.setInt(1, getId());
+			delete.executeUpdate();
+			PreparedStatement newRecord = con.prepareStatement("INSERT INTO StudentAccuracy (studentID, Amount, Accuracy, teacherID) VALUES (?, ?, ?, ?)");
+			newRecord.setInt(1, getId());
+			newRecord.setInt(2, amount);
+			newRecord.setDouble(3, accuracy);
+			newRecord.setInt(4,teacherID);
+			newRecord.executeUpdate();
+
+		}
+		catch (SQLException e){
+			System.out.println("Error from saveAccuracy: " + e.getMessage());
+		}
+	}
+	
+	public static String[][] getRank(){
+		try{
+			PreparedStatement select = con.prepareStatement("Select Login.lastname , Login.firstname,  StudentAccuracy.amount, StudentAccuracy.accuracy from StudentAccuracy left join Login on StudentAccuracy.studentID = Login.userID where StudentAccuracy.teacherID = ? order by Login.lastname DESC");
+			select.setInt(1, getId());
+			ResultSet res = select.executeQuery();
+			int numberRows=0;
+			if (res.last()) {
+				numberRows = res.getRow();
+			    // Move to beginning
+			    res.beforeFirst();
+			}
+			String[][] record = new String [numberRows][3]; 
+			while(res.next()){
+					record[numberRows-1][0] = res.getString(1) + ", " + res.getString(2);
+					record[numberRows-1][1] = ((Integer)res.getInt(3)).toString();
+					record[numberRows-1][2] = ((Integer)res.getInt(4)).toString();				
+				numberRows--;
+			}
+			return record;
+		}
+		catch(SQLException e){
+			System.out.println("Error from saveAccuracy: " + e.getMessage());
+			return null;
+		}
+	}
+	
 	public static void cleanUp(){
 		con = null;
 		cacheStats = null;
@@ -376,7 +426,7 @@ public class Database
 
 	public static void main(String[] args){
 		Database.getConnected();
-		Database.userID = 17;
+		Database.userID = 23;
 		//	  Database.getStatus();
 		//	  Integer [] status = {2,30,2,30};
 		//	  System.out.println(Database.setStatus(status));
@@ -395,6 +445,7 @@ public class Database
 		//		Item one = new Item();
 		//		items.add(one);
 		//		Database.saveInventory(items);
-
+		String [][] a = Database.getRank();
+		System.out.println(a.length);
 	}
 }
