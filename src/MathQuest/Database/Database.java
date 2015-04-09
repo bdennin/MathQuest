@@ -98,10 +98,10 @@ public class Database
 	public static void cacheStats(){
 		try{
 			Statement select = con.createStatement();
-			ResultSet res = select.executeQuery("SELECT * from Status where Login_userID =" + userID );
-			Integer[] status = new Integer[4];
+			ResultSet res = select.executeQuery("SELECT level, currentHealth, exp, gold, potion from Status where Login_userID =" + userID );
+			Integer[] status = new Integer[5];
 			if(res.next()){
-				for(int index = 1;index < 5; index++)
+				for(int index = 1;index < 6; index++)
 					status[index-1] = res.getInt(index);
 			}
 
@@ -373,6 +373,7 @@ public class Database
 			int teacherID = 23;
 			if(rs.next())
 				teacherID = rs.getInt(1);
+			System.out.println(teacherID);
 			PreparedStatement delete = con.prepareStatement("DELETE FROM StudentAccuracy WHERE studentID = ?");
 			delete.setInt(1, getId());
 			delete.executeUpdate();

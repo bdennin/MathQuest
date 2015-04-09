@@ -73,6 +73,7 @@ public class Character {
 		this.currentHealth = charStats[1];
 		this.currentExperience = charStats[2];
 		this.gold = charStats[3];
+		this.potions = charStats[4];
 		this.vitality = 10 * level;
 		this.maxHealth = vitality;
 		this.strength = 10 + 2 * level;
