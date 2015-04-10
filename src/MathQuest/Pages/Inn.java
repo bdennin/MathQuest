@@ -4,8 +4,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+
 import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
 
@@ -17,16 +16,14 @@ import MathQuest.GUI.OptionsPanel;
 import MathQuest.Logic.Character;
 
 import java.awt.Color;
-import java.awt.GridLayout;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Inn extends Area {
 
 	private static final long serialVersionUID = 1L;
-	private JTextArea scrollText;
 	final JPanel options = new JPanel();
-	static Character hero;
 	private LogPanel combatLog;
 	private ImageIcon potionIcon;
 	private ImageIcon restIcon;
@@ -37,7 +34,6 @@ public class Inn extends Area {
 
 	public Inn(Character hero) {
 		super(hero, "innMusic.mp3");
-		this.hero = hero;
 		this.loadImages();
 		this.setBackground(Color.LIGHT_GRAY);
 
@@ -46,7 +42,7 @@ public class Inn extends Area {
 
 		potionCost = hero.getLevel() * hero.getLevel() * 5;
 
-		combatLog.addTextToScrollPane("You may buy potions for " + potionCost + " gold or rest.");
+		combatLog.addTextToScrollPane("The price for potion today is " + potionCost + " gold.");
 		add(combatLog);
 
 		options.setBounds(587, 612, 269, 77);

@@ -19,8 +19,8 @@ public class Character {
 	private int potions;
 	private String name;
 	private String imagePath;
-	private double answeredCorrectly;
-	private double answeredIncorrectly;
+	private int answeredCorrectly;
+	private int answeredIncorrectly;
 	private DamageType damageType;
 	private Item equippedHelmet;
 	private Item equippedMail;
@@ -81,16 +81,18 @@ public class Character {
 		this.imagePath = "char2.jpg";
 		this.damageType = DamageType.SLASHING;
 		this.name = "Hero#1";
-		this.answeredCorrectly = 0;
-		this.answeredIncorrectly = 0;
+		this.answeredCorrectly = charStats[5];
+		System.out.println("Ansered correclty" + this.answeredCorrectly);
+		this.answeredIncorrectly = charStats[6];
 		this.inventory = items;
+		
 		for (int i = 0 ; i < this.inventory.size();i++){
 			Item el = this.inventory.get(i);
 			if(el.isEquipped()){
-				equip(el);
-				i--;	
+				equip(el);	
 			}
 		}
+		
 	}
 	public int getMaxExperience(){
 		return this.maxExperience;
@@ -201,11 +203,12 @@ public class Character {
 	}
 
 	public Integer[] getStatus() {
-		Integer[] stats = new Integer[4];	
+		Integer[] stats = new Integer[5];	
 		stats[0] = this.level;
 		stats[1] = this.currentHealth;
 		stats[2] = this.currentExperience;
 		stats[3] = this.gold;
+		stats[4] = this.getPotions();
 		return stats;
 	}
 
@@ -419,5 +422,13 @@ public class Character {
 			}
 			
 		}
+	}
+	
+	public int getAnsweredCorrectly(){
+		return answeredCorrectly;
+	}
+	
+	public int getAnsweredIncorrectly(){
+		return answeredIncorrectly;
 	}
 }

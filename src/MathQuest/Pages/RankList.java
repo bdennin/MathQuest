@@ -21,7 +21,7 @@ public class RankList extends JPanel {
 	private JTable rankTable;
 	private DefaultTableModel qtm;
 	public RankList(){
-		final String[] string ={"Name", "Asnwered Questions", "Accuracy"};
+		final String[] string ={"Name", "Correctly Asnwered", "Incorrectly Asnwered","Accuracy"};
 		this.setBounds(0, 0, 1024, 768);
 		this.setLayout(null);
 		Database.getConnected();

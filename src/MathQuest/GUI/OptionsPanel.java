@@ -87,7 +87,7 @@ public class OptionsPanel extends JPanel {
 					Database.getConnected();
 					Database.setStatus(hero.getStatus());
 					Database.saveInventory(hero.getInventory());
-					Database.saveAccuracy(hero.getTotalQuestionsAnswered(), hero.getQuestionAccuracy());
+					Database.saveAccuracy(hero.getAnsweredCorrectly(), hero.getAnsweredIncorrectly());
 					Database.close();
 				}
 				System.exit(0);

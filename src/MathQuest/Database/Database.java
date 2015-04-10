@@ -80,7 +80,7 @@ public class Database
 						cacheStats();
 						cacheStudents();
 						cacheFormulaSettings();
-						cacheInventory();
+						cacheInventory();			
 					}
 					else{
 						cacheStudents();
@@ -98,10 +98,10 @@ public class Database
 	public static void cacheStats(){
 		try{
 			Statement select = con.createStatement();
-			ResultSet res = select.executeQuery("SELECT level, currentHealth, exp, gold, potion from Status where Login_userID =" + userID );
-			Integer[] status = new Integer[5];
+			ResultSet res = select.executeQuery("SELECT Status.level, Status.currentHealth, Status.exp, Status.gold, Status.potion, StudentAccuracy.answeredCorrectly, StudentAccuracy.answeredIncorrectly from Status LEFT JOIN StudentAccuracy ON Status.Login_userID = StudentAccuracy.studentID WHERE Login_userID =" + userID );
+			Integer[] status = new Integer[7];
 			if(res.next()){
-				for(int index = 1;index < 6; index++)
+				for(int index = 1;index < 8; index++)
 					status[index-1] = res.getInt(index);
 			}
 
@@ -149,7 +149,7 @@ public class Database
 	 */
 	public static boolean setStatus(Integer[] status){
 		try{
-			PreparedStatement select = con.prepareStatement("UPDATE Status SET level = ?, currentHealth = ?, exp = ?, gold = ? where Login_userID = " + userID);
+			PreparedStatement select = con.prepareStatement("UPDATE Status SET level = ?, currentHealth = ?, exp = ?, gold = ?, potion = ? where Login_userID = " + userID);
 			int index = 1;
 			for(Integer item : status){
 				select.setInt(index, item);
@@ -365,25 +365,23 @@ public class Database
 		}
 	}
 
-	public static void saveAccuracy(int amount, double accuracy){
+	public static void saveAccuracy(int answeredCorrectly,int answeredIncorrectly){
 		try{
 			PreparedStatement teacher = con.prepareStatement("SELECT teacherID FROM TeacherStudent WHERE studentID = ?");
 			teacher.setInt(1, getId());
 			ResultSet rs = teacher.executeQuery();
-			int teacherID = 23;
+			int teacherID = 1;
 			if(rs.next())
 				teacherID = rs.getInt(1);
-			System.out.println(teacherID);
 			PreparedStatement delete = con.prepareStatement("DELETE FROM StudentAccuracy WHERE studentID = ?");
 			delete.setInt(1, getId());
 			delete.executeUpdate();
-			PreparedStatement newRecord = con.prepareStatement("INSERT INTO StudentAccuracy (studentID, Amount, Accuracy, teacherID) VALUES (?, ?, ?, ?)");
+			PreparedStatement newRecord = con.prepareStatement("INSERT INTO StudentAccuracy (studentID, answeredCorrectly, answeredIncorrectly, teacherID) VALUES (?, ?, ?, ?)");
 			newRecord.setInt(1, getId());
-			newRecord.setInt(2, amount);
-			newRecord.setDouble(3, accuracy);
+			newRecord.setInt(2, answeredCorrectly);
+			newRecord.setInt(3, answeredIncorrectly);
 			newRecord.setInt(4,teacherID);
 			newRecord.executeUpdate();
-
 		}
 		catch (SQLException e){
 			System.out.println("Error from saveAccuracy: " + e.getMessage());
@@ -392,7 +390,7 @@ public class Database
 	
 	public static String[][] getRank(){
 		try{
-			PreparedStatement select = con.prepareStatement("Select Login.lastname , Login.firstname,  StudentAccuracy.amount, StudentAccuracy.accuracy from StudentAccuracy left join Login on StudentAccuracy.studentID = Login.userID where StudentAccuracy.teacherID = ? order by Login.lastname DESC");
+			PreparedStatement select = con.prepareStatement("Select Login.lastname , Login.firstname,  StudentAccuracy.answeredCorrectly, StudentAccuracy.answeredIncorrectly from StudentAccuracy left join Login on StudentAccuracy.studentID = Login.userID where StudentAccuracy.teacherID = ? order by Login.lastname DESC");
 			select.setInt(1, getId());
 			ResultSet res = select.executeQuery();
 			int numberRows=0;
@@ -401,11 +399,14 @@ public class Database
 			    // Move to beginning
 			    res.beforeFirst();
 			}
-			String[][] record = new String [numberRows][3]; 
+			String[][] record = new String [numberRows][4]; 
 			while(res.next()){
+				int answeredCorrectly = res.getInt(3);
+				int answeredIncorrectly = res.getInt(4);
 					record[numberRows-1][0] = res.getString(1) + ", " + res.getString(2);
-					record[numberRows-1][1] = ((Integer)res.getInt(3)).toString();
-					record[numberRows-1][2] = ((Integer)res.getInt(4)).toString();				
+					record[numberRows-1][1] = ((Integer)answeredCorrectly).toString();
+					record[numberRows-1][2] = ((Integer)answeredIncorrectly).toString();		
+					record[numberRows-1][3] = ((Integer)(answeredCorrectly/(answeredCorrectly+answeredIncorrectly))).toString();
 				numberRows--;
 			}
 			return record;
@@ -424,7 +425,7 @@ public class Database
 		cacheFormulaSettings = new ArrayList<String[]>();
 	}
 
-
+/*
 	public static void main(String[] args){
 		Database.getConnected();
 		Database.userID = 23;
@@ -448,5 +449,5 @@ public class Database
 		//		Database.saveInventory(items);
 		String [][] a = Database.getRank();
 		System.out.println(a.length);
-	}
+	}*/
 }
