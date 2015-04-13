@@ -43,8 +43,8 @@ public class Blacksmith extends Area {
 	private static final Character character = new Character();
 	
 	public Blacksmith(final Character hero) {
-//		super(hero, "blacksmithMusic.mp3");
-		super(character, null);
+		super(hero, "blacksmithMusic.mp3");
+//		super(character, null);
 		this.loadImages();
 		this.loadOptionsPanel();
 		
