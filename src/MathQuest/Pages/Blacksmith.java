@@ -385,7 +385,7 @@ public class Blacksmith extends Area {
 		try {           
 			this.background = new ImageIcon(ImageIO.read(new File("insideBlacksmith.jpg")));
 			this.buyButtonIcon = new ImageIcon(ImageIO.read(new File("attack.png")));
-			this.sellButtonIcon = new ImageIcon(ImageIO.read(new File("sellcoins.png")));
+			this.sellButtonIcon = new ImageIcon(ImageIO.read(new File("sellingcoins.png")));
 			this.enhanceButtonIcon = new ImageIcon(ImageIO.read(new File("anvil.png")));
 			
 		} catch (IOException e) {
