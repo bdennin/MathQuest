@@ -2,6 +2,8 @@ package MathQuest;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -34,14 +36,61 @@ public class MathQuest
 		volume = 1;
 		outerFrame = new JFrame("MathQuest");
 		outerFrame.setSize(FRAME_DIMENSIONS);
-		outerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		outerFrame.addWindowListener(new WindowListener() {
+
+			@Override
+			public void windowOpened(WindowEvent e) {
+				
+			}
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+				quitAndSave();
+			}
+
+			@Override
+			public void windowClosed(WindowEvent e) {
+			
+			}
+
+			@Override
+			public void windowIconified(WindowEvent e) {
+				
+			}
+
+			@Override
+			public void windowDeiconified(WindowEvent e) {
+				
+			}
+
+			@Override
+			public void windowActivated(WindowEvent e) {
+				
+			}
+
+			@Override
+			public void windowDeactivated(WindowEvent e) {
+				
+			}
+		});
 		outerFrame.setLocationRelativeTo(null);
 		outerFrame.setResizable(false);
 		contentPane = new Login();
 		outerFrame.setContentPane(contentPane);
 		outerFrame.setVisible(true);
 	}
-
+	
+	public static void quitAndSave() {
+		if(MathQuest.connectToDatabase){
+			Database.getConnected();
+			Database.setStatus(hero.getStatus());
+			Database.saveInventory(hero.getInventory());
+			Database.saveAccuracy(hero.getAnsweredCorrectly(), hero.getAnsweredIncorrectly());
+			Database.close();
+		}
+		System.exit(0);
+	}
+	
 	public static Dimension getDimensions() {
 		return FRAME_DIMENSIONS;
 	}
