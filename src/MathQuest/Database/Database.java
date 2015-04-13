@@ -406,7 +406,7 @@ public class Database
 					record[numberRows-1][0] = res.getString(1) + ", " + res.getString(2);
 					record[numberRows-1][1] = ((Integer)answeredCorrectly).toString();
 					record[numberRows-1][2] = ((Integer)answeredIncorrectly).toString();		
-					record[numberRows-1][3] = ((Integer)(answeredCorrectly/(answeredCorrectly+answeredIncorrectly))).toString();
+					record[numberRows-1][3] = ((Long)Math.round(answeredCorrectly*100.0/(answeredCorrectly+answeredIncorrectly))).toString() + "%";
 				numberRows--;
 			}
 			return record;

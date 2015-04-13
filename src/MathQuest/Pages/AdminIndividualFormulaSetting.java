@@ -7,10 +7,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 import MathQuest.MathQuest;
 import MathQuest.Database.Database;
@@ -165,6 +168,7 @@ public class AdminIndividualFormulaSetting extends JPanel {
 	       }
 	     });
 		monsterLevel.setBounds(178, 85, 101, 28);
+		monsterLevel.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
 		EquationSettingPanel.add(monsterLevel);
 				
 		JButton btnSave = new JButton("Save");
@@ -211,7 +215,7 @@ public class AdminIndividualFormulaSetting extends JPanel {
 		currentSettingPanel.setBounds(331, 179, 347, 64);
 		currentSettingPanel.setLayout(null);
 		add(currentSettingPanel);
-		
+		/*
 		currentSettingTable = new JTable();
 		currentSettingTable.setBorder(new LineBorder(new Color(0, 0, 0)));
 		currentSettingTable.setBounds(178, 35, 159, 14);
@@ -221,10 +225,21 @@ public class AdminIndividualFormulaSetting extends JPanel {
 		lblNewLabel_1.setFont(new Font("SimSun", Font.PLAIN, 15));
 		lblNewLabel_1.setBounds(178, 11, 159, 25);
 		currentSettingPanel.add(lblNewLabel_1);
+		*/
+		
+		currentSettingTable = new JTable();
+		
+		JTableHeader header = currentSettingTable.getTableHeader();
+		header.setBackground(Color.lightGray);
+		
+		JScrollPane pane = new JScrollPane(currentSettingTable);
+		pane.setBounds(170, 10, 167, 46);
+		pane.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
+		currentSettingPanel.add(pane);
 		
 		JLabel lblCurrentSettings = new JLabel("Current Settings");
 		lblCurrentSettings.setFont(new Font("Simplified Arabic", Font.BOLD, 20));
-		lblCurrentSettings.setBounds(0, 30, 160, 24);
+		lblCurrentSettings.setBounds(10, 25, 160, 24);
 		currentSettingPanel.add(lblCurrentSettings);
 }
 }
