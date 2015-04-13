@@ -33,7 +33,7 @@ public class Blacksmith extends Area {
 	private static final long serialVersionUID = 1L;
 	private LogPanel scrollPane;
 	final JPanel buttonPanel = new JPanel();
-	final JPanel buyPanel, salePanel, sellPanel, enhancePanel, armorPanel, weaponPanel;
+	final JPanel itemsPanel, buyPanel, sellPanel, enhancePanel, itemPanel1, itemPanel2;
 	private ImageIcon buyButtonIcon, sellButtonIcon, enhanceButtonIcon;
 	
 	private JComboBox inventoryComboBox, enhanceComboBox;
@@ -49,7 +49,10 @@ public class Blacksmith extends Area {
 		this.loadOptionsPanel();
 		
 		int heroLevel = hero.getLevel();
-		
+
+//////////////////////////////////////////////
+// generates Items the blacksmith will sell //
+//////////////////////////////////////////////
 		if(heroLevel < 5){
 			item1 = new Item(heroLevel, "gray");
 			item2 = new Item(heroLevel, "gray");
@@ -66,22 +69,49 @@ public class Blacksmith extends Area {
 			item1 = new Item(heroLevel, "green");
 			item2 = new Item(heroLevel, "blue");
 		}
-		
-		
+//////////////////////////////////////////		
+// Panel for buy, sell, enhance buttons //
+//////////////////////////////////////////
 		buttonPanel.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
 		buttonPanel.setBounds(587, 612, 269, 77);
 		add(buttonPanel);
 		buttonPanel.setLayout(null);
 		
+		//Buy Button
 		JButton btnBuyItems = new JButton(this.buyButtonIcon);
 		btnBuyItems.setBounds(3, 3, 88, 70);
 		buttonPanel.add(btnBuyItems);
+		btnBuyItems.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(buyPanel.isVisible()){
+					scrollPane.addTextToScrollPane("Ok\n");
+					buyPanel.setVisible(false);	
+				}
+				else{
+					scrollPane.addTextToScrollPane("I think you could handle these.\n");
+					buyPanel.setVisible(true);
+				}
+			}
+		});
 		
-		
+		//Sell Button
 		JButton btnSellItems = new JButton(this.sellButtonIcon);
 		btnSellItems.setBounds(90, 3, 88, 70);
 		buttonPanel.add(btnSellItems);
+		btnSellItems.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(sellPanel.isVisible()){
+					scrollPane.addTextToScrollPane("Ok.\n");
+					sellPanel.setVisible(false);
+				}
+				else{
+					scrollPane.addTextToScrollPane("Let's see what you have.\n");
+					sellPanel.setVisible(true);
+				}
+			}
+		});
 		
+		//Enhance Button
 		JButton btnImproveItems = new JButton(this.enhanceButtonIcon);
 		btnImproveItems.setBounds(177, 3, 88, 70);
 		buttonPanel.add(btnImproveItems);
@@ -97,69 +127,41 @@ public class Blacksmith extends Area {
 			}
 		});
 		
-		
-		btnSellItems.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(sellPanel.isVisible()){
-					scrollPane.addTextToScrollPane("Ok.\n");
-					sellPanel.setVisible(false);
-				}
-				else{
-					scrollPane.addTextToScrollPane("Let's see what you have.\n");
-					sellPanel.setVisible(true);
-				}
-			}
-		});
-		
-		
-		btnBuyItems.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(salePanel.isVisible()){
-					scrollPane.addTextToScrollPane("Ok\n");
-					salePanel.setVisible(false);	
-				}
-				else{
-					scrollPane.addTextToScrollPane("I think you could handle these.\n");
-					salePanel.setVisible(true);
-				}
-			}
-		});
-		
+
+//Blacksmith text panel
 		scrollPane = new LogPanel("Blacksmith Log");
 		add(scrollPane);
 		this.scrollPane.addTextToScrollPane("Hello! I am the town Blacksmith. How can I help you?\n");
-		
+//////////////////////////
+// Sell Inventory Panel //
+//////////////////////////
 		sellPanel = new JPanel();
 		sellPanel.setBackground(Color.LIGHT_GRAY);
 		sellPanel.setBounds(735, 260, 245, 116);
 		sellPanel.setVisible(false);
 		add(sellPanel);
 		sellPanel.setLayout(null);
+		
+		//panel for sell button and combo box
+		JPanel sellOptionsPanel = new JPanel();
+		sellOptionsPanel.setBounds(1, 29, 244, 87);
+		sellPanel.add(sellOptionsPanel);
+		sellOptionsPanel.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
+		sellOptionsPanel.setLayout(null);
+		
+		//sell combo box
+		inventoryComboBox = new JComboBox<Item>();
+		inventoryComboBox.setBounds(6, 6, 233, 27);
 		for(Item el : hero.getInventory())
 			if(!el.isEquipped()){
 				inventoryComboBox.addItem(el);
 			}
+		sellOptionsPanel.add(inventoryComboBox);
 		
-		JPanel sellButtonPanel = new JPanel();
-		sellButtonPanel.setBounds(1, 29, 244, 87);
-		sellPanel.add(sellButtonPanel);
-		sellButtonPanel.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
-		sellButtonPanel.setLayout(null);
-		
-		inventoryComboBox = new JComboBox<Item>();
-		inventoryComboBox.setBounds(6, 6, 233, 27);
-		sellButtonPanel.add(inventoryComboBox);
-		
+		//sell button
 		JButton sellBtn = new JButton("Sell");
 		sellBtn.setBounds(56, 45, 117, 35);
-		sellButtonPanel.add(sellBtn);
-		
-		JLabel sellLabel = new JLabel("Sell Items");
-		sellLabel.setBackground(Color.LIGHT_GRAY);
-		sellLabel.setBounds(1, 0, 244, 29);
-		sellPanel.add(sellLabel);
-		sellLabel.setFont(new Font("Copperplate Gothic Bold", Font.PLAIN, 20));
-		sellLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		sellOptionsPanel.add(sellBtn);
 		sellBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Item i = (Item)inventoryComboBox.getSelectedItem();
@@ -170,6 +172,17 @@ public class Blacksmith extends Area {
 			}
 		});
 		
+		//Label for name of panel
+		JLabel sellLabel = new JLabel("Sell Items");
+		sellLabel.setBackground(Color.LIGHT_GRAY);
+		sellLabel.setBounds(1, 0, 244, 29);
+		sellPanel.add(sellLabel);
+		sellLabel.setFont(new Font("Copperplate Gothic Bold", Font.PLAIN, 20));
+		sellLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+/////////////////////////
+// Enhance Items Panel //
+/////////////////////////
 		enhancePanel = new JPanel();
 		enhancePanel.setBackground(Color.LIGHT_GRAY);
 		enhancePanel.setBounds(735, 422, 245, 105);
@@ -177,52 +190,69 @@ public class Blacksmith extends Area {
 		add(enhancePanel);
 		enhancePanel.setLayout(null);
 		
-		JPanel panel_4 = new JPanel();
-		panel_4.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
-		panel_4.setBounds(0, 24, 245, 80);
-		enhancePanel.add(panel_4);
-		panel_4.setLayout(null);
+		//Panel for enhance button and enhance combo box
+		JPanel enhanceOptionsPanel = new JPanel();
+		enhanceOptionsPanel.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
+		enhanceOptionsPanel.setBounds(0, 24, 245, 80);
+		enhancePanel.add(enhanceOptionsPanel);
+		enhanceOptionsPanel.setLayout(null);
 		
+		//combo box that loads equipped inventory to enhance
 		enhanceComboBox = new JComboBox();
 		enhanceComboBox.setBounds(6, 6, 233, 27);
-		panel_4.add(enhanceComboBox);
+		enhanceOptionsPanel.add(enhanceComboBox);
+		for(Item el : hero.getInventory())
+			if(el.isEquipped()){
+				enhanceComboBox.addItem(el);
+			}
 		
+		//Button to enhance items if character has enough gold
 		JButton enhancheBtn = new JButton("Improve");
+		enhancheBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//if hero has enough gold, item enhancement + 1
+			}
+		});
 		enhancheBtn.setBounds(51, 39, 117, 35);
-		panel_4.add(enhancheBtn);
+		enhanceOptionsPanel.add(enhancheBtn);
 		
+		//Label for title of enhance panel
 		JLabel lblNewLabel_2 = new JLabel("Improve Items");
 		lblNewLabel_2.setBounds(0, 0, 245, 25);
 		enhancePanel.add(lblNewLabel_2);
 		lblNewLabel_2.setFont(new Font("Copperplate Gothic Bold", Font.PLAIN, 20));
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		for(Item el : hero.getInventory())
-			enhanceComboBox.addItem(el);
 		
-		salePanel = new JPanel();
-		salePanel.setBackground(Color.LIGHT_GRAY);
-		salePanel.setBounds(206, 225, 457, 248);
-		salePanel.setVisible(false);
-		add(salePanel);
-		salePanel.setLayout(null);
-		
+////////////////////////////////////		
+//Panel for items blacksmith sells//
+////////////////////////////////////
 		buyPanel = new JPanel();
-		buyPanel.setBounds(0, 36, 456, 212);
-		salePanel.add(buyPanel);
-		buyPanel.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
+		buyPanel.setBackground(Color.LIGHT_GRAY);
+		buyPanel.setBounds(206, 225, 457, 248);
+		buyPanel.setVisible(false);
+		add(buyPanel);
 		buyPanel.setLayout(null);
 		
-		armorPanel = new JPanel();
-		armorPanel.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
-		armorPanel.setBounds(6, 6, 198, 198);
-		buyPanel.add(armorPanel);
-		armorPanel.setLayout(null);
+		//panel for items on sale
+		itemsPanel = new JPanel();
+		itemsPanel.setBounds(0, 36, 456, 212);
+		buyPanel.add(itemsPanel);
+		itemsPanel.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
+		itemsPanel.setLayout(null);
 		
+		//panel for first item's labels and buy button
+		itemPanel1 = new JPanel();
+		itemPanel1.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
+		itemPanel1.setBounds(6, 6, 198, 198);
+		itemsPanel.add(itemPanel1);
+		itemPanel1.setLayout(null);
+		
+		//Item 1 name Label
 		JLabel armorItemLabel = new JLabel(item1.toString());
 		armorItemLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 15));
 		armorItemLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		armorItemLabel.setBounds(6, 6, 186, 25);
-		armorPanel.add(armorItemLabel);
+		itemPanel1.add(armorItemLabel);
 		if(item1.getColor().equalsIgnoreCase("gray")){
 			armorItemLabel.setForeground(Color.black);
 		}
@@ -232,28 +262,32 @@ public class Blacksmith extends Area {
 		else 
 			armorItemLabel.setForeground(Color.blue);
 		
+		//Labels to display item 1 vitality, strength and price
 		JLabel lblVit = new JLabel("Vitality:");
 		lblVit.setBounds(6, 135, 61, 16);
-		armorPanel.add(lblVit);
+		itemPanel1.add(lblVit);
+		JLabel vitLabel = new JLabel("" + item1.getItemVit());
+		vitLabel.setBounds(131, 135, 61, 16);
+		itemPanel1.add(vitLabel);
 		
 		JLabel lblStrength = new JLabel("Strength:");
 		lblStrength.setBounds(6, 112, 61, 16);
-		armorPanel.add(lblStrength);
-		
+		itemPanel1.add(lblStrength);
 		JLabel strNumber = new JLabel("" + item1.getItemStr());
 		strNumber.setBounds(131, 112, 61, 16);
-		armorPanel.add(strNumber);
+		itemPanel1.add(strNumber);
 		
 		JLabel armorPrice = new JLabel("" + item1.getItemGold() + "g");
 		armorPrice.setHorizontalAlignment(SwingConstants.CENTER);
 		armorPrice.setBounds(65, 148, 61, 16);
-		armorPanel.add(armorPrice);
+		itemPanel1.add(armorPrice);
 		
+		//button to buy item 1
 		JButton btnBuyArmor = new JButton("Buy");
 		btnBuyArmor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(hero.getGold() >= item1.getItemGold()){
-					armorPanel.setVisible(false);
+					itemPanel1.setVisible(false);
 					hero.addToInventory(item1);
 					hero.removeGold(item1.getItemGold());
 					inventoryComboBox.addItem(item1);
@@ -264,23 +298,22 @@ public class Blacksmith extends Area {
 			}
 		});
 		btnBuyArmor.setBounds(39, 163, 117, 29);
-		armorPanel.add(btnBuyArmor);
+		itemPanel1.add(btnBuyArmor);
 		
-		JLabel vitLabel = new JLabel("" + item1.getItemVit());
-		vitLabel.setBounds(131, 135, 61, 16);
-		armorPanel.add(vitLabel);
 		
-		weaponPanel = new JPanel();
-		weaponPanel.setLayout(null);
-		weaponPanel.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
-		weaponPanel.setBounds(252, 6, 198, 198);
-		buyPanel.add(weaponPanel);
+		//panel for item 2's stats and buy button
+		itemPanel2 = new JPanel();
+		itemPanel2.setLayout(null);
+		itemPanel2.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
+		itemPanel2.setBounds(252, 6, 198, 198);
+		itemsPanel.add(itemPanel2);
 		
+		//Label for item 2 name
 		JLabel weaponItemLabel = new JLabel(item2.toString());
 		weaponItemLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		weaponItemLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 15));
 		weaponItemLabel.setBounds(6, 6, 186, 25);
-		weaponPanel.add(weaponItemLabel);
+		itemPanel2.add(weaponItemLabel);
 		if(item2.getColor().equalsIgnoreCase("gray")){
 			weaponItemLabel.setForeground(Color.black);
 		}
@@ -291,28 +324,32 @@ public class Blacksmith extends Area {
 			weaponItemLabel.setForeground(Color.green);
 		}
 		
+		//item 2 vitality, strength, and price
 		JLabel lblWeaponStrength = new JLabel("Strength:");
 		lblWeaponStrength.setBounds(6, 113, 61, 16);
-		weaponPanel.add(lblWeaponStrength);
+		itemPanel2.add(lblWeaponStrength);
+		JLabel weaponStrNumber = new JLabel("" + item2.getItemStr());
+		weaponStrNumber.setBounds(131, 113, 61, 16);
+		itemPanel2.add(weaponStrNumber);
 		
 		JLabel lblWeaponVit = new JLabel("Vitality:");
 		lblWeaponVit.setBounds(6, 133, 61, 16);
-		weaponPanel.add(lblWeaponVit);
-		
-		JLabel weaponStrNumber = new JLabel("" + item2.getItemStr());
-		weaponStrNumber.setBounds(131, 113, 61, 16);
-		weaponPanel.add(weaponStrNumber);
+		itemPanel2.add(lblWeaponVit);
+		JLabel weaponVitLabel = new JLabel("" + item2.getItemVit());
+		weaponVitLabel.setBounds(131, 133, 61, 16);
+		itemPanel2.add(weaponVitLabel);
 		
 		JLabel weaponPrice = new JLabel("" + item2.getItemGold() + "g");
 		weaponPrice.setHorizontalAlignment(SwingConstants.CENTER);
 		weaponPrice.setBounds(65, 148, 61, 16);
-		weaponPanel.add(weaponPrice);
+		itemPanel2.add(weaponPrice);
 		
+		//Button to buy item 2
 		JButton btnBuyWeapon = new JButton("Buy");
 		btnBuyWeapon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(hero.getGold() >= item2.getItemGold()){
-					weaponPanel.setVisible(false);
+					itemPanel2.setVisible(false);
 					hero.addToInventory(item2);
 					hero.removeGold(item2.getItemGold());
 					inventoryComboBox.addItem(item2);
@@ -323,21 +360,18 @@ public class Blacksmith extends Area {
 			}
 		});
 		btnBuyWeapon.setBounds(40, 163, 117, 29);
-		weaponPanel.add(btnBuyWeapon);
+		itemPanel2.add(btnBuyWeapon);
 		
-		JLabel weaponVitLabel = new JLabel("" + item2.getItemVit());
-		weaponVitLabel.setBounds(131, 133, 61, 16);
-		weaponPanel.add(weaponVitLabel);
-		
+		//Label for buy panel title
 		JLabel lblNewLabel = new JLabel("Items for Sale");
 		lblNewLabel.setBackground(Color.LIGHT_GRAY);
 		lblNewLabel.setBounds(0, 0, 456, 39);
-		salePanel.add(lblNewLabel);
+		buyPanel.add(lblNewLabel);
 		lblNewLabel.setFont(new Font("Copperplate Gothic Bold", Font.PLAIN, 23));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 			
 
-			this.renderBackground();
+		this.renderBackground();
 	}
 	
 	
