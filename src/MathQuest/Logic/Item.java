@@ -254,7 +254,7 @@ public class Item {
 		color = "red";
 		vit = 100 * itemLevel;
 		str = 100 * itemLevel;
-		gold = 10000 * itemLevel;
+		gold = 1000 * itemLevel;
 		
 	}
 
