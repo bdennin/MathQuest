@@ -51,7 +51,7 @@ public class Character {
 	//monster constructor
 	public Character(int level, String name, String imagePath, DamageType damageType) {
 
-		int modifier = level/5 + 1 * level;
+		int modifier = (level/5 + 1) * level;
 		
 		this.strength = 10 * modifier;
 		this.gold = 5 * modifier;
