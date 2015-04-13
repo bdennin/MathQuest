@@ -1,5 +1,5 @@
 package MathQuest;
-
+//This is a comment
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.WindowEvent;
