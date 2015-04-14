@@ -293,7 +293,7 @@ public class KillingFields extends Area {
 		btnEnchantress.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(8, "Enchantress", "Enchantress Portrait.png", DamageType.MAGICAL);
+				creature = new Character(7, "Enchantress", "Enchantress Portrait.png", DamageType.MAGICAL);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
@@ -322,7 +322,7 @@ public class KillingFields extends Area {
 		btnHellhound.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(7, "Hellhound", "Hellhound Portrait.png", DamageType.CRUSHING);
+				creature = new Character(8, "Hellhound", "Hellhound Portrait.png", DamageType.CRUSHING);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
