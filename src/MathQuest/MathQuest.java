@@ -40,7 +40,7 @@ public class MathQuest
 
 			@Override
 			public void windowOpened(WindowEvent e) {
-				
+
 			}
 
 			@Override
@@ -50,27 +50,27 @@ public class MathQuest
 
 			@Override
 			public void windowClosed(WindowEvent e) {
-			
+
 			}
 
 			@Override
 			public void windowIconified(WindowEvent e) {
-				
+
 			}
 
 			@Override
 			public void windowDeiconified(WindowEvent e) {
-				
+
 			}
 
 			@Override
 			public void windowActivated(WindowEvent e) {
-				
+
 			}
 
 			@Override
 			public void windowDeactivated(WindowEvent e) {
-				
+
 			}
 		});
 		outerFrame.setLocationRelativeTo(null);
@@ -79,18 +79,20 @@ public class MathQuest
 		outerFrame.setContentPane(contentPane);
 		outerFrame.setVisible(true);
 	}
-	
+
 	public static void quitAndSave() {
 		if(MathQuest.connectToDatabase){
-			Database.getConnected();
-			Database.setStatus(hero.getStatus());
-			Database.saveInventory(hero.getInventory());
-			Database.saveAccuracy(hero.getAnsweredCorrectly(), hero.getAnsweredIncorrectly());
-			Database.close();
+			if (Database.getType().equals("Student")){
+				Database.getConnected();
+				Database.setStatus(hero.getStatus());
+				Database.saveInventory(hero.getInventory());
+				Database.saveAccuracy(hero.getAnsweredCorrectly(), hero.getAnsweredIncorrectly());
+				Database.close();
+			}
 		}
 		System.exit(0);
 	}
-	
+
 	public static Dimension getDimensions() {
 		return FRAME_DIMENSIONS;
 	}
@@ -141,7 +143,7 @@ public class MathQuest
 		contentPane = new AdminIndividualFormulaSetting();
 		outerFrame.setContentPane(contentPane);
 	}
-	
+
 	public static void switchToRankList(){
 		contentPane = new RankList();
 		outerFrame.setContentPane(contentPane);

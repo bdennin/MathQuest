@@ -331,6 +331,8 @@ public class Database
 					cacheinventory.add(new Item(strings, numbers,isEquipped));
 					//System.out.println("count");
 				}
+			else
+				cacheinventory = null;
 		}
 		catch (SQLException e){
 			System.out.println("Error from cacheInventory: " + e.getMessage());
@@ -342,7 +344,7 @@ public class Database
 	}
 
 	public static void saveInventory(ArrayList<Item> items){
-		try{
+		try{if(items != null){
 			PreparedStatement delete = con.prepareStatement("DELETE FROM Inventory WHERE Login_userID = ?");
 			delete.setInt(1, getId());
 			delete.executeUpdate();
@@ -359,6 +361,7 @@ public class Database
 				inventory.setBoolean(9, item.isEquipped());
 				inventory.executeUpdate();
 			}
+		}
 		}
 		catch (SQLException e){
 			System.out.println("Error from saveInventory: " + e.getMessage());
