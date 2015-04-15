@@ -543,9 +543,8 @@ public class Item {
 	//enhance for blacksmith
 	public void enhanceItem(){
 		enh += 1;
-		itemName = "" + enh;
-		vit = (int)(vit + .01);
-		str = (int)(str + .01);
+		vit = vit + enh;
+		str = str + enh;
 	}
 		
 }
