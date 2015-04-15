@@ -27,7 +27,7 @@ public class World extends Area {
 	
 	public World(Character hero) {
 
-		super(hero, "townMusic.mp3");
+		super(hero, "src/MathQuest/Files/townMusic.mp3");
 		this.loadImages();
 		this.loadJLabels();
 		this.renderBackground();
@@ -136,10 +136,10 @@ public class World extends Area {
 	
 	public void loadImages() {
 		try {           
-			this.background = new ImageIcon(ImageIO.read(new File("world.jpg")));
-			this.backgroundInnSelected = new ImageIcon(ImageIO.read(new File("worldInnSelected.jpg")));
-			this.backgroundBlacksmithSelected = new ImageIcon(ImageIO.read(new File("worldBlacksmithSelected.jpg")));
-			this.backgroundKillingFieldsSelected = new ImageIcon(ImageIO.read(new File("worldKillingFieldsSelected.jpg")));
+			this.background = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/world.jpg")));
+			this.backgroundInnSelected = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/worldInnSelected.jpg")));
+			this.backgroundBlacksmithSelected = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/worldBlacksmithSelected.jpg")));
+			this.backgroundKillingFieldsSelected = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/worldKillingFieldsSelected.jpg")));
 			
 		} catch (IOException e) {
 			e.printStackTrace();

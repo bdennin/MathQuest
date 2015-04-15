@@ -31,7 +31,7 @@ public class KillingFields extends Area {
 	private Character creature;
 	
 	public KillingFields(Character hero) {
-		super(hero, "killingFieldsMusic.mp3");
+		super(hero, "src/MathQuest/Files/killingFieldsMusic.mp3");
 		this.loadImages();
 			
 		JPanel creaturePanel = new JPanel();
@@ -62,7 +62,7 @@ public class KillingFields extends Area {
 		btnGoblin.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(1, "Goblin", "Goblin Portrait.png", DamageType.SLASHING);
+				creature = new Character(1, "Goblin", "src/MathQuest/Files/Goblin Portrait.png", DamageType.SLASHING);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
@@ -73,7 +73,7 @@ public class KillingFields extends Area {
 		btnOrc.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(2, "Orc", "Orc Portrait.png", DamageType.SLASHING);
+				creature = new Character(2, "Orc", "src/MathQuest/Files/Orc Portrait.png", DamageType.SLASHING);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
@@ -82,7 +82,7 @@ public class KillingFields extends Area {
 		btnPitFiend.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(25, "Pit Fiend", "Pit Fiend Portrait.png", DamageType.SLASHING);
+				creature = new Character(25, "Pit Fiend", "src/MathQuest/Files/Pit Fiend Portrait.png", DamageType.SLASHING);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
@@ -91,7 +91,7 @@ public class KillingFields extends Area {
 		btnSuccubus.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(17, "Succubus", "Succubus Portrait.png", DamageType.MAGICAL);
+				creature = new Character(17, "Succubus", "src/MathQuest/Files/Succubus Portrait.png", DamageType.MAGICAL);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
@@ -100,7 +100,7 @@ public class KillingFields extends Area {
 		btnDemon.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(9, "Demon", "Demon Portrait.png", DamageType.CRUSHING);
+				creature = new Character(9, "Demon", "src/MathQuest/Files/Demon Portrait.png", DamageType.CRUSHING);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
@@ -113,7 +113,7 @@ public class KillingFields extends Area {
 		btnHarpy.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(10, "Harpy", "Harpy Portrait.png", DamageType.SLASHING);
+				creature = new Character(10, "Harpy", "src/MathQuest/Files/Harpy Portrait.png", DamageType.SLASHING);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
@@ -123,7 +123,7 @@ public class KillingFields extends Area {
 		btnFireElemental.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(18, "Fire Elemental", "Fire Elemental Portrait.png", DamageType.MAGICAL);
+				creature = new Character(18, "Fire Elemental", "src/MathQuest/Files/Fire Elemental Portrait.png", DamageType.MAGICAL);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
@@ -133,7 +133,7 @@ public class KillingFields extends Area {
 		btnNightmare.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(27, "Nightmare", "Nightmare Portrait.png", DamageType.CRUSHING);
+				creature = new Character(27, "Nightmare", "src/MathQuest/Files/Nightmare Portrait.png", DamageType.CRUSHING);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
@@ -143,7 +143,7 @@ public class KillingFields extends Area {
 		btnVampireKnight.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(19, "Vampire Knight", "Vampire Knight Portrait.png", DamageType.SLASHING);
+				creature = new Character(19, "Vampire Knight", "src/MathQuest/Files/Vampire Knight Portrait.png", DamageType.SLASHING);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
@@ -152,7 +152,7 @@ public class KillingFields extends Area {
 		btnEvilEye.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(11, "Evil Eye", "Evil Eye Portrait.png", DamageType.MAGICAL);
+				creature = new Character(11, "Evil Eye", "src/MathQuest/Files/Evil Eye Portrait.png", DamageType.MAGICAL);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
@@ -161,7 +161,7 @@ public class KillingFields extends Area {
 		btnGhoul.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(3, "Ghoul", "Ghoul Portrait.png", DamageType.CRUSHING);
+				creature = new Character(3, "Ghoul", "src/MathQuest/Files/Ghoul Portrait.png", DamageType.CRUSHING);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
@@ -173,7 +173,7 @@ public class KillingFields extends Area {
 		btnCentaur.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(20, "Centaur", "Centaur Portrait.png", DamageType.SLASHING);
+				creature = new Character(20, "Centaur", "src/MathQuest/Files/Centaur Portrait.png", DamageType.SLASHING);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
@@ -182,7 +182,7 @@ public class KillingFields extends Area {
 		btnGriffin.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(12, "Griffin", "Griffin Portrait.png", DamageType.SLASHING);
+				creature = new Character(12, "Griffin", "src/MathQuest/Files/Griffin Portrait.png", DamageType.SLASHING);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
@@ -191,7 +191,7 @@ public class KillingFields extends Area {
 		btnSkeleton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(4, "Skeleton", "Skeleton Portrait.png", DamageType.SLASHING);
+				creature = new Character(4, "Skeleton", "src/MathQuest/Files/Skeleton Portrait.png", DamageType.SLASHING);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
@@ -200,7 +200,7 @@ public class KillingFields extends Area {
 		btnAngel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(28, "Angel", "Angel Portrait.png", DamageType.SLASHING);
+				creature = new Character(28, "Angel", "src/MathQuest/Files/Angel Portrait.png", DamageType.SLASHING);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
@@ -213,7 +213,7 @@ public class KillingFields extends Area {
 		btnManticore.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(21, "Manticore", "Manticore Portrait.png", DamageType.CRUSHING);
+				creature = new Character(21, "Manticore", "src/MathQuest/Files/Manticore Portrait.png", DamageType.CRUSHING);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
@@ -222,7 +222,7 @@ public class KillingFields extends Area {
 		btnEarthElemental.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(13, "Earth Elemental", "Earth Elemental Portrait.png", DamageType.CRUSHING);
+				creature = new Character(13, "Earth Elemental", "src/MathQuest/Files/Earth Elemental Portrait.png", DamageType.CRUSHING);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
@@ -231,7 +231,7 @@ public class KillingFields extends Area {
 		btnTormentor.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(5, "Tormentor", "Tormentor Portrait.png", DamageType.SLASHING);
+				creature = new Character(5, "Tormentor", "src/MathQuest/Files/Tormentor Portrait.png", DamageType.SLASHING);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
@@ -240,7 +240,7 @@ public class KillingFields extends Area {
 		btnIceDragon.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(30, "Ice Dragon", "Ice Dragon Portrait.png", DamageType.MAGICAL);
+				creature = new Character(30, "Ice Dragon", "src/MathQuest/Files/Ice Dragon Portrait.png", DamageType.MAGICAL);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
@@ -253,7 +253,7 @@ public class KillingFields extends Area {
 		btnGiant.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(22, "Giant", "Giant Portrait.png", DamageType.CRUSHING);
+				creature = new Character(22, "Giant", "src/MathQuest/Files/Giant Portrait.png", DamageType.CRUSHING);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
@@ -262,7 +262,7 @@ public class KillingFields extends Area {
 		btnAirElemental.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(14, "Air Elemental", "Air Elemental Portrait.png", DamageType.MAGICAL);
+				creature = new Character(14, "Air Elemental", "src/MathQuest/Files/Air Elemental Portrait.png", DamageType.MAGICAL);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
@@ -271,7 +271,7 @@ public class KillingFields extends Area {
 		btnGhost.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(6, "Ghost", "Ghost Portrait.png", DamageType.CRUSHING);
+				creature = new Character(6, "Ghost", "src/MathQuest/Files/Ghost Portrait.png", DamageType.CRUSHING);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
@@ -280,7 +280,7 @@ public class KillingFields extends Area {
 		btnLightningDragon.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(32, "Lightning Dragon", "Lightning Dragon Portrait.png", DamageType.MAGICAL);
+				creature = new Character(32, "Lightning Dragon", "src/MathQuest/Files/Lightning Dragon Portrait.png", DamageType.MAGICAL);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
@@ -293,7 +293,7 @@ public class KillingFields extends Area {
 		btnEnchantress.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(7, "Enchantress", "Enchantress Portrait.png", DamageType.MAGICAL);
+				creature = new Character(7, "Enchantress", "src/MathQuest/Files/Enchantress Portrait.png", DamageType.MAGICAL);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
@@ -302,7 +302,7 @@ public class KillingFields extends Area {
 		btnShadowDragon.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(35, "Shadow Dragon", "Shadow Dragon Portrait.png", DamageType.MAGICAL);
+				creature = new Character(35, "Shadow Dragon", "src/MathQuest/Files/Shadow Dragon Portrait.png", DamageType.MAGICAL);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
@@ -313,7 +313,7 @@ public class KillingFields extends Area {
 		btnVampire.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(16, "Vampire", "Vampire Portrait.png", DamageType.SLASHING);
+				creature = new Character(16, "Vampire", "src/MathQuest/Files/Vampire Portrait.png", DamageType.SLASHING);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
@@ -322,7 +322,7 @@ public class KillingFields extends Area {
 		btnHellhound.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(8, "Hellhound", "Hellhound Portrait.png", DamageType.CRUSHING);
+				creature = new Character(8, "Hellhound", "src/MathQuest/Files/Hellhound Portrait.png", DamageType.CRUSHING);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
@@ -331,7 +331,7 @@ public class KillingFields extends Area {
 		btnSpiderQueen.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(37, "Spider Queen", "Spider Queen Portrait.png", DamageType.CRUSHING);
+				creature = new Character(37, "Spider Queen", "src/MathQuest/Files/Spider Queen Portrait.png", DamageType.CRUSHING);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
@@ -340,7 +340,7 @@ public class KillingFields extends Area {
 		btnLich.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(23, "Lich", "Lich Portrait.png", DamageType.MAGICAL);
+				creature = new Character(23, "Lich", "src/MathQuest/Files/Lich Portrait.png", DamageType.MAGICAL);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
@@ -349,7 +349,7 @@ public class KillingFields extends Area {
 		btnMinotaur.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(15, "Minotaur", "Minotaur Portrait.png", DamageType.SLASHING);
+				creature = new Character(15, "Minotaur", "src/MathQuest/Files/Minotaur Portrait.png", DamageType.SLASHING);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
@@ -363,7 +363,7 @@ public class KillingFields extends Area {
 		btnGoldDragon.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(24, "Gold Dragon", "Gold Dragon Portrait.png", DamageType.MAGICAL);
+				creature = new Character(24, "Gold Dragon", "src/MathQuest/Files/Gold Dragon Portrait.png", DamageType.MAGICAL);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
@@ -373,7 +373,7 @@ public class KillingFields extends Area {
 		btnUniverseDragon.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				creature = new Character(40, "Universe Dragon", "Universe Dragon Portrait.png", DamageType.MAGICAL);
+				creature = new Character(40, "Universe Dragon", "src/MathQuest/Files/Universe Dragon Portrait.png", DamageType.MAGICAL);
 				MathQuest.switchToCombat(creature);
 			}	
 		});
@@ -390,7 +390,7 @@ public class KillingFields extends Area {
 	@Override
 	public void loadImages() {
 		try {                
-			this.background = new ImageIcon(ImageIO.read(new File("killingFields.jpg")));
+			this.background = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/killingFields.jpg")));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

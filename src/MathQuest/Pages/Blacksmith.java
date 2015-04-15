@@ -43,7 +43,7 @@ public class Blacksmith extends Area {
 	private static final Character character = new Character();
 	
 	public Blacksmith(final Character hero) {
-		super(hero, "blacksmithMusic.mp3");
+		super(hero, "src/MathQuest/Files/blacksmithMusic.mp3");
 //		super(character, null);
 		this.loadImages();
 		this.loadOptionsPanel();
@@ -396,10 +396,10 @@ public class Blacksmith extends Area {
 	@Override
 	public void loadImages() {
 		try {           
-			this.background = new ImageIcon(ImageIO.read(new File("insideBlacksmith.jpg")));
-			this.buyButtonIcon = new ImageIcon(ImageIO.read(new File("attack.png")));
-			this.sellButtonIcon = new ImageIcon(ImageIO.read(new File("sellingcoins.png")));
-			this.enhanceButtonIcon = new ImageIcon(ImageIO.read(new File("anvil.png")));
+			this.background = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/insideBlacksmith.jpg")));
+			this.buyButtonIcon = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/attack.png")));
+			this.sellButtonIcon = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/sellingcoins.png")));
+			this.enhanceButtonIcon = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/anvil.png")));
 			
 		} catch (IOException e) {
 			e.printStackTrace();

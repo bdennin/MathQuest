@@ -382,10 +382,10 @@ public class InventoryPanel extends JPanel {
 
 	public void loadImages() {
 		try {                
-			this.inventoryImage = new ImageIcon(ImageIO.read(new File("inventory.png")));
-			this.helmetLabel = new ImageIcon(ImageIO.read(new File("helmetLabel.png")));
-			this.weaponLabel = new ImageIcon(ImageIO.read(new File("weaponLabel.png")));
-			this.armorLabel = new ImageIcon(ImageIO.read(new File("armorLabel.png")));
+			this.inventoryImage = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/inventory.png")));
+			this.helmetLabel = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/helmetLabel.png")));
+			this.weaponLabel = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/weaponLabel.png")));
+			this.armorLabel = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/armorLabel.png")));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -57,7 +57,7 @@ public class Combat extends Area {
 
 	public Combat(Character hero, Character creature) {
 
-		super(hero, "combatMusic" + (RANDOM.nextInt(3) + 1) + ".mp3");
+		super(hero, "src/MathQuest/Files/combatMusic" + (RANDOM.nextInt(3) + 1) + ".mp3");
 		this.loadImages();
 		this.hero = hero;
 		this.creature = creature;
@@ -303,7 +303,7 @@ public class Combat extends Area {
 
 	public void playAttackSound(Character character, Boolean damageOutcome) {
 
-		String combatSound = "file:///" + System.getProperty("user.dir").replace("\\", "/");
+		String combatSound = ("file:///" + System.getProperty("user.dir") + "/src/MathQuest/Files").replace("\\", "/");
 		DamageType damageType = character.getDamageType();
 
 		switch (damageType) {
@@ -357,7 +357,7 @@ public class Combat extends Area {
 
 	private void victory() {
 
-		String filePath = "file:///" + System.getProperty("user.dir").replace("\\", "/") + "/victory.mp3";
+		String filePath = ("file:///" + System.getProperty("user.dir") + "/src/MathQuest/Files/victory.mp3").replace("\\", "/");
 		try {
 			musicPlayer.open(new URL(filePath));
 			musicPlayer.play();
@@ -393,7 +393,7 @@ public class Combat extends Area {
 		if (level != hero.getLevel()) {
 			this.reloadCharacterPanel();
 			victoryString = String.format("<html>Congratulations! You have gained a<br/>level! You are now level %d.</html>", hero.getLevel());
-			filePath =  "file:///" + System.getProperty("user.dir").replace("\\", "/") + "/levelUp.mp3";
+			filePath =  ("file:///" + System.getProperty("user.dir")+ "/src/MathQuest/Files" + "/levelUp.mp3").replace("\\", "/");
 			try {
 				soundPlayer.open(new URL(filePath));
 				soundPlayer.play();
@@ -415,7 +415,7 @@ public class Combat extends Area {
 
 	private void defeat() {
 
-		String filePath = "file:///" + System.getProperty("user.dir").replace("\\", "/") + "/defeat.mp3";
+		String filePath = ("file:///" + System.getProperty("user.dir") + "/src/MathQuest/Files/defeat.mp3").replace("\\", "/");
 
 		try {
 			musicPlayer.open(new URL(filePath));
@@ -447,16 +447,16 @@ public class Combat extends Area {
 
 		Random random = new Random();
 		Integer pictureNumber = random.nextInt(8) + 1;
-		String imagePath = "combat" + pictureNumber + ".jpg";
+		String imagePath = "src/MathQuest/Files/combat" + pictureNumber + ".jpg";
 
 		try {                
 			this.background = new ImageIcon(ImageIO.read(new File(imagePath)));
-			this.victoryIcon = new ImageIcon(ImageIO.read(new File("victoryIcon.png")));
-			this.defeatIcon = new ImageIcon(ImageIO.read(new File("defeatIcon.png")));
-			this.potionIcon = new ImageIcon(ImageIO.read(new File("potion.png")));
-			this.attackIcon = new ImageIcon(ImageIO.read(new File("attack.png")));
-			this.runAwayIcon = new ImageIcon(ImageIO.read(new File("runAway.png")));
-			this.levelUpIcon = new ImageIcon(ImageIO.read(new File("levelUp.png")));
+			this.victoryIcon = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/victoryIcon.png")));
+			this.defeatIcon = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/defeatIcon.png")));
+			this.potionIcon = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/potion.png")));
+			this.attackIcon = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/attack.png")));
+			this.runAwayIcon = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/runAway.png")));
+			this.levelUpIcon = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/levelUp.png")));
 		}
 		catch (IOException e) {
 			e.printStackTrace();

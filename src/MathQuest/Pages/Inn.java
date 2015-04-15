@@ -33,7 +33,7 @@ public class Inn extends Area {
 	private int potionCost;
 
 	public Inn(Character hero) {
-		super(hero, "innMusic.mp3");
+		super(hero, "src/MathQuest/Files/innMusic.mp3");
 		this.loadImages();
 		this.setBackground(Color.LIGHT_GRAY);
 
@@ -169,12 +169,12 @@ public class Inn extends Area {
 	@Override
 	public void loadImages() {
 		try {                
-			this.background = new ImageIcon(ImageIO.read(new File("insideInn.png")));
-			this.potionIcon = new ImageIcon(ImageIO.read(new File("potion.png")));
-			this.restIcon = new ImageIcon(ImageIO.read(new File("rest.png")));
-			this.mealIcon = new ImageIcon(ImageIO.read(new File("meal.png")));
-			this.showerIcon = new ImageIcon(ImageIO.read(new File("shower.png")));
-			this.bedIcon = new ImageIcon(ImageIO.read(new File("bed.png")));
+			this.background = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/insideInn.png")));
+			this.potionIcon = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/potion.png")));
+			this.restIcon = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/rest.png")));
+			this.mealIcon = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/meal.png")));
+			this.showerIcon = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/shower.png")));
+			this.bedIcon = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/bed.png")));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

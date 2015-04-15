@@ -40,7 +40,7 @@ public class Character {
 		this.currentHealth = this.vitality;
 		this.maxHealth = this.vitality;
 		this.level = 1;
-		this.imagePath = "char2.jpg";
+		this.imagePath = "src/MathQuest/Files/char2.jpg";
 		this.name = "Hero#1";
 		this.damageType = DamageType.SLASHING;
 		this.answeredCorrectly = 0;

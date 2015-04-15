@@ -116,8 +116,8 @@ public class CharacterPanel extends JPanel {
 		try {                
 			this.portrait = new ImageIcon(ImageIO.read(new File(path)));
 			if(isMagnifiable) {
-				this.fullPortrait = new ImageIcon(ImageIO.read(new File(character.getName() + ".jpg")));
-				this.magnifierImage = new ImageIcon(ImageIO.read(new File("magnifier.png")));
+				this.fullPortrait = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/" + character.getName() + ".jpg")));
+				this.magnifierImage = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/magnifier.png")));
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

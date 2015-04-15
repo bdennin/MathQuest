@@ -3,17 +3,17 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="C:/Users/Jimbob/Documents/GitHub/MathQuest/basicplayer3.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jimbob/Documents/GitHub/MathQuest/commons-logging-api.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jimbob/Documents/GitHub/MathQuest/forms-1.3.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jimbob/Documents/GitHub/MathQuest/jl1.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jimbob/Documents/GitHub/MathQuest/jogg-0.0.7.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jimbob/Documents/GitHub/MathQuest/jorbis-0.0.15.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jimbob/Documents/GitHub/MathQuest/jspeex0.9.7.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jimbob/Documents/GitHub/MathQuest/miglayout15-swing.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jimbob/Documents/GitHub/MathQuest/mp3spi1.9.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jimbob/Documents/GitHub/MathQuest/mysql-connector-java-5.1.34-bin.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jimbob/Documents/GitHub/MathQuest/tritonus_share.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jimbob/Documents/GitHub/MathQuest/vorbisspi1.0.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jimbob/Documents/GitHub/MathQuest/src/MathQuest/Files/basicplayer3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jimbob/Documents/GitHub/MathQuest/src/MathQuest/Files/commons-logging-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jimbob/Documents/GitHub/MathQuest/src/MathQuest/Files/forms-1.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jimbob/Documents/GitHub/MathQuest/src/MathQuest/Files/jl1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jimbob/Documents/GitHub/MathQuest/src/MathQuest/Files/jogg-0.0.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jimbob/Documents/GitHub/MathQuest/src/MathQuest/Files/jorbis-0.0.15.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jimbob/Documents/GitHub/MathQuest/src/MathQuest/Files/jspeex0.9.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jimbob/Documents/GitHub/MathQuest/src/MathQuest/Files/miglayout15-swing.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jimbob/Documents/GitHub/MathQuest/src/MathQuest/Files/mp3spi1.9.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jimbob/Documents/GitHub/MathQuest/src/MathQuest/Files/mysql-connector-java-5.1.34-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jimbob/Documents/GitHub/MathQuest/src/MathQuest/Files/tritonus_share.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jimbob/Documents/GitHub/MathQuest/src/MathQuest/Files/vorbisspi1.0.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
