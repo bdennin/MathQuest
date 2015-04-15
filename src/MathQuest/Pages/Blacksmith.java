@@ -213,6 +213,8 @@ public class Blacksmith extends Area {
 				Item i = (Item) enhanceComboBox.getSelectedItem();
 				if(hero.getGold() >= (i.getItemGold() * 3)){
 					i.enhanceItem();
+					hero.removeGold(i.getItemGold());
+					reloadInventoryPanel(false);
 				}
 				else{
 					scrollPane.addTextToScrollPane("You Don't have enough.");
