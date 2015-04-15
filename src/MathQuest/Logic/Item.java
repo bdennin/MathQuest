@@ -13,6 +13,7 @@ public class Item {
 	int vit = 0;
 	int str = 0;
 	int gold = 0;
+	int enh = 0;
 	 
 	 
 	 
@@ -537,6 +538,14 @@ public class Item {
 		
 	public String getSlot(){
 		return slot;
+	}
+	
+	//enhance for blacksmith
+	public void enhanceItem(){
+		enh += 1;
+		itemName = "" + enh;
+		vit = (int)(vit + .01);
+		str = (int)(str + .01);
 	}
 		
 }

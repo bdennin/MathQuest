@@ -84,11 +84,11 @@ public class Blacksmith extends Area {
 		btnBuyItems.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(buyPanel.isVisible()){
-					scrollPane.addTextToScrollPane("Ok\n");
+					scrollPane.addTextToScrollPane("Ok.");
 					buyPanel.setVisible(false);	
 				}
 				else{
-					scrollPane.addTextToScrollPane("I think you could handle these.\n");
+					scrollPane.addTextToScrollPane("I think you could handle these.");
 					buyPanel.setVisible(true);
 				}
 			}
@@ -101,11 +101,11 @@ public class Blacksmith extends Area {
 		btnSellItems.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(sellPanel.isVisible()){
-					scrollPane.addTextToScrollPane("Ok.\n");
+					scrollPane.addTextToScrollPane("Ok.");
 					sellPanel.setVisible(false);
 				}
 				else{
-					scrollPane.addTextToScrollPane("Let's see what you have.\n");
+					scrollPane.addTextToScrollPane("Let's see what you have.");
 					sellPanel.setVisible(true);
 				}
 			}
@@ -117,7 +117,7 @@ public class Blacksmith extends Area {
 		buttonPanel.add(btnImproveItems);
 		btnImproveItems.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				scrollPane.addTextToScrollPane("I can make anything stronger.\n");
+				scrollPane.addTextToScrollPane("I can make anything stronger.");
 				if(enhancePanel.isVisible()){
 					enhancePanel.setVisible(false);
 				}
@@ -131,7 +131,7 @@ public class Blacksmith extends Area {
 //Blacksmith text panel
 		scrollPane = new LogPanel("Blacksmith Log");
 		add(scrollPane);
-		this.scrollPane.addTextToScrollPane("Hello! I am the town Blacksmith. How can I help you?\n");
+		this.scrollPane.addTextToScrollPane("Hello! I am the town Blacksmith. How can I help you?");
 //////////////////////////
 // Sell Inventory Panel //
 //////////////////////////
@@ -185,7 +185,7 @@ public class Blacksmith extends Area {
 /////////////////////////
 		enhancePanel = new JPanel();
 		enhancePanel.setBackground(Color.LIGHT_GRAY);
-		enhancePanel.setBounds(735, 422, 245, 105);
+		enhancePanel.setBounds(735, 422, 245, 132);
 		enhancePanel.setVisible(false);
 		add(enhancePanel);
 		enhancePanel.setLayout(null);
@@ -193,7 +193,7 @@ public class Blacksmith extends Area {
 		//Panel for enhance button and enhance combo box
 		JPanel enhanceOptionsPanel = new JPanel();
 		enhanceOptionsPanel.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
-		enhanceOptionsPanel.setBounds(0, 24, 245, 80);
+		enhanceOptionsPanel.setBounds(0, 24, 245, 108);
 		enhancePanel.add(enhanceOptionsPanel);
 		enhanceOptionsPanel.setLayout(null);
 		
@@ -210,11 +210,24 @@ public class Blacksmith extends Area {
 		JButton enhancheBtn = new JButton("Improve");
 		enhancheBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//if hero has enough gold, item enhancement + 1
+				Item i = (Item) enhanceComboBox.getSelectedItem();
+				if(hero.getGold() >= (i.getItemGold() * 3)){
+					i.enhanceItem();
+				}
+				else{
+					scrollPane.addTextToScrollPane("You Don't have enough.");
+				}
 			}
 		});
-		enhancheBtn.setBounds(51, 39, 117, 35);
+		enhancheBtn.setBounds(51, 67, 117, 35);
 		enhanceOptionsPanel.add(enhancheBtn);
+		
+		if(null != enhanceComboBox.getSelectedItem()){
+			Item i = (Item)enhanceComboBox.getSelectedItem();
+			JLabel lblNewLabel_1 = new JLabel("" + i.getItemGold() + "g");
+			lblNewLabel_1.setBounds(79, 39, 61, 16);
+			enhanceOptionsPanel.add(lblNewLabel_1);
+		}
 		
 		//Label for title of enhance panel
 		JLabel lblNewLabel_2 = new JLabel("Improve Items");
@@ -293,7 +306,7 @@ public class Blacksmith extends Area {
 					inventoryComboBox.addItem(item1);
 				}
 				else{
-					scrollPane.addTextToScrollPane("You don't have enough for that\n");
+					scrollPane.addTextToScrollPane("You don't have enough for that.");
 				}
 			}
 		});
@@ -355,7 +368,7 @@ public class Blacksmith extends Area {
 					inventoryComboBox.addItem(item2);
 				}
 				else{
-					scrollPane.addTextToScrollPane("You don't have enough for that\n");
+					scrollPane.addTextToScrollPane("You don't have enough for that.");
 				}
 			}
 		});
