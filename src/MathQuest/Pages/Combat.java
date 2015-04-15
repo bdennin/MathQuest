@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import javax.swing.ProgressMonitor;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
 
@@ -20,7 +21,6 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 import javazoom.jlgui.basicplayer.BasicPlayerException;
-
 import MathQuest.MathQuest;
 import MathQuest.Database.Database;
 import MathQuest.GUI.CharacterPanel;
@@ -47,6 +47,7 @@ public class Combat extends Area {
 	private ImageIcon victoryIcon;
 	private ImageIcon defeatIcon;
 	private ImageIcon potionIcon;
+	private ImageIcon levelUpIcon;
 	private ImageIcon runAwayIcon;
 	private ImageIcon attackIcon;
 	private Character hero;
@@ -71,14 +72,14 @@ public class Combat extends Area {
 
 		this.combatLog = new LogPanel("Combat Log");
 		combatLog.addTextToScrollPane("You have entered combat!");
+		add(combatLog);
+		
+		this.renderBackground();
 		
 		if(hero.getLevel() >= creature.getLevel())
 			combatLog.addTextToScrollPane("It is your turn to act.");
 		else
-			this.monsterAttack();
-		add(combatLog);
-
-		this.renderBackground();
+			combatLog.addTextToScrollPane("A " + creature.getName() + " attacks first!");
 	}
 
 	private Boolean checkDamage(int damage) {
@@ -98,7 +99,7 @@ public class Combat extends Area {
 				question = Equation.constructEquation(equationSettings);
 		}
 		else
-			question = Equation.constructEquation(Sign.SUBTRACTION, Digits.ONE, Terms.THREE);
+			question = Equation.constructEquation(Sign.ADDITION, Digits.ONE, Terms.TWO);
 
 		this.answer = Equation.solveEquation(question);
 		ArrayList<Integer> options = new ArrayList<Integer>();
@@ -137,6 +138,8 @@ public class Combat extends Area {
 		attackButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if(hero.getLevel() < creature.getLevel())
+					monsterAttack();
 				promptQuestion();
 			}
 		});
@@ -157,6 +160,8 @@ public class Combat extends Area {
 		usePotionButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if(hero.getLevel() < creature.getLevel())
+					monsterAttack();
 				int potions = hero.getPotions();
 				if(potions > 0) {
 					int currentHealth = hero.getCurrentHealth();
@@ -340,9 +345,9 @@ public class Combat extends Area {
 		}
 
 		try {
-			soundPlayer.open(new URL(combatSound));
-			soundPlayer.play();
-			soundPlayer.setGain(MathQuest.getVolume());
+			effectPlayer.open(new URL(combatSound));
+			effectPlayer.play();
+			effectPlayer.setGain(MathQuest.getVolume());
 		}
 		catch(BasicPlayerException | MalformedURLException e) {
 			e.printStackTrace();
@@ -365,6 +370,7 @@ public class Combat extends Area {
 		int experience = (int)(creature.getMaxExperience() * .5);
 		int gold = creature.getGold();
 		hero.addGold(gold);
+		int level = hero.getLevel();
 		hero.gainExperience(experience);
 
 		String victoryString; 
@@ -384,6 +390,26 @@ public class Combat extends Area {
 				JOptionPane.PLAIN_MESSAGE,
 				victoryIcon);
 
+		if (level != hero.getLevel()) {
+			this.reloadCharacterPanel();
+			victoryString = String.format("<html>Congratulations! You have gained a<br/>level! You are now level %d.</html>", hero.getLevel());
+			filePath =  "file:///" + System.getProperty("user.dir").replace("\\", "/") + "/levelUp.mp3";
+			try {
+				soundPlayer.open(new URL(filePath));
+				soundPlayer.play();
+				soundPlayer.setGain(MathQuest.getVolume());
+			}
+			catch(BasicPlayerException | MalformedURLException e) {
+				e.printStackTrace();
+			}
+			
+			JOptionPane.showMessageDialog(this, 
+					new JLabel(victoryString, JLabel.CENTER), 
+					"You Feel Stronger...", 
+					JOptionPane.PLAIN_MESSAGE,
+					levelUpIcon);
+		}
+		
 		MathQuest.switchToGameWorld();
 	}
 
@@ -430,8 +456,9 @@ public class Combat extends Area {
 			this.potionIcon = new ImageIcon(ImageIO.read(new File("potion.png")));
 			this.attackIcon = new ImageIcon(ImageIO.read(new File("attack.png")));
 			this.runAwayIcon = new ImageIcon(ImageIO.read(new File("runAway.png")));
-
-		} catch (IOException e) {
+			this.levelUpIcon = new ImageIcon(ImageIO.read(new File("levelUp.png")));
+		}
+		catch (IOException e) {
 			e.printStackTrace();
 		}	
 	}

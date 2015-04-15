@@ -49,6 +49,7 @@ public class OptionsMenu extends JPanel {
 		optionsBody.setLayout(null);
 		
 		JLabel volumeLabel = new JLabel("Volume");
+		volumeLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
 		volumeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		volumeLabel.setBounds(10, 11, 80, 22);
 		optionsBody.add(volumeLabel);
@@ -71,7 +72,8 @@ public class OptionsMenu extends JPanel {
 		optionsBody.add(volumeSlider);
 		
 		final JCheckBox checkboxMuteSound = new JCheckBox("Mute Sound");
-		checkboxMuteSound.setBounds(100, 40, 97, 23);
+		checkboxMuteSound.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
+		checkboxMuteSound.setBounds(100, 40, 118, 23);
 		checkboxMuteSound.setSelected(MathQuest.isMuted);
 		checkboxMuteSound.addActionListener(new ActionListener() {
 
@@ -89,8 +91,10 @@ public class OptionsMenu extends JPanel {
 		});
 		optionsBody.add(checkboxMuteSound);
 		
-		JButton btnOK = new JButton("OK");
-		btnOK.setBounds(125, 122, 88, 23);
+				JButton btnOK = new JButton("X");
+				btnOK.setBounds(298, 1, 40, 20);
+				add(btnOK);
+				btnOK.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		btnOK.addActionListener(new ActionListener() {
 			
 			@Override
@@ -101,6 +105,5 @@ public class OptionsMenu extends JPanel {
 				world.renderBackground();
 			}
 		});
-		optionsBody.add(btnOK);
 	}
 }

@@ -129,14 +129,24 @@ public class Equation {
 
 	public static Integer solveEquation(String equation) {
 		Integer answer = null;
+		Double ans = null;
 		try {
-			answer = (Integer) ENGINE.eval(equation);
+			Object value = ENGINE.eval(equation);
+			try {
+				answer = (Integer)value;
+			}
+			catch(ClassCastException e) {
+				ans = (Double)value;
+			}
 
 		} catch (ScriptException e) {
 
 			e.printStackTrace();
 		}
-		return answer.intValue();
+		if(null == answer) 
+			return ans.intValue();
+		else
+			return answer.intValue();
 	}
 
 	public static Integer generateWrongAnswer(String equation) {

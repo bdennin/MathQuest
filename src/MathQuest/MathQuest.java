@@ -24,7 +24,7 @@ public class MathQuest
 	private static Character hero;
 	private static double volume;
 
-	public static boolean connectToDatabase = true;
+	public static boolean connectToDatabase = false;
 	public static boolean isMuted;
 
 	public MathQuest() {
@@ -82,7 +82,9 @@ public class MathQuest
 
 	public static void quitAndSave() {
 		if(MathQuest.connectToDatabase){
-			if (Database.getType().equals("Student")){
+			if (null == Database.getType())
+				System.exit(0);
+			else if (Database.getType().equals("Student")){
 				Database.getConnected();
 				Database.setStatus(hero.getStatus());
 				Database.saveInventory(hero.getInventory());
