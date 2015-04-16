@@ -545,6 +545,7 @@ public class Item {
 		enh += 1;
 		vit = vit + enh;
 		str = str + enh;
+		gold = gold * 2;
 	}
 		
 }

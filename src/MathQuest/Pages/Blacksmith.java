@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import MathQuest.MathQuest;
 import MathQuest.GUI.OptionsPanel;
 import MathQuest.Logic.Character;
 import MathQuest.Logic.Item;
@@ -17,6 +18,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.swing.SwingConstants;
 import javax.swing.border.CompoundBorder;
@@ -25,16 +28,22 @@ import java.awt.Font;
 
 import javax.swing.border.BevelBorder;
 import javax.swing.JComboBox;
+
 import java.awt.Color;
+
 import javax.swing.Icon;
+
+import javazoom.jlgui.basicplayer.BasicPlayerException;
 
 public class Blacksmith extends Area {
 	
 	private static final long serialVersionUID = 1L;
 	private LogPanel scrollPane;
 	final JPanel buttonPanel = new JPanel();
-	final JPanel itemsPanel, buyPanel, sellPanel, enhancePanel, itemPanel1, itemPanel2;
+	final JPanel itemsPanel, buyPanel, sellPanel, enhanceOptionsPanel, enhancePanel, itemPanel1, itemPanel2;
 	private ImageIcon buyButtonIcon, sellButtonIcon, enhanceButtonIcon;
+	
+	private JLabel lblNewLabel_1;
 	
 	private JComboBox inventoryComboBox, enhanceComboBox;
 	
@@ -127,17 +136,17 @@ public class Blacksmith extends Area {
 			}
 		});
 		
-
 //Blacksmith text panel
 		scrollPane = new LogPanel("Blacksmith Log");
 		add(scrollPane);
 		this.scrollPane.addTextToScrollPane("Hello! I am the town Blacksmith. How can I help you?");
+		
 //////////////////////////
 // Sell Inventory Panel //
 //////////////////////////
 		sellPanel = new JPanel();
 		sellPanel.setBackground(Color.LIGHT_GRAY);
-		sellPanel.setBounds(735, 260, 245, 116);
+		sellPanel.setBounds(158, 388, 245, 116);
 		sellPanel.setVisible(false);
 		add(sellPanel);
 		sellPanel.setLayout(null);
@@ -151,7 +160,7 @@ public class Blacksmith extends Area {
 		
 		//sell combo box
 		inventoryComboBox = new JComboBox<Item>();
-		inventoryComboBox.setBounds(6, 6, 233, 27);
+		inventoryComboBox.setBounds(6, 6, 232, 27);
 		for(Item el : hero.getInventory())
 			if(!el.isEquipped()){
 				inventoryComboBox.addItem(el);
@@ -160,40 +169,41 @@ public class Blacksmith extends Area {
 		
 		//sell button
 		JButton sellBtn = new JButton("Sell");
-		sellBtn.setBounds(56, 45, 117, 35);
+		sellBtn.setBounds(68, 46, 117, 35);
 		sellOptionsPanel.add(sellBtn);
+		
+		//Label for name of panel
+		JLabel sellLabel = new JLabel("Sell Items");
+		sellLabel.setBounds(1, 0, 244, 29);
+		sellPanel.add(sellLabel);
+		sellLabel.setBackground(Color.LIGHT_GRAY);
+		sellLabel.setFont(new Font("Copperplate Gothic Bold", Font.PLAIN, 20));
+		sellLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		sellBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Item i = (Item)inventoryComboBox.getSelectedItem();
-				hero.addGold(i.getItemGold());
+				hero.addGold((i.getItemGold() / 3));
+				playSound("coins");
 				hero.removeFromInventory((Item)inventoryComboBox.getSelectedItem());
 				inventoryComboBox.removeItem(inventoryComboBox.getSelectedItem());
 				reloadInventoryPanel(false);
 			}
 		});
-		
-		//Label for name of panel
-		JLabel sellLabel = new JLabel("Sell Items");
-		sellLabel.setBackground(Color.LIGHT_GRAY);
-		sellLabel.setBounds(1, 0, 244, 29);
-		sellPanel.add(sellLabel);
-		sellLabel.setFont(new Font("Copperplate Gothic Bold", Font.PLAIN, 20));
-		sellLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
 /////////////////////////
 // Enhance Items Panel //
 /////////////////////////
 		enhancePanel = new JPanel();
 		enhancePanel.setBackground(Color.LIGHT_GRAY);
-		enhancePanel.setBounds(735, 422, 245, 132);
+		enhancePanel.setBounds(418, 388, 245, 116);
 		enhancePanel.setVisible(false);
 		add(enhancePanel);
 		enhancePanel.setLayout(null);
 		
 		//Panel for enhance button and enhance combo box
-		JPanel enhanceOptionsPanel = new JPanel();
+		enhanceOptionsPanel = new JPanel();
 		enhanceOptionsPanel.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
-		enhanceOptionsPanel.setBounds(0, 24, 245, 108);
+		enhanceOptionsPanel.setBounds(0, 28, 245, 87);
 		enhancePanel.add(enhanceOptionsPanel);
 		enhanceOptionsPanel.setLayout(null);
 		
@@ -211,9 +221,10 @@ public class Blacksmith extends Area {
 		enhancheBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Item i = (Item) enhanceComboBox.getSelectedItem();
-				if(hero.getGold() >= (i.getItemGold() * 3)){
-					i.enhanceItem();
+				if(hero.getGold() >= (i.getItemGold() * 2)){
 					hero.removeGold(i.getItemGold());
+					i.enhanceItem();
+					playSound("hammer");
 					reloadInventoryPanel(false);
 				}
 				else{
@@ -221,15 +232,10 @@ public class Blacksmith extends Area {
 				}
 			}
 		});
-		enhancheBtn.setBounds(51, 67, 117, 35);
+		enhancheBtn.setBounds(68, 46, 117, 35);
 		enhanceOptionsPanel.add(enhancheBtn);
 		
-		if(null != enhanceComboBox.getSelectedItem()){
-			Item i = (Item)enhanceComboBox.getSelectedItem();
-			JLabel lblNewLabel_1 = new JLabel("" + i.getItemGold() + "g");
-			lblNewLabel_1.setBounds(79, 39, 61, 16);
-			enhanceOptionsPanel.add(lblNewLabel_1);
-		}
+		
 		
 		//Label for title of enhance panel
 		JLabel lblNewLabel_2 = new JLabel("Improve Items");
@@ -243,14 +249,14 @@ public class Blacksmith extends Area {
 ////////////////////////////////////
 		buyPanel = new JPanel();
 		buyPanel.setBackground(Color.LIGHT_GRAY);
-		buyPanel.setBounds(206, 225, 457, 248);
+		buyPanel.setBounds(158, 170, 505, 201);
 		buyPanel.setVisible(false);
 		add(buyPanel);
 		buyPanel.setLayout(null);
 		
 		//panel for items on sale
 		itemsPanel = new JPanel();
-		itemsPanel.setBounds(0, 36, 456, 212);
+		itemsPanel.setBounds(0, 36, 505, 164);
 		buyPanel.add(itemsPanel);
 		itemsPanel.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
 		itemsPanel.setLayout(null);
@@ -258,7 +264,7 @@ public class Blacksmith extends Area {
 		//panel for first item's labels and buy button
 		itemPanel1 = new JPanel();
 		itemPanel1.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
-		itemPanel1.setBounds(6, 6, 198, 198);
+		itemPanel1.setBounds(6, 6, 234, 142);
 		itemsPanel.add(itemPanel1);
 		itemPanel1.setLayout(null);
 		
@@ -266,7 +272,7 @@ public class Blacksmith extends Area {
 		JLabel armorItemLabel = new JLabel(item1.toString());
 		armorItemLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 15));
 		armorItemLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		armorItemLabel.setBounds(6, 6, 186, 25);
+		armorItemLabel.setBounds(6, 6, 222, 25);
 		itemPanel1.add(armorItemLabel);
 		if(item1.getColor().equalsIgnoreCase("gray")){
 			armorItemLabel.setForeground(Color.black);
@@ -279,22 +285,22 @@ public class Blacksmith extends Area {
 		
 		//Labels to display item 1 vitality, strength and price
 		JLabel lblVit = new JLabel("Vitality:");
-		lblVit.setBounds(6, 135, 61, 16);
+		lblVit.setBounds(6, 71, 61, 16);
 		itemPanel1.add(lblVit);
 		JLabel vitLabel = new JLabel("" + item1.getItemVit());
-		vitLabel.setBounds(131, 135, 61, 16);
+		vitLabel.setBounds(167, 71, 61, 16);
 		itemPanel1.add(vitLabel);
 		
 		JLabel lblStrength = new JLabel("Strength:");
-		lblStrength.setBounds(6, 112, 61, 16);
+		lblStrength.setBounds(6, 43, 61, 16);
 		itemPanel1.add(lblStrength);
 		JLabel strNumber = new JLabel("" + item1.getItemStr());
-		strNumber.setBounds(131, 112, 61, 16);
+		strNumber.setBounds(167, 43, 61, 16);
 		itemPanel1.add(strNumber);
 		
 		JLabel armorPrice = new JLabel("" + item1.getItemGold() + "g");
 		armorPrice.setHorizontalAlignment(SwingConstants.CENTER);
-		armorPrice.setBounds(65, 148, 61, 16);
+		armorPrice.setBounds(92, 88, 61, 16);
 		itemPanel1.add(armorPrice);
 		
 		//button to buy item 1
@@ -305,6 +311,7 @@ public class Blacksmith extends Area {
 					itemPanel1.setVisible(false);
 					hero.addToInventory(item1);
 					hero.removeGold(item1.getItemGold());
+					playSound("coins");
 					inventoryComboBox.addItem(item1);
 				}
 				else{
@@ -312,7 +319,7 @@ public class Blacksmith extends Area {
 				}
 			}
 		});
-		btnBuyArmor.setBounds(39, 163, 117, 29);
+		btnBuyArmor.setBounds(63, 107, 117, 29);
 		itemPanel1.add(btnBuyArmor);
 		
 		
@@ -320,14 +327,14 @@ public class Blacksmith extends Area {
 		itemPanel2 = new JPanel();
 		itemPanel2.setLayout(null);
 		itemPanel2.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
-		itemPanel2.setBounds(252, 6, 198, 198);
+		itemPanel2.setBounds(268, 6, 231, 142);
 		itemsPanel.add(itemPanel2);
 		
 		//Label for item 2 name
 		JLabel weaponItemLabel = new JLabel(item2.toString());
 		weaponItemLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		weaponItemLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 15));
-		weaponItemLabel.setBounds(6, 6, 186, 25);
+		weaponItemLabel.setBounds(6, 6, 219, 25);
 		itemPanel2.add(weaponItemLabel);
 		if(item2.getColor().equalsIgnoreCase("gray")){
 			weaponItemLabel.setForeground(Color.black);
@@ -341,22 +348,22 @@ public class Blacksmith extends Area {
 		
 		//item 2 vitality, strength, and price
 		JLabel lblWeaponStrength = new JLabel("Strength:");
-		lblWeaponStrength.setBounds(6, 113, 61, 16);
+		lblWeaponStrength.setBounds(6, 43, 61, 16);
 		itemPanel2.add(lblWeaponStrength);
 		JLabel weaponStrNumber = new JLabel("" + item2.getItemStr());
-		weaponStrNumber.setBounds(131, 113, 61, 16);
+		weaponStrNumber.setBounds(164, 43, 61, 16);
 		itemPanel2.add(weaponStrNumber);
 		
 		JLabel lblWeaponVit = new JLabel("Vitality:");
-		lblWeaponVit.setBounds(6, 133, 61, 16);
+		lblWeaponVit.setBounds(6, 71, 61, 16);
 		itemPanel2.add(lblWeaponVit);
 		JLabel weaponVitLabel = new JLabel("" + item2.getItemVit());
-		weaponVitLabel.setBounds(131, 133, 61, 16);
+		weaponVitLabel.setBounds(164, 71, 61, 16);
 		itemPanel2.add(weaponVitLabel);
 		
 		JLabel weaponPrice = new JLabel("" + item2.getItemGold() + "g");
 		weaponPrice.setHorizontalAlignment(SwingConstants.CENTER);
-		weaponPrice.setBounds(65, 148, 61, 16);
+		weaponPrice.setBounds(85, 89, 61, 16);
 		itemPanel2.add(weaponPrice);
 		
 		//Button to buy item 2
@@ -367,6 +374,7 @@ public class Blacksmith extends Area {
 					itemPanel2.setVisible(false);
 					hero.addToInventory(item2);
 					hero.removeGold(item2.getItemGold());
+					playSound("coins");
 					inventoryComboBox.addItem(item2);
 				}
 				else{
@@ -374,14 +382,14 @@ public class Blacksmith extends Area {
 				}
 			}
 		});
-		btnBuyWeapon.setBounds(40, 163, 117, 29);
+		btnBuyWeapon.setBounds(54, 107, 117, 29);
 		itemPanel2.add(btnBuyWeapon);
 		
 		//Label for buy panel title
 		JLabel lblNewLabel = new JLabel("Items for Sale");
-		lblNewLabel.setBackground(Color.LIGHT_GRAY);
-		lblNewLabel.setBounds(0, 0, 456, 39);
+		lblNewLabel.setBounds(0, 0, 505, 39);
 		buyPanel.add(lblNewLabel);
+		lblNewLabel.setBackground(Color.LIGHT_GRAY);
 		lblNewLabel.setFont(new Font("Copperplate Gothic Bold", Font.PLAIN, 23));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 			
@@ -389,6 +397,31 @@ public class Blacksmith extends Area {
 		this.renderBackground();
 	}
 	
+	public void playSound(String s){
+		if(s.equalsIgnoreCase("coins")){
+			String filePath = ("file:///" + System.getProperty("user.dir") + "/src/MathQuest/Files/coins.mp3").replace("\\", "/");
+			try {
+				effectPlayer.open(new URL(filePath));
+				effectPlayer.play();
+				effectPlayer.setGain(MathQuest.getVolume());
+			}
+			catch(BasicPlayerException | MalformedURLException e) {
+				e.printStackTrace();
+			}
+		}
+		if(s.equalsIgnoreCase("hammer")){
+			//switch filepath to hammer sound effect
+			String filePath = ("file:///" + System.getProperty("user.dir") + "/src/MathQuest/Files/hammer.mp3").replace("\\", "/");
+			try {
+				effectPlayer.open(new URL(filePath));
+				effectPlayer.play();
+				effectPlayer.setGain(MathQuest.getVolume());
+			}
+			catch(BasicPlayerException | MalformedURLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	
 	@Override
 	public OptionsPanel loadOptionsPanel() {
