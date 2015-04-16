@@ -18,6 +18,7 @@ import MathQuest.MathQuest;
 
 import MathQuest.Pages.Area;
 import MathQuest.Pages.World;
+import MathQuest.Logic.Character;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -28,32 +29,32 @@ import javax.swing.JButton;
 public class OptionsMenu extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	public OptionsMenu(final Area frame) {
-		
+
 		this.setBackground(Color.LIGHT_GRAY);
 		this.setBounds(343, 296, 338, 177);
 		setLayout(null);	
-		
+
 		JLabel optionsLabel = new JLabel("Options");
 		optionsLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 12));
 		optionsLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		optionsLabel.setBorder(new LineBorder(Color.BLACK));
 		optionsLabel.setBounds(0, 0, 338, 22);
 		this.add(optionsLabel);
-		
+
 		JPanel optionsBody = new JPanel();
 		optionsBody.setBounds(0, 21, 338, 156);
 		optionsBody.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
 		this.add(optionsBody);
 		optionsBody.setLayout(null);
-		
-		JLabel volumeLabel = new JLabel("Volume");
+
+		JLabel volumeLabel = new JLabel("Volume:");
 		volumeLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
 		volumeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		volumeLabel.setBounds(10, 11, 80, 22);
 		optionsBody.add(volumeLabel);
-		
+
 		final JSlider volumeSlider = new JSlider();
 		volumeSlider.setPaintTicks(true);
 		volumeSlider.setSnapToTicks(true);
@@ -70,7 +71,7 @@ public class OptionsMenu extends JPanel {
 			}	
 		});
 		optionsBody.add(volumeSlider);
-		
+
 		final JCheckBox checkboxMuteSound = new JCheckBox("Mute Sound");
 		checkboxMuteSound.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
 		checkboxMuteSound.setBounds(100, 40, 118, 23);
@@ -90,13 +91,32 @@ public class OptionsMenu extends JPanel {
 			}
 		});
 		optionsBody.add(checkboxMuteSound);
-		
-				JButton btnOK = new JButton("X");
-				btnOK.setBounds(298, 1, 40, 20);
-				add(btnOK);
-				btnOK.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		btnOK.addActionListener(new ActionListener() {
-			
+
+		JLabel lblReset = new JLabel("Reset:");
+		lblReset.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
+		lblReset.setHorizontalAlignment(SwingConstants.CENTER);
+		lblReset.setBounds(10, 91, 80, 14);
+		optionsBody.add(lblReset);
+
+		JButton btnDeleteCharacter = new JButton("<html><center>Delete<br/>Character</center></html>");
+		btnDeleteCharacter.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
+		btnDeleteCharacter.setBounds(100, 80, 89, 35);
+		btnDeleteCharacter.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				MathQuest.setCharacter(new Character());
+				MathQuest.switchToGameWorld();
+			}
+		});
+		optionsBody.add(btnDeleteCharacter);
+
+		JButton btnClose = new JButton("X");
+		btnClose.setBounds(298, 1, 40, 20);
+		add(btnClose);
+		btnClose.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		btnClose.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Area.toggleOptions();

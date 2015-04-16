@@ -1,13 +1,10 @@
 package MathQuest.Pages;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
-import java.io.IOException;
 
 import MathQuest.MathQuest;
 import MathQuest.GUI.OptionsPanel;
@@ -20,14 +17,14 @@ public class World extends Area {
 	private JLabel innLabel;
 	private JLabel blacksmithLabel;
 	private JLabel killingFieldsLabel;
-	
+
 	private ImageIcon backgroundInnSelected;
 	private ImageIcon backgroundBlacksmithSelected;
 	private ImageIcon backgroundKillingFieldsSelected;
-	
+
 	public World(Character hero) {
 
-		super(hero, "src/MathQuest/Files/townMusic.mp3");
+		super(hero, MathQuest.class.getResource("Files/townMusic.mp3"));
 		this.loadImages();
 		this.loadJLabels();
 		this.renderBackground();
@@ -133,17 +130,14 @@ public class World extends Area {
 		this.remove(innLabel);
 		this.remove(killingFieldsLabel);
 	}
-	
+
 	public void loadImages() {
-		try {           
-			this.background = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/world.jpg")));
-			this.backgroundInnSelected = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/worldInnSelected.jpg")));
-			this.backgroundBlacksmithSelected = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/worldBlacksmithSelected.jpg")));
-			this.backgroundKillingFieldsSelected = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/worldKillingFieldsSelected.jpg")));
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
+		this.background = new ImageIcon(MathQuest.class.getResource("Files/world.jpg"));
+		this.backgroundInnSelected = new ImageIcon(MathQuest.class.getResource("Files/worldInnSelected.jpg"));
+		this.backgroundBlacksmithSelected = new ImageIcon(MathQuest.class.getResource("Files/worldBlacksmithSelected.jpg"));
+		this.backgroundKillingFieldsSelected = new ImageIcon(MathQuest.class.getResource("Files/worldKillingFieldsSelected.jpg"));
+
 	}
 
 	@Override

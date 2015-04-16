@@ -13,19 +13,23 @@ import MathQuest.Database.Database;
 import MathQuest.Logic.Character;
 import MathQuest.Pages.Area;
 import MathQuest.Pages.World;
+import java.awt.GridLayout;
+import java.awt.Font;
 
 public class OptionsPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
 	public OptionsPanel(final Area frame, final Character hero, boolean hasReturn) {
-
-		this.setLayout(null);
-		this.setBounds(0, 0, 132, 94);
-		this.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
-
+		
+		JPanel optionsPanel = new JPanel();
+		optionsPanel.setBounds(0, 0, 125, 92);
+		optionsPanel.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
+		optionsPanel.setLayout(new GridLayout(0, 1, 0, 0));
+		this.add(optionsPanel);
+		
 		JButton inventoryButton = new JButton("Inventory");
-		inventoryButton.setBounds(3, 3, 125, 29);
+		inventoryButton.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
 		inventoryButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -42,10 +46,10 @@ public class OptionsPanel extends JPanel {
 				frame.renderBackground();
 			}
 		});
-		this.add(inventoryButton);
+		optionsPanel.add(inventoryButton);
 
 		JButton button = new JButton();
-		button.setBounds(3, 32, 125, 29);
+		button.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
 
 		if(hasReturn) {
 			button.setText("Return");
@@ -76,10 +80,10 @@ public class OptionsPanel extends JPanel {
 			});
 
 		}
-		this.add(button);
+		optionsPanel.add(button);
 
 		JButton quitButton = new JButton("Quit");
-		quitButton.setBounds(3, 61, 125, 29);
+		quitButton.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
 		quitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -93,6 +97,43 @@ public class OptionsPanel extends JPanel {
 				System.exit(0);
 			}
 		});
-		this.add(quitButton);
+		optionsPanel.add(quitButton);
+	}
+
+	public OptionsPanel(final Area frame, final Character hero) {
+		
+		JPanel optionsPanel = new JPanel();
+		optionsPanel.setBounds(0, 0, 125, 62);
+		optionsPanel.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
+		optionsPanel.setLayout(new GridLayout(0, 1, 0, 0));
+		this.add(optionsPanel);
+		
+		JButton button = new JButton("Return");
+		button.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
+		button.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MathQuest.switchToGameWorld();
+			}
+		});
+		optionsPanel.add(button);
+
+		JButton quitButton = new JButton("Quit");
+		quitButton.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
+		quitButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(MathQuest.connectToDatabase){
+					Database.getConnected();
+					Database.setStatus(hero.getStatus());
+					Database.saveInventory(hero.getInventory());
+					Database.saveAccuracy(hero.getAnsweredCorrectly(), hero.getAnsweredIncorrectly());
+					Database.close();
+				}
+				System.exit(0);
+			}
+		});
+		optionsPanel.add(quitButton);
 	}
 }
