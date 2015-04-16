@@ -76,6 +76,7 @@ public class Login extends JPanel {
 	}
 
 	public void login(){
+		@SuppressWarnings("deprecation")
 		boolean isSuccessfulLogin = Login.verifyCredentials(username.getText(), password.getText());
 
 		if(isSuccessfulLogin) {

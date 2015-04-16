@@ -56,6 +56,7 @@ public class InventoryWindow extends JPanel {
 			if(el.getSlot().equals(header))
 				slotItems.add(el);
 		}
+		@SuppressWarnings({ "rawtypes", "unchecked" })
 		final JList itemList = new JList(slotItems.toArray());
 		scrollPane.setViewportView(itemList);
 

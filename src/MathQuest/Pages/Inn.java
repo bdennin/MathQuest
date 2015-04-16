@@ -1,14 +1,10 @@
 package MathQuest.Pages;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
-
-import java.io.File;
-import java.io.IOException;
 
 import MathQuest.MathQuest;
 import MathQuest.GUI.LogPanel;
