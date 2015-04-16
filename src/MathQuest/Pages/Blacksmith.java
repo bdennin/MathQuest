@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import MathQuest.MathQuest;
 import MathQuest.GUI.OptionsPanel;
 import MathQuest.Logic.Character;
 import MathQuest.Logic.Item;
@@ -25,7 +26,9 @@ import java.awt.Font;
 
 import javax.swing.border.BevelBorder;
 import javax.swing.JComboBox;
+
 import java.awt.Color;
+
 import javax.swing.Icon;
 
 public class Blacksmith extends Area {
@@ -43,7 +46,7 @@ public class Blacksmith extends Area {
 	private static final Character character = new Character();
 	
 	public Blacksmith(final Character hero) {
-		super(hero, "src/MathQuest/Files/blacksmithMusic.mp3");
+		super(hero, MathQuest.class.getResource("Files/blacksmithMusic.mp3"));
 //		super(character, null);
 		this.loadImages();
 		this.loadOptionsPanel();
@@ -395,14 +398,10 @@ public class Blacksmith extends Area {
 
 	@Override
 	public void loadImages() {
-		try {           
-			this.background = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/insideBlacksmith.jpg")));
-			this.buyButtonIcon = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/attack.png")));
-			this.sellButtonIcon = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/sellingcoins.png")));
-			this.enhanceButtonIcon = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/anvil.png")));
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
+			this.background = new ImageIcon(MathQuest.class.getResource("Files/insideBlacksmith.jpg"));
+			this.buyButtonIcon = new ImageIcon(MathQuest.class.getResource("Files/attack.png"));
+			this.sellButtonIcon = new ImageIcon(MathQuest.class.getResource("Files/sellingcoins.png"));
+			this.enhanceButtonIcon = new ImageIcon(MathQuest.class.getResource("Files/anvil.png"));
 	}
 }

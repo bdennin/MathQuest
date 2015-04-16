@@ -5,20 +5,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
-import javax.swing.ProgressMonitor;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Random;
 
-import javax.imageio.ImageIO;
+import java.util.ArrayList;
 
 import javazoom.jlgui.basicplayer.BasicPlayerException;
 import MathQuest.MathQuest;
@@ -54,10 +47,11 @@ public class Combat extends Area {
 	private Character creature;
 	private String creatureName;
 	private Integer answer;
+	private boolean isFirstToAct;
 
 	public Combat(Character hero, Character creature) {
 
-		super(hero, "src/MathQuest/Files/combatMusic" + (RANDOM.nextInt(3) + 1) + ".mp3");
+		super(hero, MathQuest.class.getResource("Files/combatMusic" + (RANDOM.nextInt(3) + 1) + ".mp3"));
 		this.loadImages();
 		this.hero = hero;
 		this.creature = creature;
@@ -73,13 +67,14 @@ public class Combat extends Area {
 		this.combatLog = new LogPanel("Combat Log");
 		combatLog.addTextToScrollPane("You have entered combat!");
 		add(combatLog);
-		
+
 		this.renderBackground();
-		
-		if(hero.getLevel() >= creature.getLevel())
+
+		this.isFirstToAct = hero.getLevel() >= creature.getLevel();
+		if(isFirstToAct)
 			combatLog.addTextToScrollPane("It is your turn to act.");
 		else
-			combatLog.addTextToScrollPane("A " + creature.getName() + " attacks first!");
+			combatLog.addTextToScrollPane("A(n) " + creature.getName() + " will attack first!");
 	}
 
 	private Boolean checkDamage(int damage) {
@@ -89,7 +84,7 @@ public class Combat extends Area {
 	private void promptQuestion() {
 
 		combatLog.addTextToScrollPane("You try to find your opponent's weakness.");
-		
+
 		String question;
 		if(MathQuest.connectToDatabase){
 			String[] equationSettings = Database.getFormulaFromCache(creature.getLevel());
@@ -127,6 +122,11 @@ public class Combat extends Area {
 		combatLog.addTextToScrollPane("Solve: " + question);
 	}
 
+
+	private void setAttacker() {
+		this.isFirstToAct = true;
+	}
+	
 	private void loadCombatOptions() {
 
 		combatOptions.setBounds(587, 612, 269, 77);
@@ -138,9 +138,13 @@ public class Combat extends Area {
 		attackButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(hero.getLevel() < creature.getLevel())
+				if(!isFirstToAct) {
 					monsterAttack();
-				promptQuestion();
+					promptQuestion();
+				}
+				else {
+				 	promptQuestion();		
+				}
 			}
 		});
 		combatOptions.add(attackButton);
@@ -160,10 +164,11 @@ public class Combat extends Area {
 		usePotionButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(hero.getLevel() < creature.getLevel())
-					monsterAttack();
 				int potions = hero.getPotions();
 				if(potions > 0) {
+					if(!isFirstToAct) {
+						monsterAttack();
+					}
 					int currentHealth = hero.getCurrentHealth();
 					int maxHealth = hero.getMaxHealth();
 					int potionHealth = (int)(maxHealth * .3);
@@ -268,16 +273,19 @@ public class Combat extends Area {
 
 		int damage = creature.calculateDamage();
 		Boolean damageOutcome = checkDamage(damage);
-
+		
 		this.playAttackSound(creature, damageOutcome);
 
-		String output = "A " + creature.getName() + " attacks YOU for " + damage + " points of damage.";
+		String output = "A(n) " + creature.getName() + " attacks YOU for " + damage + " points of damage.";
 		combatLog.addTextToScrollPane(output);
 		MathQuest.getCharacter().takeDamage(damage);
 		this.reloadCharacterPanel();
 
 		if(MathQuest.getCharacter().getCurrentHealth() <= 0) {
 			this.defeat();
+		}
+		else if(!isFirstToAct) {
+			setAttacker();
 		}
 		else {
 			combatLog.addTextToScrollPane("It is your turn to act.");
@@ -303,67 +311,80 @@ public class Combat extends Area {
 
 	public void playAttackSound(Character character, Boolean damageOutcome) {
 
-		String combatSound = ("file:///" + System.getProperty("user.dir") + "/src/MathQuest/Files").replace("\\", "/");
+		String combatSound;
 		DamageType damageType = character.getDamageType();
 
 		switch (damageType) {
 		case CRUSHING:
 			if (damageOutcome == null) {	
-				combatSound += "/crushing2.mp3";
+				combatSound = "/crushing2.mp3";
 			}
 			else if (damageOutcome == false) {
-				combatSound += "/crushing0.mp3";
+				combatSound = "/crushing0.mp3";
 			}
 			else {
-				combatSound += "/crushing1.mp3";
+				combatSound = "/crushing1.mp3";
 			}
 			break;
 		case SLASHING:
 			if (damageOutcome == null) {
-				combatSound += "/slashing3.mp3";
+				combatSound = "/slashing3.mp3";
 			}
 			else if (damageOutcome == false) {
-				combatSound += "/slashing0.mp3";
+				combatSound = "/slashing0.mp3";
 			}
 			else {
-				combatSound += "/slashing" + (RANDOM.nextInt(2) + 1) + ".mp3";
+				combatSound = "/slashing" + (RANDOM.nextInt(2) + 1) + ".mp3";
 			}
 			break;
 		case MAGICAL:
 			if (damageOutcome == null){	
-				combatSound += "/magic4.mp3";
+				combatSound = "/magic4.mp3";
 			}
 			else if (damageOutcome == false) {
-				combatSound += "/magic0.mp3";
+				combatSound = "/magic0.mp3";
 			}
 			else {
-				combatSound += "/magic" + (RANDOM.nextInt(3) + 1) + ".mp3";
+				combatSound = "/magic" + (RANDOM.nextInt(3) + 1) + ".mp3";
 			}
 			break;
 		default:
 			throw new IllegalArgumentException();
 		}
-
-		try {
-			effectPlayer.open(new URL(combatSound));
-			effectPlayer.play();
-			effectPlayer.setGain(MathQuest.getVolume());
+		
+		combatSound = String.format("Files" + combatSound);
+		
+		if(character == hero) {
+			try {
+				soundPlayer.open(MathQuest.class.getResource(combatSound));
+				soundPlayer.play();
+				soundPlayer.setGain(MathQuest.getVolume());
+			}
+			catch(BasicPlayerException e) {
+				e.printStackTrace();
+			}	
 		}
-		catch(BasicPlayerException | MalformedURLException e) {
-			e.printStackTrace();
-		}	
+		else {
+			try {
+				effectPlayer.open(MathQuest.class.getResource(combatSound));
+				effectPlayer.play();
+				effectPlayer.setGain(MathQuest.getVolume());
+			}
+			catch(BasicPlayerException e) {
+				e.printStackTrace();
+			}	
+		}
 
 	}
 
 	private void victory() {
 
-		String filePath = ("file:///" + System.getProperty("user.dir") + "/src/MathQuest/Files/victory.mp3").replace("\\", "/");
 		try {
-			musicPlayer.open(new URL(filePath));
+			musicPlayer.open(MathQuest.class.getResource("Files/victory.mp3"));
 			musicPlayer.play();
 			musicPlayer.setGain(MathQuest.getVolume());
 		}
-		catch(BasicPlayerException | MalformedURLException e) {
+		catch(BasicPlayerException e) {
 			e.printStackTrace();
 		}
 
@@ -391,38 +412,37 @@ public class Combat extends Area {
 				victoryIcon);
 
 		if (level != hero.getLevel()) {
+
 			this.reloadCharacterPanel();
 			victoryString = String.format("<html>Congratulations! You have gained a<br/>level! You are now level %d.</html>", hero.getLevel());
-			filePath =  ("file:///" + System.getProperty("user.dir")+ "/src/MathQuest/Files" + "/levelUp.mp3").replace("\\", "/");
+
 			try {
-				soundPlayer.open(new URL(filePath));
-				soundPlayer.play();
-				soundPlayer.setGain(MathQuest.getVolume());
+				effectPlayer.open(MathQuest.class.getResource("Files/levelUp.mp3"));
+				effectPlayer.play();
+				effectPlayer.setGain(MathQuest.getVolume());
 			}
-			catch(BasicPlayerException | MalformedURLException e) {
+			catch(BasicPlayerException e) {
 				e.printStackTrace();
 			}
-			
+
 			JOptionPane.showMessageDialog(this, 
 					new JLabel(victoryString, JLabel.CENTER), 
 					"You Feel Stronger...", 
 					JOptionPane.PLAIN_MESSAGE,
 					levelUpIcon);
 		}
-		
+
 		MathQuest.switchToGameWorld();
 	}
 
 	private void defeat() {
 
-		String filePath = ("file:///" + System.getProperty("user.dir") + "/src/MathQuest/Files/defeat.mp3").replace("\\", "/");
-
 		try {
-			musicPlayer.open(new URL(filePath));
+			musicPlayer.open(MathQuest.class.getResource("Files/defeat.mp3"));
 			musicPlayer.play();
 			musicPlayer.setGain(MathQuest.getVolume());
 		}
-		catch(BasicPlayerException | MalformedURLException e) {
+		catch(BasicPlayerException e) {
 			e.printStackTrace();
 		}
 
@@ -445,21 +465,13 @@ public class Combat extends Area {
 	@Override
 	public void loadImages() {
 
-		Random random = new Random();
-		Integer pictureNumber = random.nextInt(8) + 1;
-		String imagePath = "src/MathQuest/Files/combat" + pictureNumber + ".jpg";
-
-		try {                
-			this.background = new ImageIcon(ImageIO.read(new File(imagePath)));
-			this.victoryIcon = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/victoryIcon.png")));
-			this.defeatIcon = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/defeatIcon.png")));
-			this.potionIcon = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/potion.png")));
-			this.attackIcon = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/attack.png")));
-			this.runAwayIcon = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/runAway.png")));
-			this.levelUpIcon = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/levelUp.png")));
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}	
+		Integer pictureNumber = RANDOM.nextInt(8) + 1;        
+		this.background = new ImageIcon(MathQuest.class.getResource("Files/combat" + pictureNumber + ".jpg"));
+		this.victoryIcon = new ImageIcon(MathQuest.class.getResource("Files/victoryIcon.png"));
+		this.defeatIcon = new ImageIcon(MathQuest.class.getResource("Files/defeatIcon.png"));
+		this.potionIcon = new ImageIcon(MathQuest.class.getResource("Files/potion.png"));
+		this.attackIcon = new ImageIcon(MathQuest.class.getResource("Files/attack.png"));
+		this.runAwayIcon = new ImageIcon(MathQuest.class.getResource("Files/runAway.png"));
+		this.levelUpIcon = new ImageIcon(MathQuest.class.getResource("Files/levelUp.png"));
 	}
 }

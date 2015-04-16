@@ -1,6 +1,9 @@
 package MathQuest.Logic;
 
+import java.net.URL;
 import java.util.ArrayList;
+
+import MathQuest.MathQuest;
 
 public class Character {
 
@@ -18,7 +21,7 @@ public class Character {
 	private int gold;
 	private int potions;
 	private String name;
-	private String imagePath;
+	private URL imagePath;
 	private int answeredCorrectly;
 	private int answeredIncorrectly;
 	private DamageType damageType;
@@ -40,7 +43,7 @@ public class Character {
 		this.currentHealth = this.vitality;
 		this.maxHealth = this.vitality;
 		this.level = 1;
-		this.imagePath = "src/MathQuest/Files/char2.jpg";
+		this.imagePath = MathQuest.class.getResource("Files/char2.jpg");
 		this.name = "Hero#1";
 		this.damageType = DamageType.SLASHING;
 		this.answeredCorrectly = 0;
@@ -49,7 +52,7 @@ public class Character {
 	}
 
 	//monster constructor
-	public Character(int level, String name, String imagePath, DamageType damageType) {
+	public Character(int level, String name, URL imagePath, DamageType damageType) {
 
 		int modifier = (level/5 + 1) * level;
 		
@@ -78,7 +81,7 @@ public class Character {
 		this.maxHealth = vitality;
 		this.strength = 10 + 2 * level;
 		this.maxExperience = (int)(10 * Math.pow(2, level));
-		this.imagePath = "char2.jpg";
+		this.imagePath = MathQuest.class.getResource("Files/char2.jpg");
 		this.damageType = DamageType.SLASHING;
 		this.name = "Hero#1";
 		this.answeredCorrectly = charStats[5];
@@ -212,7 +215,7 @@ public class Character {
 		return stats;
 	}
 
-	public String getImagePath() {
+	public URL getImagePath() {
 		return this.imagePath;
 	}
 

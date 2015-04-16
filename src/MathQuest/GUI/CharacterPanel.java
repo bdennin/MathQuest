@@ -1,13 +1,12 @@
 package MathQuest.GUI;
 
-import java.io.File;
-import java.io.IOException;
+import java.net.URL;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import MathQuest.MathQuest;
 import MathQuest.Logic.Character;
 import MathQuest.Pages.Area;
 
@@ -80,7 +79,7 @@ public class CharacterPanel extends JPanel {
 
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
-					
+
 				}
 
 				@Override
@@ -112,15 +111,12 @@ public class CharacterPanel extends JPanel {
 		add(charPortrait);
 	}
 
-	private void loadImages(String path) {
-		try {                
-			this.portrait = new ImageIcon(ImageIO.read(new File(path)));
-			if(isMagnifiable) {
-				this.fullPortrait = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/" + character.getName() + ".jpg")));
-				this.magnifierImage = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/magnifier.png")));
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
+	private void loadImages(URL path) {   
+
+		this.portrait = new ImageIcon(path);
+		if(isMagnifiable) {
+			this.fullPortrait = new ImageIcon(MathQuest.class.getResource("Files/" + character.getName() + ".jpg"));
+			this.magnifierImage = new ImageIcon(MathQuest.class.getResource("Files/magnifier.png"));
 		}
 	}
 }

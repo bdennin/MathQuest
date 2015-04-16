@@ -1,12 +1,12 @@
 package MathQuest.GUI;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
 
+import MathQuest.MathQuest;
 import MathQuest.Logic.Character;
 import MathQuest.Pages.Area;
 import MathQuest.Pages.World;
@@ -19,8 +19,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
-import java.io.IOException;
 
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
@@ -381,13 +379,10 @@ public class InventoryPanel extends JPanel {
 	}
 
 	public void loadImages() {
-		try {                
-			this.inventoryImage = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/inventory.png")));
-			this.helmetLabel = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/helmetLabel.png")));
-			this.weaponLabel = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/weaponLabel.png")));
-			this.armorLabel = new ImageIcon(ImageIO.read(new File("src/MathQuest/Files/armorLabel.png")));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
+			this.inventoryImage = new ImageIcon(MathQuest.class.getResource("Files/inventory.png"));
+			this.helmetLabel = new ImageIcon(MathQuest.class.getResource("Files/helmetLabel.png"));
+			this.weaponLabel = new ImageIcon(MathQuest.class.getResource("Files/weaponLabel.png"));
+			this.armorLabel = new ImageIcon(MathQuest.class.getResource("Files/armorLabel.png"));
 	}
 }

@@ -1,7 +1,6 @@
 package MathQuest.Pages;
 
 import java.awt.Component;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Random;
 
@@ -42,10 +41,10 @@ public abstract class Area extends JPanel {
 	public static boolean isOptionsVisible;
 	public static boolean isInventoryVisible;
 
-	public Area(Character hero, String musicFilePath) {
+	public Area(Character hero, URL url) {
 		
-		if(null != musicFilePath)
-			this.initializeMusic(musicFilePath);
+		if(null != url)
+			this.initializeMusic(url);
 		
 		this.setBounds(0, 0, 1024, 768);
 		this.setLayout(null);
@@ -73,9 +72,14 @@ public abstract class Area extends JPanel {
 		if(null == optionsPanel) {
 
 		}
-		else { 
+		else if(this instanceof KillingFields) {
 			optionsPanel.setLayout(null);
-			optionsPanel.setBounds(884, 643, 132, 94);
+			optionsPanel.setBounds(891, 675, 125, 62);
+			add(optionsPanel);
+		}
+		else{
+			optionsPanel.setLayout(null);
+			optionsPanel.setBounds(891, 645, 125, 92);
 			add(optionsPanel);
 		}
 	}
@@ -141,16 +145,15 @@ public abstract class Area extends JPanel {
 		this.repaint();
 	}
 
-	public void initializeMusic(String fileName) {
+	public void initializeMusic(URL url) {
 
-		String musicPath = String.format("file:///%s%s%s", System.getProperty("user.dir").replace("\\", "/"), "/", fileName);
-
+	
 		try {
-			musicPlayer.open(new URL(musicPath));
+			musicPlayer.open(url);
 			musicPlayer.play();
 			musicPlayer.setGain(MathQuest.getVolume());
 		}
-		catch(BasicPlayerException | MalformedURLException e) {
+		catch(BasicPlayerException e){
 			e.printStackTrace();
 		}
 	}
