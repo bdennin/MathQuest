@@ -52,16 +52,7 @@ public class Character {
 		this.answeredCorrectly = 0;
 		this.answeredIncorrectly = 0;
 		inventory = new ArrayList<Item>();
-		inventory.add(new Item(10, "Orange"));
-		inventory.add(new Item(10, "Orange"));
-		inventory.add(new Item(10, "Orange"));
-		inventory.add(new Item(10, "Orange"));
-		inventory.add(new Item(10, "Orange"));
-		inventory.add(new Item(10, "Orange"));
-		inventory.add(new Item(10, "Orange"));
-		inventory.add(new Item(10, "Orange"));
-		inventory.add(new Item(10, "Orange"));
-		
+		inventory.add(new Item());
 	}
 
 	//monster constructor
@@ -400,7 +391,6 @@ public class Character {
 		}
 		else {
 			Item equippable = (Item)item;
-			System.out.println(equippable.getImagePath());
 			String slot = equippable.getSlot();
 			if(slot.equals("Helmets")) {
 				if(this.equippedHelmet != null){
