@@ -112,6 +112,8 @@ public class MathQuest
 	public static void switchToGameWorld() {
 		contentPane = new World(hero);
 		outerFrame.setContentPane(contentPane);
+		contentPane.revalidate();
+		contentPane.repaint();
 	}
 
 	public static void switchToInn() {
@@ -122,16 +124,22 @@ public class MathQuest
 	public static void switchToBlacksmith() {
 		contentPane = new Blacksmith(hero);
 		outerFrame.setContentPane(contentPane);
+		contentPane.revalidate();
+		contentPane.repaint();
 	}
 
 	public static void switchToKillingFields() {
 		contentPane = new KillingFields(hero);
 		outerFrame.setContentPane(contentPane);
+		contentPane.revalidate();
+		contentPane.repaint();
 	}
 
 	public static void switchToCombat(Character creature) {
 		contentPane = new Combat(hero, creature);
 		outerFrame.setContentPane(contentPane);
+		contentPane.revalidate();
+		contentPane.repaint();
 	}
 
 	public static void switchToLogin(){
@@ -139,6 +147,7 @@ public class MathQuest
 		contentPane = new Login();
 		outerFrame.setContentPane(contentPane);
 		contentPane.revalidate();
+		contentPane.repaint();
 	}
 
 	public static void switchToAdminIndividualFormulaSetting(){

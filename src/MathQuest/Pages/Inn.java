@@ -12,6 +12,7 @@ import MathQuest.GUI.OptionsPanel;
 import MathQuest.Logic.Character;
 
 import java.awt.Color;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -42,7 +43,7 @@ public class Inn extends Area {
 
 		options.setBounds(587, 612, 269, 77);
 		options.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
-		options.setLayout(null);
+		options.setLayout(new GridLayout(1, 0, 0, 0));
 		add(options);
 
 		showOptions();
@@ -55,7 +56,6 @@ public class Inn extends Area {
 		options.removeAll();
 
 		JButton btnPotion = new JButton(this.potionIcon);
-		btnPotion.setBounds(3, 3, 88, 70);
 		btnPotion.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -74,7 +74,6 @@ public class Inn extends Area {
 		options.add(btnPotion);
 
 		JButton btnRest = new JButton(this.restIcon);
-		btnRest.setBounds(90, 3, 88, 70);	
 		btnRest.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -97,7 +96,6 @@ public class Inn extends Area {
 		combatLog.addTextToScrollPane("Please choose the service you want.");
 
 		JButton btnShower = new JButton(this.showerIcon);
-		btnShower.setBounds(3, 3, 88, 70);
 		btnShower.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -105,7 +103,7 @@ public class Inn extends Area {
 					hero.healthRegain("Shower");
 					hero.payForInn("Shower");
 					reloadCharacterPanel();
-					reloadInventoryPanel(false);
+					reloadInventoryPanel(false, hero.getInventory());
 					combatLog.addTextToScrollPane("You feel much better after showering!");
 				}
 				else
@@ -116,7 +114,6 @@ public class Inn extends Area {
 		options.add(btnShower);
 
 		JButton btnMeal = new JButton(this.mealIcon);
-		btnMeal.setBounds(90, 3, 88, 70);	
 		btnMeal.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -124,7 +121,7 @@ public class Inn extends Area {
 					hero.healthRegain("Meal");
 					hero.payForInn("Meal");
 					reloadCharacterPanel();
-					reloadInventoryPanel(false);
+					reloadInventoryPanel(false, hero.getInventory());
 					combatLog.addTextToScrollPane("You feel much better after eating!");
 				}
 				else 
@@ -135,7 +132,6 @@ public class Inn extends Area {
 		options.add(btnMeal);
 
 		JButton btnSleep = new JButton(this.bedIcon);
-		btnSleep.setBounds(177, 3, 88, 70);
 		btnSleep.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -143,7 +139,7 @@ public class Inn extends Area {
 					hero.healthRegain("Sleep");
 					hero.payForInn("Sleep");
 					reloadCharacterPanel();
-					reloadInventoryPanel(false);
+					reloadInventoryPanel(false, hero.getInventory());
 					combatLog.addTextToScrollPane("You feel much better after taking a nap!");
 				}
 				else 

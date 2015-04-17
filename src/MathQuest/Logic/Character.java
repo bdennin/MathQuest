@@ -3,7 +3,10 @@ package MathQuest.Logic;
 import java.net.URL;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
+
 import MathQuest.MathQuest;
+import MathQuest.GUI.InventoryPanel;
 
 public class Character {
 
@@ -49,6 +52,16 @@ public class Character {
 		this.answeredCorrectly = 0;
 		this.answeredIncorrectly = 0;
 		inventory = new ArrayList<Item>();
+		inventory.add(new Item(10, "Orange"));
+		inventory.add(new Item(10, "Orange"));
+		inventory.add(new Item(10, "Orange"));
+		inventory.add(new Item(10, "Orange"));
+		inventory.add(new Item(10, "Orange"));
+		inventory.add(new Item(10, "Orange"));
+		inventory.add(new Item(10, "Orange"));
+		inventory.add(new Item(10, "Orange"));
+		inventory.add(new Item(10, "Orange"));
+		
 	}
 
 	//monster constructor
@@ -387,6 +400,7 @@ public class Character {
 		}
 		else {
 			Item equippable = (Item)item;
+			System.out.println(equippable.getImagePath());
 			String slot = equippable.getSlot();
 			if(slot.equals("Helmets")) {
 				if(this.equippedHelmet != null){
@@ -394,6 +408,7 @@ public class Character {
 				}
 				this.setEquippedHelmet(equippable);
 				this.addItemStats(equippable);
+				InventoryPanel.setHelmetImage(new ImageIcon(equippable.getImagePath()));
 			}
 			else if(slot.equals("Armor")) {
 				if(this.equippedMail != null){
@@ -401,6 +416,7 @@ public class Character {
 				}
 				this.setEquippedMail(equippable);
 				this.addItemStats(equippable);
+				InventoryPanel.setArmorImage(new ImageIcon(equippable.getImagePath()));
 			}
 			else if(slot.equals("Boots")) {
 				if(this.equippedBoots != null){
@@ -408,6 +424,7 @@ public class Character {
 				}
 				this.setEquippedBoots(equippable);
 				this.addItemStats(equippable);
+				InventoryPanel.setFeetImage(new ImageIcon(equippable.getImagePath()));
 			}
 			else if(slot.equals("Gloves")) {
 				if(this.equippedGloves != null){
@@ -415,6 +432,7 @@ public class Character {
 				}
 				this.setEquippedGloves(equippable);
 				this.addItemStats(equippable);
+				InventoryPanel.setGloveImage(new ImageIcon(equippable.getImagePath()));
 			}
 			else {
 				if(this.equippedWeapon != null){
@@ -422,6 +440,7 @@ public class Character {
 				}
 				this.setEquippedWeapon(equippable);
 				this.addItemStats(equippable);
+				InventoryPanel.setWeaponImage(new ImageIcon(equippable.getImagePath()));
 			}
 			
 		}

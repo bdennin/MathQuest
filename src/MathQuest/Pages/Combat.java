@@ -75,6 +75,7 @@ public class Combat extends Area {
 			combatLog.addTextToScrollPane("It is your turn to act.");
 		else
 			combatLog.addTextToScrollPane("A(n) " + creature.getName() + " will attack first!");
+		this.refresh();
 	}
 
 	private Boolean checkDamage(int damage) {
@@ -84,7 +85,8 @@ public class Combat extends Area {
 	private void promptQuestion() {
 
 		combatLog.addTextToScrollPane("You try to find your opponent's weakness.");
-
+		this.refresh();
+		
 		String question;
 		if(MathQuest.connectToDatabase){
 			String[] equationSettings = Database.getFormulaFromCache(creature.getLevel());
@@ -120,6 +122,8 @@ public class Combat extends Area {
 
 		this.reloadCombatOptions(options);
 		combatLog.addTextToScrollPane("Solve: " + question);
+		this.refresh();
+		
 	}
 
 
@@ -185,6 +189,7 @@ public class Combat extends Area {
 			}
 		});
 		combatOptions.add(usePotionButton);
+		this.refresh();
 	}
 
 	private void reloadCombatOptions(final ArrayList<Integer> mathAnswers) {
@@ -233,6 +238,7 @@ public class Combat extends Area {
 			combatOptions.add(answerThree);
 			combatOptions.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
 		}
+		this.refresh();
 	}
 
 	private void attack(Integer answer) {
@@ -241,15 +247,18 @@ public class Combat extends Area {
 		Boolean damageOutcome = checkDamage(damage);
 
 		combatLog.addTextToScrollPane("You answered " + answer + ".");
+		this.refresh();
 
 		if(answer == this.answer) {
 			combatLog.addTextToScrollPane("Correct! You strike your enemy with great power!");
+			this.refresh();
 			hero.incrementAnsweredCorrectly();
 			damage = 2 * damage;
 			damageOutcome = null;
 		}
 		else {
 			combatLog.addTextToScrollPane("Good try, but the correct answer was " + this.answer + ".");
+			this.refresh();
 			hero.incrementAnsweredIncorrectly();
 		}
 
@@ -257,7 +266,8 @@ public class Combat extends Area {
 
 		String output = new String("You attack a " + this.creatureName + " for " + damage + " points of damage.");
 		combatLog.addTextToScrollPane(output);
-
+		this.refresh();
+		
 		creature.takeDamage(damage);
 		this.reloadMonsterPanel();
 
@@ -278,6 +288,7 @@ public class Combat extends Area {
 
 		String output = "A(n) " + creature.getName() + " attacks YOU for " + damage + " points of damage.";
 		combatLog.addTextToScrollPane(output);
+		this.refresh();
 		MathQuest.getCharacter().takeDamage(damage);
 		this.reloadCharacterPanel();
 
@@ -289,6 +300,7 @@ public class Combat extends Area {
 		}
 		else {
 			combatLog.addTextToScrollPane("It is your turn to act.");
+			this.refresh();
 		}
 	}
 

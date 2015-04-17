@@ -33,6 +33,12 @@ public class InventoryPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
+	private static ImageIcon headImage;
+	private static ImageIcon gloveImage;
+	private static ImageIcon feetImage;
+	private static ImageIcon mainImage;
+	private static ImageIcon chestImage;
+	
 	private ImageIcon inventoryImage;
 	private ImageIcon helmetLabel;
 	private ImageIcon armorLabel;
@@ -95,7 +101,7 @@ public class InventoryPanel extends JPanel {
 		scrollPane.setViewportView(itemList);
 
 		JButton btnEquip = new JButton("Equip");
-		btnEquip.setBounds(222, 140, 89, 23);
+		btnEquip.setBounds(222, 137, 89, 29);
 		btnEquip.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
 		btnEquip.addMouseListener(new MouseListener() {
 			@Override
@@ -133,10 +139,10 @@ public class InventoryPanel extends JPanel {
 		});
 		equipmentPanel.add(btnEquip);
 
-		JButton btnReset = new JButton("Reset");
-		btnReset.setBounds(116, 140, 89, 23);
-		btnReset.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
-		btnReset.addActionListener(new ActionListener() {
+		JButton btnShowAll = new JButton("<html><center>Show All</center></html>");
+		btnShowAll.setBounds(116, 137, 89, 29);
+		btnShowAll.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
+		btnShowAll.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -145,7 +151,7 @@ public class InventoryPanel extends JPanel {
 				frame.renderBackground();
 			}
 		});
-		equipmentPanel.add(btnReset);
+		equipmentPanel.add(btnShowAll);
 
 		final JLabel headLabel = new JLabel();
 		headLabel.setBounds(233, 17, 52, 52);
@@ -322,6 +328,36 @@ public class InventoryPanel extends JPanel {
 		});
 		inventoryStatsPanel.add(chestLabel);
 
+		JLabel headItem = new JLabel();
+		headItem.setBounds(233, 17, 52, 52);
+		if(null != headImage)
+			headItem.setIcon(headImage);
+		inventoryStatsPanel.add(headItem);
+
+		JLabel gloveItem = new JLabel();
+		if(null != gloveImage)
+			gloveItem.setIcon(gloveImage);
+		gloveItem.setBounds(121, 191, 52, 52);
+		inventoryStatsPanel.add(gloveItem);
+
+		JLabel feetItem = new JLabel();
+		if(null != feetImage)
+			feetItem.setIcon(feetImage);
+		feetItem.setBounds(233, 191, 52, 52);
+		inventoryStatsPanel.add(feetItem);
+
+		JLabel mainItem = new JLabel();
+		if(null != mainImage)
+			mainItem.setIcon(mainImage);
+		mainItem.setBounds(121, 59, 52, 109);
+		inventoryStatsPanel.add(mainItem);
+
+		JLabel chestItem = new JLabel();
+		if(null != chestImage)
+			chestItem.setIcon(chestImage);
+		chestItem.setBounds(233, 87, 52, 82);
+		inventoryStatsPanel.add(chestItem);
+
 		JLabel inventoryImage = new JLabel();
 		inventoryImage.setBounds(99, 9, 212, 260);
 		inventoryImage.setHorizontalAlignment(SwingConstants.CENTER);
@@ -460,7 +496,25 @@ public class InventoryPanel extends JPanel {
 
 	}
 
+	public static void setHelmetImage(ImageIcon image) {
+		headImage = image;
+	}
 
+	public static void setArmorImage(ImageIcon image) {
+		chestImage = image;
+	}
+
+	public static void setFeetImage(ImageIcon image) {
+		feetImage = image;
+	}
+
+	public static void setWeaponImage(ImageIcon image) {
+		mainImage = image;
+	}
+
+	public static void setGloveImage(ImageIcon image) {
+		gloveImage = image;
+	}
 
 	public void loadImages() {
 

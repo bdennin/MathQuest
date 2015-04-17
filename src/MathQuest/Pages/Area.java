@@ -40,8 +40,10 @@ public abstract class Area extends JPanel {
 	public static boolean isInventoryVisible;
 
 	public Area(Character hero, URL url) {
-		if(null != url)
+		if(null != url) {
 			this.initializeMusic(url);
+			this.revalidate();
+		}
 
 		this.setBounds(0, 0, 1024, 768);
 		this.setLayout(null);
@@ -79,6 +81,8 @@ public abstract class Area extends JPanel {
 			optionsPanel.setBounds(891, 645, 125, 92);
 			add(optionsPanel);
 		}
+		
+		this.refresh();
 	}
 
 	public abstract OptionsPanel loadOptionsPanel();
@@ -118,8 +122,6 @@ public abstract class Area extends JPanel {
 		inventoryPanel = new InventoryPanel(this, this.hero, items);
 		add(inventoryPanel);
 		inventoryPanel.setVisible(a);
-		this.revalidate();
-		this.repaint();
 		this.renderBackground();
 	}	
 
@@ -131,6 +133,7 @@ public abstract class Area extends JPanel {
 		backgroundLabel.setBounds(0, 0, 1024, 768);
 		backgroundLabel.setIcon(this.background);
 		add(backgroundLabel);
+		this.revalidate();
 		this.repaint();
 	}
 
@@ -152,7 +155,7 @@ public abstract class Area extends JPanel {
 			e.printStackTrace();
 		}
 	}
-
+	
 	public static void toggleInventory() {
 		isInventoryVisible = !isInventoryVisible;
 		if(isInventoryVisible && isOptionsVisible)
@@ -165,6 +168,11 @@ public abstract class Area extends JPanel {
 		if(isOptionsVisible && isInventoryVisible)
 			toggleInventory();
 		optionsMenu.setVisible(isOptionsVisible);
+	}
+	
+	public void refresh() {
+		this.revalidate();
+		this.repaint();
 	}
 	
 }
