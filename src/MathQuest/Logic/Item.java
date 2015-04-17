@@ -32,6 +32,7 @@ public class Item {
 		vit = 0;
 		gold = 1;
 		isEquipped = false;
+		this.setImagePath();
 	}
 
 	public Item(String[] strings, Integer[] numbers, boolean equipped){
@@ -43,6 +44,7 @@ public class Item {
 		gold = numbers[2];
 		vit = numbers[3];
 		isEquipped = equipped;  
+		this.setImagePath();
 	}
 
 	public Item(int monsterLvl, String catagory){
@@ -61,7 +63,7 @@ public class Item {
 			setStatsFalcor();
 		else
 			setStatsBasic();
-
+		this.setImagePath();
 	}
 
 
@@ -110,7 +112,6 @@ public class Item {
 		gold = gold * itemLevel;
 		modifier = itemName;
 		itemName = modifier + slotName;
-		this.setImagePath();
 
 	}
 
@@ -159,7 +160,6 @@ public class Item {
 		gold = gold * itemLevel;
 		animalName = itemName;
 		itemName = slotName + animalName;
-		this.setImagePath();
 	}
 
 	private void setStatsEpic(){
@@ -222,7 +222,6 @@ public class Item {
 		gold = gold * itemLevel;
 		animalName = itemName;
 		itemName = epicName + slotName + animalName;
-		this.setImagePath();
 		
 	}
 
@@ -253,7 +252,6 @@ public class Item {
 		str = str * itemLevel;
 		vit = vit * itemLevel * 2;
 		gold = gold * itemLevel;
-		this.setImagePath();
 
 	}
 
@@ -532,9 +530,9 @@ public class Item {
 
 	public String toString(){
 		if (isEquipped == true){
-			return itemName + " (Equipped)";
+			return String.format("<html><font color='%s'>%s</font> (Equipped)</html>", this.getColor(), itemName);
 		}
-		return itemName;
+		return String.format("<html><font color='%s'>%s</font></html>", this.getColor(), itemName);
 	}
 
 	public String getName(){

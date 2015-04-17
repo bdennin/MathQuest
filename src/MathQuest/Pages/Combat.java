@@ -413,7 +413,7 @@ public class Combat extends Area {
 			victoryString = String.format("<html>You are victorious! You check your<br/>enemy for gold and head back to<br/>town. You receive:<br/><Center><br/>%d XP<br/>%d Gold<br/></Center></html>", experience, gold);
 		}
 		else {
-			victoryString = String.format("<html>You are victorious! You check your<br/>enemy for gold and head back to<br/>town. You receive:<br/><Center><br/>%d XP<br/>%d Gold<br/><font color='%s'>[%s]</font><br/></Center></html>", experience, gold, droppedItem.getColor(), droppedItem);
+			victoryString = String.format("<html>You are victorious! You check your<br/>enemy for gold and head back to<br/>town. You receive:<br/><Center><br/>%d XP<br/>%d Gold<br/><font color='%s'>[%s]</font><br/></Center></html>", experience, gold, droppedItem.getColor(), droppedItem.getName());
 			hero.addToInventory(droppedItem);
 		}
 
