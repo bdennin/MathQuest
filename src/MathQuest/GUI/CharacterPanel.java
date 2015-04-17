@@ -14,6 +14,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -31,7 +32,6 @@ public class CharacterPanel extends JPanel {
 	private boolean isMagnifiable;
 
 	public CharacterPanel(final Area frame, Character character, boolean isLevelDisplayed, boolean isMagnifiable) {
-
 		this.setLayout(null);
 		this.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
 		this.setBounds(0, 0, 107, 144);
@@ -46,7 +46,6 @@ public class CharacterPanel extends JPanel {
 		this.add(healthBar);
 
 		if(isLevelDisplayed) {
-
 			JPanel levelPanel = new JPanel();
 			levelPanel.setLayout(null);
 			levelPanel.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -54,6 +53,7 @@ public class CharacterPanel extends JPanel {
 			add(levelPanel);
 
 			JLabel levelLabel = new JLabel(level.toString());
+			levelLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
 			levelLabel.setBounds(0, 0, 22, 20);
 			levelPanel.add(levelLabel);
 			levelLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -112,7 +112,6 @@ public class CharacterPanel extends JPanel {
 	}
 
 	private void loadImages(URL path) {   
-
 		this.portrait = new ImageIcon(path);
 		if(isMagnifiable) {
 			this.fullPortrait = new ImageIcon(MathQuest.class.getResource("Files/" + character.getName() + ".jpg"));

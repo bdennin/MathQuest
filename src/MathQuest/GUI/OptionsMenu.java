@@ -111,8 +111,8 @@ public class OptionsMenu extends JPanel {
 		});
 		optionsBody.add(btnDeleteCharacter);
 
-		JButton btnClose = new JButton("X");
-		btnClose.setBounds(298, 1, 40, 20);
+		JButton btnClose = new JButton("<html><center>X</center></html>");
+		btnClose.setBounds(300, 2, 36, 18);
 		add(btnClose);
 		btnClose.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		btnClose.addActionListener(new ActionListener() {

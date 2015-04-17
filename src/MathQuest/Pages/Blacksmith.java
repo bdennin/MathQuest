@@ -186,7 +186,7 @@ public class Blacksmith extends Area {
 				playSound("coins");
 				hero.removeFromInventory((Item)inventoryComboBox.getSelectedItem());
 				inventoryComboBox.removeItem(inventoryComboBox.getSelectedItem());
-				reloadInventoryPanel(false);
+				reloadInventoryPanel(false, hero.getInventory());
 			}
 		});
 
@@ -225,7 +225,7 @@ public class Blacksmith extends Area {
 					hero.removeGold(i.getItemGold());
 					i.enhanceItem();
 					playSound("hammer");
-					reloadInventoryPanel(false);
+					reloadInventoryPanel(false, hero.getInventory());
 				}
 				else{
 					scrollPane.addTextToScrollPane("You Don't have enough.");

@@ -5,8 +5,10 @@ import javax.swing.JPanel;
 import MathQuest.Logic.Character;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
@@ -26,6 +28,7 @@ public class HealthBar extends JPanel {
 		double lifePercentage = (double)life/(double)totalLife;
 
 		final JLabel lifeLabel = new JLabel();
+		lifeLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
 		lifeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lifeLabel.setBounds(0, 0, 99, 28);
 		add(lifeLabel);

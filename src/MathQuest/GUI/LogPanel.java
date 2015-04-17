@@ -46,5 +46,7 @@ public class LogPanel extends JPanel{
 	public void addTextToScrollPane(String text) {
 		this.scrollText.append(text);
 		this.scrollText.append("\n");
+		this.revalidate();
+		this.repaint();
 	}
 }

@@ -1,6 +1,8 @@
 package MathQuest.GUI;
 
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
@@ -8,6 +10,7 @@ import javax.swing.border.LineBorder;
 
 import MathQuest.MathQuest;
 import MathQuest.Logic.Character;
+import MathQuest.Logic.Item;
 import MathQuest.Pages.Area;
 import MathQuest.Pages.World;
 
@@ -19,10 +22,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JButton;
+import javax.swing.JScrollPane;
 
 public class InventoryPanel extends JPanel {
 
@@ -33,9 +38,9 @@ public class InventoryPanel extends JPanel {
 	private ImageIcon armorLabel;
 	private ImageIcon weaponLabel;
 
-	public InventoryPanel(final Area frame, final Character hero) {
+	public InventoryPanel(final Area frame, final Character hero, final ArrayList<Item> items) {
 
-		this.setBounds(675, 4, 341, 479);
+		this.setBounds(675, 4, 341, 558);
 		this.setLayout(null);
 		this.setBackground(Color.LIGHT_GRAY);
 		this.loadImages();
@@ -61,19 +66,89 @@ public class InventoryPanel extends JPanel {
 		String life = String.format("%s / %s", currentLife.toString(), maxLife.toString());
 
 		JPanel inventoryBody = new JPanel();
-		inventoryBody.setBounds(0, 22, 341, 457);
+		inventoryBody.setBounds(0, 22, 342, 537);
 		inventoryBody.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
 		inventoryBody.setLayout(null);
 		add(inventoryBody);
 
 		JPanel inventoryStatsPanel = new JPanel();
-		inventoryStatsPanel.setBounds(10, 184, 321, 263);
+		inventoryStatsPanel.setBounds(10, 67, 321, 278);
 		inventoryBody.add(inventoryStatsPanel);
 		inventoryStatsPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		inventoryStatsPanel.setLayout(null);
 
+		JPanel equipmentPanel = new JPanel();
+		equipmentPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		equipmentPanel.setBounds(10, 352, 321, 174);
+		inventoryBody.add(equipmentPanel);
+		equipmentPanel.setLayout(null);
+
+		final JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 32, 301, 99);
+		equipmentPanel.add(scrollPane);
+
+		final JList<Item> itemList = new JList<Item>();
+		final DefaultListModel<Item> model = new DefaultListModel<Item>();
+		itemList.setModel(model);
+		for(Item el : items) 
+			model.addElement(el);
+		scrollPane.setViewportView(itemList);
+
+		JButton btnEquip = new JButton("Equip");
+		btnEquip.setBounds(222, 140, 89, 23);
+		btnEquip.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
+		btnEquip.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				Item item = itemList.getSelectedValue();
+				if(null == item) {
+
+				}
+				else {
+					hero.equip(item);
+					frame.reloadCharacterPanel();
+					frame.reloadInventoryPanel(true, items);
+				}
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+
+			}
+		});
+		equipmentPanel.add(btnEquip);
+
+		JButton btnReset = new JButton("Reset");
+		btnReset.setBounds(116, 140, 89, 23);
+		btnReset.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
+		btnReset.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				@SuppressWarnings({ "rawtypes", "unchecked" })
+				final JList items = new JList(hero.getInventory().toArray());
+				scrollPane.setViewportView(items);
+				frame.renderBackground();
+			}
+		});
+		equipmentPanel.add(btnReset);
+
 		final JLabel headLabel = new JLabel();
-		headLabel.setBounds(136, 9, 52, 52);
+		headLabel.setBounds(233, 17, 52, 52);
 		headLabel.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -92,7 +167,12 @@ public class InventoryPanel extends JPanel {
 
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				frame.addInventoryWindow("Helmets");
+				ArrayList<Item> headItems = new ArrayList<Item>();
+				for(Item el : hero.getInventory()) {
+					if(el.getSlot() == "Helmets")
+						headItems.add(el);
+				}
+				frame.reloadInventoryPanel(true, headItems);
 			}
 
 			@Override
@@ -103,7 +183,7 @@ public class InventoryPanel extends JPanel {
 		inventoryStatsPanel.add(headLabel);
 
 		final JLabel gloveLabel = new JLabel();
-		gloveLabel.setBounds(23, 183, 52, 52);
+		gloveLabel.setBounds(121, 191, 52, 52);
 		gloveLabel.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -122,7 +202,12 @@ public class InventoryPanel extends JPanel {
 
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				frame.addInventoryWindow("Gloves");
+				ArrayList<Item> handItems = new ArrayList<Item>();
+				for(Item el : hero.getInventory()) {
+					if(el.getSlot() == "Gloves")
+						handItems.add(el);
+				}
+				frame.reloadInventoryPanel(true, handItems);
 			}
 
 			@Override
@@ -133,7 +218,7 @@ public class InventoryPanel extends JPanel {
 		inventoryStatsPanel.add(gloveLabel);
 
 		final JLabel feetLabel = new JLabel();
-		feetLabel.setBounds(249, 183, 52, 52);
+		feetLabel.setBounds(233, 191, 52, 52);
 		feetLabel.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -152,7 +237,12 @@ public class InventoryPanel extends JPanel {
 
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				frame.addInventoryWindow("Boots");
+				ArrayList<Item> feetItems = new ArrayList<Item>();
+				for(Item el : hero.getInventory()) {
+					if(el.getSlot() == "Boots")
+						feetItems.add(el);
+				}
+				frame.reloadInventoryPanel(true, feetItems);
 			}
 
 			@Override
@@ -163,7 +253,7 @@ public class InventoryPanel extends JPanel {
 		inventoryStatsPanel.add(feetLabel);
 
 		final JLabel mainLabel = new JLabel();
-		mainLabel.setBounds(22, 51, 52, 109);
+		mainLabel.setBounds(121, 59, 52, 109);
 		mainLabel.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -182,7 +272,12 @@ public class InventoryPanel extends JPanel {
 
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				frame.addInventoryWindow("Weapons");
+				ArrayList<Item> mainItems = new ArrayList<Item>();
+				for(Item el : hero.getInventory()) {
+					if(el.getSlot() == "Weapons")
+						mainItems.add(el);
+				}
+				frame.reloadInventoryPanel(true, mainItems);
 			}
 
 			@Override
@@ -193,7 +288,7 @@ public class InventoryPanel extends JPanel {
 		inventoryStatsPanel.add(mainLabel);
 
 		final JLabel chestLabel = new JLabel();
-		chestLabel.setBounds(135, 79, 52, 82);
+		chestLabel.setBounds(233, 87, 52, 82);
 		chestLabel.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -212,7 +307,12 @@ public class InventoryPanel extends JPanel {
 
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				frame.addInventoryWindow("Armor");
+				ArrayList<Item> chestItems = new ArrayList<Item>();
+				for(Item el : hero.getInventory()) {
+					if(el.getSlot() == "Armor")
+						chestItems.add(el);
+				}
+				frame.reloadInventoryPanel(true, chestItems);
 			}
 
 			@Override
@@ -223,15 +323,73 @@ public class InventoryPanel extends JPanel {
 		inventoryStatsPanel.add(chestLabel);
 
 		JLabel inventoryImage = new JLabel();
-		inventoryImage.setForeground(Color.BLACK);
+		inventoryImage.setBounds(99, 9, 212, 260);
 		inventoryImage.setHorizontalAlignment(SwingConstants.CENTER);
-		inventoryImage.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 5));
-		inventoryImage.setBounds(0, 0, 318, 260);
 		inventoryImage.setIcon(this.inventoryImage);
 		inventoryStatsPanel.add(inventoryImage);
 
+		JLabel lifeLabel = new JLabel("Life:");
+		lifeLabel.setBounds(10, 9, 75, 14);
+		inventoryStatsPanel.add(lifeLabel);
+		lifeLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
+		lifeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+		JLabel actualLifeLabel = new JLabel(life);
+		actualLifeLabel.setBounds(10, 23, 75, 14);
+		inventoryStatsPanel.add(actualLifeLabel);
+		actualLifeLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
+		actualLifeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+		JLabel strengthLabel = new JLabel("Strength:");
+		strengthLabel.setBounds(10, 52, 75, 14);
+		inventoryStatsPanel.add(strengthLabel);
+		strengthLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
+		strengthLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+		JLabel damageLabel = new JLabel("Damage:");
+		damageLabel.setBounds(10, 91, 75, 14);
+		inventoryStatsPanel.add(damageLabel);
+		damageLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
+		damageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+		JLabel actualDamage = new JLabel(damage);
+		actualDamage.setBounds(10, 105, 75, 14);
+		inventoryStatsPanel.add(actualDamage);
+		actualDamage.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
+		actualDamage.setHorizontalAlignment(SwingConstants.CENTER);
+
+		JLabel actualStrengthLabel = new JLabel(actualStrength.toString());
+		actualStrengthLabel.setBounds(10, 66, 75, 14);
+		inventoryStatsPanel.add(actualStrengthLabel);
+		actualStrengthLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
+		actualStrengthLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+		JLabel goldLabel = new JLabel("Gold:");
+		goldLabel.setBounds(10, 200, 75, 14);
+		inventoryStatsPanel.add(goldLabel);
+		goldLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
+		goldLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+		JLabel potionLabel = new JLabel("Potions:");
+		potionLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		potionLabel.setBounds(10, 241, 75, 14);
+		inventoryStatsPanel.add(potionLabel);
+		potionLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
+
+		JLabel actualGoldLabel = new JLabel(actualGold.toString());
+		actualGoldLabel.setBounds(10, 214, 75, 14);
+		inventoryStatsPanel.add(actualGoldLabel);
+		actualGoldLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
+		actualGoldLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+		JLabel actualPotionsLabel = new JLabel(potions.toString());
+		actualPotionsLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		actualPotionsLabel.setBounds(10, 255, 75, 14);
+		inventoryStatsPanel.add(actualPotionsLabel);
+		actualPotionsLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
+
 		JPanel characterStatsPanel = new JPanel();
-		characterStatsPanel.setBounds(10, 11, 321, 168);
+		characterStatsPanel.setBounds(10, 11, 321, 49);
 		inventoryBody.add(characterStatsPanel);
 		characterStatsPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		characterStatsPanel.setLayout(null);
@@ -240,120 +398,51 @@ public class InventoryPanel extends JPanel {
 		levelLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
 		levelLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		levelLabel.setVerticalAlignment(SwingConstants.TOP);
-		levelLabel.setBorder(new LineBorder(Color.black));
-		levelLabel.setBounds(10, 11, 68, 29);
+		levelLabel.setBounds(10, 9, 68, 14);
 		characterStatsPanel.add(levelLabel);
 
 		JLabel experienceLabel = new JLabel("Experience:");
 		experienceLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
 		experienceLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		experienceLabel.setVerticalAlignment(SwingConstants.TOP);
-		experienceLabel.setBorder(new LineBorder(Color.black));
-		experienceLabel.setBounds(88, 11, 108, 29);
+		experienceLabel.setBounds(88, 9, 108, 14);
 		characterStatsPanel.add(experienceLabel);
 
 		JLabel nextLevelLabel = new JLabel("Next Level:");
 		nextLevelLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
 		nextLevelLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		nextLevelLabel.setVerticalAlignment(SwingConstants.TOP);
-		nextLevelLabel.setBorder(new LineBorder(Color.black));
-		nextLevelLabel.setBounds(206, 11, 105, 29);
+		nextLevelLabel.setBounds(206, 9, 105, 14);
 		characterStatsPanel.add(nextLevelLabel);
 
 		JLabel actualLevel = new JLabel(level.toString());
 		actualLevel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
 		actualLevel.setHorizontalAlignment(SwingConstants.CENTER);
-		actualLevel.setBounds(10, 26, 68, 14);
+		actualLevel.setBounds(10, 24, 68, 14);
 		characterStatsPanel.add(actualLevel);
 
 		JLabel actualExperience = new JLabel(experience.toString());
 		actualExperience.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
 		actualExperience.setHorizontalAlignment(SwingConstants.CENTER);
-		actualExperience.setBounds(88, 26, 105, 14);
+		actualExperience.setBounds(88, 24, 105, 14);
 		characterStatsPanel.add(actualExperience);
 
 		JLabel actualNextLevel = new JLabel(nextLevel.toString());
 		actualNextLevel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
 		actualNextLevel.setHorizontalAlignment(SwingConstants.CENTER);
-		actualNextLevel.setBounds(206, 26, 105, 14);
+		actualNextLevel.setBounds(206, 24, 105, 14);
 		characterStatsPanel.add(actualNextLevel);
 
-		JLabel strengthLabel = new JLabel("Strength:");
-		strengthLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
-		strengthLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		strengthLabel.setBounds(175, 63, 68, 14);
-		characterStatsPanel.add(strengthLabel);
+		JLabel equipmentLabel = new JLabel("Equipment:");
+		equipmentLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		equipmentLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
+		equipmentLabel.setBounds(91, 9, 138, 14);
+		equipmentPanel.add(equipmentLabel);
 
-		JLabel damageLabel = new JLabel("Damage:");
-		damageLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
-		damageLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		damageLabel.setBounds(175, 88, 68, 14);
-		characterStatsPanel.add(damageLabel);
-
-		JLabel actualDamage = new JLabel(damage);
-		actualDamage.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
-		actualDamage.setHorizontalAlignment(SwingConstants.CENTER);
-		actualDamage.setBounds(243, 88, 68, 14);
-		characterStatsPanel.add(actualDamage);
-
-		JLabel lifeLabel = new JLabel("Life:");
-		lifeLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
-		lifeLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		lifeLabel.setBounds(25, 63, 68, 14);
-		characterStatsPanel.add(lifeLabel);
-
-		JLabel actualLifeLabel = new JLabel(life);
-		actualLifeLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
-		actualLifeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		actualLifeLabel.setBounds(92, 63, 68, 14);
-		characterStatsPanel.add(actualLifeLabel);
-
-		JLabel lifeBorder = new JLabel();
-		lifeBorder.setBounds(10, 51, 150, 64);
-		lifeBorder.setBorder(new LineBorder(Color.black));
-		characterStatsPanel.add(lifeBorder);
-
-		JLabel strengthBorder = new JLabel();
-		strengthBorder.setBounds(165, 51, 146, 64);
-		strengthBorder.setBorder(new LineBorder(Color.black));
-		characterStatsPanel.add(strengthBorder);
-
-		JLabel goldLabel = new JLabel("Gold:");
-		goldLabel.setBounds(25, 133, 73, 14);
-		characterStatsPanel.add(goldLabel);
-		goldLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
-		goldLabel.setHorizontalAlignment(SwingConstants.LEFT);
-
-		JLabel itemBorder = new JLabel();
-		itemBorder.setBounds(10, 126, 301, 29);
-		itemBorder.setBorder(new LineBorder(Color.black));
-		characterStatsPanel.add(itemBorder);
-
-		JLabel actualStrengthLabel = new JLabel(actualStrength.toString());
-		actualStrengthLabel.setBounds(243, 63, 68, 14);
-		characterStatsPanel.add(actualStrengthLabel);
-		actualStrengthLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
-		actualStrengthLabel.setHorizontalAlignment(SwingConstants.CENTER);
-
-		JLabel potionLabel = new JLabel("Potions:");
-		potionLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
-		potionLabel.setBounds(175, 133, 68, 14);
-		characterStatsPanel.add(potionLabel);
-
-		JLabel actualGoldLabel = new JLabel(actualGold.toString());
-		actualGoldLabel.setBounds(97, 133, 63, 14);
-		characterStatsPanel.add(actualGoldLabel);
-		actualGoldLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
-		actualGoldLabel.setHorizontalAlignment(SwingConstants.CENTER);
-
-		JLabel actualPotionsLabel = new JLabel(potions.toString());
-		actualPotionsLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
-		actualPotionsLabel.setBounds(253, 133, 46, 14);
-		characterStatsPanel.add(actualPotionsLabel);
-
-		JButton btnOK = new JButton("X");
-		btnOK.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		btnOK.setBounds(301, 1, 40, 20);
+		JButton btnOK = new JButton("<html><center>X</center></html>");
+		btnOK.setHorizontalAlignment(SwingConstants.LEFT);
+		btnOK.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnOK.setBounds(303, 2, 36, 18);
 		add(btnOK);
 		btnOK.addActionListener(new ActionListener() {
 			@Override
@@ -363,26 +452,21 @@ public class InventoryPanel extends JPanel {
 					World world = (World)frame;
 					world.loadJLabels();
 				}
-				if(null == frame.getInventoryWindow()) {
-
-				}
-				else {
-					frame.removeInventoryWindow();
-				}
 
 				Area.toggleInventory();
 				frame.renderBackground();
 			}
 		});
-		
-		
+
 	}
 
+
+
 	public void loadImages() {
-		
-			this.inventoryImage = new ImageIcon(MathQuest.class.getResource("Files/inventory.png"));
-			this.helmetLabel = new ImageIcon(MathQuest.class.getResource("Files/helmetLabel.png"));
-			this.weaponLabel = new ImageIcon(MathQuest.class.getResource("Files/weaponLabel.png"));
-			this.armorLabel = new ImageIcon(MathQuest.class.getResource("Files/armorLabel.png"));
+
+		this.inventoryImage = new ImageIcon(MathQuest.class.getResource("Files/inventory.png"));
+		this.helmetLabel = new ImageIcon(MathQuest.class.getResource("Files/helmetLabel.png"));
+		this.weaponLabel = new ImageIcon(MathQuest.class.getResource("Files/weaponLabel.png"));
+		this.armorLabel = new ImageIcon(MathQuest.class.getResource("Files/armorLabel.png"));
 	}
 }

@@ -48,7 +48,7 @@ public class Character {
 		this.damageType = DamageType.SLASHING;
 		this.answeredCorrectly = 0;
 		this.answeredIncorrectly = 0;
-		inventory =  new ArrayList<Item>();
+		inventory = new ArrayList<Item>();
 	}
 
 	//monster constructor

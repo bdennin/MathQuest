@@ -1,7 +1,7 @@
 package MathQuest.Pages;
 
-import java.awt.Component;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
@@ -13,10 +13,10 @@ import javazoom.jlgui.basicplayer.BasicPlayerException;
 import MathQuest.MathQuest;
 import MathQuest.GUI.CharacterPanel;
 import MathQuest.GUI.InventoryPanel;
-import MathQuest.GUI.InventoryWindow;
 import MathQuest.GUI.OptionsMenu;
 import MathQuest.GUI.OptionsPanel;
 import MathQuest.Logic.Character;
+import MathQuest.Logic.Item;
 
 public abstract class Area extends JPanel {
 
@@ -30,43 +30,40 @@ public abstract class Area extends JPanel {
 	protected static OptionsMenu optionsMenu;
 	protected static InventoryPanel inventoryPanel;
 
-	protected InventoryWindow inventoryWindow;
 	protected CharacterPanel characterPanel;
 	protected OptionsPanel optionsPanel;
 	protected ImageIcon background;
 	protected JLabel backgroundLabel;	
 	protected Character hero;
-	protected boolean isEnabled;
 
 	public static boolean isOptionsVisible;
 	public static boolean isInventoryVisible;
 
 	public Area(Character hero, URL url) {
-		
 		if(null != url)
 			this.initializeMusic(url);
-		
+
 		this.setBounds(0, 0, 1024, 768);
 		this.setLayout(null);
-		this.isEnabled = true;
-		this.hero = hero;
 
-		isOptionsVisible = true;
-		optionsMenu = new OptionsMenu(this);	
-		Area.toggleOptions();
-		add(optionsMenu);
+		if(null != hero) {
+			this.hero = hero;
+			this.characterPanel = new CharacterPanel(this, this.hero, true, false);
+			characterPanel.setLayout(null);
+			characterPanel.setBounds(6, 6, 107, 144);
+			add(characterPanel);
+			
+			isOptionsVisible = true;
+			optionsMenu = new OptionsMenu(this);	
+			Area.toggleOptions();
+			add(optionsMenu);
 
-		isInventoryVisible = true;
-		inventoryPanel = new InventoryPanel(this, this.hero);
-		Area.toggleInventory();
-		add(inventoryPanel);
+			isInventoryVisible = true;
+			inventoryPanel = new InventoryPanel(this, this.hero, hero.getInventory());
+			Area.toggleInventory();
+			add(inventoryPanel);
 
-		this.inventoryWindow = null;
-		
-		this.characterPanel = new CharacterPanel(this, this.hero, true, false);
-		characterPanel.setLayout(null);
-		characterPanel.setBounds(6, 6, 107, 144);
-		add(characterPanel);
+		}
 
 		this.optionsPanel = loadOptionsPanel();
 		if(null == optionsPanel) {
@@ -87,15 +84,6 @@ public abstract class Area extends JPanel {
 	public abstract OptionsPanel loadOptionsPanel();
 
 	public abstract void loadImages();
-
-	public void toggleElements() {
-		this.isEnabled = !isEnabled;
-		for(Component el : this.getComponents()) {
-			el.setEnabled(isEnabled);
-		}
-		this.revalidate();
-		this.repaint();
-	}
 
 	public CharacterPanel getCharacterPanel() {
 		return this.characterPanel;
@@ -124,17 +112,18 @@ public abstract class Area extends JPanel {
 		this.renderBackground();
 	}
 
-	public void reloadInventoryPanel(boolean a) {
+	public void reloadInventoryPanel(boolean a, ArrayList<Item> items) {
 
 		this.remove(inventoryPanel);
-		inventoryPanel = new InventoryPanel(this, this.hero);
+		inventoryPanel = new InventoryPanel(this, this.hero, items);
 		add(inventoryPanel);
 		inventoryPanel.setVisible(a);
+		this.revalidate();
+		this.repaint();
 		this.renderBackground();
 	}	
-	
-	public void renderBackground() {
 
+	public void renderBackground() {
 		if(null != this.backgroundLabel)
 			this.remove(backgroundLabel);
 
@@ -146,8 +135,6 @@ public abstract class Area extends JPanel {
 	}
 
 	public void initializeMusic(URL url) {
-
-	
 		try {
 			musicPlayer.open(url);
 			musicPlayer.play();
@@ -157,7 +144,7 @@ public abstract class Area extends JPanel {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void setMusicVolume() {
 		try {
 			musicPlayer.setGain(MathQuest.getVolume());
@@ -179,29 +166,5 @@ public abstract class Area extends JPanel {
 			toggleInventory();
 		optionsMenu.setVisible(isOptionsVisible);
 	}
-
-	public InventoryWindow getInventoryWindow() {
-		return this.inventoryWindow;
-	}
 	
-	public void addInventoryWindow(String inventoryHeader) {
-		if(null == inventoryWindow) {
-			inventoryWindow = new InventoryWindow(this, hero, inventoryHeader);
-			this.add(inventoryWindow);
-			this.renderBackground();
-		}
-		else if(this.inventoryWindow.getHeaderText() != inventoryHeader) {
-			this.removeInventoryWindow();
-			this.addInventoryWindow(inventoryHeader);
-		}
-		else {
-			
-		}
-	}
-
-	public void removeInventoryWindow() {
-		this.remove(inventoryWindow);
-		inventoryWindow = null;
-		this.renderBackground();
-	}
 }
