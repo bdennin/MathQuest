@@ -30,7 +30,7 @@ public class KillingFields extends Area {
 	private Character creature;
 	
 	public KillingFields(Character hero) {
-		super(hero, MathQuest.class.getResource("Files/killingFieldsMusic.mp3"));
+		super(hero);
 		this.loadImages();
 		
 		JPanel creaturePanel = new JPanel();

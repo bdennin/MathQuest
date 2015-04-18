@@ -1,12 +1,9 @@
 package MathQuest.Pages;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 
 import MathQuest.MathQuest;
 import MathQuest.GUI.OptionsPanel;
@@ -16,10 +13,6 @@ import MathQuest.GUI.LogPanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import javax.swing.SwingConstants;
 import javax.swing.border.CompoundBorder;
@@ -31,10 +24,6 @@ import javax.swing.JComboBox;
 
 import java.awt.Color;
 
-import javax.swing.Icon;
-
-import javazoom.jlgui.basicplayer.BasicPlayerException;
-
 public class Blacksmith extends Area {
 	
 	private static final long serialVersionUID = 1L;
@@ -43,16 +32,12 @@ public class Blacksmith extends Area {
 	final JPanel itemsPanel, buyPanel, sellPanel, enhanceOptionsPanel, enhancePanel, itemPanel1, itemPanel2;
 	private ImageIcon buyButtonIcon, sellButtonIcon, enhanceButtonIcon;
 	
-	private JLabel lblNewLabel_1;
-	
 	private JComboBox inventoryComboBox, enhanceComboBox;
 	
 	private Item item1, item2;
 	
-	private static final Character character = new Character();
-	
 	public Blacksmith(final Character hero) {
-		super(hero, MathQuest.class.getResource("Files/blacksmithMusic.mp3"));
+		super(hero);
 //		super(character, null);
 		this.loadImages();
 		this.loadOptionsPanel();
@@ -399,27 +384,14 @@ public class Blacksmith extends Area {
 	
 	public void playSound(String s){
 		if(s.equalsIgnoreCase("coins")){
-			String filePath = ("file:///" + System.getProperty("user.dir") + "/src/MathQuest/Files/coins.mp3").replace("\\", "/");
-			try {
-				effectPlayer.open(new URL(filePath));
-				effectPlayer.play();
-				effectPlayer.setGain(MathQuest.getVolume());
-			}
-			catch(BasicPlayerException | MalformedURLException e) {
-				e.printStackTrace();
-			}
+			MathQuest.playSound(MathQuest.class.getResource("Files/coins.mp3"));
 		}
-		if(s.equalsIgnoreCase("hammer")){
+		else if(s.equalsIgnoreCase("hammer")){
 			//switch filepath to hammer sound effect
-			String filePath = ("file:///" + System.getProperty("user.dir") + "/src/MathQuest/Files/hammer.mp3").replace("\\", "/");
-			try {
-				effectPlayer.open(new URL(filePath));
-				effectPlayer.play();
-				effectPlayer.setGain(MathQuest.getVolume());
-			}
-			catch(BasicPlayerException | MalformedURLException e) {
-				e.printStackTrace();
-			}
+			MathQuest.playSound(MathQuest.class.getResource("Files/hammer.mp3"));
+		}
+		else {
+			
 		}
 	}
 	

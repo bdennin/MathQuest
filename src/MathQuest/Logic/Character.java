@@ -41,7 +41,7 @@ public class Character {
 		this.maxExperience = 10;
 		this.strength = 10;
 		this.vitality = 10;
-		this.gold = 0;
+		this.gold = 50;
 		this.potions = 0;
 		this.currentHealth = this.vitality;
 		this.maxHealth = this.vitality;
@@ -52,7 +52,6 @@ public class Character {
 		this.answeredCorrectly = 0;
 		this.answeredIncorrectly = 0;
 		inventory = new ArrayList<Item>();
-		inventory.add(new Item());
 	}
 
 	//monster constructor
@@ -225,9 +224,9 @@ public class Character {
 
 	public int calculateCost(String roomType, int level){
 		switch(roomType){
-		case "Shower": return level*level*1;
-		case "Meal": return level*level*3;
-		case "Sleep":return level*level*5;
+		case "Shower": return (int)(Math.round(level*level*.7));
+		case "Meal": return (int)(Math.round(level*level*1.9));
+		case "Sleep":return level*level*3;
 		default: return level*level*2;
 		}
 	}

@@ -27,7 +27,7 @@ public class Login extends Area {
 	final JLabel errorLabel;
 	
 	public Login() {
-		super(null, MathQuest.class.getResource("Files/Tristram.mp3"));
+		super(null);
 		this.setBounds(0, 0, 1024, 768);
 		this.loadImages();
 		this.setLayout(null);

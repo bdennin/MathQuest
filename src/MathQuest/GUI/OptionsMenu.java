@@ -67,7 +67,7 @@ public class OptionsMenu extends JPanel {
 			public void stateChanged(ChangeEvent arg0) {
 				double volume = (double)volumeSlider.getValue()/10;
 				MathQuest.setVolume(volume);
-				frame.setMusicVolume();
+				MathQuest.setMusicVolume();
 			}	
 		});
 		optionsBody.add(volumeSlider);

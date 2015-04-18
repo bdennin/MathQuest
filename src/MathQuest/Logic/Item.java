@@ -22,19 +22,6 @@ public class Item {
 	int enh = 0;
 	private URL imagePath;
 
-
-	public Item(){
-		slot = "Weapons";
-		color = "gray";
-		itemName = "Terrible Item";
-		itemLevel = 1;
-		str = 0;
-		vit = 0;
-		gold = 1;
-		isEquipped = false;
-		this.setImagePath();
-	}
-
 	public Item(String[] strings, Integer[] numbers, boolean equipped){
 		itemName = strings[0]; 
 		color = strings[1];
@@ -561,7 +548,6 @@ public class Item {
 
 	private void setImagePath() {
 		String filePath;
-		System.out.println(this.slot);
 		if(this.slot == "Helmets") {
 			filePath = String.format("Files/helmet%d.png", RANDOM.nextInt(7) + 1);
 			this.imagePath = MathQuest.class.getResource(filePath);

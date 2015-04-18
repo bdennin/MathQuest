@@ -4,17 +4,26 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.net.URL;
+import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import javazoom.jlgui.basicplayer.BasicPlayer;
+import javazoom.jlgui.basicplayer.BasicPlayerException;
 import MathQuest.Database.Database;
 import MathQuest.Logic.Character;
 import MathQuest.Pages.*;
 
 
-public class MathQuest
-{
+public class MathQuest {
+	
+	public static final BasicPlayer musicPlayer = new BasicPlayer();
+	public static final BasicPlayer soundPlayer = new BasicPlayer();
+	public static final BasicPlayer effectPlayer = new BasicPlayer();
+	public static final Random RANDOM = new Random();
+	
 	private static final Dimension FRAME_DIMENSIONS = new Dimension(1024, 768);
 
 	private static JFrame outerFrame;
@@ -32,6 +41,7 @@ public class MathQuest
 	}
 
 	private static void initializeMathQuest() {
+
 		isMuted = false;
 		volume = 1;
 		outerFrame = new JFrame("MathQuest");
@@ -75,6 +85,7 @@ public class MathQuest
 		});
 		outerFrame.setLocationRelativeTo(null);
 		outerFrame.setResizable(false);
+		playMusic(MathQuest.class.getResource("Files/Tristram.mp3"));
 		contentPane = new Login();
 		outerFrame.setContentPane(contentPane);
 		outerFrame.setVisible(true);
@@ -110,6 +121,9 @@ public class MathQuest
 	}
 
 	public static void switchToGameWorld() {
+		if(contentPane instanceof Combat) {
+			playMusic(MathQuest.class.getResource("Files/Tristram.mp3"));
+		}
 		contentPane = new World(hero);
 		outerFrame.setContentPane(contentPane);
 		contentPane.revalidate();
@@ -140,6 +154,7 @@ public class MathQuest
 		outerFrame.setContentPane(contentPane);
 		contentPane.revalidate();
 		contentPane.repaint();
+		playMusic(MathQuest.class.getResource("Files/combatMusic" + (RANDOM.nextInt(3) + 1) + ".mp3"));
 	}
 
 	public static void switchToLogin(){
@@ -195,6 +210,48 @@ public class MathQuest
 	public static JFrame getOuterFrame(){
 		return outerFrame;
 	}
+	
+	public static void playMusic(URL url) {
+		try {
+			musicPlayer.open(url);
+			musicPlayer.play();
+			musicPlayer.setGain(volume);
+		}
+		catch(BasicPlayerException e){
+			e.printStackTrace();
+		}
+	}
+
+	public static void playSound(URL url) {
+		try {
+			soundPlayer.open(url);
+			soundPlayer.play();
+			soundPlayer.setGain(volume);
+		}
+		catch(BasicPlayerException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public static void playEffect(URL url) {
+		try {
+			effectPlayer.open(url);
+			effectPlayer.play();
+			effectPlayer.setGain(volume);
+		}
+		catch(BasicPlayerException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public static void setMusicVolume() {
+		try {
+			MathQuest.musicPlayer.setGain(MathQuest.getVolume());
+		} catch (BasicPlayerException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater (
 				new Runnable() {

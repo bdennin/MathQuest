@@ -24,7 +24,7 @@ public class World extends Area {
 
 	public World(Character hero) {
 
-		super(hero, MathQuest.class.getResource("Files/townMusic.mp3"));
+		super(hero);
 		this.loadImages();
 		this.loadJLabels();
 		this.renderBackground();

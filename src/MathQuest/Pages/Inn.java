@@ -29,14 +29,14 @@ public class Inn extends Area {
 	private int potionCost;
 
 	public Inn(Character hero) {
-		super(hero, MathQuest.class.getResource("Files/innMusic.mp3"));
+		super(hero);
 		this.loadImages();
 		this.setBackground(Color.LIGHT_GRAY);
 
 		this.combatLog = new LogPanel("Inn Log");
 		combatLog.addTextToScrollPane("You have entered the Inn!");
 
-		potionCost = hero.getLevel() * hero.getLevel() * 5;
+		potionCost = hero.getLevel() * hero.getLevel() * 3;
 
 		combatLog.addTextToScrollPane("The price for potion today is " + potionCost + " gold.");
 		add(combatLog);
@@ -64,6 +64,7 @@ public class Inn extends Area {
 				if(gold >= potionCost) {
 					hero.removeGold(potionCost);
 					hero.setPotions(hero.getPotions() + 1);
+					reloadInventoryPanel(Area.isInventoryVisible, hero.getInventory());
 					combatLog.addTextToScrollPane("You have purchased a potion.");
 				}
 				else {

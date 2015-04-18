@@ -2,13 +2,10 @@ package MathQuest.Pages;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Random;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import javazoom.jlgui.basicplayer.BasicPlayer;
 import javazoom.jlgui.basicplayer.BasicPlayerException;
 import MathQuest.MathQuest;
 import MathQuest.GUI.CharacterPanel;
@@ -22,11 +19,6 @@ public abstract class Area extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	protected static final BasicPlayer musicPlayer = new BasicPlayer();
-	protected static final BasicPlayer soundPlayer = new BasicPlayer();
-	protected static final BasicPlayer effectPlayer = new BasicPlayer();
-	protected static final Random RANDOM = new Random();
-
 	protected static OptionsMenu optionsMenu;
 	protected static InventoryPanel inventoryPanel;
 
@@ -39,11 +31,7 @@ public abstract class Area extends JPanel {
 	public static boolean isOptionsVisible;
 	public static boolean isInventoryVisible;
 
-	public Area(Character hero, URL url) {
-		if(null != url) {
-			this.initializeMusic(url);
-			this.revalidate();
-		}
+	public Area(Character hero) {
 
 		this.setBounds(0, 0, 1024, 768);
 		this.setLayout(null);
@@ -135,25 +123,6 @@ public abstract class Area extends JPanel {
 		add(backgroundLabel);
 		this.revalidate();
 		this.repaint();
-	}
-
-	public void initializeMusic(URL url) {
-		try {
-			musicPlayer.open(url);
-			musicPlayer.play();
-			musicPlayer.setGain(MathQuest.getVolume());
-		}
-		catch(BasicPlayerException e){
-			e.printStackTrace();
-		}
-	}
-
-	public void setMusicVolume() {
-		try {
-			musicPlayer.setGain(MathQuest.getVolume());
-		} catch (BasicPlayerException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	public static void toggleInventory() {
