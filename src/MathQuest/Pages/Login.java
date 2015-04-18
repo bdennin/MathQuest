@@ -104,6 +104,7 @@ public class Login extends Area {
 			errorLabel.setText("Invalid username/password.");
 		}
 	}
+	
 	public static boolean verifyCredentials(String username, String password) {
 		boolean outcome;
 		if(username.isEmpty() || password.isEmpty())

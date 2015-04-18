@@ -397,7 +397,6 @@ public class Character {
 					this.removeItemStats(this.equippedHelmet);
 				}
 				this.setEquippedHelmet(equippable);
-				this.addItemStats(equippable);
 				InventoryPanel.setHelmetImage(new ImageIcon(equippable.getImagePath()));
 			}
 			else if(slot.equals("Armor")) {
@@ -405,7 +404,6 @@ public class Character {
 					this.removeItemStats(this.equippedMail);
 				}
 				this.setEquippedMail(equippable);
-				this.addItemStats(equippable);
 				InventoryPanel.setArmorImage(new ImageIcon(equippable.getImagePath()));
 			}
 			else if(slot.equals("Boots")) {
@@ -413,7 +411,6 @@ public class Character {
 					this.removeItemStats(this.equippedBoots);
 				}
 				this.setEquippedBoots(equippable);
-				this.addItemStats(equippable);
 				InventoryPanel.setFeetImage(new ImageIcon(equippable.getImagePath()));
 			}
 			else if(slot.equals("Gloves")) {
@@ -421,7 +418,6 @@ public class Character {
 					this.removeItemStats(this.equippedGloves);
 				}
 				this.setEquippedGloves(equippable);
-				this.addItemStats(equippable);
 				InventoryPanel.setGloveImage(new ImageIcon(equippable.getImagePath()));
 			}
 			else {
@@ -429,10 +425,9 @@ public class Character {
 					this.removeItemStats(this.equippedWeapon);
 				}
 				this.setEquippedWeapon(equippable);
-				this.addItemStats(equippable);
 				InventoryPanel.setWeaponImage(new ImageIcon(equippable.getImagePath()));
 			}
-			
+			this.addItemStats(equippable);
 		}
 	}
 	

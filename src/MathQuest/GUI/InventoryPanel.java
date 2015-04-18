@@ -103,6 +103,21 @@ public class InventoryPanel extends JPanel {
 		JButton btnEquip = new JButton("Equip");
 		btnEquip.setBounds(222, 137, 89, 29);
 		btnEquip.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
+		btnEquip.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Item item = itemList.getSelectedValue();
+				if(null == item) {
+
+				}
+				else {
+					hero.equip(item);
+					frame.reloadCharacterPanel();
+					frame.reloadInventoryPanel(true, items);
+				}
+			}
+			
+		});
 		btnEquip.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -121,15 +136,7 @@ public class InventoryPanel extends JPanel {
 
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				Item item = itemList.getSelectedValue();
-				if(null == item) {
 
-				}
-				else {
-					hero.equip(item);
-					frame.reloadCharacterPanel();
-					frame.reloadInventoryPanel(true, items);
-				}
 			}
 
 			@Override
