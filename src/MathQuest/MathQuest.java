@@ -46,7 +46,7 @@ public class MathQuest {
 		isMuted = false;
 		volume = 1;
 		playMusic(MathQuest.class.getResource("Files/Tristram.mp3"));
-
+		
 		outerFrame = new JFrame("MathQuest");
 		outerFrame.setSize(FRAME_DIMENSIONS);
 		outerFrame.addWindowListener(new WindowListener() {
@@ -215,7 +215,7 @@ public class MathQuest {
 	}
 
 	public static void playMusic(URL url) {
-		if(null != musicPlayer)
+		if(musicPlayer != null) 
 			musicPlayer.stop();
 		Media content = new Media(url.toString());
 		musicPlayer = new MediaPlayer(content);
@@ -224,7 +224,7 @@ public class MathQuest {
 		musicPlayer.setVolume(volume);
 		musicPlayer.play();
 	}
-
+	
 	public static void playSound(URL url) {
 		Media content = new Media(url.toString());
 		soundPlayer = new MediaPlayer(content);

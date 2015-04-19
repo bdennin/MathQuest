@@ -483,8 +483,7 @@ public class InventoryPanel extends JPanel {
 		equipmentPanel.add(equipmentLabel);
 
 		JButton btnOK = new JButton("<html><center>X</center></html>");
-		btnOK.setHorizontalAlignment(SwingConstants.LEFT);
-		btnOK.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnOK.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		btnOK.setBounds(303, 2, 36, 18);
 		add(btnOK);
 		btnOK.addActionListener(new ActionListener() {

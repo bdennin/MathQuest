@@ -120,7 +120,6 @@ public class OptionsMenu extends JPanel {
 
 		JButton btnClose = new JButton("<html><center>X</center></html>");
 		btnClose.setBounds(300, 2, 36, 18);
-		add(btnClose);
 		btnClose.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		btnClose.addActionListener(new ActionListener() {
 
@@ -132,5 +131,6 @@ public class OptionsMenu extends JPanel {
 				world.renderBackground();
 			}
 		});
+		add(btnClose);
 	}
 }
