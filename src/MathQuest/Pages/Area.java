@@ -1,13 +1,10 @@
 package MathQuest.Pages;
 
-import java.net.URL;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import javazoom.jlgui.basicplayer.BasicPlayerException;
-import MathQuest.MathQuest;
 import MathQuest.GUI.CharacterPanel;
 import MathQuest.GUI.InventoryPanel;
 import MathQuest.GUI.OptionsMenu;

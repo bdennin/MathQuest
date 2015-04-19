@@ -54,7 +54,9 @@ public class OptionsMenu extends JPanel {
 		volumeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		volumeLabel.setBounds(10, 11, 80, 22);
 		optionsBody.add(volumeLabel);
-
+		
+		final JCheckBox checkboxMuteSound = new JCheckBox("Mute Sound");
+		
 		final JSlider volumeSlider = new JSlider();
 		volumeSlider.setPaintTicks(true);
 		volumeSlider.setSnapToTicks(true);
@@ -67,12 +69,15 @@ public class OptionsMenu extends JPanel {
 			public void stateChanged(ChangeEvent arg0) {
 				double volume = (double)volumeSlider.getValue()/10;
 				MathQuest.setVolume(volume);
-				MathQuest.setMusicVolume();
+				if(volume < .1)
+					checkboxMuteSound.setSelected(true);
+				else
+					checkboxMuteSound.setSelected(false);
 			}	
 		});
 		optionsBody.add(volumeSlider);
 
-		final JCheckBox checkboxMuteSound = new JCheckBox("Mute Sound");
+		
 		checkboxMuteSound.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
 		checkboxMuteSound.setBounds(100, 40, 118, 23);
 		checkboxMuteSound.setSelected(MathQuest.isMuted);
@@ -82,10 +87,12 @@ public class OptionsMenu extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if(checkboxMuteSound.isSelected()) {
 					volumeSlider.setValue(0);
+					MathQuest.setVolume(0);
 					volumeSlider.setEnabled(false);
 				}
 				else {
 					volumeSlider.setValue(10);
+					MathQuest.setVolume(1);
 					volumeSlider.setEnabled(true);
 				}
 			}

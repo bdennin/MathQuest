@@ -12,7 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javazoom.jlgui.basicplayer.BasicPlayerException;
 import MathQuest.MathQuest;
 import MathQuest.Database.Database;
 import MathQuest.GUI.CharacterPanel;
@@ -361,18 +360,11 @@ public class Combat extends Area {
 		default:
 			throw new IllegalArgumentException();
 		}
-
-		if(character == hero) {
-			MathQuest.playSound(MathQuest.class.getResource(combatSound));
-		}
-		else {
-			MathQuest.playEffect(MathQuest.class.getResource(combatSound));
-		}
-
+		MathQuest.playSound(MathQuest.class.getResource(combatSound));
 	}
 
 	private void victory() {
-
+		
 		MathQuest.playMusic(MathQuest.class.getResource("Files/victory.mp3"));
 		
 		double experienceRandomizer = (Math.random() * 30 + 50)/100;
@@ -401,7 +393,7 @@ public class Combat extends Area {
 		if (level < hero.getLevel()) {
 
 			this.reloadCharacterPanel();
-			MathQuest.playEffect(MathQuest.class.getResource("Files/levelUp.mp3"));
+			MathQuest.playSound(MathQuest.class.getResource("Files/levelUp.wav"));
 			
 			victoryString = String.format("<html>Congratulations! You have gained a<br/>level! You are now level %d.</html>", hero.getLevel());
 
@@ -422,7 +414,7 @@ public class Combat extends Area {
 		hero.death();
 
 		JOptionPane.showMessageDialog(this, 
-				new JLabel("<html>You have been defeated in battle!<br/>You have lost gold and experience!</html>"), 
+				new JLabel("<html>You have been defeated in battle!<br/>You have lost gold and experience.</html>"), 
 				"Defeat", 
 				JOptionPane.PLAIN_MESSAGE,
 				defeatIcon);

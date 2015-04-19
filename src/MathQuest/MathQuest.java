@@ -1,31 +1,32 @@
 package MathQuest;
-//This is a comment
+
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.net.URL;
 import java.util.Random;
+import java.util.concurrent.CountDownLatch;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
-import javazoom.jlgui.basicplayer.BasicPlayer;
-import javazoom.jlgui.basicplayer.BasicPlayerException;
 import MathQuest.Database.Database;
 import MathQuest.Logic.Character;
 import MathQuest.Pages.*;
-
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 public class MathQuest {
-	
-	public static final BasicPlayer musicPlayer = new BasicPlayer();
-	public static final BasicPlayer soundPlayer = new BasicPlayer();
-	public static final BasicPlayer effectPlayer = new BasicPlayer();
+
 	public static final Random RANDOM = new Random();
-	
+
 	private static final Dimension FRAME_DIMENSIONS = new Dimension(1024, 768);
 
+	private static MediaPlayer musicPlayer;
+	private static MediaPlayer soundPlayer;
 	private static JFrame outerFrame;
 	private static JPanel contentPane;
 	private static String username;
@@ -41,9 +42,11 @@ public class MathQuest {
 	}
 
 	private static void initializeMathQuest() {
-
+	
 		isMuted = false;
 		volume = 1;
+		playMusic(MathQuest.class.getResource("Files/Tristram.mp3"));
+
 		outerFrame = new JFrame("MathQuest");
 		outerFrame.setSize(FRAME_DIMENSIONS);
 		outerFrame.addWindowListener(new WindowListener() {
@@ -85,7 +88,6 @@ public class MathQuest {
 		});
 		outerFrame.setLocationRelativeTo(null);
 		outerFrame.setResizable(false);
-		playMusic(MathQuest.class.getResource("Files/Tristram.mp3"));
 		contentPane = new Login();
 		outerFrame.setContentPane(contentPane);
 		outerFrame.setVisible(true);
@@ -200,6 +202,7 @@ public class MathQuest {
 	}
 
 	public static void setVolume(double gain) {
+		musicPlayer.setVolume(volume);
 		volume = gain;
 	}
 
@@ -210,49 +213,40 @@ public class MathQuest {
 	public static JFrame getOuterFrame(){
 		return outerFrame;
 	}
-	
+
 	public static void playMusic(URL url) {
-		try {
-			musicPlayer.open(url);
-			musicPlayer.play();
-			musicPlayer.setGain(volume);
-		}
-		catch(BasicPlayerException e){
-			e.printStackTrace();
-		}
+		if(null != musicPlayer)
+			musicPlayer.stop();
+		Media content = new Media(url.toString());
+		musicPlayer = new MediaPlayer(content);
+		if(!url.toString().contains("victory"))
+			musicPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+		musicPlayer.setVolume(volume);
+		musicPlayer.play();
 	}
 
 	public static void playSound(URL url) {
-		try {
-			soundPlayer.open(url);
-			soundPlayer.play();
-			soundPlayer.setGain(volume);
-		}
-		catch(BasicPlayerException e){
-			e.printStackTrace();
-		}
+		Media content = new Media(url.toString());
+		soundPlayer = new MediaPlayer(content);
+		soundPlayer.setVolume(volume);
+		soundPlayer.setAutoPlay(true);
+		soundPlayer.play();
 	}
-	
-	public static void playEffect(URL url) {
-		try {
-			effectPlayer.open(url);
-			effectPlayer.play();
-			effectPlayer.setGain(volume);
-		}
-		catch(BasicPlayerException e){
-			e.printStackTrace();
-		}
-	}
-	
-	public static void setMusicVolume() {
-		try {
-			MathQuest.musicPlayer.setGain(MathQuest.getVolume());
-		} catch (BasicPlayerException e) {
-			e.printStackTrace();
-		}
-	}
-	
+
 	public static void main(String[] args) {
+		final CountDownLatch latch = new CountDownLatch(1);
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				new JFXPanel(); 
+				latch.countDown();			
+			}
+		});
+		try {
+			latch.await();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		EventQueue.invokeLater (
 				new Runnable() {
 					@Override
