@@ -34,7 +34,7 @@ public class MathQuest {
 	private static Character hero;
 	private static double volume;
 
-	public static boolean connectToDatabase = false;
+	public static boolean connectToDatabase = true;
 	public static boolean isMuted;
 
 	public MathQuest() {
@@ -177,6 +177,11 @@ public class MathQuest {
 		outerFrame.setContentPane(contentPane);
 	}
 
+	public static void switchToChangePassword() {
+		contentPane = new ChangePassword();
+		outerFrame.setContentPane(contentPane);
+	}
+	
 	public static String getUsername() {
 		return username;
 	}

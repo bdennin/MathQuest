@@ -31,7 +31,7 @@ public class OptionsMenu extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	public OptionsMenu(final Area frame) {
-
+		
 		this.setBackground(Color.LIGHT_GRAY);
 		this.setBounds(343, 296, 338, 177);
 		setLayout(null);	
@@ -117,6 +117,19 @@ public class OptionsMenu extends JPanel {
 			}
 		});
 		optionsBody.add(btnDeleteCharacter);
+		
+		JButton btnchangepassword = new JButton("<html><center>Change<br/>Password</center></html>");
+		btnchangepassword.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
+		btnchangepassword.setBounds(210, 80, 89, 35);
+		btnchangepassword.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				MathQuest.switchToChangePassword();
+			}
+		});
+		optionsBody.add(btnchangepassword);
+		optionsBody.add(btnchangepassword);
 
 		JButton btnClose = new JButton("<html><center>X</center></html>");
 		btnClose.setBounds(300, 2, 36, 18);

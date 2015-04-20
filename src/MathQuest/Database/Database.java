@@ -390,7 +390,7 @@ public class Database
 			System.out.println("Error from saveAccuracy: " + e.getMessage());
 		}
 	}
-	
+
 	public static String[][] getRank(){
 		try{
 			PreparedStatement select = con.prepareStatement("Select Login.lastname , Login.firstname,  StudentAccuracy.answeredCorrectly, StudentAccuracy.answeredIncorrectly from StudentAccuracy left join Login on StudentAccuracy.studentID = Login.userID where StudentAccuracy.teacherID = ? order by Login.lastname DESC");
@@ -399,27 +399,50 @@ public class Database
 			int numberRows=0;
 			if (res.last()) {
 				numberRows = res.getRow();
-			    // Move to beginning
-			    res.beforeFirst();
+				// Move to beginning
+				res.beforeFirst();
 			}
 			String[][] record = new String [numberRows][4]; 
 			while(res.next()){
 				int answeredCorrectly = res.getInt(3);
 				int answeredIncorrectly = res.getInt(4);
-					record[numberRows-1][0] = res.getString(1) + ", " + res.getString(2);
-					record[numberRows-1][1] = ((Integer)answeredCorrectly).toString();
-					record[numberRows-1][2] = ((Integer)answeredIncorrectly).toString();		
-					record[numberRows-1][3] = ((Long)Math.round(answeredCorrectly*100.0/(answeredCorrectly+answeredIncorrectly))).toString() + "%";
+				record[numberRows-1][0] = res.getString(1) + ", " + res.getString(2);
+				record[numberRows-1][1] = ((Integer)answeredCorrectly).toString();
+				record[numberRows-1][2] = ((Integer)answeredIncorrectly).toString();		
+				record[numberRows-1][3] = ((Long)Math.round(answeredCorrectly*100.0/(answeredCorrectly+answeredIncorrectly))).toString() + "%";
 				numberRows--;
 			}
 			return record;
 		}
 		catch(SQLException e){
-			System.out.println("Error from saveAccuracy: " + e.getMessage());
+			System.out.println("Error from getRank: " + e.getMessage());
 			return null;
 		}
 	}
-	
+
+	public static boolean changePassword(String oldPass, String newPass){
+		try{
+			PreparedStatement select = con.prepareStatement("Select password from Login where userID = ?");
+			select.setInt(1,  getId());
+			ResultSet execute = select.executeQuery();
+			String pass = null;
+			if(execute.next())
+				pass=execute.getString(1);
+			if(pass.equals(oldPass)){
+				PreparedStatement update = con.prepareStatement("UPDATE Login SET password = ? where userID = ?");
+				update.setString(1, newPass);;
+				update.setInt(2,  getId());
+				int res = update.executeUpdate();
+				if (res > 0)
+					return true;
+			}
+			return false;
+		}
+		catch (SQLException e){
+			System.out.println("Error from changePassword: " + e.getMessage());
+			return false;
+		}
+	}
 	public static void cleanUp(){
 		con = null;
 		cacheStats = null;
@@ -428,7 +451,7 @@ public class Database
 		cacheFormulaSettings = new ArrayList<String[]>();
 	}
 
-/*
+	/*
 	public static void main(String[] args){
 		Database.getConnected();
 		Database.userID = 23;

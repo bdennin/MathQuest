@@ -88,7 +88,7 @@ public class Character {
 		this.damageType = DamageType.SLASHING;
 		this.name = "Hero#1";
 		this.answeredCorrectly = charStats[5];
-		System.out.println("Ansered correclty" + this.answeredCorrectly);
+		//System.out.println("Ansered correclty" + this.answeredCorrectly);
 		this.answeredIncorrectly = charStats[6];
 		this.inventory = items;
 		
