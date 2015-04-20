@@ -40,7 +40,7 @@ public class ChangePassword extends Area {
 
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
-		panel.setBounds(367, 506, 342, 211);
+		panel.setBounds(341, 506, 342, 211);
 		panel.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
 		add(panel);
 
@@ -65,7 +65,7 @@ public class ChangePassword extends Area {
 
 		errorLabel = new JLabel();
 		errorLabel.setFont(new Font("Simplified Arabic", Font.BOLD, 15));
-		errorLabel.setBounds(76, 180, 215, 16);
+		errorLabel.setBounds(27, 180, 287, 16);
 		errorLabel.setForeground(Color.RED);
 		panel.add(errorLabel);
 
@@ -85,29 +85,34 @@ public class ChangePassword extends Area {
 					String newPass = newpassword.getText();
 					String confirmPass = passwordField.getText();
 					String oldPass = oldpass.getText();
-					if(newPass.equals(confirmPass)){
-						Database.getConnected();
-						if (Database.changePassword(oldPass, newPass)){
-							successLabel.setText("Successfully saveed! Returning to world...");
-							timer.schedule(new TimerTask() {
-								@Override
-								public void run() {
-									MathQuest.switchToGameWorld();
-								}
-							}, 1500);
+					if(newPass.equals(oldPass)){
+						errorLabel.setText("New password must be unique");
+					}
+					else{
+						if(newPass.equals(confirmPass)){
+							Database.getConnected();
+							if (Database.changePassword(oldPass, newPass)){
+								successLabel.setText("Successfully saveed! Returning to world.");
+								timer.schedule(new TimerTask() {
+									@Override
+									public void run() {
+										MathQuest.switchToGameWorld();
+									}
+								}, 1500);
+							}
+							else
+								errorLabel.setText("Wrong old password");
 						}
 						else
-							errorLabel.setText("Wrong old password");
-					}
-					else
-						errorLabel.setText("New password does not match");
+							errorLabel.setText("New password does not match");
 
-					timer.schedule(new TimerTask() {
-						@Override
-						public void run() {
-							errorLabel.setText(null);
-						}
-					}, 1500);
+						timer.schedule(new TimerTask() {
+							@Override
+							public void run() {
+								errorLabel.setText(null);
+							}
+						}, 1500);
+					}
 				}
 				else
 					errorLabel.setText("Database is not connected");
@@ -123,10 +128,15 @@ public class ChangePassword extends Area {
 		passwordField = new JPasswordField(10);
 		passwordField.setBounds(180, 105, 134, 28);
 		panel.add(passwordField);
-		
+
 		btnGoBack = new JButton("Go Back");
 		btnGoBack.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
 		btnGoBack.setBounds(27, 144, 134, 28);
+		btnGoBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MathQuest.switchToGameWorld();
+			}
+		});
 		panel.add(btnGoBack);
 
 		this.renderBackground();
