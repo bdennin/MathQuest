@@ -58,7 +58,7 @@ public class Character {
 	public Character(int level, String name, URL imagePath, DamageType damageType) {
 
 		int modifier = (level/5 + 1) * level;
-		
+
 		this.strength = 10 * modifier;
 		this.gold = 5 * modifier;
 		this.currentHealth = 10 * modifier;
@@ -74,7 +74,7 @@ public class Character {
 
 	//save constructor
 	public Character(Integer[] charStats, ArrayList<Item> items) {
-		
+
 		this.level = charStats[0];
 		this.currentHealth = charStats[1];
 		this.currentExperience = charStats[2];
@@ -91,14 +91,14 @@ public class Character {
 		//System.out.println("Ansered correclty" + this.answeredCorrectly);
 		this.answeredIncorrectly = charStats[6];
 		this.inventory = items;
-		
+
 		for (int i = 0 ; i < this.inventory.size();i++){
 			Item el = this.inventory.get(i);
 			if(el.isEquipped()){
 				equip(el);	
 			}
 		}
-		
+
 	}
 	public int getMaxExperience(){
 		return this.maxExperience;
@@ -139,7 +139,7 @@ public class Character {
 	public void setCurrentHealth(int health) {
 		this.currentHealth = health;
 	}
-	
+
 	public int getLevel(){
 		return this.level;
 	}
@@ -167,11 +167,11 @@ public class Character {
 	public void setDamageType(DamageType damageType) {
 		this.damageType = damageType;
 	}
-	
+
 	public int getPotions() {
 		return this.potions;
 	}
-	
+
 	public void setPotions(int potions) {
 		this.potions = potions;
 	}
@@ -195,7 +195,10 @@ public class Character {
 		this.addMaxHealth(10);
 		this.currentHealth = this.maxHealth;
 		this.currentExperience = this.currentExperience - this.maxExperience;
-		this.maxExperience = this.maxExperience*2;
+		if(this.level > 8)
+			this.maxExperience = (int)(this.maxExperience*1.5);
+		else
+			this.maxExperience = (int)(this.maxExperience*2);
 	}
 
 	public int calculateDamage() {
@@ -429,11 +432,11 @@ public class Character {
 			this.addItemStats(equippable);
 		}
 	}
-	
+
 	public int getAnsweredCorrectly(){
 		return answeredCorrectly;
 	}
-	
+
 	public int getAnsweredIncorrectly(){
 		return answeredIncorrectly;
 	}

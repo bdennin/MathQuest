@@ -1,22 +1,17 @@
 package MathQuest.Logic;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.lang.Math;
 import java.net.URL;
 import java.util.Random;
 
-import javax.swing.JLabel;
-
 import MathQuest.MathQuest;
-import MathQuest.Pages.Area;
-import javax.swing.SwingConstants;
 
-public class Item extends JLabel {
+public class Item {
 
-	private static final long serialVersionUID = 1L;
 	private static final Random RANDOM = new Random();
 	
+	private int enh;
+	private URL imagePath;
 	boolean itemDropped;
 	boolean isEquipped;
 	String slot;
@@ -26,11 +21,8 @@ public class Item extends JLabel {
 	int vit = 0;
 	int str = 0;
 	int gold = 0;
-	int enh = 1;
-	private URL imagePath;
 
 	public Item(String[] strings, Integer[] numbers, boolean equipped){
-		setHorizontalAlignment(SwingConstants.CENTER);
 		itemName = strings[0]; 
 		color = strings[1];
 		slot = strings[2];
@@ -40,7 +32,7 @@ public class Item extends JLabel {
 		vit = numbers[3];
 		isEquipped = equipped;  
 		this.setImagePath();
-		this.setText(itemName);
+		this.enh = 0;
 	}
 
 	public Item(int monsterLvl, String category){
@@ -59,36 +51,8 @@ public class Item extends JLabel {
 			setStatsFalcor();
 		else
 			setStatsBasic();
-		this.setText(itemName);
 		this.setImagePath();
-		this.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-			
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				Area.setViewer(itemName, vit, str);
-			}
-
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				Area.removeViewer();
-			}
-
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
-
-			}
-			
-		});
+		this.enh = 0;
 	}
 
 
@@ -554,10 +518,13 @@ public class Item extends JLabel {
 	}
 
 	public String toString(){
+		String item = String.format("<html><font color='%s'>%s</font>", this.getColor(), itemName);
 		if (isEquipped == true){
-			return String.format("<html><font color='%s'>%s</font> (Equipped) +%s</html>", this.getColor(), itemName, enh);
+			item = String.format("%s (Equipped)", item);
 		}
-		return String.format("<html><font color='%s'>%s</font> +%s</html>", this.getColor(), itemName, enh);
+		if (enh > 0)
+			item = String.format("%s +%s", item, enh);
+		return String.format("%s</html>", item);
 	}
 
 	public String getName(){
@@ -577,9 +544,6 @@ public class Item extends JLabel {
 		vit = (int) (vit + (vit * .5));
 		str = (int) (str + (str * .5));
 		gold = (int) (gold + (gold * .5));
-		itemName = this.toString();
-		itemName = itemName.substring(0, itemName.length() - 7);
-		itemName = String.format("%s +%s</html>", itemName , enh);
 	}
 
 	public URL getImagePath() {

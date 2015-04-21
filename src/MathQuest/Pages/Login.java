@@ -25,7 +25,7 @@ public class Login extends Area {
 	private JPasswordField password;
 	private JTextField username;
 	final JLabel errorLabel;
-	private static Character hero = new Character();
+	
 	public Login() {
 		super(null);
 		this.setBounds(0, 0, 1024, 768);
@@ -35,7 +35,7 @@ public class Login extends Area {
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
-		panel.setBounds(367, 565, 289, 170);
+		panel.setBounds(367, 395, 289, 170);
 		panel.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
 		add(panel);
 
