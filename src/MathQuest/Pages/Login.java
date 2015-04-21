@@ -35,7 +35,7 @@ public class Login extends Area {
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
-		panel.setBounds(367, 565, 289, 170);
+		panel.setBounds(367, 424, 289, 170);
 		panel.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
 		add(panel);
 

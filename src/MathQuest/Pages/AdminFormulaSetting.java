@@ -177,10 +177,11 @@ public class AdminFormulaSetting extends JPanel {
 		btnCancel.setBounds(222, 298, 93, 23);
 		EquationSettingPanel.add(btnCancel);
 
-		JLabel lblFormula = new JLabel("Formula Setting");
-		lblFormula.setFont(new Font("Simplified Arabic", Font.BOLD, 40));
-		lblFormula.setBounds(55, 56, 294, 74);
-		add(lblFormula);
+		JLabel lblTitle = new JLabel("Formula Setting");
+		lblTitle.setFont(new Font("Simplified Arabic", Font.BOLD, 40));
+		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitle.setBounds(119, 60, 786, 99);
+		add(lblTitle);
 
 		JPanel currentSettingPanel = new JPanel();
 		currentSettingPanel.setBounds(331, 179, 432, 64);

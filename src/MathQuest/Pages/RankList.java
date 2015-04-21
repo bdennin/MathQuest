@@ -26,11 +26,11 @@ public class RankList extends JPanel {
 		this.setLayout(null);
 		Database.getConnected();
 		
-		JLabel lblNewLabel = new JLabel("Students' Performance");
-		lblNewLabel.setFont(new Font("Simplified Arabic", Font.BOLD, 40));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(119, 32, 786, 99);
-		add(lblNewLabel);
+		JLabel lblTitle = new JLabel("Students' Performance");
+		lblTitle.setFont(new Font("Simplified Arabic", Font.BOLD, 40));
+		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitle.setBounds(119, 60, 786, 99);
+		add(lblTitle);
 		
 		rankTable = new JTable();
 		String[][] selected = Database.getRank();
@@ -41,7 +41,7 @@ public class RankList extends JPanel {
 		header.setBackground(Color.lightGray);
 		
 		JScrollPane pane = new JScrollPane(rankTable);
-		pane.setBounds(226, 127, 571, 477);
+		pane.setBounds(226, 177, 571, 427);
 		pane.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
 		
 		add(pane);
