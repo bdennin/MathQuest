@@ -25,7 +25,7 @@ public class Login extends Area {
 	private JPasswordField password;
 	private JTextField username;
 	final JLabel errorLabel;
-	
+	private static Character hero = new Character();
 	public Login() {
 		super(null);
 		this.setBounds(0, 0, 1024, 768);
@@ -35,7 +35,7 @@ public class Login extends Area {
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
-		panel.setBounds(367, 578, 289, 157);
+		panel.setBounds(367, 565, 289, 170);
 		panel.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
 		add(panel);
 
@@ -58,12 +58,6 @@ public class Login extends Area {
 		password.setBounds(128, 66, 134, 28);
 		panel.add(password);
 
-		errorLabel = new JLabel();
-		errorLabel.setFont(new Font("Simplified Arabic", Font.BOLD, 15));
-		errorLabel.setBounds(87, 161, 215, 16);
-		errorLabel.setForeground(Color.RED);
-		panel.add(errorLabel);
-
 		JButton btnLogin = new JButton("Login");
 		btnLogin.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
 		btnLogin.setBounds(128, 105, 134, 28);
@@ -74,6 +68,12 @@ public class Login extends Area {
 			}
 		});
 		panel.add(btnLogin);
+		
+				errorLabel = new JLabel();
+				errorLabel.setBounds(37, 143, 215, 16);
+				panel.add(errorLabel);
+				errorLabel.setFont(new Font("Simplified Arabic", Font.BOLD, 15));
+				errorLabel.setForeground(Color.RED);
 		
 		this.renderBackground();
 

@@ -114,7 +114,7 @@ public class Combat extends Area {
 		ArrayList<Integer> options = new ArrayList<Integer>();
 		boolean correctAnswerAdded = false;
 
-		int numberOfChoices = MathQuest.RANDOM.nextInt(4) + 2; 
+		int numberOfChoices = MathQuest.RANDOM.nextInt(2) + 3; 
 		for(int i = 0; i < numberOfChoices; i++) {
 
 			int random = MathQuest.RANDOM.nextInt(numberOfChoices);

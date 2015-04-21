@@ -177,6 +177,11 @@ public class MathQuest {
 		outerFrame.setContentPane(contentPane);
 	}
 
+	public static void switchToChangePassword() {
+		contentPane = new ChangePassword();
+		outerFrame.setContentPane(contentPane);
+	}
+	
 	public static String getUsername() {
 		return username;
 	}
