@@ -1,13 +1,20 @@
 package MathQuest.Logic;
 
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.lang.Math;
 import java.net.URL;
 import java.util.Random;
 
+import javax.swing.JLabel;
+
 import MathQuest.MathQuest;
+import MathQuest.Pages.Area;
+import javax.swing.SwingConstants;
 
-public class Item {
+public class Item extends JLabel {
 
+	private static final long serialVersionUID = 1L;
 	private static final Random RANDOM = new Random();
 	
 	boolean itemDropped;
@@ -23,6 +30,7 @@ public class Item {
 	private URL imagePath;
 
 	public Item(String[] strings, Integer[] numbers, boolean equipped){
+		setHorizontalAlignment(SwingConstants.CENTER);
 		itemName = strings[0]; 
 		color = strings[1];
 		slot = strings[2];
@@ -32,25 +40,55 @@ public class Item {
 		vit = numbers[3];
 		isEquipped = equipped;  
 		this.setImagePath();
+		this.setText(itemName);
 	}
 
-	public Item(int monsterLvl, String catagory){
+	public Item(int monsterLvl, String category){
 
-		color = catagory;
+		color = category;
 		itemLevel = monsterLvl;
-		if (catagory == "gray")
+		if (category == "gray")
 			setStatsBasic();
-		else if (catagory =="green")
+		else if (category =="green")
 			setStatsRare();
-		else if (catagory == "blue")
+		else if (category == "blue")
 			setStatsEpic();
-		else if (catagory == "orange")
+		else if (category == "orange")
 			setStatsLegendary();
-		else if (catagory == "red")
+		else if (category == "red")
 			setStatsFalcor();
 		else
 			setStatsBasic();
+		this.setText(itemName);
 		this.setImagePath();
+		this.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+			
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				Area.setViewer(itemName, vit, str);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				Area.removeViewer();
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+
+			}
+			
+		});
 	}
 
 

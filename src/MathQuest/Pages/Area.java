@@ -1,12 +1,16 @@
 package MathQuest.Pages;
 
 import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.sun.org.apache.xerces.internal.impl.RevalidationHandler;
+
 import MathQuest.GUI.CharacterPanel;
 import MathQuest.GUI.InventoryPanel;
+import MathQuest.GUI.ItemViewer;
 import MathQuest.GUI.OptionsMenu;
 import MathQuest.GUI.OptionsPanel;
 import MathQuest.Logic.Character;
@@ -18,7 +22,8 @@ public abstract class Area extends JPanel {
 
 	protected static OptionsMenu optionsMenu;
 	protected static InventoryPanel inventoryPanel;
-
+	protected static ItemViewer itemViewer;
+	
 	protected CharacterPanel characterPanel;
 	protected OptionsPanel optionsPanel;
 	protected ImageIcon background;
@@ -49,7 +54,10 @@ public abstract class Area extends JPanel {
 			inventoryPanel = new InventoryPanel(this, this.hero, hero.getInventory());
 			Area.toggleInventory();
 			add(inventoryPanel);
-
+			
+			itemViewer = new ItemViewer("Nothing", 0, 0);
+			itemViewer.setBounds(367, 386, 289, 22);
+			itemViewer.setVisible(false);
 		}
 
 		this.optionsPanel = loadOptionsPanel();
@@ -77,7 +85,7 @@ public abstract class Area extends JPanel {
 	public CharacterPanel getCharacterPanel() {
 		return this.characterPanel;
 	}
-
+	
 	public Character getHero() {
 		return this.hero;
 	}
@@ -134,6 +142,16 @@ public abstract class Area extends JPanel {
 		if(isOptionsVisible && isInventoryVisible)
 			toggleInventory();
 		optionsMenu.setVisible(isOptionsVisible);
+	}
+	
+	public static void setViewer(String name, int vitality, int strength) {
+		itemViewer = new ItemViewer(name, vitality, strength);
+		itemViewer.setBounds(367, 386, 289, 22);
+		itemViewer.setVisible(true);
+	}
+
+	public static void removeViewer() {
+		itemViewer.setVisible(false);
 	}
 	
 	public void refresh() {

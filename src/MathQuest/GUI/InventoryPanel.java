@@ -43,6 +43,8 @@ public class InventoryPanel extends JPanel {
 	private ImageIcon helmetLabel;
 	private ImageIcon armorLabel;
 	private ImageIcon weaponLabel;
+	private ImageIcon glovesLabel;
+	private ImageIcon bootsLabel;
 
 	public InventoryPanel(final Area frame, final Character hero, final ArrayList<Item> items) {
 
@@ -118,32 +120,6 @@ public class InventoryPanel extends JPanel {
 			}
 			
 		});
-		btnEquip.addMouseListener(new MouseListener() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
-
-			}
-		});
 		equipmentPanel.add(btnEquip);
 
 		JButton btnShowAll = new JButton("<html><center>Show All</center></html>");
@@ -205,7 +181,7 @@ public class InventoryPanel extends JPanel {
 
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
-				gloveLabel.setIcon(helmetLabel);
+				gloveLabel.setIcon(glovesLabel);
 			}
 
 			@Override
@@ -240,7 +216,7 @@ public class InventoryPanel extends JPanel {
 
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
-				feetLabel.setIcon(helmetLabel);
+				feetLabel.setIcon(bootsLabel);
 			}
 
 			@Override
@@ -372,13 +348,13 @@ public class InventoryPanel extends JPanel {
 		inventoryStatsPanel.add(inventoryImage);
 
 		JLabel lifeLabel = new JLabel("Life:");
-		lifeLabel.setBounds(10, 9, 75, 14);
+		lifeLabel.setBounds(0, 9, 99, 14);
 		inventoryStatsPanel.add(lifeLabel);
 		lifeLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
 		lifeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
 		JLabel actualLifeLabel = new JLabel(life);
-		actualLifeLabel.setBounds(10, 23, 75, 14);
+		actualLifeLabel.setBounds(0, 23, 99, 14);
 		inventoryStatsPanel.add(actualLifeLabel);
 		actualLifeLabel.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
 		actualLifeLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -528,5 +504,7 @@ public class InventoryPanel extends JPanel {
 		this.helmetLabel = new ImageIcon(MathQuest.class.getResource("Files/helmetLabel.png"));
 		this.weaponLabel = new ImageIcon(MathQuest.class.getResource("Files/weaponLabel.png"));
 		this.armorLabel = new ImageIcon(MathQuest.class.getResource("Files/armorLabel.png"));
+		this.glovesLabel = new ImageIcon(MathQuest.class.getResource("Files/glovesLabel.png"));
+		this.bootsLabel = new ImageIcon(MathQuest.class.getResource("Files/bootsLabel.png"));
 	}
 }

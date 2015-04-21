@@ -244,8 +244,6 @@ public class Combat extends Area {
 		int damage = hero.calculateDamage();
 		Boolean damageOutcome = checkDamage(damage);
 
-		this.refresh();
-
 		if(answer == this.answer) {
 			combatLog.addTextToScrollPane("Correct! You strike your enemy with great power!");
 			this.refresh();
@@ -258,7 +256,8 @@ public class Combat extends Area {
 			this.refresh();
 			hero.incrementAnsweredIncorrectly();
 		}
-
+		
+		this.refresh();
 		this.playAttackSound(hero, damageOutcome);
 
 		String output = new String("You attack a " + this.creatureName + " for " + damage + " points of damage.");
