@@ -6,6 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
 
@@ -40,7 +41,7 @@ public class ChangePassword extends Area {
 
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
-		panel.setBounds(341, 506, 342, 211);
+		panel.setBounds(341, 424, 342, 211);
 		panel.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
 		add(panel);
 
@@ -67,12 +68,14 @@ public class ChangePassword extends Area {
 		errorLabel.setFont(new Font("Simplified Arabic", Font.BOLD, 15));
 		errorLabel.setBounds(27, 180, 287, 16);
 		errorLabel.setForeground(Color.RED);
+		errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(errorLabel);
 
 		successLabel = new JLabel();
 		successLabel.setFont(new Font("Simplified Arabic", Font.BOLD, 15));
 		successLabel.setBounds(27, 180, 287, 16);
 		successLabel.setForeground(Color.GREEN);
+		successLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(successLabel);
 
 		JButton btnSave = new JButton("Save");
@@ -92,6 +95,7 @@ public class ChangePassword extends Area {
 						if(newPass.equals(confirmPass)){
 							Database.getConnected();
 							if (Database.changePassword(oldPass, newPass)){
+								Database.close();
 								successLabel.setText("Successfully saveed! Returning to world.");
 								timer.schedule(new TimerTask() {
 									@Override
@@ -105,14 +109,13 @@ public class ChangePassword extends Area {
 						}
 						else
 							errorLabel.setText("New password does not match");
-
-						timer.schedule(new TimerTask() {
-							@Override
-							public void run() {
-								errorLabel.setText(null);
-							}
-						}, 1500);
 					}
+					timer.schedule(new TimerTask() {
+						@Override
+						public void run() {
+							errorLabel.setText(null);
+						}
+					}, 1500);
 				}
 				else
 					errorLabel.setText("Database is not connected");
@@ -134,6 +137,7 @@ public class ChangePassword extends Area {
 		btnGoBack.setBounds(27, 144, 134, 28);
 		btnGoBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Database.close();
 				MathQuest.switchToGameWorld();
 			}
 		});

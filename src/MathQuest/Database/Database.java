@@ -48,18 +48,65 @@ public class Database
 	 * @param inputType
 	 * @return true if save the information successfully. Otherwise, the input username already exists in the database.
 	 */
-	public static boolean createAccount(String inputName, String inputPass, String inputType){
+	public static ArrayList<String[]>  createAccount(ArrayList<String[]> accounts){
 		try{
-			Statement select = con.createStatement();
-			int res = select.executeUpdate("INSERT IGNORE INTO Login (username, password, type) VALUES (\"" + inputName + "\" ,\"" + inputPass + "\" ,\"" + inputType + "\")" );
-			if (res == 1){
-				return true;
+			PreparedStatement insert1 = con.prepareStatement("INSERT IGNORE INTO Login (username, password, type, firstname, lastname) VALUES (?,?,?,?,?)" );
+			PreparedStatement insert2 = con.prepareStatement("INSERT IGNORE INTO TeacherStudent (teacherID, studentID) VALUES (?,?)" );
+			ArrayList<String[]> fails = new ArrayList<String[]>();
+			for(String[] parameters : accounts){
+				if(isExistUserName(parameters[0]) == 0){
+				insert1.setString(1, parameters[0]);
+				insert1.setString(2, "123");
+				insert1.setString(3, "student");
+				insert1.setString(4, parameters[1]);
+				insert1.setString(5, parameters[2]);
+				System.out.println("Here");
+				int res = insert1.executeUpdate();
+				if(res == 1){
+				insert2.setInt(1,getId());
+				insert2.setInt(2,getNewID(parameters[0]));
+				insert2.executeUpdate();
+				}
+				}
+				else
+					fails.add(parameters);
 			}
-			return false;
+			return fails;
 		}
 		catch (SQLException e){
 			System.out.println("Error from createAccount: " + e.getMessage());
-			return false;
+			return null;
+		}
+	}
+
+	private static int isExistUserName(String username){
+		try{
+			PreparedStatement select = con.prepareStatement("SELECT COUNT(userID) FROM Login WHERE username = ?" );
+			select.setString(1, username);
+			ResultSet isExist = select.executeQuery();
+			if(isExist.next())
+				return isExist.getInt(1);
+			else
+				return 1;
+		
+		}
+		catch (SQLException e){
+			System.out.println("Error from isExistUserName: " + e.getMessage());
+			return 1;
+		}
+	}
+	
+	private static int getNewID(String username){
+		try{
+			PreparedStatement select = con.prepareStatement("SELECT userID FROM Login WHERE username = ?" );
+			select.setString(1, username);
+			ResultSet isExist = select.executeQuery();
+			isExist.next();
+			return isExist.getInt(1);
+		}
+		catch (SQLException e){
+			System.out.println("Error from isExistUserName: " + e.getMessage());
+			return 0;
 		}
 	}
 	/**

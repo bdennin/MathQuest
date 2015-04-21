@@ -20,7 +20,7 @@ public class AdminMain extends JPanel{
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
-		panel.setBounds(373, 137, 277, 448);
+		panel.setBounds(373, 123, 277, 496);
 		add(panel);
 		
 		JButton btnSave = new JButton("Formula Setting (Bulk)");
@@ -29,7 +29,7 @@ public class AdminMain extends JPanel{
 				MathQuest.switchToAdminFomularSetting(Database.getId());
 			}
 		});
-		btnSave.setBounds(50, 166, 176, 31);
+		btnSave.setBounds(50, 127, 176, 31);
 		panel.add(btnSave);
 		
 		JButton btnCheckStudentsStatues = new JButton("Check Performances");
@@ -38,7 +38,7 @@ public class AdminMain extends JPanel{
 				MathQuest.switchToRankList();
 			}
 		});
-		btnCheckStudentsStatues.setBounds(50, 255, 176, 31);
+		btnCheckStudentsStatues.setBounds(50, 211, 176, 31);
 		panel.add(btnCheckStudentsStatues);
 		
 		JButton btnLogOut = new JButton("Log out");
@@ -47,7 +47,7 @@ public class AdminMain extends JPanel{
 				MathQuest.switchToLogin();
 			}
 		});
-		btnLogOut.setBounds(50, 344, 176, 31);
+		btnLogOut.setBounds(50, 379, 176, 31);
 		panel.add(btnLogOut);
 		
 		JButton btnFormularSettingindividual = new JButton("Formula Setting");
@@ -56,7 +56,16 @@ public class AdminMain extends JPanel{
 				MathQuest.switchToAdminIndividualFormulaSetting();
 			}
 		});
-		btnFormularSettingindividual.setBounds(50, 82, 176, 31);
+		btnFormularSettingindividual.setBounds(50, 43, 176, 31);
 		panel.add(btnFormularSettingindividual);
+		
+		JButton btnCreateAccounts = new JButton("Create Accounts");
+		btnCreateAccounts.setBounds(50, 295, 176, 31);
+		btnCreateAccounts.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			//	MathQuest.switchToCreateAccounts();
+			}
+		});
+		panel.add(btnCreateAccounts);
 	}
 }
