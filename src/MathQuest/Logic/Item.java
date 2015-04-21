@@ -19,7 +19,7 @@ public class Item {
 	int vit = 0;
 	int str = 0;
 	int gold = 0;
-	int enh = 0;
+	int enh = 1;
 	private URL imagePath;
 
 	public Item(String[] strings, Integer[] numbers, boolean equipped){
@@ -517,9 +517,9 @@ public class Item {
 
 	public String toString(){
 		if (isEquipped == true){
-			return String.format("<html><font color='%s'>%s</font> (Equipped)</html>", this.getColor(), itemName);
+			return String.format("<html><font color='%s'>%s</font> (Equipped) +%s</html>", this.getColor(), itemName, enh);
 		}
-		return String.format("<html><font color='%s'>%s</font></html>", this.getColor(), itemName);
+		return String.format("<html><font color='%s'>%s</font> +%s</html>", this.getColor(), itemName, enh);
 	}
 
 	public String getName(){
@@ -535,10 +535,13 @@ public class Item {
 
 	//enhance for blacksmith
 	public void enhanceItem(){
-		enh += 1;
-		vit = vit + enh;
-		str = str + enh;
-		gold = gold * 2;
+		enh = 1 + enh;
+		vit = (int) (vit + (vit * .5));
+		str = (int) (str + (str * .5));
+		gold = (int) (gold + (gold * .5));
+		itemName = this.toString();
+		itemName = itemName.substring(0, itemName.length() - 7);
+		itemName = String.format("%s +%s</html>", itemName , enh);
 	}
 
 	public URL getImagePath() {

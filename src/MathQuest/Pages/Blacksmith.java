@@ -23,6 +23,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.JComboBox;
 
 import java.awt.Color;
+import javax.swing.JTextPane;
 
 public class Blacksmith extends Area {
 	
@@ -32,13 +33,15 @@ public class Blacksmith extends Area {
 	final JPanel itemsPanel, buyPanel, sellPanel, enhanceOptionsPanel, enhancePanel, itemPanel1, itemPanel2;
 	private ImageIcon buyButtonIcon, sellButtonIcon, enhanceButtonIcon;
 	
-	private JComboBox inventoryComboBox, enhanceComboBox;
+	private final JTextPane sellPriceTextPane, enhPriceTextPane;
+	
+	private final JComboBox<Item> inventoryComboBox, enhanceComboBox;
 	
 	private Item item1, item2;
 	
+	
 	public Blacksmith(final Character hero) {
 		super(hero);
-//		super(character, null);
 		this.loadImages();
 		this.loadOptionsPanel();
 		
@@ -145,17 +148,50 @@ public class Blacksmith extends Area {
 		
 		//sell combo box
 		inventoryComboBox = new JComboBox<Item>();
-		inventoryComboBox.setBounds(6, 6, 232, 27);
 		for(Item el : hero.getInventory())
 			if(!el.isEquipped()){
 				inventoryComboBox.addItem(el);
 			}
+		inventoryComboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(null != inventoryComboBox.getSelectedItem()){
+					inventoryComboBox.revalidate();
+					inventoryComboBox.repaint();
+					Item temp = (Item)inventoryComboBox.getSelectedItem();
+					sellPriceTextPane.setText("" + temp.getItemGold()/3 + "g");
+				}
+			}
+		});
+		inventoryComboBox.setBounds(6, 6, 232, 27);
 		sellOptionsPanel.add(inventoryComboBox);
 		
 		//sell button
 		JButton sellBtn = new JButton("Sell");
-		sellBtn.setBounds(68, 46, 117, 35);
+		sellBtn.setBounds(121, 45, 117, 35);
 		sellOptionsPanel.add(sellBtn);
+		sellBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Item i = (Item)inventoryComboBox.getSelectedItem();
+				hero.addGold((i.getItemGold() / 3));
+				playSound("coins");
+				hero.removeFromInventory((Item)inventoryComboBox.getSelectedItem());
+				inventoryComboBox.removeItem(inventoryComboBox.getSelectedItem());
+				reloadInventoryPanel(Area.isInventoryVisible, hero.getInventory());
+				if(null != inventoryComboBox.getSelectedItem()){
+					i = (Item)inventoryComboBox.getSelectedItem();
+					sellPriceTextPane.setText("" + i.getItemGold()/3 + "g");
+				}
+			}
+		});
+		
+		sellPriceTextPane = new JTextPane();
+		sellPriceTextPane.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 20));
+		sellPriceTextPane.setBounds(16, 45, 72, 27);
+//		if(null != inventoryComboBox.getSelectedItem()){
+//			Item temp = (Item)inventoryComboBox.getSelectedItem();
+//			sellPriceTextPane.setText("" + temp.getItemGold()/3 + "g");
+//		}
+		sellOptionsPanel.add(sellPriceTextPane);
 		
 		//Label for name of panel
 		JLabel sellLabel = new JLabel("Sell Items");
@@ -164,16 +200,7 @@ public class Blacksmith extends Area {
 		sellLabel.setBackground(Color.LIGHT_GRAY);
 		sellLabel.setFont(new Font("Copperplate Gothic Bold", Font.PLAIN, 20));
 		sellLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		sellBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Item i = (Item)inventoryComboBox.getSelectedItem();
-				hero.addGold((i.getItemGold() / 3));
-				playSound("coins");
-				hero.removeFromInventory((Item)inventoryComboBox.getSelectedItem());
-				inventoryComboBox.removeItem(inventoryComboBox.getSelectedItem());
-				reloadInventoryPanel(false, hero.getInventory());
-			}
-		});
+		
 
 /////////////////////////
 // Enhance Items Panel //
@@ -194,31 +221,54 @@ public class Blacksmith extends Area {
 		
 		//combo box that loads equipped inventory to enhance
 		enhanceComboBox = new JComboBox();
-		enhanceComboBox.setBounds(6, 6, 233, 27);
-		enhanceOptionsPanel.add(enhanceComboBox);
 		for(Item el : hero.getInventory())
 			if(el.isEquipped()){
 				enhanceComboBox.addItem(el);
 			}
+		enhanceComboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(null != enhanceComboBox.getSelectedItem()){
+					enhanceComboBox.revalidate();
+					enhanceComboBox.repaint();
+					Item temp = (Item)enhanceComboBox.getSelectedItem();
+					enhPriceTextPane.setText("" + temp.getItemGold() + "g");
+				}
+			}
+		});
+		enhanceComboBox.setBounds(6, 6, 233, 27);
+		enhanceOptionsPanel.add(enhanceComboBox);
 		
 		//Button to enhance items if character has enough gold
 		JButton enhancheBtn = new JButton("Improve");
 		enhancheBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Item i = (Item) enhanceComboBox.getSelectedItem();
-				if(hero.getGold() >= (i.getItemGold() * 2)){
+				if(hero.getGold() >= i.getItemGold()){
 					hero.removeGold(i.getItemGold());
 					i.enhanceItem();
 					playSound("hammer");
-					reloadInventoryPanel(false, hero.getInventory());
+					reloadInventoryPanel(Area.isInventoryVisible, hero.getInventory());
+					if(null != enhanceComboBox.getSelectedItem()){
+						enhPriceTextPane.setText("" + i.getItemGold() + "g");
+					}
 				}
 				else{
 					scrollPane.addTextToScrollPane("You Don't have enough.");
 				}
 			}
 		});
-		enhancheBtn.setBounds(68, 46, 117, 35);
+		enhancheBtn.setBounds(110, 45, 117, 35);
 		enhanceOptionsPanel.add(enhancheBtn);
+		
+		enhPriceTextPane = new JTextPane();
+		enhPriceTextPane.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 20));
+		enhPriceTextPane.setEditable(false);
+		enhPriceTextPane.setBounds(16, 45, 65, 27);
+		if(null != enhanceComboBox.getSelectedItem()){
+			Item temp = (Item) enhanceComboBox.getSelectedItem();
+			enhPriceTextPane.setText("" + temp.getItemGold() + "g");
+		}
+		enhanceOptionsPanel.add(enhPriceTextPane);
 		
 		
 		
@@ -394,6 +444,17 @@ public class Blacksmith extends Area {
 			
 		}
 	}
+	
+//	public void refreshPrices(){
+//		if(null != inventoryComboBox.getSelectedItem()){
+//			Item j = (Item) inventoryComboBox.getSelectedItem();
+//			sellPriceTextPane.setText("" + j.getItemGold()/3 + "g");
+//		}
+//		if(null != enhanceComboBox.getSelectedItem()){
+//			Item i = (Item) enhanceComboBox.getSelectedItem();
+//			enhPriceTextPane.setText("" + i.getItemGold() + "g");
+//		}
+//	}
 	
 	@Override
 	public OptionsPanel loadOptionsPanel() {
