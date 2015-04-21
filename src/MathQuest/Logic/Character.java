@@ -373,7 +373,7 @@ public class Character {
 		this.inventory.remove(item);
 	}
 
-	private void removeItemStats(Item item) {
+	public void removeItemStats(Item item) {
 		this.strength -= item.str;
 		this.vitality -= item.vit;
 		this.currentHealth -= item.vit;
@@ -432,6 +432,64 @@ public class Character {
 			this.addItemStats(equippable);
 		}
 	}
+	
+
+	public void unequip(Object item) {
+		if(null == item) {
+
+		}
+		else {
+			Item equippable = (Item)item;
+			String slot = equippable.getSlot();
+			if(slot.equals("Helmets")) {
+				if(this.equippedHelmet == null){
+					
+				}
+				else {
+					this.equippedHelmet = null;
+					InventoryPanel.setHelmetImage(null);	
+				}
+			}
+			else if(slot.equals("Armor")) {
+				if(this.equippedMail == null){
+					
+				}
+				else {
+					this.equippedMail = null;
+					InventoryPanel.setArmorImage(null);	
+				}
+			}
+			else if(slot.equals("Boots")) {
+				if(this.equippedBoots== null){
+					
+				}
+				else {
+					this.equippedBoots = null;
+					InventoryPanel.setFeetImage(null);	
+				}
+			}
+			else if(slot.equals("Gloves")) {
+				if(this.equippedGloves == null){
+					
+				}
+				else {
+					this.equippedGloves = null;
+					InventoryPanel.setGloveImage(null);	
+				}
+			}
+			else {
+				if(this.equippedWeapon == null){
+					
+				}
+				else {
+					this.equippedWeapon = null;
+					InventoryPanel.setWeaponImage(null);	
+				}
+			}
+			this.removeItemStats(equippable);
+		}
+	}
+
 
 	public int getAnsweredCorrectly(){
 		return answeredCorrectly;

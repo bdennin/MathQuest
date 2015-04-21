@@ -158,7 +158,7 @@ public class Blacksmith extends Area {
 					inventoryComboBox.revalidate();
 					inventoryComboBox.repaint();
 					Item temp = (Item)inventoryComboBox.getSelectedItem();
-					sellPriceTextPane.setText("" + temp.getItemGold()/3 + "g");
+					sellPriceTextPane.setText("" + temp.getItemGold()/2 + "g");
 				}
 			}
 		});
@@ -243,18 +243,22 @@ public class Blacksmith extends Area {
 		enhancheBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Item i = (Item) enhanceComboBox.getSelectedItem();
-				if(hero.getGold() >= i.getItemGold()){
+				if(hero.getGold() >= i.getItemGold() && i.getEnhanceLevel() < i.getEnhanceCap()){
 					hero.removeGold(i.getItemGold());
+					hero.unequip(i);
 					i.enhanceItem();
+					hero.equip(i);
 					playSound("hammer");
 					reloadInventoryPanel(Area.isInventoryVisible, hero.getInventory());
 					if(null != enhanceComboBox.getSelectedItem()){
 						enhPriceTextPane.setText("" + i.getItemGold() + "g");
 					}
 				}
-				else{
-					scrollPane.addTextToScrollPane("You Don't have enough.");
+				else if(i.getEnhanceLevel() >= i.getEnhanceCap()){
+					scrollPane.addTextToScrollPane("This item cannot be upgraded any further.");
 				}
+				else
+					scrollPane.addTextToScrollPane("You don't have enough gold.");
 			}
 		});
 		enhancheBtn.setBounds(110, 45, 117, 35);

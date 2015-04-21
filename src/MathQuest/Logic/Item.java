@@ -11,6 +11,7 @@ public class Item {
 	private static final Random RANDOM = new Random();
 	
 	private int enh;
+	private int enhCap;
 	private URL imagePath;
 	boolean itemDropped;
 	boolean isEquipped;
@@ -33,6 +34,7 @@ public class Item {
 		isEquipped = equipped;  
 		this.setImagePath();
 		this.enh = 0;
+		this.setEnhanceCap();
 	}
 
 	public Item(int monsterLvl, String category){
@@ -53,9 +55,33 @@ public class Item {
 			setStatsBasic();
 		this.setImagePath();
 		this.enh = 0;
+		this.setEnhanceCap();
 	}
 
-
+	private void setEnhanceCap() {
+		String color = this.getColor();
+		if(color.equals("gray")) 
+			enhCap = 0;
+		else if(color.equals("green"))
+			enhCap = 1;
+		else if(color.equals("blue"))
+			enhCap = 2;
+		else if(color.equals("orange")) 
+			enhCap = 3;
+		else if(color.equals("red"))
+			enhCap = 4;
+		else
+			enhCap = 0;
+	}
+	
+	public int getEnhanceCap() {
+		return enhCap;
+	}
+	
+	public int getEnhanceLevel() {
+		return enh;
+	}
+	
 	public void disrobe(){
 		isEquipped = false;
 	}
@@ -541,9 +567,9 @@ public class Item {
 	//enhance for blacksmith
 	public void enhanceItem(){
 		enh = 1 + enh;
-		vit = (int) (vit + (vit * .5));
-		str = (int) (str + (str * .5));
-		gold = (int) (gold + (gold * .5));
+		vit = (int) (vit + (vit * .3));
+		str = (int) (str + (str * .3));
+		gold = (int) (gold + (gold * .3));
 	}
 
 	public URL getImagePath() {
@@ -575,8 +601,6 @@ public class Item {
 		}
 		else
 			throw new IllegalArgumentException();
-		
-
 	}
 
 }

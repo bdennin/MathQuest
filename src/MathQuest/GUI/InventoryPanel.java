@@ -38,7 +38,7 @@ public class InventoryPanel extends JPanel {
 	private static ImageIcon feetImage;
 	private static ImageIcon mainImage;
 	private static ImageIcon chestImage;
-	
+
 	private ImageIcon inventoryImage;
 	private ImageIcon helmetLabel;
 	private ImageIcon armorLabel;
@@ -118,7 +118,7 @@ public class InventoryPanel extends JPanel {
 					frame.reloadInventoryPanel(true, items);
 				}
 			}
-			
+
 		});
 		equipmentPanel.add(btnEquip);
 
@@ -479,23 +479,38 @@ public class InventoryPanel extends JPanel {
 	}
 
 	public static void setHelmetImage(ImageIcon image) {
-		headImage = image;
+		if(null == image)
+			headImage = null;
+		else
+			headImage = image;
 	}
 
 	public static void setArmorImage(ImageIcon image) {
-		chestImage = image;
+		if(null == image)
+			chestImage = null;
+		else
+			chestImage = image;
 	}
 
 	public static void setFeetImage(ImageIcon image) {
-		feetImage = image;
+		if(null == image)
+			feetImage = null;
+		else
+			feetImage = image;
 	}
 
 	public static void setWeaponImage(ImageIcon image) {
-		mainImage = image;
+		if(null == image)
+			mainImage = null;
+		else
+			mainImage = image;
 	}
 
 	public static void setGloveImage(ImageIcon image) {
-		gloveImage = image;
+		if(null == image)
+			gloveImage = null;
+		else
+			gloveImage = image;
 	}
 
 	public void loadImages() {
