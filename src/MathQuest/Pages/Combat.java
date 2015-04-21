@@ -392,7 +392,7 @@ public class Combat extends Area {
 		if (level < hero.getLevel()) {
 
 			this.reloadCharacterPanel();
-			MathQuest.playSound(MathQuest.class.getResource("Files/levelUp.wav"));
+			MathQuest.playSound(MathQuest.class.getResource("Files/levelUp.mp3"));
 			
 			victoryString = String.format("<html>Congratulations! You have gained a<br/>level! You are now level %d.</html>", hero.getLevel());
 
