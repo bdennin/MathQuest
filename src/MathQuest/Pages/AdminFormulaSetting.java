@@ -44,13 +44,15 @@ public class AdminFormulaSetting extends JPanel {
 		final JLabel successLabel = new JLabel();
 		successLabel.setForeground(Color.GREEN);
 		successLabel.setFont(new Font("Simplified Arabic", Font.BOLD, 20));
-		successLabel.setBounds(367, 140, 280, 29);
+		successLabel.setBounds(183, 140, 657, 29);
+		successLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		add(successLabel);
-
+		
 		final JLabel errorLabel = new JLabel();
 		errorLabel.setForeground(Color.RED);
 		errorLabel.setFont(new Font("Simplified Arabic", Font.BOLD, 20));
-		errorLabel.setBounds(314, 140, 491, 29);
+		errorLabel.setBounds(105, 140, 814, 29);
+		errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		add(errorLabel);
 
 		JLabel lblNewLabel = new JLabel("Signs");
@@ -121,7 +123,7 @@ public class AdminFormulaSetting extends JPanel {
 			{
 
 				int temp = Integer.parseInt(monsterLevel.getText());
-				if (temp <= 20 && temp >= 0){
+				if (temp <= 32 && temp >= 0){
 					if (record < temp)
 						record = temp;
 
@@ -135,7 +137,7 @@ public class AdminFormulaSetting extends JPanel {
 					}, 1500);
 				}
 				else
-					errorLabel.setText("Invalid monster level. Monster level should smaller than 20 and bigger than 0.");
+					errorLabel.setText("Invalid monster level. Monster level should smaller than 32 and bigger than 0.");
 			}
 		});
 		monsterLevel.setBounds(170, 13, 101, 28);

@@ -51,22 +51,30 @@ public class Database
 	public static ArrayList<String[]>  createAccount(ArrayList<String[]> accounts){
 		try{
 			PreparedStatement insert1 = con.prepareStatement("INSERT IGNORE INTO Login (username, password, type, firstname, lastname) VALUES (?,?,?,?,?)" );
-			PreparedStatement insert2 = con.prepareStatement("INSERT IGNORE INTO TeacherStudent (teacherID, studentID) VALUES (?,?)" );
+			PreparedStatement insert2 = con.prepareStatement("INSERT INTO TeacherStudent (teacherID, studentID) VALUES (?,?)" );
 			ArrayList<String[]> fails = new ArrayList<String[]>();
 			for(String[] parameters : accounts){
 				if(isExistUserName(parameters[0]) == 0){
-				insert1.setString(1, parameters[0]);
-				insert1.setString(2, "123");
-				insert1.setString(3, "student");
-				insert1.setString(4, parameters[1]);
-				insert1.setString(5, parameters[2]);
-				System.out.println("Here");
-				int res = insert1.executeUpdate();
-				if(res == 1){
-				insert2.setInt(1,getId());
-				insert2.setInt(2,getNewID(parameters[0]));
-				insert2.executeUpdate();
-				}
+					insert1.setString(1, parameters[0]);
+					insert1.setString(2, "123");
+					insert1.setString(3, "student");
+					insert1.setString(4, parameters[1]);
+					insert1.setString(5, parameters[2]);
+					System.out.println("Here");
+					int res = insert1.executeUpdate();
+					if(res == 1){
+						int studentId = getNewID(parameters[0]);
+						insert2.setInt(1,getId());
+						insert2.setInt(2,studentId);
+						insert2.executeUpdate();
+						for (int i = 1;i <= 32;i++){
+							PreparedStatement insert3 = con.prepareStatement("INSERT INTO Formula (studentId, teacherId, monsterLevel) VALUES (?,?,?)" );
+							insert3.setInt(1,studentId);
+							insert3.setInt(2,getId());
+							insert3.setInt(3,i);
+							insert3.executeUpdate();
+						}
+					}
 				}
 				else
 					fails.add(parameters);
@@ -88,14 +96,14 @@ public class Database
 				return isExist.getInt(1);
 			else
 				return 1;
-		
+
 		}
 		catch (SQLException e){
 			System.out.println("Error from isExistUserName: " + e.getMessage());
 			return 1;
 		}
 	}
-	
+
 	private static int getNewID(String username){
 		try{
 			PreparedStatement select = con.prepareStatement("SELECT userID FROM Login WHERE username = ?" );
@@ -322,7 +330,7 @@ public class Database
 
 	public static void cacheStudents(){
 		try{
-			PreparedStatement select = con.prepareStatement("SELECT Login.userID, Login.firstname, Login.lastname FROM Login LEFT JOIN Formula ON Login.userID = Formula.studentId WHERE Formula.teacherId = ? GROUP BY Formula.studentId ORDER BY Login.lastname");
+			PreparedStatement select = con.prepareStatement("SELECT Login.userID, Login.firstname, Login.lastname FROM Login LEFT JOIN TeacherStudent ON Login.userID = TeacherStudent.studentID WHERE TeacherStudent.teacherID = ? GROUP BY TeacherStudent.studentID ORDER BY Login.lastname");
 			select.setInt(1, getId());
 			ResultSet res = select.executeQuery();
 			cacheStudentsName = new Vector();
@@ -375,7 +383,7 @@ public class Database
 					for (int i = 0; i<5; i++)
 						numbers[i] = res.getInt(i+4);
 					boolean isEquipped = res.getBoolean(9);
-					
+
 					cacheinventory.add(new Item(strings, numbers,isEquipped));
 					//System.out.println("count");
 				}

@@ -116,25 +116,28 @@ public class CreateAccounts  extends JPanel implements ActionListener  {
 		lblsuccess1.setBounds(67, 205, 188, 15);
 		lblsuccess1.setFont(new Font("Simplified Arabic", Font.BOLD, 15));
 		lblsuccess1.setForeground(Color.GREEN);
+		lblsuccess1.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(lblsuccess1);
 		
 		lblerror1 = new JLabel();
 		lblerror1.setBounds(67, 205, 188, 15);
 		lblerror1.setFont(new Font("Simplified Arabic", Font.BOLD, 15));
 		lblerror1.setForeground(Color.RED);
+		lblerror1.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(lblerror1);
 
 		lblsuccess2 = new JLabel();
 		lblsuccess2.setBounds(605, 430, 188, 15);
 		lblsuccess2.setFont(new Font("Simplified Arabic", Font.BOLD, 15));
 		lblsuccess2.setForeground(Color.GREEN);
+		lblsuccess2.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblsuccess2);
 		
 		JButton btnNewButton_1 = new JButton("Create");
 		btnNewButton_1.setBounds(159, 163, 96, 23);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				clearMessage();
 				String[] parameters = new String[5];
 				ArrayList<String[]> account = new ArrayList<String[]>();
 				parameters[0]= userName.getText();
@@ -174,6 +177,7 @@ public class CreateAccounts  extends JPanel implements ActionListener  {
 		
 	}
 	public void actionPerformed(ActionEvent e) {
+		clearMessage();
 		int returnVal = fc.showOpenDialog(CreateAccounts.this);
 		
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -205,10 +209,10 @@ public class CreateAccounts  extends JPanel implements ActionListener  {
 	}
 
 		private void clearMessage(){
-			scrollText.setOpaque(false);
 			scrollText.setText(null);
 			lblerror1.setText(null);
 		}
+		
 	public ArrayList<String[]> readyFile(File file) {
 		try{
 			Scanner reader = new Scanner(file);
