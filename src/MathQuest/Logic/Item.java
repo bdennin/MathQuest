@@ -31,9 +31,9 @@ public class Item {
 		str = numbers[1];
 		gold = numbers[2];
 		vit = numbers[3];
+		enh = numbers[4];
 		isEquipped = equipped;  
-		this.setImagePath();
-		this.enh = 0;
+		this.setImagePath();	
 		this.setEnhanceCap();
 	}
 

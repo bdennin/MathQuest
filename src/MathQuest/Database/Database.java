@@ -363,18 +363,19 @@ public class Database
 
 	public static void cacheInventory(){
 		try{
-			PreparedStatement select = con.prepareStatement("SELECT name, color, slot, level, str, gold, vit, isEquipped FROM Inventory WHERE Login_userID = ? ORDER BY inventoryID");
+			PreparedStatement select = con.prepareStatement("SELECT name, color, slot, level, str, gold, vit, enh, isEquipped FROM Inventory WHERE Login_userID = ? ORDER BY inventoryID");
 			select.setInt(1, getId());
 			ResultSet res = select.executeQuery();
 			String[] strings = new String[3];
-			Integer[] numbers = new Integer[4];
+			Integer[] numbers = new Integer[5];
 			if(!res.wasNull())
 				while(res.next()){
 					for (int i = 0; i<3; i++)
 						strings[i] = res.getString(i+1);
-					for (int i = 0; i<4; i++)
+					for (int i = 0; i<5; i++)
 						numbers[i] = res.getInt(i+4);
-					boolean isEquipped = res.getBoolean(8);
+					boolean isEquipped = res.getBoolean(9);
+					
 					cacheinventory.add(new Item(strings, numbers,isEquipped));
 					//System.out.println("count");
 				}
@@ -396,7 +397,7 @@ public class Database
 			delete.setInt(1, getId());
 			delete.executeUpdate();
 			for(Item item : items){
-				PreparedStatement inventory = con.prepareStatement("INSERT INTO Inventory (name, color, level, str, gold, vit, Login_userID, slot, isEquipped) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+				PreparedStatement inventory = con.prepareStatement("INSERT INTO Inventory (name, color, level, str, gold, vit, Login_userID, slot, isEquipped, enh) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 				inventory.setString(1, item.getName());
 				inventory.setString(2, item.getColor());
 				inventory.setString(8, item.getSlot());
@@ -406,6 +407,7 @@ public class Database
 				inventory.setInt(6, item.getItemVit());
 				inventory.setInt(7, getId());
 				inventory.setBoolean(9, item.isEquipped());
+				inventory.setInt(10, item.getEnhanceLevel());
 				inventory.executeUpdate();
 			}
 		}
