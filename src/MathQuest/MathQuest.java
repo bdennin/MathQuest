@@ -121,7 +121,12 @@ public class MathQuest {
 		contentPane = new AdminFormulaSetting(Id);
 		outerFrame.setContentPane(contentPane);
 	}
-
+	
+	public static void switchToCreateAccounts() {
+		contentPane = new CreateAccounts();
+		outerFrame.setContentPane(contentPane);
+	}
+	
 	public static void switchToGameWorld() {
 		if(contentPane instanceof Combat) {
 			playMusic(MathQuest.class.getResource("Files/Tristram.mp3"));

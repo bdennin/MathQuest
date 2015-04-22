@@ -63,7 +63,7 @@ public class AdminMain extends JPanel{
 		btnCreateAccounts.setBounds(50, 295, 176, 31);
 		btnCreateAccounts.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			//	MathQuest.switchToCreateAccounts();
+				MathQuest.switchToCreateAccounts();
 			}
 		});
 		panel.add(btnCreateAccounts);
