@@ -352,8 +352,9 @@ public class Database
 			PreparedStatement select = con.prepareStatement("SELECT sign, digit, term FROM Formula WHERE studentId = ? ORDER BY monsterLevel");
 			select.setInt(1, getId());
 			ResultSet res = select.executeQuery();
-			String[] setting = new String[3];
+
 			while(res.next()){
+				String[] setting = new String[3];
 				//System.out.println("MonsterLevel");
 				for(int index = 0;index < 3; index++)
 					setting[index] = res.getString(index+1);
