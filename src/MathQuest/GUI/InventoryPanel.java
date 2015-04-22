@@ -158,7 +158,7 @@ public class InventoryPanel extends JPanel {
 			public void mousePressed(MouseEvent arg0) {
 				ArrayList<Item> headItems = new ArrayList<Item>();
 				for(Item el : hero.getInventory()) {
-					if(el.getSlot() == "Helmets")
+					if(el.getSlot().equals("Helmets"))
 						headItems.add(el);
 				}
 				frame.reloadInventoryPanel(true, headItems);
@@ -193,7 +193,7 @@ public class InventoryPanel extends JPanel {
 			public void mousePressed(MouseEvent arg0) {
 				ArrayList<Item> handItems = new ArrayList<Item>();
 				for(Item el : hero.getInventory()) {
-					if(el.getSlot() == "Gloves")
+					if(el.getSlot().equals("Gloves"))
 						handItems.add(el);
 				}
 				frame.reloadInventoryPanel(true, handItems);
@@ -228,7 +228,7 @@ public class InventoryPanel extends JPanel {
 			public void mousePressed(MouseEvent arg0) {
 				ArrayList<Item> feetItems = new ArrayList<Item>();
 				for(Item el : hero.getInventory()) {
-					if(el.getSlot() == "Boots")
+					if(el.getSlot().equals("Boots"))
 						feetItems.add(el);
 				}
 				frame.reloadInventoryPanel(true, feetItems);

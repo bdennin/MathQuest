@@ -225,6 +225,15 @@ public class Character {
 		return this.imagePath;
 	}
 
+	public int checkedMaxHealth() {
+		int cumulative = 0;
+		for(Item el : this.inventory) {
+			if(el.isEquipped)
+				cumulative += el.getItemVit();
+		}
+		return cumulative + (this.level * 10);
+	}
+	
 	public int calculateCost(String roomType, int level){
 		switch(roomType){
 		case "Shower": return (int)(Math.round(level*level*.7));
