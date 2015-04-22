@@ -89,8 +89,9 @@ public class OptionsPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if(MathQuest.connectToDatabase){
 					Database.getConnected();
-					Database.setStatus(hero.getStatus());
 					Database.saveInventory(hero.getInventory());
+					hero.unequipAll();
+					Database.setStatus(hero.getStatus());
 					Database.saveAccuracy(hero.getAnsweredCorrectly(), hero.getAnsweredIncorrectly());
 					Database.close();
 				}
@@ -126,8 +127,9 @@ public class OptionsPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if(MathQuest.connectToDatabase){
 					Database.getConnected();
-					Database.setStatus(hero.getStatus());
 					Database.saveInventory(hero.getInventory());
+					hero.unequipAll();
+					Database.setStatus(hero.getStatus());
 					Database.saveAccuracy(hero.getAnsweredCorrectly(), hero.getAnsweredIncorrectly());
 					Database.close();
 				}

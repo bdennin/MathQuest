@@ -233,7 +233,7 @@ public class Character {
 		}
 		return cumulative + (this.level * 10);
 	}
-	
+
 	public int calculateCost(String roomType, int level){
 		switch(roomType){
 		case "Shower": return (int)(Math.round(level*level*.7));
@@ -441,8 +441,36 @@ public class Character {
 			this.addItemStats(equippable);
 		}
 	}
-	
 
+	public void unequipAll(){
+		if(this.equippedBoots !=null ){
+			this.removeItemStats(equippedBoots);
+			this.equippedBoots = null;
+			InventoryPanel.setFeetImage(null);	
+			
+		}
+		if(this.equippedHelmet !=null ){
+			this.removeItemStats(equippedHelmet);
+			this.equippedHelmet = null;
+			InventoryPanel.setHelmetImage(null);	
+		}
+		if(this.equippedMail !=null ){
+			this.removeItemStats(equippedMail);
+			this.equippedMail = null;
+			InventoryPanel.setArmorImage(null);	
+		}
+		if(this.equippedGloves !=null ){
+			this.removeItemStats(equippedGloves);
+			this.equippedGloves = null;
+			InventoryPanel.setGloveImage(null);	
+		}
+		if(this.equippedWeapon !=null ){
+			this.removeItemStats(equippedWeapon);
+			this.equippedWeapon = null;
+			InventoryPanel.setWeaponImage(null);	
+		}
+	}
+	
 	public void unequip(Object item) {
 		if(null == item) {
 
@@ -452,7 +480,7 @@ public class Character {
 			String slot = equippable.getSlot();
 			if(slot.equals("Helmets")) {
 				if(this.equippedHelmet == null){
-					
+
 				}
 				else {
 					this.equippedHelmet = null;
@@ -461,7 +489,7 @@ public class Character {
 			}
 			else if(slot.equals("Armor")) {
 				if(this.equippedMail == null){
-					
+
 				}
 				else {
 					this.equippedMail = null;
@@ -470,7 +498,7 @@ public class Character {
 			}
 			else if(slot.equals("Boots")) {
 				if(this.equippedBoots== null){
-					
+
 				}
 				else {
 					this.equippedBoots = null;
@@ -479,7 +507,7 @@ public class Character {
 			}
 			else if(slot.equals("Gloves")) {
 				if(this.equippedGloves == null){
-					
+
 				}
 				else {
 					this.equippedGloves = null;
@@ -488,7 +516,7 @@ public class Character {
 			}
 			else {
 				if(this.equippedWeapon == null){
-					
+
 				}
 				else {
 					this.equippedWeapon = null;
