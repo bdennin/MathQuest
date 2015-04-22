@@ -41,15 +41,15 @@ public class Item {
 
 		color = category;
 		itemLevel = monsterLvl;
-		if (category == "gray")
+		if (category.equals("gray"))
 			setStatsBasic();
-		else if (category =="green")
+		else if (category.equals("green"))
 			setStatsRare();
-		else if (category == "blue")
+		else if (category.equals("blue"))
 			setStatsEpic();
-		else if (category == "orange")
+		else if (category.equals("orange"))
 			setStatsLegendary();
-		else if (category == "red")
+		else if (category.equals("red"))
 			setStatsFalcor();
 		else
 			setStatsBasic();
@@ -579,23 +579,23 @@ public class Item {
 
 	private void setImagePath() {
 		String filePath;
-		if(this.slot == "Helmets") {
+		if(this.slot.equals("Helmets")) {
 			filePath = String.format("Files/helmet%d.png", RANDOM.nextInt(7) + 1);
 			this.imagePath = MathQuest.class.getResource(filePath);
 		}
-		else if(this.slot == "Boots") {
+		else if(this.slot.equals("Boots")) {
 			filePath = String.format("Files/boots%d.png", RANDOM.nextInt(2) + 1);
 			this.imagePath = MathQuest.class.getResource(filePath);
 		}
-		else if(this.slot == "Armor") {
+		else if(this.slot.equals("Armor")) {
 			filePath = String.format("Files/armor%d.png", RANDOM.nextInt(10) + 1);
 			this.imagePath = MathQuest.class.getResource(filePath);
 		}
-		else if(this.slot == "Weapons") {
+		else if(this.slot.equals("Weapons")) {
 			filePath = String.format("Files/weapon%d.png", RANDOM.nextInt(21) + 1);
 			this.imagePath = MathQuest.class.getResource(filePath);
 		}
-		else if(this.slot == "Gloves") {
+		else if(this.slot.equals("Gloves")) {
 			filePath = String.format("Files/gloves%d.png", RANDOM.nextInt(3) + 1);
 			this.imagePath = MathQuest.class.getResource(filePath);
 		}
