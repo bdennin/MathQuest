@@ -98,7 +98,7 @@ public class Combat extends Area {
 				question = Equation.constructEquation(equationSettings);
 		}
 		else
-			question = Equation.constructEquation(Sign.ADDITION, Digits.ONE, Terms.TWO);
+			question = Equation.constructEquation(Sign.BOTH, Digits.TWO, Terms.THREE);
 
 		this.answer = Equation.solveEquation(question);
 		ArrayList<Integer> options = this.generateWrongAnswers(question);

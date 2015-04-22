@@ -99,7 +99,7 @@ public class OptionsMenu extends JPanel {
 		});
 		optionsBody.add(checkboxMuteSound);
 
-		JLabel lblReset = new JLabel("Reset:");
+		JLabel lblReset = new JLabel("System:");
 		lblReset.setFont(new Font("Copperplate Gothic Light", Font.PLAIN, 11));
 		lblReset.setHorizontalAlignment(SwingConstants.CENTER);
 		lblReset.setBounds(10, 91, 80, 14);
@@ -113,6 +113,11 @@ public class OptionsMenu extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				MathQuest.setCharacter(new Character());
+				InventoryPanel.setArmorImage(null);
+				InventoryPanel.setFeetImage(null);
+				InventoryPanel.setGloveImage(null);
+				InventoryPanel.setHelmetImage(null);
+				InventoryPanel.setWeaponImage(null);
 				MathQuest.switchToGameWorld();
 			}
 		});

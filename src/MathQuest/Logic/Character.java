@@ -83,7 +83,7 @@ public class Character {
 		this.vitality = 10 * level;
 		this.maxHealth = vitality;
 		this.strength = 10 + 2 * level;
-		this.maxExperience = (int)(10 * Math.pow(2, level));
+		this.maxExperience = (int)(10 * Math.pow(2, level - 1));
 		this.imagePath = MathQuest.class.getResource("Files/char2.jpg");
 		this.damageType = DamageType.SLASHING;
 		this.name = "Hero#1";
