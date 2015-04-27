@@ -46,7 +46,6 @@ public class KillingFields extends Area {
 		creatureHeaderPanel.setLayout(null);
 		creaturePanel.add(creatureHeaderPanel);
 
-		
 		JLabel creatureHeader = new JLabel("Creatures");
 		creatureHeader.setHorizontalAlignment(SwingConstants.CENTER);
 		creatureHeader.setBounds(0, 0, 470, 22);
