@@ -6,8 +6,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.sun.org.apache.xerces.internal.impl.RevalidationHandler;
-
 import MathQuest.GUI.CharacterPanel;
 import MathQuest.GUI.InventoryPanel;
 import MathQuest.GUI.ItemViewer;
